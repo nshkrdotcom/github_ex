@@ -1,0 +1,72 @@
+{
+  "sources": {
+    "differences_github_apps_vs_oauth_apps": {
+      "title": "Differences between GitHub Apps and OAuth apps",
+      "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/differences-between-github-apps-and-oauth-apps",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Fapps%2Foauth-apps%2Fbuilding-oauth-apps%2Fdifferences-between-github-apps-and-oauth-apps",
+      "pathname": "/en/apps/oauth-apps/building-oauth-apps/differences-between-github-apps-and-oauth-apps",
+      "snapshot": "differences_github_apps_vs_oauth_apps.md"
+    },
+    "endpoints_fg_pat": {
+      "title": "Endpoints available for fine-grained personal access tokens",
+      "url": "https://docs.github.com/en/rest/authentication/endpoints-available-for-fine-grained-personal-access-tokens",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Frest%2Fauthentication%2Fendpoints-available-for-fine-grained-personal-access-tokens",
+      "pathname": "/en/rest/authentication/endpoints-available-for-fine-grained-personal-access-tokens",
+      "snapshot": "endpoints_fg_pat.md"
+    },
+    "endpoints_github_app_installation": {
+      "title": "Endpoints available for GitHub App installation access tokens",
+      "url": "https://docs.github.com/en/rest/authentication/endpoints-available-for-github-app-installation-access-tokens",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Frest%2Fauthentication%2Fendpoints-available-for-github-app-installation-access-tokens",
+      "pathname": "/en/rest/authentication/endpoints-available-for-github-app-installation-access-tokens",
+      "snapshot": "endpoints_github_app_installation.md"
+    },
+    "endpoints_github_app_user": {
+      "title": "Endpoints available for GitHub App user access tokens",
+      "url": "https://docs.github.com/en/rest/authentication/endpoints-available-for-github-app-user-access-tokens",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Frest%2Fauthentication%2Fendpoints-available-for-github-app-user-access-tokens",
+      "pathname": "/en/rest/authentication/endpoints-available-for-github-app-user-access-tokens",
+      "snapshot": "endpoints_github_app_user.md"
+    },
+    "github_app_installation_tokens": {
+      "title": "Generating an installation access token for a GitHub App",
+      "url": "https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Fapps%2Fcreating-github-apps%2Fauthenticating-with-a-github-app%2Fgenerating-an-installation-access-token-for-a-github-app",
+      "pathname": "/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app",
+      "snapshot": "github_app_installation_tokens.md"
+    },
+    "managing_personal_access_tokens": {
+      "title": "Managing your personal access tokens",
+      "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Fauthentication%2Fkeeping-your-account-and-data-secure%2Fmanaging-your-personal-access-tokens",
+      "pathname": "/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens",
+      "snapshot": "managing_personal_access_tokens.md"
+    },
+    "oauth_scopes": {
+      "title": "Scopes for OAuth apps",
+      "url": "https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Fapps%2Foauth-apps%2Fbuilding-oauth-apps%2Fscopes-for-oauth-apps",
+      "pathname": "/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps",
+      "snapshot": "oauth_scopes.md"
+    },
+    "permissions_fg_pat": {
+      "title": "Permissions required for fine-grained personal access tokens",
+      "url": "https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Frest%2Fauthentication%2Fpermissions-required-for-fine-grained-personal-access-tokens",
+      "pathname": "/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens",
+      "snapshot": "permissions_fg_pat.md"
+    },
+    "permissions_github_apps": {
+      "title": "Permissions required for GitHub Apps",
+      "url": "https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps",
+      "api_url": "https://docs.github.com/api/article/body?pathname=%2Fen%2Frest%2Fauthentication%2Fpermissions-required-for-github-apps",
+      "pathname": "/en/rest/authentication/permissions-required-for-github-apps",
+      "snapshot": "permissions_github_apps.md"
+    }
+  },
+  "captured_at": "2026-03-15T03:40:48Z",
+  "endpoint_prog_access": {
+    "page_count": 152,
+    "snapshot": "endpoint_prog_access.json"
+  }
+}

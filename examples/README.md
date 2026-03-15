@@ -6,37 +6,37 @@ in this package.
 Read these first if you have not created credentials yet:
 
 - [Authentication and OAuth](../guides/authentication-and-oauth.md)
+- [Auth Capability Matrix](../guides/auth-capability-matrix.md)
 - [GitHub App Authentication](../guides/github-app-authentication.md)
 
-## Fastest Path
+## Example Auth Table
 
-If you just want these examples to work, do not start with OAuth or a GitHub
-App.
+| Example | Endpoint | Minimal FG PAT requirement | Notes |
+|--------|--------|--------|--------|
+| `00_smoke.exs` | `GET /` and `GET /rate_limit` | none | no auth required for the smoke path |
+| `01_get_authenticated_user.exs` | `GET /user` | none | endpoint page says a fine-grained PAT needs no permissions |
+| `02_list_authenticated_repos.exs` | `GET /user/repos` | `Metadata: read` | choose your own user as resource owner for `/user` and `/user/repos` |
+| `03_list_repo_issues.exs` | `GET /repos/{owner}/{repo}/issues` | `Issues: read` | select the target repository on the token |
+| `04_list_pull_requests.exs` | `GET /repos/{owner}/{repo}/pulls` | `Pull requests: read` | select the target repository on the token |
+| `05_list_workflow_runs.exs` | `GET /repos/{owner}/{repo}/actions/runs` | `Actions: read` | select the target repository on the token |
 
-Start with a fine-grained PAT:
+## Fine-Grained PAT Quickstart
 
-1. Create a fine-grained personal access token.
-2. Limit it to the repos you will test against.
-3. Start with read access for `Contents`, `Issues`, `Pull requests`, and `Actions`.
-4. Add user `Profile` read permission if you want `01_get_authenticated_user.exs`.
-5. Export it as `GITHUB_TOKEN`.
+Create a fine-grained PAT for the bundled read-focused examples:
 
-Then run:
+1. Choose your current user as resource owner when you want `/user` and `/user/repos`.
+2. Choose only the selected repositories you will test.
+3. Add exactly these repository permissions:
+   - `Metadata: read`
+   - `Issues: read`
+   - `Pull requests: read`
+   - `Actions: read`
 
-```bash
-mix run examples/00_smoke.exs
-mix run examples/01_get_authenticated_user.exs
-mix run examples/03_list_repo_issues.exs
-```
+`Contents: read` is not required for the bundled examples.
 
-Rules:
-
-- no mocks
-- no fake transports
-- missing setup is a hard failure
-- API errors are hard failures
-
-Run examples from the repo root with `mix run`, or use [`run_all.sh`](./run_all.sh).
+If you want to try endpoints outside this read-focused surface, stop and read
+the [Auth Capability Matrix](../guides/auth-capability-matrix.md) before you
+assume the same token will work.
 
 ## Environment
 
@@ -47,21 +47,6 @@ export GITHUB_TOKEN="..."
 export GITHUB_EXAMPLE_OWNER="octocat"
 export GITHUB_EXAMPLE_REPO="Hello-World"
 export GITHUB_EXAMPLE_ISSUE_NUMBER="1"
-```
-
-Recommended token choice for `GITHUB_TOKEN`:
-
-- use a fine-grained personal access token unless you have a known reason not to
-- set repository access to only the repos you will test against
-- for the bundled examples, start with read access for `Contents`, `Issues`, `Pull requests`, and `Actions`
-- add user `Profile` read permission if you want `01_get_authenticated_user.exs`
-- prefer a short expiration; for local testing, this repo recommends something like `7` to `30` days instead of an indefinite token
-- only fall back to a classic PAT if the endpoint you need is not supported by fine-grained PATs or your org's policy/workflow requires it
-
-Suggested token naming convention for local development:
-
-```text
-github-ex local-dev <owner-or-org> <repo-or-scope> <yyyy-mm>
 ```
 
 Optional workflow example override:
@@ -79,12 +64,6 @@ export GITHUB_OAUTH_REDIRECT_URI="http://127.0.0.1:40071/callback"
 export GITHUB_OAUTH_AUTH_CODE="..."
 ```
 
-Use the OAuth path when you want GitHub to show a browser approval screen,
-redirect back to your callback URL, and let the SDK exchange that authorization
-code for a user token. See
-[Authentication and OAuth](../guides/authentication-and-oauth.md) for scope
-selection guidance.
-
 GitHub App example:
 
 ```bash
@@ -92,11 +71,6 @@ export GITHUB_APP_ID="..."
 export GITHUB_APP_PRIVATE_KEY_PATH="/path/to/private-key.pem"
 export GITHUB_APP_INSTALLATION_ID="..."
 ```
-
-Use the GitHub App path when you want repo- or org-scoped automation with
-short-lived tokens instead of a long-lived PAT. See
-[GitHub App Authentication](../guides/github-app-authentication.md) for the app
-permission checklist and an explanation of installation tokens.
 
 ## Running
 
@@ -117,6 +91,8 @@ Suites:
 ./examples/run_all.sh app
 ./examples/run_all.sh all
 ```
+
+Run examples from the repo root with `mix run`, or use [`run_all.sh`](./run_all.sh).
 
 ## Inventory
 

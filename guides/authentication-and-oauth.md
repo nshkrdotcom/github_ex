@@ -1,173 +1,148 @@
 # Authentication and OAuth
 
-GitHub REST calls are usually made with a bearer token, but the right way to
-obtain that token depends on what you are building.
-
 ## Start Here
 
-Choose auth mode like this:
+Use this guide when you need to decide which credential to create before you
+write code.
 
-- You are a human trying the SDK locally, running scripts, or building one-off tooling for yourself: use a fine-grained PAT first.
-- Your app needs GitHub to show a browser approval screen and then send a callback code back to your app: use an OAuth app.
-- You want installed automation for repos or orgs, with bot-style short-lived tokens instead of one user's long-lived token: use a GitHub App. See [GitHub App Authentication](github-app-authentication.md).
-- Classic personal access token is fallback only.
+- Use a fine-grained PAT if you want the current bundled examples and a narrow,
+  user-created local token.
+- Use a classic PAT if you want broad local exploration across many modules and
+  do not want to fight fine-grained PAT limitations first.
+- Use an OAuth app if you need a browser approval screen and callback code, or
+  if you need enterprise-object access that still fits OAuth better.
+- Use a GitHub App if you need installed repo or org automation with
+  short-lived bot credentials. Read [GitHub App Authentication](github-app-authentication.md).
 
-## Fastest Path For Local Development
+Before you guess, check the generated
+[Auth Capability Matrix](auth-capability-matrix.md).
 
-If your goal is "I want to call the API from this SDK today," do this:
+## Fastest Path For The Bundled Examples
 
-1. Create a fine-grained PAT.
-2. Set repository access to only the repos you will test against.
-3. Start with these permissions:
-   - `Contents: read`
-   - `Issues: read`
-   - `Pull requests: read`
-   - `Actions: read`
-4. Add user permission `Profile: read` if you want `GitHubEx.Users.get_authenticated/1`.
-5. Set a short expiration.
-6. Export it as `GITHUB_TOKEN`.
+Use this if you want the examples in `examples/` working today.
 
-Then use:
+Create a fine-grained PAT with:
+
+- resource owner: your current user account when you want `/user` and `/user/repos`
+- repository access: only the selected repos you will test
+- repository permissions: `Metadata: read`, `Issues: read`, `Pull requests: read`, `Actions: read`
+
+Important corrections for this repo:
+
+- `GET /user` currently requires no fine-grained PAT permissions
+- `GET /user/repos` needs `Metadata: read`
+- `Contents: read` is not required for the current bundled examples
+
+Then export the token:
+
+```bash
+export GITHUB_TOKEN="..."
+```
+
+And use it:
 
 ```elixir
 client = GitHubEx.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
 ```
 
-If that is enough for your use case, stop there. Do not move to OAuth or
-GitHub Apps unless you actually need those models.
+For the example-by-example mapping, read [Examples README](../examples/README.md).
 
-The same client shape works with all bearer token types:
+## Broad Local Exploration
 
-- a fine-grained personal access token
-- a classic personal access token
-- an OAuth access token
-- a GitHub App installation token
+Use this if you want to roam across the SDK instead of staying inside the
+bundled read-focused examples.
 
-## Personal Access Tokens
+Start with [Auth Capability Matrix](auth-capability-matrix.md). It tells you, per
+operation:
 
-### Which PAT should you create?
+- whether fine-grained PATs are supported
+- whether GitHub App installation and user tokens are supported
+- which fine-grained or GitHub App permission is required
+- whether the repo only has legacy classic-PAT or OAuth scope hints
+- whether GitHub's sources disagree
 
-Use a fine-grained PAT unless you have a known reason not to.
+Classic PAT is often the simpler choice when:
 
-That matches GitHub's current guidance:
+- you need to move across many modules quickly
+- you need multiple organizations at once
+- you need Packages or Checks access
+- you hit outside-collaborator or public-contribution patterns GitHub still
+  documents as fine-grained PAT gaps
+- you are working with enterprise-flavored surfaces and do not want to keep
+  re-cutting tokens during discovery
 
-- GitHub recommends fine-grained PATs over classic PATs for better restriction and control.
-- GitHub notes that some features and endpoints still require classic PATs.
-- Fine-grained PATs are also the tokens that organizations can require approval for.
+Do not use a classic PAT if a narrow fine-grained PAT already covers the
+specific endpoints you need. Classic PAT is broader and less safe.
 
-Use a classic PAT only if you hit one of the known fine-grained gaps, such as:
+## Fine-Grained PATs
 
-- an endpoint that GitHub documents as classic-only
-- enterprise account APIs
-- checks API access
-- packages access
-- access patterns that need multiple organizations at once
-- outside-collaborator or public-repo contribution scenarios that GitHub still documents as classic-only
+Use this if you want the narrowest user-created bearer token GitHub offers for
+most normal local SDK work.
 
-### How to create a good PAT for this SDK
+Do not use this if your real need is broad exploration across unsupported
+surfaces or if you already know you need a browser callback or installed app
+automation.
 
-Recommended local-development checklist for this repo:
+The fine-grained PAT UI is conditional. The permission list is not fixed.
 
-1. Create a fine-grained token under `Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens`.
-2. Put only the owner or organization you actually need in `Resource owner`.
-3. Grant access only to the repositories you will test against.
-4. Pick the shortest practical expiration. For local development, this repo recommends `7` to `30` days rather than an indefinite token. This is a repo recommendation, not a GitHub requirement.
-5. Name it so you can revoke it later without guessing. Recommended convention in this repo:
+- account permissions only appear when the current user is the resource owner
+- organization permissions only appear when the resource owner is an organization
+- repository permissions appear for both user-owned and organization-owned repositories
 
-```text
-github-ex local-dev <owner-or-org> <repo-or-scope> <yyyy-mm>
-```
+That is why the UI changes when you switch owners or repository scope.
 
-Examples:
+Organization-owned fine-grained PATs may also require approval. Until approved,
+GitHub can leave the token in a `pending` state where it only reads public
+resources.
 
-```text
-github-ex local-dev octocat hello-world 2026-03
-github-ex local-dev my-org workflow-read 2026-03
-```
+GitHub still documents real fine-grained PAT gaps, including:
 
-### Which permissions should a fine-grained PAT start with?
+- public repo contribution when you are not a member
+- outside-collaborator and repository-collaborator scenarios
+- access across multiple organizations
+- Packages
+- Checks API
+- Projects owned by a user account
 
-For the bundled example surface in this repo, start narrow:
+Use the matrix before assuming a fine-grained PAT is the universal answer.
 
-- User permission `Profile: read` if you want `GitHubEx.Users.get_authenticated/1`
-- Repository permission `Contents: read` for basic repo reads
-- Repository permission `Issues: read` for issue-list examples
-- Repository permission `Pull requests: read` for PR-list examples
-- Repository permission `Actions: read` for workflow run examples
+## Classic PATs
 
-If you only want to call public endpoints like `GitHubEx.Meta.root/1`, you can
-skip auth entirely.
+Use this if you need a broad local-development credential and you already know
+the narrower fine-grained PAT path will slow you down.
 
-If a call fails with `403`, do not immediately broaden everything. GitHub's REST
-docs expose the required permission tables for both fine-grained PATs and
-GitHub Apps, and GitHub also returns an `X-Accepted-GitHub-Permissions` header
-to help you narrow the missing permission.
+This is the simpler choice when:
 
-### PAT organization and SSO notes
+- you are testing across many modules quickly
+- you need endpoints GitHub still documents as fine-grained PAT gaps
+- you need one token that spans more than one organization
+- you need a practical local fallback before you design a narrower production credential
 
-- Fine-grained PATs may require organization approval, depending on org policy.
-- Classic PATs can be blocked by organization policy.
-- Classic PATs may also require a separate SSO authorization step for SAML SSO organizations.
-- Fine-grained PATs are authorized for org access during token creation.
+Do not use this if you can stay inside a smaller fine-grained PAT or GitHub App
+permission set. Classic PAT remains broader than necessary for many flows.
 
-## OAuth App Flow
+This repo treats classic PAT coverage as a lower-confidence signal. GitHub does
+not publish one structured classic-PAT support index for the full REST API, so
+the matrix stores classic coverage as `legacy_scope_hint` or `unknown`.
 
-Use OAuth when a human user needs to sign in to your app and grant your app the
-ability to act as that user.
+## OAuth Apps
 
-Plain-English version:
+Use this if:
 
-- GitHub shows the user an approval page in the browser.
-- GitHub redirects back to your callback URL with a code.
-- Your app exchanges that code for a user token.
+- your app needs GitHub to show a browser approval screen and redirect back
+  with an authorization code
+- you need enterprise-object access where GitHub still points you toward OAuth
 
-If you do not need that browser approval and callback-code flow, do not use
-OAuth here.
+Do not use this if you only need local scripts or installed bot automation.
 
-GitHub currently recommends considering a GitHub App instead of an OAuth app for
-new integrations when that model fits, because GitHub Apps use fine-grained
-permissions and short-lived tokens. OAuth apps still make sense when your main
-need is user sign-in plus user-attributed access.
+Typical OAuth flow:
 
-### Register the OAuth app
+1. Register an OAuth app in GitHub developer settings.
+2. Send the user to GitHub's authorization URL.
+3. Receive the callback with a code.
+4. Exchange the code for a user access token.
 
-Create it in GitHub at `Settings -> Developer settings -> OAuth apps`.
-
-You will need:
-
-- `Application name`: choose a user-visible name such as `github-ex local dev`
-- `Homepage URL`: your local or deployed app home page
-- `Authorization callback URL`: the exact redirect URI your app will receive the code on
-
-This SDK's examples expect:
-
-```text
-http://127.0.0.1:40071/callback
-```
-
-### Which OAuth scopes should you request?
-
-Start with the smallest scope set that matches your flow:
-
-- identity only: `read:user`
-- identity plus private email: `read:user`, `user:email`
-- public repository access only: `public_repo`
-- private repository access or repo-owned resources such as issues and pull requests: `repo`
-- commit status only: `repo:status`
-- deployments only: `repo_deployment`
-- repository webhooks: `write:repo_hook`
-- organization webhooks: `write:org_hook`
-
-Important tradeoff:
-
-- OAuth scopes limit the token.
-- They do not grant access the user does not already have.
-- OAuth scopes are broader than GitHub App permissions. For example, GitHub documents that OAuth apps need `repo` to work with issues, pull requests, or anything owned by the repository, while GitHub Apps can request narrower permissions.
-
-### Build the authorization URL
-
-`GitHubEx.OAuth` covers the standard authorization-code flow against
-`https://github.com/login/oauth/*`.
+`GitHubEx.OAuth` covers that flow:
 
 ```elixir
 {:ok, url} =
@@ -178,8 +153,6 @@ Important tradeoff:
     generate_state: true
   )
 ```
-
-### Exchange the code
 
 ```elixir
 client = GitHubEx.Client.new()
@@ -194,52 +167,22 @@ client = GitHubEx.Client.new()
   )
 ```
 
-Use the returned access token as a normal bearer token:
+GitHub App permissions are usually finer-grained than OAuth scopes. Use OAuth
+because the flow or enterprise surface needs it, not because it is the default.
 
-```elixir
-client = GitHubEx.Client.new(auth: token.access_token)
-```
+## OAuth Application Token Endpoints
 
-## Saved OAuth Token Files
+These five endpoints are special:
 
-Use the included task for a terminal-friendly onboarding path:
+- `DELETE /applications/{client_id}/grant`
+- `POST /applications/{client_id}/token`
+- `DELETE /applications/{client_id}/token`
+- `PATCH /applications/{client_id}/token`
+- `POST /applications/{client_id}/token/scoped`
 
-```bash
-export GITHUB_OAUTH_CLIENT_ID="..."
-export GITHUB_OAUTH_CLIENT_SECRET="..."
-export GITHUB_OAUTH_REDIRECT_URI="http://127.0.0.1:40071/callback"
-
-mix github.oauth --save --manual --no-browser
-```
-
-That writes a token file to:
-
-```bash
-~/.config/github_ex/oauth/github.json
-```
-
-or the XDG-equivalent path when `XDG_CONFIG_HOME` is set.
-
-Use that saved token in normal API calls:
-
-```elixir
-client =
-  GitHubEx.Client.new(
-    oauth2: [
-      token_source:
-        {Pristine.Adapters.TokenSource.File,
-         path: GitHubEx.OAuthTokenFile.default_path()}
-    ]
-  )
-```
-
-## Application Token Endpoints
-
-GitHub exposes OAuth application token inspection and revocation endpoints under
-`/applications/{client_id}/token*`.
-
-Those do not use normal bearer auth. They require request-scoped client
-credentials:
+They do not use normal bearer-token auth. They use OAuth application client
+credentials. `GitHubEx` converts the request-scoped client credentials into
+Basic auth automatically for these endpoints.
 
 ```elixir
 GitHubEx.Apps.check_token(client, %{
@@ -249,12 +192,14 @@ GitHubEx.Apps.check_token(client, %{
 })
 ```
 
-`GitHubEx` strips `client_secret` from the request body and converts it into
-Basic auth automatically for those endpoints.
+## Where To Look Up Exact Permissions
 
-## Current GitHub Docs Backing This Guide
+Use one of these, in order:
 
-- Fine-grained vs classic PATs: https://docs.github.com/en/enterprise-cloud@latest/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
-- Fine-grained PAT permissions: https://docs.github.com/en/rest/authentication/permissions-required-for-fine-grained-personal-access-tokens
-- OAuth scopes: https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
-- GitHub Apps vs OAuth apps: https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/differences-between-github-apps-and-oauth-apps
+- [Auth Capability Matrix](auth-capability-matrix.md) for the generated repo-level answer
+- `mix github.auth.lookup GET /user/repos`
+- `mix github.auth.lookup repos/list-for-authenticated-user`
+- the endpoint docs URL stored in `priv/generated/auth_manifest.json`
+- GitHub's `X-Accepted-GitHub-Permissions` response header when a request fails
+
+For the current example suite, read [Examples README](../examples/README.md).

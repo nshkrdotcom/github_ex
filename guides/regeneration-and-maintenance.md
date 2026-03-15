@@ -1,52 +1,72 @@
 # Regeneration and Maintenance
 
-`github_ex` is generated from the pinned official GitHub REST OpenAPI
-description committed in this repo.
+`github_ex` is generated from pinned upstream inputs committed in this repo.
 
-## Upstream Source
+## Pinned Inputs
 
-- Spec repository: `github/rest-api-description`
-- Pinned file: `priv/upstream/openapi/api.github.com.2026-03-10.json`
-- Supported versions check: `https://api.github.com/versions`
+- OpenAPI source: `priv/upstream/openapi/api.github.com.2026-03-10.json`
+- Codegen spec: `priv/upstream/openapi/api.github.com.2026-03-10.codegen.json`
+- GitHub Docs auth snapshots: `priv/upstream/github_docs_auth/`
 
-## Refresh the Spec
+The auth matrix depends on both the pinned OpenAPI file and the committed
+GitHub Docs auth snapshots.
+
+## Refresh the OpenAPI Spec
 
 ```bash
 mix github.refresh
 ```
 
-That downloads the pinned upstream JSON into `priv/upstream/openapi/` and then
-regenerates the SDK surface.
-
-To refresh the committed file without regenerating immediately:
+To refresh the committed OpenAPI files without regenerating immediately:
 
 ```bash
 mix github.refresh --no-generate
 ```
 
-## Regenerate the SDK
+## Refresh the GitHub Docs Auth Snapshots
+
+```bash
+mix github.auth.refresh
+```
+
+To refresh the snapshots without regenerating immediately:
+
+```bash
+mix github.auth.refresh --no-generate
+```
+
+This updates:
+
+- the nine committed GitHub Docs markdown snapshots
+- `priv/upstream/github_docs_auth/endpoint_prog_access.json`
+- `priv/upstream/github_docs_auth/metadata.json`
+
+## Regenerate the SDK And Auth Matrix
 
 ```bash
 mix github.generate
 ```
 
-Generated code lands in:
+Generated outputs land in:
 
 - `lib/github_ex/generated`
 - `priv/generated/manifest.json`
 - `priv/generated/docs_manifest.json`
+- `priv/generated/auth_manifest.json`
 - `priv/generated/open_api_state.snapshot.term`
+- `guides/auth-capability-matrix.md`
 
 ## Verification
 
 ```bash
+mix github.generate
 mix format
 mix compile --warnings-as-errors
 mix test
-mix dialyzer
 mix credo --strict
+mix dialyzer
 mix docs
 ```
 
-The goal is to keep the committed spec, generated source, docs, and test suite
-moving together as one contract.
+When the pinned OpenAPI spec changes or the GitHub Docs auth snapshots change,
+regenerate the auth manifest and rerun the full verification loop.

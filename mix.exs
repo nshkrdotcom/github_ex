@@ -136,6 +136,7 @@ defmodule GitHubEx.MixProject do
       "guides/getting-started.md",
       "guides/client-configuration.md",
       "guides/authentication-and-oauth.md",
+      "guides/auth-capability-matrix.md",
       "guides/github-app-authentication.md",
       "guides/pagination-and-rate-limits.md",
       "guides/common-workflows.md",
@@ -158,6 +159,7 @@ defmodule GitHubEx.MixProject do
       {"Authentication",
        [
          "guides/authentication-and-oauth.md",
+         "guides/auth-capability-matrix.md",
          "guides/github-app-authentication.md"
        ]},
       {"Usage",
@@ -179,6 +181,7 @@ defmodule GitHubEx.MixProject do
          GitHubEx,
          GitHubEx.AppAuth,
          GitHubEx.Auth,
+         GitHubEx.AuthMatrix,
          GitHubEx.Client,
          GitHubEx.Error,
          GitHubEx.OAuth,
@@ -193,6 +196,8 @@ defmodule GitHubEx.MixProject do
          GitHubEx.Codegen,
          GitHubEx.Codegen.Renderer,
          GitHubEx.Refresh,
+         Mix.Tasks.Github.Auth.Lookup,
+         Mix.Tasks.Github.Auth.Refresh,
          Mix.Tasks.Github.Generate,
          Mix.Tasks.Github.Oauth,
          Mix.Tasks.Github.Refresh

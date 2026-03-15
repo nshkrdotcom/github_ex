@@ -2,17 +2,17 @@
 
 `GitHubEx` is a generated, runtime-thin SDK for the GitHub REST API.
 
-Before you create credentials, read:
+## Auth Preflight
 
-- [Authentication and OAuth](authentication-and-oauth.md)
-- [GitHub App Authentication](github-app-authentication.md)
+Before you create credentials, choose your path:
 
-The public entry points are:
-
-- `GitHubEx.Client.new/1`
-- generated endpoint modules such as `GitHubEx.Users`, `GitHubEx.Repos`, `GitHubEx.Issues`, `GitHubEx.Pulls`, and `GitHubEx.Actions`
-- `GitHubEx.Client.request/2` for raw requests
-- `GitHubEx.Response` and `GitHubEx.Pagination` when you need header-aware flows
+- Bundled examples: use the exact fine-grained PAT recipe in
+  [Authentication and OAuth](authentication-and-oauth.md) and the per-example
+  table in [Examples README](../examples/README.md).
+- Broad local exploration: start with
+  [Auth Capability Matrix](auth-capability-matrix.md) before you assume one
+  token type covers the SDK surface you want.
+- Installed automation: read [GitHub App Authentication](github-app-authentication.md).
 
 ## Install
 
@@ -30,7 +30,7 @@ mix deps.get
 
 ## Create a Client
 
-With a token:
+With a bearer token:
 
 ```elixir
 client = GitHubEx.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))

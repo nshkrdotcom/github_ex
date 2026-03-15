@@ -5,6 +5,7 @@ defmodule GitHubEx.Codegen do
 
   @profile :github_ex
   @default_spec_filename "api.github.com.2026-03-10.codegen.json"
+  @default_full_spec_filename "api.github.com.2026-03-10.json"
 
   @spec profile() :: atom()
   def profile, do: @profile
@@ -25,6 +26,12 @@ defmodule GitHubEx.Codegen do
       generated_dir:
         Keyword.get(opts, :generated_dir, Path.join(project_root, "lib/github_ex/generated")),
       project_root: project_root,
+      full_spec_path:
+        Keyword.get(
+          opts,
+          :full_spec_path,
+          Path.join(upstream_dir, Path.join("openapi", @default_full_spec_filename))
+        ),
       spec_dir: Keyword.get(opts, :spec_dir, Path.join(upstream_dir, "openapi")),
       spec_path:
         Keyword.get(
@@ -41,14 +48,22 @@ defmodule GitHubEx.Codegen do
     paths = paths(opts)
     prepare_dirs!(paths)
     ensure_spec!(paths.spec_path)
+    ensure_spec!(paths.full_spec_path)
 
-    state =
+    codegen_spec =
       paths.spec_path
       |> File.read!()
       |> Jason.decode!()
-      |> build_state(paths)
+
+    full_spec =
+      paths.full_spec_path
+      |> File.read!()
+      |> Jason.decode!()
+
+    state = build_state(codegen_spec, paths)
 
     persist_artifacts!(state, paths)
+    GitHubEx.AuthManifest.generate!(full_spec, state.operations, project_root: paths.project_root)
     state
   end
 
