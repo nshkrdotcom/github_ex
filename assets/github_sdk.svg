@@ -1,0 +1,265 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Hexagon fill gradient -->
+    <linearGradient id="hexFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2C2C2C"/>
+      <stop offset="45%" stop-color="#1A1A1A"/>
+      <stop offset="100%" stop-color="#0D1117"/>
+    </linearGradient>
+
+    <!-- Hex border gradient -->
+    <linearGradient id="hexBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#606060"/>
+      <stop offset="50%" stop-color="#3A3A3A"/>
+      <stop offset="100%" stop-color="#606060"/>
+    </linearGradient>
+
+    <!-- Specular highlight on hex -->
+    <radialGradient id="specular" cx="40%" cy="25%" r="60%" fx="40%" fy="25%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+      <stop offset="40%" stop-color="rgba(255,255,255,0.03)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </radialGradient>
+
+    <!-- GitHub green accent gradient -->
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3FB950"/>
+      <stop offset="100%" stop-color="#238636"/>
+    </linearGradient>
+
+    <!-- Branch line gradient -->
+    <linearGradient id="branchGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#58A6FF"/>
+      <stop offset="100%" stop-color="#1F6FEB"/>
+    </linearGradient>
+
+    <!-- Merge node gradient -->
+    <linearGradient id="mergeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BC8CFF"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+
+    <!-- API code block gradient -->
+    <linearGradient id="codeBlock" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#21262D"/>
+      <stop offset="100%" stop-color="#161B22"/>
+    </linearGradient>
+
+    <!-- Octocat fill gradient -->
+    <radialGradient id="octoFill" cx="50%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E6EDF3"/>
+    </radialGradient>
+
+    <!-- Drop shadow for hex -->
+    <filter id="hexShadow" x="-12%" y="-8%" width="124%" height="124%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+      <feOffset dx="0" dy="3" result="shifted"/>
+      <feFlood flood-color="#000000" flood-opacity="0.45" result="color"/>
+      <feComposite in="color" in2="shifted" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Drop shadow for inner icon -->
+    <filter id="iconShadow" x="-20%" y="-15%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
+      <feOffset dx="0.5" dy="1.5" result="shifted"/>
+      <feFlood flood-color="#000000" flood-opacity="0.35" result="color"/>
+      <feComposite in="color" in2="shifted" operator="in" result="shadow"/>
+      <feMerge>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Emboss/bevel for hex surface -->
+    <filter id="bevel" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur"/>
+      <feSpecularLighting in="blur" surfaceScale="3" specularConstant="0.4" specularExponent="20" lighting-color="#ffffff" result="spec">
+        <fePointLight x="80" y="40" z="180"/>
+      </feSpecularLighting>
+      <feComposite in="spec" in2="SourceAlpha" operator="in" result="specIn"/>
+      <feComposite in="SourceGraphic" in2="specIn" operator="arithmetic" k1="0" k2="1" k3="0.6" k4="0"/>
+    </filter>
+
+    <!-- Glow for accent elements -->
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Clip to hexagon -->
+    <clipPath id="hexClip">
+      <polygon points="100,4 183.14,52 183.14,148 100,196 16.86,148 16.86,52"/>
+    </clipPath>
+
+    <!-- Subtle noise texture -->
+    <filter id="noise" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blended"/>
+      <feComponentTransfer in="blended">
+        <feFuncA type="linear" slope="1"/>
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <!-- === HEXAGON CONTAINER === -->
+
+  <!-- Main hexagon with shadow -->
+  <polygon
+    points="100,4 183.14,52 183.14,148 100,196 16.86,148 16.86,52"
+    fill="url(#hexFill)"
+    stroke="url(#hexBorder)"
+    stroke-width="1.5"
+    stroke-linejoin="round"
+    filter="url(#hexShadow)"/>
+
+  <!-- Bevel/emboss layer -->
+  <polygon
+    points="100,4 183.14,52 183.14,148 100,196 16.86,148 16.86,52"
+    fill="url(#hexFill)"
+    clip-path="url(#hexClip)"
+    filter="url(#bevel)"
+    opacity="0.5"/>
+
+  <!-- Specular highlight -->
+  <polygon
+    points="100,4 183.14,52 183.14,148 100,196 16.86,148 16.86,52"
+    fill="url(#specular)"
+    clip-path="url(#hexClip)"/>
+
+  <!-- Inner border line -->
+  <polygon
+    points="100,13 176,57 176,143 100,187 24,143 24,57"
+    fill="none"
+    stroke="rgba(255,255,255,0.05)"
+    stroke-width="0.75"
+    stroke-linejoin="round"/>
+
+  <!-- Second inner border for depth -->
+  <polygon
+    points="100,16 174,59 174,141 100,184 26,141 26,59"
+    fill="none"
+    stroke="rgba(0,0,0,0.3)"
+    stroke-width="0.5"
+    stroke-linejoin="round"/>
+
+  <!-- === OFFICIAL GITHUB INVERTOCAT MARK === -->
+  <!-- Original path is 16x16; scaled 3.2× and centered at (100, 75) -->
+  <g filter="url(#iconShadow)" transform="translate(74.4, 49.4) scale(3.2)">
+    <path
+      fill="url(#octoFill)"
+      fill-rule="evenodd"
+      d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+         0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+         -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+         .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+         -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0
+         1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56
+         .82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07
+         -.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+  </g>
+
+  <!-- === CODE / API ELEMENTS === -->
+  <g transform="translate(100, 82)">
+
+    <!-- Terminal code block -->
+    <rect x="-28" y="24" width="56" height="38" rx="4" ry="4"
+          fill="url(#codeBlock)"
+          stroke="#30363D" stroke-width="0.8"
+          filter="url(#iconShadow)"/>
+
+    <!-- Terminal title bar -->
+    <rect x="-28" y="24" width="56" height="7" rx="4" ry="4" fill="#30363D"/>
+    <rect x="-28" y="28" width="56" height="3" fill="#30363D"/>
+
+    <!-- Traffic light dots -->
+    <circle cx="-22" cy="28" r="1.5" fill="#F85149" opacity="0.9"/>
+    <circle cx="-17" cy="28" r="1.5" fill="#E3B341" opacity="0.9"/>
+    <circle cx="-12" cy="28" r="1.5" fill="#3FB950" opacity="0.9"/>
+
+    <!-- Syntax-highlighted code lines -->
+    <g opacity="0.95">
+      <!-- Line 1: def keyword + function -->
+      <rect x="-22" y="35" width="8" height="2" rx="0.5" fill="#FF7B72"/>
+      <rect x="-12" y="35" width="16" height="2" rx="0.5" fill="#D2A8FF"/>
+
+      <!-- Line 2: pipe + module -->
+      <rect x="-18" y="39" width="4" height="2" rx="0.5" fill="#79C0FF"/>
+      <rect x="-12" y="39" width="20" height="2" rx="0.5" fill="#C9D1D9"/>
+
+      <!-- Line 3: |> pipeline -->
+      <rect x="-18" y="43" width="4" height="2" rx="0.5" fill="#79C0FF"/>
+      <rect x="-12" y="43" width="14" height="2" rx="0.5" fill="#7EE787"/>
+
+      <!-- Line 4: return -->
+      <rect x="-18" y="47" width="6" height="2" rx="0.5" fill="#FF7B72"/>
+      <rect x="-10" y="47" width="10" height="2" rx="0.5" fill="#FFA657"/>
+
+      <!-- Line 5: end -->
+      <rect x="-22" y="51" width="6" height="2" rx="0.5" fill="#FF7B72"/>
+    </g>
+
+    <!-- Cursor blink -->
+    <rect x="6" y="51" width="1.5" height="2.5" rx="0.3" fill="#58A6FF" opacity="0.8"/>
+
+    <!-- Git branch decoration (left side) -->
+    <g transform="translate(-36, 38)" filter="url(#glow)">
+      <!-- Main branch line -->
+      <line x1="0" y1="0" x2="0" y2="24" stroke="url(#branchGrad)" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Branch fork -->
+      <path d="M 0,8 Q 4,8 6,12" fill="none" stroke="url(#mergeGrad)" stroke-width="1.4" stroke-linecap="round"/>
+      <line x1="6" y1="12" x2="6" y2="20" stroke="url(#mergeGrad)" stroke-width="1.4" stroke-linecap="round"/>
+      <!-- Commit dots -->
+      <circle cx="0" cy="0" r="2.2" fill="#161B22" stroke="#58A6FF" stroke-width="1"/>
+      <circle cx="0" cy="12" r="2.2" fill="#161B22" stroke="#58A6FF" stroke-width="1"/>
+      <circle cx="6" cy="12" r="2.0" fill="#161B22" stroke="#BC8CFF" stroke-width="1"/>
+      <circle cx="6" cy="20" r="2.0" fill="#161B22" stroke="#BC8CFF" stroke-width="1"/>
+      <!-- Merge point -->
+      <path d="M 6,20 Q 4,22 0,24" fill="none" stroke="url(#mergeGrad)" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="0" cy="24" r="2.2" fill="url(#accent)" stroke="#238636" stroke-width="0.6"/>
+    </g>
+
+    <!-- PR merge badge (right side) -->
+    <g transform="translate(32, 36)">
+      <rect x="0" y="0" width="14" height="14" rx="3" fill="url(#accent)" opacity="0.9"/>
+      <!-- Merge icon -->
+      <circle cx="5" cy="4" r="1.5" fill="none" stroke="#FFFFFF" stroke-width="0.8"/>
+      <line x1="5" y1="5.5" x2="5" y2="10" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round"/>
+      <circle cx="9" cy="7" r="1.5" fill="none" stroke="#FFFFFF" stroke-width="0.8"/>
+      <path d="M 5,7 L 7.5,7" fill="none" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round"/>
+      <circle cx="5" cy="10" r="1.5" fill="none" stroke="#FFFFFF" stroke-width="0.8"/>
+    </g>
+
+    <!-- Contribution graph dots -->
+    <g transform="translate(32, 52)" opacity="0.85">
+      <rect x="0" y="0" width="2.5" height="2.5" rx="0.5" fill="#0E4429"/>
+      <rect x="3.5" y="0" width="2.5" height="2.5" rx="0.5" fill="#006D32"/>
+      <rect x="7" y="0" width="2.5" height="2.5" rx="0.5" fill="#26A641"/>
+      <rect x="10.5" y="0" width="2.5" height="2.5" rx="0.5" fill="#39D353"/>
+      <rect x="0" y="3.5" width="2.5" height="2.5" rx="0.5" fill="#26A641"/>
+      <rect x="3.5" y="3.5" width="2.5" height="2.5" rx="0.5" fill="#39D353"/>
+      <rect x="7" y="3.5" width="2.5" height="2.5" rx="0.5" fill="#006D32"/>
+      <rect x="10.5" y="3.5" width="2.5" height="2.5" rx="0.5" fill="#26A641"/>
+    </g>
+  </g>
+
+  <!-- Subtle connecting dots pattern -->
+  <g opacity="0.08" clip-path="url(#hexClip)">
+    <circle cx="35" cy="45" r="1"/>
+    <circle cx="55" cy="35" r="0.8"/>
+    <circle cx="145" cy="40" r="0.8"/>
+    <circle cx="165" cy="55" r="1"/>
+    <circle cx="40" cy="165" r="0.8"/>
+    <circle cx="160" cy="160" r="0.8"/>
+    <line x1="35" y1="45" x2="55" y2="35" stroke="white" stroke-width="0.4"/>
+    <line x1="145" y1="40" x2="165" y2="55" stroke="white" stroke-width="0.4"/>
+  </g>
+</svg>
