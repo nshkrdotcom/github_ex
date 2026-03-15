@@ -2,6 +2,11 @@
 
 `GitHubSDK` is a generated, runtime-thin SDK for the GitHub REST API.
 
+Before you create credentials, read:
+
+- [Authentication and OAuth](authentication-and-oauth.md)
+- [GitHub App Authentication](github-app-authentication.md)
+
 The public entry points are:
 
 - `GitHubSDK.Client.new/1`

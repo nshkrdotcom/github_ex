@@ -14,6 +14,14 @@
 Native Elixir SDK for the GitHub REST API, generated from the pinned official
 GitHub OpenAPI description and executed through the shared `pristine` runtime.
 
+## Authentication Start Here
+
+Read this before creating any credentials:
+
+- [Authentication and OAuth](guides/authentication-and-oauth.md): which auth mode to choose, whether to create a fine-grained or classic PAT, recommended OAuth scopes, expiration guidance, and what to put in the token name
+- [GitHub App Authentication](guides/github-app-authentication.md): what an installation token is, when to use a GitHub App, which permissions to grant, and how to obtain `GITHUB_APP_ID`, `GITHUB_APP_INSTALLATION_ID`, and a private key PEM
+- [Live Examples README](examples/README.md): the exact environment variables used by the example suite, plus auth-specific setup notes
+
 `GitHubSDK` is intentionally thin:
 
 - generated endpoint modules stay close to the upstream REST payloads
@@ -90,6 +98,7 @@ The user-friendly onboarding docs live in:
 
 - [Authentication and OAuth](guides/authentication-and-oauth.md)
 - [GitHub App Authentication](guides/github-app-authentication.md)
+- [Live Examples README](examples/README.md)
 
 ## Docs Map
 
