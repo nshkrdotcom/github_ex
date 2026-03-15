@@ -18,9 +18,10 @@ GitHub OpenAPI description and executed through the shared `pristine` runtime.
 
 Read this before creating any credentials:
 
-- [Authentication and OAuth](guides/authentication-and-oauth.md): which auth mode to choose, whether to create a fine-grained or classic PAT, recommended OAuth scopes, expiration guidance, and what to put in the token name
-- [GitHub App Authentication](guides/github-app-authentication.md): what an installation token is, when to use a GitHub App, which permissions to grant, and how to obtain `GITHUB_APP_ID`, `GITHUB_APP_INSTALLATION_ID`, and a private key PEM
-- [Live Examples README](examples/README.md): the exact environment variables used by the example suite, plus auth-specific setup notes
+- If you just want to try the SDK locally today: start with a fine-grained PAT. Read [Authentication and OAuth](guides/authentication-and-oauth.md).
+- If your app needs GitHub to show an approval screen in the browser and send a callback code back to your app: use an OAuth app. Read [Authentication and OAuth](guides/authentication-and-oauth.md).
+- If you want repo/org automation installed onto repositories with short-lived bot tokens: use a GitHub App. Read [GitHub App Authentication](guides/github-app-authentication.md).
+- If you want the exact environment variables used by the live examples: read [Live Examples README](examples/README.md).
 
 `GitHubEx` is intentionally thin:
 

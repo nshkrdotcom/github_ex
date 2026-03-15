@@ -7,18 +7,36 @@ obtain that token depends on what you are building.
 
 Choose auth mode like this:
 
-- Personal use, local development, one human user: use a fine-grained personal access token first.
-- User login flow for your own application: use an OAuth app.
-- Automation, bots, org/repo installation model, or multi-tenant integrations: use a GitHub App instead of OAuth or PATs. See [GitHub App Authentication](github-app-authentication.md).
-- Classic personal access token: use only as a fallback when fine-grained PATs cannot cover the endpoints or access pattern you need.
+- You are a human trying the SDK locally, running scripts, or building one-off tooling for yourself: use a fine-grained PAT first.
+- Your app needs GitHub to show a browser approval screen and then send a callback code back to your app: use an OAuth app.
+- You want installed automation for repos or orgs, with bot-style short-lived tokens instead of one user's long-lived token: use a GitHub App. See [GitHub App Authentication](github-app-authentication.md).
+- Classic personal access token is fallback only.
 
-For normal bearer-token calls, the SDK entry point stays the same:
+## Fastest Path For Local Development
+
+If your goal is "I want to call the API from this SDK today," do this:
+
+1. Create a fine-grained PAT.
+2. Set repository access to only the repos you will test against.
+3. Start with these permissions:
+   - `Contents: read`
+   - `Issues: read`
+   - `Pull requests: read`
+   - `Actions: read`
+4. Add user permission `Profile: read` if you want `GitHubEx.Users.get_authenticated/1`.
+5. Set a short expiration.
+6. Export it as `GITHUB_TOKEN`.
+
+Then use:
 
 ```elixir
 client = GitHubEx.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
 ```
 
-That bearer token can be:
+If that is enough for your use case, stop there. Do not move to OAuth or
+GitHub Apps unless you actually need those models.
+
+The same client shape works with all bearer token types:
 
 - a fine-grained personal access token
 - a classic personal access token
@@ -96,6 +114,15 @@ to help you narrow the missing permission.
 
 Use OAuth when a human user needs to sign in to your app and grant your app the
 ability to act as that user.
+
+Plain-English version:
+
+- GitHub shows the user an approval page in the browser.
+- GitHub redirects back to your callback URL with a code.
+- Your app exchanges that code for a user token.
+
+If you do not need that browser approval and callback-code flow, do not use
+OAuth here.
 
 GitHub currently recommends considering a GitHub App instead of an OAuth app for
 new integrations when that model fits, because GitHub Apps use fine-grained

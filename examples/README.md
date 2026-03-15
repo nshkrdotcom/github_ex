@@ -8,6 +8,27 @@ Read these first if you have not created credentials yet:
 - [Authentication and OAuth](../guides/authentication-and-oauth.md)
 - [GitHub App Authentication](../guides/github-app-authentication.md)
 
+## Fastest Path
+
+If you just want these examples to work, do not start with OAuth or a GitHub
+App.
+
+Start with a fine-grained PAT:
+
+1. Create a fine-grained personal access token.
+2. Limit it to the repos you will test against.
+3. Start with read access for `Contents`, `Issues`, `Pull requests`, and `Actions`.
+4. Add user `Profile` read permission if you want `01_get_authenticated_user.exs`.
+5. Export it as `GITHUB_TOKEN`.
+
+Then run:
+
+```bash
+mix run examples/00_smoke.exs
+mix run examples/01_get_authenticated_user.exs
+mix run examples/03_list_repo_issues.exs
+```
+
 Rules:
 
 - no mocks
@@ -58,8 +79,9 @@ export GITHUB_OAUTH_REDIRECT_URI="http://127.0.0.1:40071/callback"
 export GITHUB_OAUTH_AUTH_CODE="..."
 ```
 
-Use the OAuth path when you are testing a user login flow and want the SDK to
-exchange an authorization code for a user token. See
+Use the OAuth path when you want GitHub to show a browser approval screen,
+redirect back to your callback URL, and let the SDK exchange that authorization
+code for a user token. See
 [Authentication and OAuth](../guides/authentication-and-oauth.md) for scope
 selection guidance.
 

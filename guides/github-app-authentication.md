@@ -7,6 +7,9 @@ GitHub Apps have two distinct auth modes:
 
 `GitHubEx.AppAuth` covers both.
 
+If you are just trying the SDK locally as one human user, do not start here.
+Start with a fine-grained PAT in [Authentication and OAuth](authentication-and-oauth.md).
+
 ## When to choose a GitHub App
 
 Choose a GitHub App when you want:
