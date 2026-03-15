@@ -1,6 +1,6 @@
 Code.require_file("support/live_example.exs", __DIR__)
 
-alias GitHubSDK.Examples.Live
+alias GitHubEx.Examples.Live
 
 client =
   if System.get_env("GITHUB_TOKEN") do
@@ -11,11 +11,11 @@ client =
 
 Live.banner!("List pull requests")
 
-GitHubSDK.Pulls.list(client, %{
+GitHubEx.Pulls.list(client, %{
   "owner" => Live.owner!(),
   "repo" => Live.repo!(),
   "per_page" => 25,
   "state" => "open"
 })
-|> Live.ok!("GitHubSDK.Pulls.list/2")
+|> Live.ok!("GitHubEx.Pulls.list/2")
 |> Live.print_json!()

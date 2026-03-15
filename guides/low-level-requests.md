@@ -11,7 +11,7 @@ is the clearest option:
 
 ```elixir
 {:ok, response} =
-  GitHubSDK.Client.request(client, %{
+  GitHubEx.Client.request(client, %{
     method: :get,
     path: "/repos/{owner}/{repo}",
     path_params: %{"owner" => "octocat", "repo" => "Hello-World"},
@@ -36,7 +36,7 @@ For public requests where you explicitly do not want the client default token
 attached:
 
 ```elixir
-GitHubSDK.Client.request(client, %{
+GitHubEx.Client.request(client, %{
   method: :get,
   path: "/meta",
   use_default_auth: false

@@ -1,6 +1,6 @@
 # Regeneration and Maintenance
 
-`github_sdk` is generated from the pinned official GitHub REST OpenAPI
+`github_ex` is generated from the pinned official GitHub REST OpenAPI
 description committed in this repo.
 
 ## Upstream Source
@@ -32,7 +32,7 @@ mix github.generate
 
 Generated code lands in:
 
-- `lib/github_sdk/generated`
+- `lib/github_ex/generated`
 - `priv/generated/manifest.json`
 - `priv/generated/docs_manifest.json`
 - `priv/generated/open_api_state.snapshot.term`

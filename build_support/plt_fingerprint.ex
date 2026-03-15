@@ -1,11 +1,11 @@
-defmodule GitHubSDK.Build.PltFingerprint do
+defmodule GitHubEx.Build.PltFingerprint do
   @moduledoc false
 
   @project_patterns [
     "mix.exs",
     "lib/**/*.{ex,exs,erl,hrl}",
     "codegen/**/*.{ex,exs,erl,hrl}",
-    "lib/github_sdk/generated/**/*.{ex,exs,erl,hrl}",
+    "lib/github_ex/generated/**/*.{ex,exs,erl,hrl}",
     "priv/generated/**/*"
   ]
   @dependency_patterns [

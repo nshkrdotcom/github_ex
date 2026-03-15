@@ -1,6 +1,6 @@
 # Getting Started
 
-`GitHubSDK` is a generated, runtime-thin SDK for the GitHub REST API.
+`GitHubEx` is a generated, runtime-thin SDK for the GitHub REST API.
 
 Before you create credentials, read:
 
@@ -9,10 +9,10 @@ Before you create credentials, read:
 
 The public entry points are:
 
-- `GitHubSDK.Client.new/1`
-- generated endpoint modules such as `GitHubSDK.Users`, `GitHubSDK.Repos`, `GitHubSDK.Issues`, `GitHubSDK.Pulls`, and `GitHubSDK.Actions`
-- `GitHubSDK.Client.request/2` for raw requests
-- `GitHubSDK.Response` and `GitHubSDK.Pagination` when you need header-aware flows
+- `GitHubEx.Client.new/1`
+- generated endpoint modules such as `GitHubEx.Users`, `GitHubEx.Repos`, `GitHubEx.Issues`, `GitHubEx.Pulls`, and `GitHubEx.Actions`
+- `GitHubEx.Client.request/2` for raw requests
+- `GitHubEx.Response` and `GitHubEx.Pagination` when you need header-aware flows
 
 ## Install
 
@@ -33,13 +33,13 @@ mix deps.get
 With a token:
 
 ```elixir
-client = GitHubSDK.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
+client = GitHubEx.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
 ```
 
 Without auth for public endpoints:
 
 ```elixir
-client = GitHubSDK.Client.new()
+client = GitHubEx.Client.new()
 ```
 
 Defaults:
@@ -54,14 +54,14 @@ Defaults:
 Authenticated user:
 
 ```elixir
-{:ok, me} = GitHubSDK.Users.get_authenticated(client)
+{:ok, me} = GitHubEx.Users.get_authenticated(client)
 ```
 
 Repository issues:
 
 ```elixir
 {:ok, issues} =
-  GitHubSDK.Issues.list_for_repo(client, %{
+  GitHubEx.Issues.list_for_repo(client, %{
     "owner" => "octocat",
     "repo" => "Hello-World",
     "state" => "open"
@@ -72,7 +72,7 @@ Pull requests:
 
 ```elixir
 {:ok, pulls} =
-  GitHubSDK.Pulls.list(client, %{
+  GitHubEx.Pulls.list(client, %{
     "owner" => "octocat",
     "repo" => "Hello-World"
   })
@@ -86,7 +86,7 @@ headers, ask for a wrapped response:
 
 ```elixir
 {:ok, response} =
-  GitHubSDK.Client.request(client, %{
+  GitHubEx.Client.request(client, %{
     method: :get,
     path: "/user",
     opts: [response: :wrapped]

@@ -45,8 +45,8 @@ defmodule Mix.Tasks.Github.OAuthTaskTest do
     Mix.shell(Mix.Shell.Process)
     Mix.Task.reenable("github.oauth")
     Process.put(:github_oauth_task_test_pid, self())
-    Application.put_env(:github_sdk, :oauth_interactive_module, FakeInteractive)
-    Application.put_env(:github_sdk, :oauth2_module, FakeOAuth2)
+    Application.put_env(:github_ex, :oauth_interactive_module, FakeInteractive)
+    Application.put_env(:github_ex, :oauth2_module, FakeOAuth2)
 
     env_backup =
       Enum.map(
@@ -65,8 +65,8 @@ defmodule Mix.Tasks.Github.OAuthTaskTest do
         {key, value} -> System.put_env(key, value)
       end)
 
-      Application.delete_env(:github_sdk, :oauth_interactive_module)
-      Application.delete_env(:github_sdk, :oauth2_module)
+      Application.delete_env(:github_ex, :oauth_interactive_module)
+      Application.delete_env(:github_ex, :oauth2_module)
       Process.delete(:github_oauth_task_result)
       Process.delete(:github_oauth_refresh_result)
       Process.delete(:github_oauth_task_test_pid)
@@ -123,7 +123,7 @@ defmodule Mix.Tasks.Github.OAuthTaskTest do
 
     OAuthTask.run(["--save"])
 
-    path = Path.join([tmp_dir, "github_sdk", "oauth", "github.json"])
+    path = Path.join([tmp_dir, "github_ex", "oauth", "github.json"])
 
     assert_receive {:mix_shell, :info, ["Saved token file: " <> ^path]}
     assert_receive {:mix_shell, :info, ["export GITHUB_OAUTH_TOKEN_PATH=\"" <> ^path <> "\""]}

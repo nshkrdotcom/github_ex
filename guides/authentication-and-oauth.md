@@ -15,7 +15,7 @@ Choose auth mode like this:
 For normal bearer-token calls, the SDK entry point stays the same:
 
 ```elixir
-client = GitHubSDK.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
+client = GitHubEx.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
 ```
 
 That bearer token can be:
@@ -71,13 +71,13 @@ github-ex local-dev my-org workflow-read 2026-03
 
 For the bundled example surface in this repo, start narrow:
 
-- User permission `Profile: read` if you want `GitHubSDK.Users.get_authenticated/1`
+- User permission `Profile: read` if you want `GitHubEx.Users.get_authenticated/1`
 - Repository permission `Contents: read` for basic repo reads
 - Repository permission `Issues: read` for issue-list examples
 - Repository permission `Pull requests: read` for PR-list examples
 - Repository permission `Actions: read` for workflow run examples
 
-If you only want to call public endpoints like `GitHubSDK.Meta.root/1`, you can
+If you only want to call public endpoints like `GitHubEx.Meta.root/1`, you can
 skip auth entirely.
 
 If a call fails with `403`, do not immediately broaden everything. GitHub's REST
@@ -139,12 +139,12 @@ Important tradeoff:
 
 ### Build the authorization URL
 
-`GitHubSDK.OAuth` covers the standard authorization-code flow against
+`GitHubEx.OAuth` covers the standard authorization-code flow against
 `https://github.com/login/oauth/*`.
 
 ```elixir
 {:ok, url} =
-  GitHubSDK.OAuth.authorize_url(
+  GitHubEx.OAuth.authorize_url(
     client_id: System.fetch_env!("GITHUB_OAUTH_CLIENT_ID"),
     redirect_uri: System.fetch_env!("GITHUB_OAUTH_REDIRECT_URI"),
     scopes: ["repo", "read:user"],
@@ -155,10 +155,10 @@ Important tradeoff:
 ### Exchange the code
 
 ```elixir
-client = GitHubSDK.Client.new()
+client = GitHubEx.Client.new()
 
 {:ok, token} =
-  GitHubSDK.OAuth.exchange_code(
+  GitHubEx.OAuth.exchange_code(
     System.fetch_env!("GITHUB_OAUTH_AUTH_CODE"),
     client: client,
     client_id: System.fetch_env!("GITHUB_OAUTH_CLIENT_ID"),
@@ -170,7 +170,7 @@ client = GitHubSDK.Client.new()
 Use the returned access token as a normal bearer token:
 
 ```elixir
-client = GitHubSDK.Client.new(auth: token.access_token)
+client = GitHubEx.Client.new(auth: token.access_token)
 ```
 
 ## Saved OAuth Token Files
@@ -188,7 +188,7 @@ mix github.oauth --save --manual --no-browser
 That writes a token file to:
 
 ```bash
-~/.config/github_sdk/oauth/github.json
+~/.config/github_ex/oauth/github.json
 ```
 
 or the XDG-equivalent path when `XDG_CONFIG_HOME` is set.
@@ -197,11 +197,11 @@ Use that saved token in normal API calls:
 
 ```elixir
 client =
-  GitHubSDK.Client.new(
+  GitHubEx.Client.new(
     oauth2: [
       token_source:
         {Pristine.Adapters.TokenSource.File,
-         path: GitHubSDK.OAuthTokenFile.default_path()}
+         path: GitHubEx.OAuthTokenFile.default_path()}
     ]
   )
 ```
@@ -215,14 +215,14 @@ Those do not use normal bearer auth. They require request-scoped client
 credentials:
 
 ```elixir
-GitHubSDK.Apps.check_token(client, %{
+GitHubEx.Apps.check_token(client, %{
   "client_id" => System.fetch_env!("GITHUB_OAUTH_CLIENT_ID"),
   "client_secret" => System.fetch_env!("GITHUB_OAUTH_CLIENT_SECRET"),
   "access_token" => token
 })
 ```
 
-`GitHubSDK` strips `client_secret` from the request body and converts it into
+`GitHubEx` strips `client_secret` from the request body and converts it into
 Basic auth automatically for those endpoints.
 
 ## Current GitHub Docs Backing This Guide

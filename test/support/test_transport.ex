@@ -1,4 +1,4 @@
-defmodule GitHubSDK.TestTransport do
+defmodule GitHubEx.TestTransport do
   @moduledoc false
 
   @behaviour Pristine.Ports.Transport

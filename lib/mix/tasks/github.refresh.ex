@@ -20,7 +20,7 @@ defmodule Mix.Tasks.Github.Refresh do
     end
 
     metadata =
-      GitHubSDK.Refresh.run!(
+      GitHubEx.Refresh.run!(
         generate?: not Keyword.get(opts, :no_generate, false),
         spec_path: opts[:spec_path],
         spec_url: opts[:spec_url]

@@ -1,6 +1,6 @@
 Code.require_file("support/live_example.exs", __DIR__)
 
-alias GitHubSDK.Examples.Live
+alias GitHubEx.Examples.Live
 
 Live.banner!("Build GitHub OAuth authorize URL")
 

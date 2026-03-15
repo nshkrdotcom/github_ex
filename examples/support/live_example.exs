@@ -1,7 +1,7 @@
-defmodule GitHubSDK.Examples.Live do
+defmodule GitHubEx.Examples.Live do
   @moduledoc false
 
-  alias GitHubSDK.{AppAuth, Client, OAuth, OAuthTokenFile}
+  alias GitHubEx.{AppAuth, Client, OAuth, OAuthTokenFile}
 
   def start! do
     Mix.Task.run("app.start")
@@ -129,6 +129,6 @@ defmodule GitHubSDK.Examples.Live do
       scopes: scopes,
       generate_state: true
     )
-    |> ok!("GitHubSDK.OAuth.authorize_url/1")
+    |> ok!("GitHubEx.OAuth.authorize_url/1")
   end
 end

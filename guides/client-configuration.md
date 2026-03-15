@@ -1,6 +1,6 @@
 # Client Configuration
 
-`GitHubSDK.Client` is intentionally narrow. It configures GitHub-specific
+`GitHubEx.Client` is intentionally narrow. It configures GitHub-specific
 headers and runtime defaults, then delegates transport, serialization, retry,
 telemetry, and circuit breaking to `pristine`.
 
@@ -27,7 +27,7 @@ that should not become API parameters.
 Most callers only need this for wrapped responses:
 
 ```elixir
-GitHubSDK.Repos.list_for_authenticated_user(client, %{
+GitHubEx.Repos.list_for_authenticated_user(client, %{
   "per_page" => 100,
   "request_opts" => [response: :wrapped]
 })
@@ -41,28 +41,28 @@ Generated wrappers return JSON-shaped maps and lists by default. Opt into typed
 materialization when you need it:
 
 ```elixir
-client = GitHubSDK.Client.new(auth: token, typed_responses: true)
+client = GitHubEx.Client.new(auth: token, typed_responses: true)
 ```
 
 or per request:
 
 ```elixir
-GitHubSDK.Users.get_authenticated(client, %{"typed_responses" => true})
+GitHubEx.Users.get_authenticated(client, %{"typed_responses" => true})
 ```
 
 ## Foundation Overrides
 
-`GitHubSDK.Client` builds its runtime context with `Pristine.foundation_context/1`.
+`GitHubEx.Client` builds its runtime context with `Pristine.foundation_context/1`.
 That means you can still override advanced seams through `foundation:`.
 
 Example:
 
 ```elixir
 client =
-  GitHubSDK.Client.new(
+  GitHubEx.Client.new(
     auth: System.fetch_env!("GITHUB_TOKEN"),
     foundation: [
-      telemetry: [namespace: [:github_sdk]],
+      telemetry: [namespace: [:github_ex]],
       rate_limit: [key: {:my_app, :github}],
       circuit_breaker: [failure_threshold: 8]
     ]
@@ -70,4 +70,4 @@ client =
 ```
 
 Keep those overrides explicit in application code. The SDK docs only promise
-the `GitHubSDK.Client` surface, not raw runtime internals.
+the `GitHubEx.Client` surface, not raw runtime internals.

@@ -1,6 +1,6 @@
 # Upstream Sources
 
-This directory stores committed upstream artifacts used to build `github_sdk`.
+This directory stores committed upstream artifacts used to build `github_ex`.
 
 Current pinned source:
 

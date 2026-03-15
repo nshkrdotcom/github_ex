@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="assets/github_sdk.svg" alt="GitHubSDK" width="200"/>
+  <img src="assets/github_ex.svg" alt="GitHubEx" width="200"/>
 </p>
 
 <p align="center">
   <a href="https://hex.pm/packages/github_ex"><img src="https://img.shields.io/hexpm/v/github_ex.svg" alt="Hex.pm"/></a>
   <a href="https://hexdocs.pm/github_ex"><img src="https://img.shields.io/badge/hex-docs-blue.svg" alt="HexDocs"/></a>
-  <a href="https://github.com/nshkrdotcom/github_sdk"><img src="https://img.shields.io/badge/GitHub-repo-black?logo=github" alt="GitHub"/></a>
+  <a href="https://github.com/nshkrdotcom/github_ex"><img src="https://img.shields.io/badge/GitHub-repo-black?logo=github" alt="GitHub"/></a>
   <a href="https://hex.pm/packages/github_ex"><img src="https://img.shields.io/hexpm/l/github_ex.svg" alt="License"/></a>
 </p>
 
-# GitHubSDK
+# GitHubEx
 
 Native Elixir SDK for the GitHub REST API, generated from the pinned official
 GitHub OpenAPI description and executed through the shared `pristine` runtime.
@@ -22,12 +22,12 @@ Read this before creating any credentials:
 - [GitHub App Authentication](guides/github-app-authentication.md): what an installation token is, when to use a GitHub App, which permissions to grant, and how to obtain `GITHUB_APP_ID`, `GITHUB_APP_INSTALLATION_ID`, and a private key PEM
 - [Live Examples README](examples/README.md): the exact environment variables used by the example suite, plus auth-specific setup notes
 
-`GitHubSDK` is intentionally thin:
+`GitHubEx` is intentionally thin:
 
 - generated endpoint modules stay close to the upstream REST payloads
-- `GitHubSDK.Client` owns GitHub-specific headers, retries, response wrapping, and auth defaults
-- `GitHubSDK.OAuth` and `GitHubSDK.AppAuth` cover the two most important onboarding paths beyond raw bearer tokens
-- `GitHubSDK.Pagination` and `GitHubSDK.Response` expose the GitHub-specific `Link` and rate-limit headers that normal JSON decoding would otherwise hide
+- `GitHubEx.Client` owns GitHub-specific headers, retries, response wrapping, and auth defaults
+- `GitHubEx.OAuth` and `GitHubEx.AppAuth` cover the two most important onboarding paths beyond raw bearer tokens
+- `GitHubEx.Pagination` and `GitHubEx.Response` expose the GitHub-specific `Link` and rate-limit headers that normal JSON decoding would otherwise hide
 
 ## Install
 
@@ -50,20 +50,20 @@ mix deps.get
 Create a client with a GitHub token:
 
 ```elixir
-client = GitHubSDK.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
+client = GitHubEx.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
 ```
 
 Fetch the authenticated user:
 
 ```elixir
-{:ok, me} = GitHubSDK.Users.get_authenticated(client)
+{:ok, me} = GitHubEx.Users.get_authenticated(client)
 ```
 
 List repositories for that user:
 
 ```elixir
 {:ok, repos} =
-  GitHubSDK.Repos.list_for_authenticated_user(client, %{
+  GitHubEx.Repos.list_for_authenticated_user(client, %{
     "visibility" => "all",
     "per_page" => 50
   })
@@ -74,7 +74,7 @@ pagination links:
 
 ```elixir
 {:ok, wrapped} =
-  GitHubSDK.Client.request(client, %{
+  GitHubEx.Client.request(client, %{
     method: :get,
     path: "/user",
     opts: [response: :wrapped]
@@ -87,12 +87,12 @@ wrapped.links["next"]
 
 ## Authentication Modes
 
-`GitHubSDK.Client.new/1` supports:
+`GitHubEx.Client.new/1` supports:
 
 - raw bearer tokens such as fine-grained PATs, classic PATs, installation tokens, or OAuth access tokens
 - OAuth-backed token sources through `oauth2: [...]`
 - request-scoped basic auth for `/applications/{client_id}/token*` endpoints
-- GitHub App JWT and installation token flows through `GitHubSDK.AppAuth`
+- GitHub App JWT and installation token flows through `GitHubEx.AppAuth`
 
 The user-friendly onboarding docs live in:
 
@@ -108,7 +108,7 @@ The user-friendly onboarding docs live in:
 - [GitHub App Authentication](guides/github-app-authentication.md): JWT signing, installation tokens, and app-vs-installation clients
 - [Pagination and Rate Limits](guides/pagination-and-rate-limits.md): `Link` headers, wrapped responses, and retry behavior
 - [Common Workflows](guides/common-workflows.md): repos, issues, pulls, workflow runs, and common read paths
-- [Low-Level Requests](guides/low-level-requests.md): the raw request escape hatch on `GitHubSDK.Client.request/2`
+- [Low-Level Requests](guides/low-level-requests.md): the raw request escape hatch on `GitHubEx.Client.request/2`
 - [Regeneration and Maintenance](guides/regeneration-and-maintenance.md): upstream spec provenance, refresh commands, and the codegen artifact map
 
 ## Examples Map

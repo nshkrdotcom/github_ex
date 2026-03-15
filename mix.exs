@@ -1,16 +1,16 @@
 Code.require_file("build_support/plt_fingerprint.ex", __DIR__)
 
-defmodule GitHubSDK.MixProject do
+defmodule GitHubEx.MixProject do
   use Mix.Project
 
-  alias GitHubSDK.Build.PltFingerprint
+  alias GitHubEx.Build.PltFingerprint
 
   @version "0.1.0"
-  @source_url "https://github.com/nshkrdotcom/github_sdk"
+  @source_url "https://github.com/nshkrdotcom/github_ex"
 
   def project do
     [
-      app: :github_sdk,
+      app: :github_ex,
       version: @version,
       elixir: "~> 1.18",
       start_permanent: Mix.env() == :prod,
@@ -19,7 +19,7 @@ defmodule GitHubSDK.MixProject do
       dialyzer: dialyzer(),
       description: description(),
       package: package(),
-      name: "GitHubSDK",
+      name: "GitHubEx",
       source_url: @source_url,
       homepage_url: @source_url,
       docs: docs()
@@ -33,7 +33,7 @@ defmodule GitHubSDK.MixProject do
   def application do
     [
       extra_applications: [:logger, :crypto, :public_key, :inets],
-      mod: {GitHubSDK.Application, []}
+      mod: {GitHubEx.Application, []}
     ]
   end
 
@@ -120,7 +120,7 @@ defmodule GitHubSDK.MixProject do
     [
       main: "readme-1",
       assets: %{"assets" => "assets"},
-      logo: "assets/github_sdk.svg",
+      logo: "assets/github_ex.svg",
       canonical: "https://hexdocs.pm/github_ex",
       source_url: @source_url,
       source_ref: "v#{@version}",
@@ -176,23 +176,23 @@ defmodule GitHubSDK.MixProject do
     [
       {"Core",
        [
-         GitHubSDK,
-         GitHubSDK.AppAuth,
-         GitHubSDK.Auth,
-         GitHubSDK.Client,
-         GitHubSDK.Error,
-         GitHubSDK.OAuth,
-         GitHubSDK.OAuthTokenFile,
-         GitHubSDK.Pagination,
-         GitHubSDK.RateLimitInfo,
-         GitHubSDK.Response,
-         GitHubSDK.Retry
+         GitHubEx,
+         GitHubEx.AppAuth,
+         GitHubEx.Auth,
+         GitHubEx.Client,
+         GitHubEx.Error,
+         GitHubEx.OAuth,
+         GitHubEx.OAuthTokenFile,
+         GitHubEx.Pagination,
+         GitHubEx.RateLimitInfo,
+         GitHubEx.Response,
+         GitHubEx.Retry
        ]},
       {"Tooling",
        [
-         GitHubSDK.Codegen,
-         GitHubSDK.Codegen.Renderer,
-         GitHubSDK.Refresh,
+         GitHubEx.Codegen,
+         GitHubEx.Codegen.Renderer,
+         GitHubEx.Refresh,
          Mix.Tasks.Github.Generate,
          Mix.Tasks.Github.Oauth,
          Mix.Tasks.Github.Refresh
@@ -202,6 +202,6 @@ defmodule GitHubSDK.MixProject do
   end
 
   defp generated_module_pattern do
-    ~r/^GitHubSDK\.(?!Application$|AppAuth$|Auth$|Build(?:\.|$)|Client$|Codegen(?:\.|$)|Error$|OAuth(?:\.|$)|OAuthTokenFile$|Pagination$|RateLimitInfo$|Refresh$|Response$|ResultClassifier$|Retry$)[A-Z]/
+    ~r/^GitHubEx\.(?!Application$|AppAuth$|Auth$|Build(?:\.|$)|Client$|Codegen(?:\.|$)|Error$|OAuth(?:\.|$)|OAuthTokenFile$|Pagination$|RateLimitInfo$|Refresh$|Response$|ResultClassifier$|Retry$)[A-Z]/
   end
 end

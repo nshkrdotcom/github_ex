@@ -1,11 +1,11 @@
-Application.put_env(:github_sdk, :api_version, "2026-03-10")
-Application.put_env(:github_sdk, :base_url, "https://api.github.com")
-Application.put_env(:github_sdk, :oauth_site, "https://github.com")
-Application.put_env(:github_sdk, :timeout_ms, 60_000)
-Application.put_env(:github_sdk, :user_agent, "github-sdk-elixir/0.1.0")
+Application.put_env(:github_ex, :api_version, "2026-03-10")
+Application.put_env(:github_ex, :base_url, "https://api.github.com")
+Application.put_env(:github_ex, :oauth_site, "https://github.com")
+Application.put_env(:github_ex, :timeout_ms, 60_000)
+Application.put_env(:github_ex, :user_agent, "github-ex-elixir/0.1.0")
 
 Application.put_env(
-  :github_sdk,
+  :github_ex,
   :retry,
   max_retries: 2,
   initial_retry_delay_ms: 1_000,

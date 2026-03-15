@@ -1,6 +1,6 @@
 Code.require_file("support/live_example.exs", __DIR__)
 
-alias GitHubSDK.Examples.Live
+alias GitHubEx.Examples.Live
 
 client =
   if System.get_env("GITHUB_TOKEN") do
@@ -24,6 +24,6 @@ params =
     end
   end)
 
-GitHubSDK.Actions.list_workflow_runs_for_repo(client, params)
-|> Live.ok!("GitHubSDK.Actions.list_workflow_runs_for_repo/2")
+GitHubEx.Actions.list_workflow_runs_for_repo(client, params)
+|> Live.ok!("GitHubEx.Actions.list_workflow_runs_for_repo/2")
 |> Live.print_json!()

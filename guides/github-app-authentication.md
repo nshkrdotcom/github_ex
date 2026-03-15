@@ -5,7 +5,7 @@ GitHub Apps have two distinct auth modes:
 - app authentication with a short-lived JWT
 - installation authentication with a short-lived installation access token
 
-`GitHubSDK.AppAuth` covers both.
+`GitHubEx.AppAuth` covers both.
 
 ## When to choose a GitHub App
 
@@ -37,7 +37,7 @@ an installation token, not the app JWT directly.
 
 ## Setup Checklist
 
-Before you can use `GitHubSDK.AppAuth`, create and install a GitHub App:
+Before you can use `GitHubEx.AppAuth`, create and install a GitHub App:
 
 1. Register a GitHub App in GitHub developer settings.
 2. Give it the minimum repository or organization permissions needed.
@@ -80,13 +80,13 @@ permission.
 private_key_pem = File.read!(System.fetch_env!("GITHUB_APP_PRIVATE_KEY_PATH"))
 
 jwt =
-  GitHubSDK.AppAuth.jwt!(
+  GitHubEx.AppAuth.jwt!(
     System.fetch_env!("GITHUB_APP_ID"),
     private_key_pem
   )
 ```
 
-That token can call app-level endpoints such as `GitHubSDK.Apps.get_authenticated/1`.
+That token can call app-level endpoints such as `GitHubEx.Apps.get_authenticated/1`.
 
 Keep the distinction explicit:
 
@@ -97,7 +97,7 @@ Keep the distinction explicit:
 
 ```elixir
 app_client =
-  GitHubSDK.AppAuth.app_client(
+  GitHubEx.AppAuth.app_client(
     System.fetch_env!("GITHUB_APP_ID"),
     File.read!(System.fetch_env!("GITHUB_APP_PRIVATE_KEY_PATH"))
   )
@@ -107,7 +107,7 @@ app_client =
 
 ```elixir
 {:ok, token_response} =
-  GitHubSDK.AppAuth.installation_token(
+  GitHubEx.AppAuth.installation_token(
     app_client,
     System.fetch_env!("GITHUB_APP_INSTALLATION_ID")
   )
@@ -119,7 +119,7 @@ You can also narrow the token on creation:
 
 ```elixir
 {:ok, token_response} =
-  GitHubSDK.AppAuth.installation_token(
+  GitHubEx.AppAuth.installation_token(
     app_client,
     System.fetch_env!("GITHUB_APP_INSTALLATION_ID"),
     %{
@@ -140,7 +140,7 @@ the installation already has.
 
 ```elixir
 installation_client =
-  GitHubSDK.AppAuth.installation_client(
+  GitHubEx.AppAuth.installation_client(
     System.fetch_env!("GITHUB_APP_ID"),
     File.read!(System.fetch_env!("GITHUB_APP_PRIVATE_KEY_PATH")),
     System.fetch_env!("GITHUB_APP_INSTALLATION_ID")

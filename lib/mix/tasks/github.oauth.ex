@@ -11,7 +11,7 @@ defmodule Mix.Tasks.Github.Oauth do
 
   use Mix.Task
 
-  alias GitHubSDK.OAuthTokenFile
+  alias GitHubEx.OAuthTokenFile
   alias Pristine.SDK.OAuth2.Error
 
   @default_timeout_ms 120_000
@@ -57,10 +57,10 @@ defmodule Mix.Tasks.Github.Oauth do
     open_browser? = not Keyword.get(opts, :no_browser, false)
     manual? = Keyword.get(opts, :manual, false)
     scopes = Keyword.get_values(opts, :scope)
-    client = GitHubSDK.Client.new()
+    client = GitHubEx.Client.new()
 
     result =
-      interactive_module().authorize(GitHubSDK.OAuth.provider(),
+      interactive_module().authorize(GitHubEx.OAuth.provider(),
         client_id: client_id,
         client_secret: client_secret,
         context: client.context,
@@ -85,9 +85,9 @@ defmodule Mix.Tasks.Github.Oauth do
     client_id = fetch_env!("GITHUB_OAUTH_CLIENT_ID")
     client_secret = fetch_env!("GITHUB_OAUTH_CLIENT_SECRET")
     path = save_path(opts)
-    client = GitHubSDK.Client.new()
+    client = GitHubEx.Client.new()
 
-    case saved_token_module().refresh(GitHubSDK.OAuth.provider(),
+    case saved_token_module().refresh(GitHubEx.OAuth.provider(),
            oauth2_module: oauth2_module(),
            client_id: client_id,
            client_secret: client_secret,
@@ -123,14 +123,14 @@ defmodule Mix.Tasks.Github.Oauth do
 
   defp interactive_module do
     Application.get_env(
-      :github_sdk,
+      :github_ex,
       :oauth_interactive_module,
       Module.concat([Pristine, OAuth2, Interactive])
     )
   end
 
   defp oauth2_module do
-    Application.get_env(:github_sdk, :oauth2_module, Module.concat([Pristine, SDK, OAuth2]))
+    Application.get_env(:github_ex, :oauth2_module, Module.concat([Pristine, SDK, OAuth2]))
   end
 
   defp saved_token_module do

@@ -6,14 +6,14 @@ GitHub automation.
 ## Authenticated User
 
 ```elixir
-{:ok, me} = GitHubSDK.Users.get_authenticated(client)
+{:ok, me} = GitHubEx.Users.get_authenticated(client)
 ```
 
 ## Repositories
 
 ```elixir
 {:ok, repos} =
-  GitHubSDK.Repos.list_for_authenticated_user(client, %{
+  GitHubEx.Repos.list_for_authenticated_user(client, %{
     "visibility" => "all",
     "sort" => "updated"
   })
@@ -23,7 +23,7 @@ Single repository:
 
 ```elixir
 {:ok, repo} =
-  GitHubSDK.Repos.get(client, %{
+  GitHubEx.Repos.get(client, %{
     "owner" => "octocat",
     "repo" => "Hello-World"
   })
@@ -33,7 +33,7 @@ Single repository:
 
 ```elixir
 {:ok, issues} =
-  GitHubSDK.Issues.list_for_repo(client, %{
+  GitHubEx.Issues.list_for_repo(client, %{
     "owner" => "octocat",
     "repo" => "Hello-World",
     "state" => "open"
@@ -44,7 +44,7 @@ Single repository:
 
 ```elixir
 {:ok, pulls} =
-  GitHubSDK.Pulls.list(client, %{
+  GitHubEx.Pulls.list(client, %{
     "owner" => "octocat",
     "repo" => "Hello-World"
   })
@@ -54,7 +54,7 @@ Single repository:
 
 ```elixir
 {:ok, runs} =
-  GitHubSDK.Actions.list_workflow_runs_for_repo(client, %{
+  GitHubEx.Actions.list_workflow_runs_for_repo(client, %{
     "owner" => "octocat",
     "repo" => "Hello-World",
     "per_page" => 25
@@ -64,4 +64,4 @@ Single repository:
 ## Search
 
 Search endpoints usually return `items` arrays and benefit from
-`GitHubSDK.Pagination` with `item_key: "items"`.
+`GitHubEx.Pagination` with `item_key: "items"`.

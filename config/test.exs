@@ -1,4 +1,4 @@
 import Config
 
-config :github_sdk,
-  transport: GitHubSDK.TestTransport
+config :github_ex,
+  transport: GitHubEx.TestTransport
