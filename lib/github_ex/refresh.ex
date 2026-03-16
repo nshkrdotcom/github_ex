@@ -51,7 +51,7 @@ defmodule GitHubEx.Refresh do
     File.write!(paths.metadata_path, Jason.encode_to_iodata!(metadata, pretty: true))
 
     if Keyword.get(opts, :generate?, true) do
-      GitHubEx.Codegen.generate!(
+      run_codegen!(
         project_root: paths.project_root,
         spec_path: paths.codegen_spec_path
       )
@@ -79,10 +79,11 @@ defmodule GitHubEx.Refresh do
     request = Finch.build(:get, url)
 
     case Finch.request(request, GitHubEx.Finch) do
-      {:ok, %Finch.Response{status: status, body: body}} when status >= 200 and status < 300 ->
+      {:ok, %{__struct__: Finch.Response, status: status, body: body}}
+      when status >= 200 and status < 300 ->
         body
 
-      {:ok, %Finch.Response{status: status, body: body}} ->
+      {:ok, %{__struct__: Finch.Response, status: status, body: body}} ->
         raise "failed to fetch #{url}: HTTP #{status}: #{body}"
 
       {:error, reason} ->
@@ -97,6 +98,16 @@ defmodule GitHubEx.Refresh do
     |> prune_codegen_noise()
     |> then(&Jason.encode_to_iodata!(&1, pretty: false))
     |> then(&File.write!(destination_path, &1))
+  end
+
+  defp run_codegen!(opts) do
+    codegen_module = Module.concat(GitHubEx, Codegen)
+
+    if Code.ensure_loaded?(codegen_module) and function_exported?(codegen_module, :generate!, 1) do
+      apply(codegen_module, :generate!, [opts])
+    else
+      raise "GitHubEx.Codegen.generate!/1 is unavailable in this build"
+    end
   end
 
   defp prune_codegen_noise(value) when is_map(value) do
