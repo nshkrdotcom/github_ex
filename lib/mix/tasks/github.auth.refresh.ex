@@ -32,7 +32,7 @@ defmodule Mix.Tasks.Github.Auth.Refresh do
 
     if Code.ensure_loaded?(auth_sources_module) and
          function_exported?(auth_sources_module, :refresh!, 0) do
-      apply(auth_sources_module, :refresh!, [])
+      :erlang.apply(auth_sources_module, :refresh!, [])
     else
       Mix.raise("GitHubEx.AuthSources.refresh!/0 is unavailable in this build")
     end
@@ -42,7 +42,7 @@ defmodule Mix.Tasks.Github.Auth.Refresh do
     codegen_module = Module.concat(GitHubEx, Codegen)
 
     if Code.ensure_loaded?(codegen_module) and function_exported?(codegen_module, :generate!, 0) do
-      apply(codegen_module, :generate!, [])
+      :erlang.apply(codegen_module, :generate!, [])
     else
       Mix.raise("GitHubEx.Codegen.generate!/0 is unavailable in this build")
     end

@@ -104,7 +104,7 @@ defmodule GitHubEx.Refresh do
     codegen_module = Module.concat(GitHubEx, Codegen)
 
     if Code.ensure_loaded?(codegen_module) and function_exported?(codegen_module, :generate!, 1) do
-      apply(codegen_module, :generate!, [opts])
+      :erlang.apply(codegen_module, :generate!, [opts])
     else
       raise "GitHubEx.Codegen.generate!/1 is unavailable in this build"
     end

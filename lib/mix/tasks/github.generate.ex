@@ -18,7 +18,7 @@ defmodule Mix.Tasks.Github.Generate do
     codegen_module = Module.concat(GitHubEx, Codegen)
 
     if Code.ensure_loaded?(codegen_module) and function_exported?(codegen_module, :generate!, 0) do
-      apply(codegen_module, :generate!, [])
+      :erlang.apply(codegen_module, :generate!, [])
     else
       Mix.raise("GitHubEx.Codegen.generate!/0 is unavailable in this build")
     end
