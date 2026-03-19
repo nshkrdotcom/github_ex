@@ -1,6 +1,5 @@
 {
   "profile": "github_ex",
-  "spec_path": "priv/upstream/openapi/api.github.com.2026-03-10.codegen.json",
   "generated_files": [
     "/home/home/p/g/n/github_ex/lib/github_ex/generated/actions.ex",
     "/home/home/p/g/n/github_ex/lib/github_ex/generated/activity.ex",
@@ -35827,6 +35826,7 @@
       "use_default_auth": true
     }
   ],
+  "spec_path": "priv/upstream/openapi/api.github.com.2026-03-10.codegen.json",
   "operation_count": 1093,
   "operation_modules": [
     "Actions",
