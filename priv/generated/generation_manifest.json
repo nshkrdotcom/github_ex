@@ -1,0 +1,137 @@
+{
+  "artifact_files": [
+    "priv/generated/auth_manifest.json",
+    "priv/generated/docs_inventory.json",
+    "priv/generated/generation_manifest.json",
+    "priv/generated/operation_auth_policies.json",
+    "priv/generated/provider_ir.json"
+  ],
+  "auth_policy_count": 2,
+  "fingerprints": {
+    "generation": {
+      "compiler": "pristine_codegen",
+      "provider": "github_ex",
+      "source_strategy": "openapi_only",
+      "version": "0.1.0"
+    },
+    "sources": [
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/differences_github_apps_vs_oauth_apps.md",
+        "sha256": "05e36d8521c79b6ed4af421e3f2fa05066d5630c0200d3974ae3eed22b775488"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/endpoint_prog_access.json",
+        "sha256": "e9a0e9fad6b6dc0dcddc275ea25b703ceabf1e747699675823d73ae26056ec8d"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/endpoints_fg_pat.md",
+        "sha256": "d2445a7ec4aa33bfb73fc4ff5a5304be5e204221de456962426de92a33eb0720"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/endpoints_github_app_installation.md",
+        "sha256": "b79cd1e2eecdc68dd0d08ffb245e9c0bbc3aeff8d4337a3e9703158e5578a73c"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/endpoints_github_app_user.md",
+        "sha256": "ea1107b0d536f9d6d992625a61f48de30f6895cc4cc11526dbcdc106d381b947"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/github_app_installation_tokens.md",
+        "sha256": "b95cfc25009083e9df346189c320626d1c02ea9af2754dabcdb5844750d841a1"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/managing_personal_access_tokens.md",
+        "sha256": "fed6f02af9baa6a4d10a3bec168d166aff2f330f851e303037bfb1a00e7fe856"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/metadata.json",
+        "sha256": "c148bcb40c03360045d60535dd15e22b95c8eb38854ebf37597c158caf71f150"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/oauth_scopes.md",
+        "sha256": "f38a087b33075b9c03fa7f37e468ea3815423ba0178ae27f360d0d603115b553"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/permissions_fg_pat.md",
+        "sha256": "fb292d4a6cf7cc93a1a574fefe7a283480383c27e786a3c6daae1fa5d3bd961a"
+      },
+      {
+        "kind": "github_docs_auth",
+        "path": "priv/upstream/github_docs_auth/permissions_github_apps.md",
+        "sha256": "3e031dc9ab9e4ec4bcf32e4daedf42afe635fca47f6e4cba0535dc236c114ea1"
+      },
+      {
+        "kind": "openapi",
+        "path": "priv/upstream/openapi/api.github.com.2026-03-10.json",
+        "sha256": "5d3df9f089be947bf3417852bebdaf37f1f333a647ae971d3236e7a6c3cb085d"
+      }
+    ]
+  },
+  "generated_files": [
+    "lib/github_ex/generated/actions.ex",
+    "lib/github_ex/generated/activity.ex",
+    "lib/github_ex/generated/apps.ex",
+    "lib/github_ex/generated/billing.ex",
+    "lib/github_ex/generated/campaigns.ex",
+    "lib/github_ex/generated/checks.ex",
+    "lib/github_ex/generated/classroom.ex",
+    "lib/github_ex/generated/client.ex",
+    "lib/github_ex/generated/code_scanning.ex",
+    "lib/github_ex/generated/code_security.ex",
+    "lib/github_ex/generated/codes_of_conduct.ex",
+    "lib/github_ex/generated/codespaces.ex",
+    "lib/github_ex/generated/copilot.ex",
+    "lib/github_ex/generated/credentials.ex",
+    "lib/github_ex/generated/dependabot.ex",
+    "lib/github_ex/generated/dependency_graph.ex",
+    "lib/github_ex/generated/emojis.ex",
+    "lib/github_ex/generated/enterprise_team_memberships.ex",
+    "lib/github_ex/generated/enterprise_team_organizations.ex",
+    "lib/github_ex/generated/enterprise_teams.ex",
+    "lib/github_ex/generated/gists.ex",
+    "lib/github_ex/generated/git.ex",
+    "lib/github_ex/generated/gitignore.ex",
+    "lib/github_ex/generated/hosted_compute.ex",
+    "lib/github_ex/generated/interactions.ex",
+    "lib/github_ex/generated/issues.ex",
+    "lib/github_ex/generated/licenses.ex",
+    "lib/github_ex/generated/markdown.ex",
+    "lib/github_ex/generated/meta.ex",
+    "lib/github_ex/generated/migrations.ex",
+    "lib/github_ex/generated/oidc.ex",
+    "lib/github_ex/generated/orgs.ex",
+    "lib/github_ex/generated/packages.ex",
+    "lib/github_ex/generated/private_registries.ex",
+    "lib/github_ex/generated/projects.ex",
+    "lib/github_ex/generated/pulls.ex",
+    "lib/github_ex/generated/rate_limit.ex",
+    "lib/github_ex/generated/reactions.ex",
+    "lib/github_ex/generated/repos.ex",
+    "lib/github_ex/generated/search.ex",
+    "lib/github_ex/generated/secret_scanning.ex",
+    "lib/github_ex/generated/security_advisories.ex",
+    "lib/github_ex/generated/teams.ex",
+    "lib/github_ex/generated/users.ex"
+  ],
+  "operation_count": 1093,
+  "pagination_policy_count": 37,
+  "provider": {
+    "base_module": "GitHubEx",
+    "client_module": "GitHubEx.Client",
+    "id": "github_ex",
+    "package_app": "github_ex",
+    "package_name": "github_ex",
+    "source_strategy": "openapi_only"
+  },
+  "schema_count": 0
+}

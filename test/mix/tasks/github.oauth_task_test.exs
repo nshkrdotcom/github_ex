@@ -2,8 +2,8 @@ defmodule Mix.Tasks.Github.OAuthTaskTest do
   use ExUnit.Case, async: false
 
   alias Mix.Tasks.Github.Oauth, as: OAuthTask
-  alias Pristine.SDK.Context, as: SDKContext
-  alias Pristine.SDK.OAuth2.Token, as: SDKToken
+  alias Pristine.Core.Context, as: SDKContext
+  alias Pristine.OAuth2.Token, as: SDKToken
 
   @moduletag :tmp_dir
 

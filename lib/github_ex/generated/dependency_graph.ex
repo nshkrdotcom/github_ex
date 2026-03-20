@@ -1,79 +1,152 @@
 defmodule GitHubEx.DependencyGraph do
   @moduledoc """
-  Generated GitHub REST operations for the `DependencyGraph` namespace.
-
-  ## Operations
-
-  * `dependency-graph/diff-range`
-  * `dependency-graph/export-sbom`
-  * `dependency-graph/create-repository-snapshot`
+  Generated Github Ex operations for dependency graph.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @create_repository_snapshot_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Create a snapshot of dependencies for a repository\n\nPath: /repos/{owner}/{repo}/dependency-graph/snapshots\n\nMethod: post"
-  @spec create_repository_snapshot(GitHubEx.Client.t()) :: result
-  @spec create_repository_snapshot(GitHubEx.Client.t(), map()) :: result
-  def create_repository_snapshot(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.DependencyGraph, :create_repository_snapshot},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Create a snapshot of dependencies for a repository\n\nCreate a new snapshot of a repository's dependencies.\n\nThe authenticated user must have access to the repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_repository_snapshot(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_repository_snapshot(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_repository_snapshot_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_repository_snapshot_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_repository_snapshot_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependency-graph/create-repository-snapshot",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/dependency-graph/snapshots",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependency_graph, :create_repository_snapshot],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a diff of the dependencies between commits\n\nPath: /repos/{owner}/{repo}/dependency-graph/compare/{basehead}\n\nMethod: get"
-  @spec diff_range(GitHubEx.Client.t()) :: result
-  @spec diff_range(GitHubEx.Client.t(), map()) :: result
-  def diff_range(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.DependencyGraph, :diff_range},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @diff_range_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"basehead", :basehead}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"name", :name}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a diff of the dependencies between commits\n\nGets the diff of the dependency changes between two commits of a repository, based on the changes to the dependency manifests made in those commits."
+  @spec diff_range(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def diff_range(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_diff_range_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_diff_range_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @diff_range_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependency-graph/diff-range",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"basehead", :basehead}],
       path_template: "/repos/{owner}/{repo}/dependency-graph/compare/{basehead}",
-      query: [{"name", :name}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependency_graph, :diff_range],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Export a software bill of materials (SBOM) for a repository.\n\nPath: /repos/{owner}/{repo}/dependency-graph/sbom\n\nMethod: get"
-  @spec export_sbom(GitHubEx.Client.t()) :: result
-  @spec export_sbom(GitHubEx.Client.t(), map()) :: result
-  def export_sbom(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.DependencyGraph, :export_sbom},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @export_sbom_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Export a software bill of materials (SBOM) for a repository.\n\nExports the software bill of materials (SBOM) for a repository in SPDX JSON format."
+  @spec export_sbom(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def export_sbom(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_export_sbom_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_export_sbom_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @export_sbom_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependency-graph/export-sbom",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/dependency-graph/sbom",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependency_graph, :export_sbom],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

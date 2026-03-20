@@ -1,470 +1,1202 @@
 defmodule GitHubEx.Gists do
   @moduledoc """
-  Generated GitHub REST operations for the `Gists` namespace.
-
-  ## Operations
-
-  * `gists/create`
-  * `gists/list`
-  * `gists/list-public`
-  * `gists/list-starred`
-  * `gists/delete`
-  * `gists/get`
-  * `gists/update`
-  * `gists/create-comment`
-  * `gists/list-comments`
-  * `gists/delete-comment`
-  * `gists/get-comment`
-  * `gists/update-comment`
-  * `gists/list-commits`
-  * `gists/fork`
-  * `gists/list-forks`
-  * `gists/check-is-starred`
-  * `gists/star`
-  * `gists/unstar`
-  * `gists/get-revision`
-  * `gists/list-for-user`
+  Generated Github Ex operations for gists.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @check_is_starred_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Check if a gist is starred\n\nPath: /gists/{gist_id}/star\n\nMethod: get"
-  @spec check_is_starred(GitHubEx.Client.t()) :: result
-  @spec check_is_starred(GitHubEx.Client.t(), map()) :: result
-  def check_is_starred(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :check_is_starred},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Check if a gist is starred"
+  @spec check_is_starred(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def check_is_starred(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_check_is_starred_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_check_is_starred_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @check_is_starred_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/check-is-starred",
       method: :get,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/star",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :check_is_starred],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a gist\n\nPath: /gists\n\nMethod: post"
-  @spec create(GitHubEx.Client.t()) :: result
-  @spec create(GitHubEx.Client.t(), map()) :: result
-  def create(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Gists, :create},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a gist\n\nAllows you to add a new gist with one or more files.\n\n> [!NOTE]\n> Don't name your files \"gistfile\" with a numerical suffix. This is the format of the automatic naming scheme that Gist uses internally."
+  @spec create(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/create",
       method: :post,
-      path: [],
       path_template: "/gists",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :gists, :create],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a gist comment\n\nPath: /gists/{gist_id}/comments\n\nMethod: post"
-  @spec create_comment(GitHubEx.Client.t()) :: result
-  @spec create_comment(GitHubEx.Client.t(), map()) :: result
-  def create_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Gists, :create_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_comment_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a gist comment\n\nCreates a comment on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
+  @spec create_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/create-comment",
       method: :post,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/comments",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :gists, :create_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a gist\n\nPath: /gists/{gist_id}\n\nMethod: delete"
-  @spec delete(GitHubEx.Client.t()) :: result
-  @spec delete(GitHubEx.Client.t(), map()) :: result
-  def delete(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :delete},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a gist"
+  @spec delete(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/delete",
       method: :delete,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :gists, :delete],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a gist comment\n\nPath: /gists/{gist_id}/comments/{comment_id}\n\nMethod: delete"
-  @spec delete_comment(GitHubEx.Client.t()) :: result
-  @spec delete_comment(GitHubEx.Client.t(), map()) :: result
-  def delete_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :delete_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_comment_partition_spec %{
+    path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a gist comment"
+  @spec delete_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/delete-comment",
       method: :delete,
-      path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
       path_template: "/gists/{gist_id}/comments/{comment_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :gists, :delete_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Fork a gist\n\nPath: /gists/{gist_id}/forks\n\nMethod: post"
-  @spec fork(GitHubEx.Client.t()) :: result
-  @spec fork(GitHubEx.Client.t(), map()) :: result
-  def fork(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :fork},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @fork_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Fork a gist"
+  @spec fork(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def fork(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_fork_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_fork_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @fork_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/fork",
       method: :post,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/forks",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :gists, :fork],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a gist\n\nPath: /gists/{gist_id}\n\nMethod: get"
-  @spec get(GitHubEx.Client.t()) :: result
-  @spec get(GitHubEx.Client.t(), map()) :: result
-  def get(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :get},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a gist\n\nGets a specified gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
+  @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/get",
       method: :get,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :get],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a gist comment\n\nPath: /gists/{gist_id}/comments/{comment_id}\n\nMethod: get"
-  @spec get_comment(GitHubEx.Client.t()) :: result
-  @spec get_comment(GitHubEx.Client.t(), map()) :: result
-  def get_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :get_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_comment_partition_spec %{
+    path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a gist comment\n\nGets a comment on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
+  @spec get_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/get-comment",
       method: :get,
-      path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
       path_template: "/gists/{gist_id}/comments/{comment_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :get_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a gist revision\n\nPath: /gists/{gist_id}/{sha}\n\nMethod: get"
-  @spec get_revision(GitHubEx.Client.t()) :: result
-  @spec get_revision(GitHubEx.Client.t(), map()) :: result
-  def get_revision(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :get_revision},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_revision_partition_spec %{
+    path: [{"gist_id", :gist_id}, {"sha", :sha}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a gist revision\n\nGets a specified gist revision.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
+  @spec get_revision(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_revision(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_revision_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_revision_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_revision_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/get-revision",
       method: :get,
-      path: [{"gist_id", :gist_id}, {"sha", :sha}],
       path_template: "/gists/{gist_id}/{sha}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :get_revision],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List gists for the authenticated user\n\nPath: /gists\n\nMethod: get"
-  @spec list(GitHubEx.Client.t()) :: result
-  @spec list(GitHubEx.Client.t(), map()) :: result
-  def list(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :list},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List gists for the authenticated user\n\nLists the authenticated user's gists or if called anonymously, this endpoint returns all public gists:"
+  @spec list(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/list",
       method: :get,
-      path: [],
       path_template: "/gists",
-      query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :list],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List gist comments\n\nPath: /gists/{gist_id}/comments\n\nMethod: get"
-  @spec list_comments(GitHubEx.Client.t()) :: result
-  @spec list_comments(GitHubEx.Client.t(), map()) :: result
-  def list_comments(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :list_comments},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_comments_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List gist comments\n\nLists the comments on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
+  @spec list_comments(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_comments(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_comments_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_comments(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_comments(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_comments_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_comments_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_comments_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/list-comments",
       method: :get,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/comments",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :list_comments],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List gist commits\n\nPath: /gists/{gist_id}/commits\n\nMethod: get"
-  @spec list_commits(GitHubEx.Client.t()) :: result
-  @spec list_commits(GitHubEx.Client.t(), map()) :: result
-  def list_commits(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :list_commits},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_commits_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List gist commits"
+  @spec list_commits(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_commits(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_commits_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_commits(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_commits(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_commits_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_commits_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_commits_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/list-commits",
       method: :get,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/commits",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :list_commits],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List gists for a user\n\nPath: /users/{username}/gists\n\nMethod: get"
-  @spec list_for_user(GitHubEx.Client.t()) :: result
-  @spec list_for_user(GitHubEx.Client.t(), map()) :: result
-  def list_for_user(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :list_for_user},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_for_user_partition_spec %{
+    path: [{"username", :username}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List gists for a user\n\nLists public gists for the specified user:"
+  @spec list_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_for_user(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_for_user_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_for_user(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_for_user(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_for_user_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_for_user_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_for_user_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/list-for-user",
       method: :get,
-      path: [{"username", :username}],
       path_template: "/users/{username}/gists",
-      query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :list_for_user],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List gist forks\n\nPath: /gists/{gist_id}/forks\n\nMethod: get"
-  @spec list_forks(GitHubEx.Client.t()) :: result
-  @spec list_forks(GitHubEx.Client.t(), map()) :: result
-  def list_forks(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :list_forks},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_forks_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List gist forks"
+  @spec list_forks(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_forks(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_forks_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_forks(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_forks(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_forks_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_forks_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_forks_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/list-forks",
       method: :get,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/forks",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :list_forks],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List public gists\n\nPath: /gists/public\n\nMethod: get"
-  @spec list_public(GitHubEx.Client.t()) :: result
-  @spec list_public(GitHubEx.Client.t(), map()) :: result
-  def list_public(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :list_public},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_public_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List public gists\n\nList public gists sorted by most recently updated to least recently updated.\n\nNote: With [pagination](https://docs.github.com/rest/guides/using-pagination-in-the-rest-api), you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page."
+  @spec list_public(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_public(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_public_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_public(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_public(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_public_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_public_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_public_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/list-public",
       method: :get,
-      path: [],
       path_template: "/gists/public",
-      query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :list_public],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List starred gists\n\nPath: /gists/starred\n\nMethod: get"
-  @spec list_starred(GitHubEx.Client.t()) :: result
-  @spec list_starred(GitHubEx.Client.t(), map()) :: result
-  def list_starred(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :list_starred},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_starred_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List starred gists\n\nList the authenticated user's starred gists:"
+  @spec list_starred(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_starred(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_starred_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_starred(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_starred(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_starred_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_starred_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_starred_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/list-starred",
       method: :get,
-      path: [],
       path_template: "/gists/starred",
-      query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :gists, :list_starred],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Star a gist\n\nPath: /gists/{gist_id}/star\n\nMethod: put"
-  @spec star(GitHubEx.Client.t()) :: result
-  @spec star(GitHubEx.Client.t(), map()) :: result
-  def star(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :star},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @star_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Star a gist\n\nNote that you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see \"[HTTP method](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#http-method).\""
+  @spec star(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def star(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_star_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_star_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @star_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/star",
       method: :put,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/star",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :gists, :star],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Unstar a gist\n\nPath: /gists/{gist_id}/star\n\nMethod: delete"
-  @spec unstar(GitHubEx.Client.t()) :: result
-  @spec unstar(GitHubEx.Client.t(), map()) :: result
-  def unstar(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Gists, :unstar},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @unstar_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Unstar a gist"
+  @spec unstar(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def unstar(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_unstar_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_unstar_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @unstar_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/unstar",
       method: :delete,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}/star",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :gists, :unstar],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update a gist\n\nPath: /gists/{gist_id}\n\nMethod: patch"
-  @spec update(GitHubEx.Client.t()) :: result
-  @spec update(GitHubEx.Client.t(), map()) :: result
-  def update(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Gists, :update},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_partition_spec %{
+    path: [{"gist_id", :gist_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a gist\n\nAllows you to update a gist's description and to update, delete, or rename gist files. Files\nfrom the previous version of the gist that aren't explicitly changed during an edit\nare unchanged.\n\nAt least one of `description` or `files` is required.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
+  @spec update(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/update",
       method: :patch,
-      path: [{"gist_id", :gist_id}],
       path_template: "/gists/{gist_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :gists, :update],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update a gist comment\n\nPath: /gists/{gist_id}/comments/{comment_id}\n\nMethod: patch"
-  @spec update_comment(GitHubEx.Client.t()) :: result
-  @spec update_comment(GitHubEx.Client.t(), map()) :: result
-  def update_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Gists, :update_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_comment_partition_spec %{
+    path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a gist comment\n\nUpdates a comment on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
+  @spec update_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "gists/update-comment",
       method: :patch,
-      path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
       path_template: "/gists/{gist_id}/comments/{comment_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :gists, :update_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

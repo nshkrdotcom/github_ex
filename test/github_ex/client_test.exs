@@ -2,7 +2,7 @@ defmodule GitHubEx.ClientTest do
   use ExUnit.Case, async: true
 
   alias GitHubEx.{Client, Response, TestTransport}
-  alias Pristine.SDK.Response, as: SDKResponse
+  alias Pristine.Core.Response, as: TransportResponse
 
   test "raw requests use default auth and can return wrapped responses" do
     client =
@@ -18,11 +18,11 @@ defmodule GitHubEx.ClientTest do
             assert request.headers["X-GitHub-Api-Version"] == "2026-03-10"
 
             {:ok,
-             SDKResponse.new(
+             %TransportResponse{
                status: 200,
                headers: %{"x-ratelimit-limit" => "5000", "x-ratelimit-remaining" => "4999"},
                body: Jason.encode!(%{"login" => "octocat"})
-             )}
+             }}
           end
         ]
       )

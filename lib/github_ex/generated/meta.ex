@@ -1,125 +1,250 @@
 defmodule GitHubEx.Meta do
   @moduledoc """
-  Generated GitHub REST operations for the `Meta` namespace.
-
-  ## Operations
-
-  * `meta/root`
-  * `meta/get`
-  * `meta/get-octocat`
-  * `meta/get-all-versions`
-  * `meta/get-zen`
+  Generated Github Ex operations for meta.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @get_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Get GitHub meta information\n\nPath: /meta\n\nMethod: get"
-  @spec get(GitHubEx.Client.t()) :: result
-  @spec get(GitHubEx.Client.t(), map()) :: result
-  def get(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Meta, :get},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Get GitHub meta information\n\nReturns meta information about GitHub, including a list of GitHub's IP addresses. For more information, see \"[About GitHub's IP addresses](https://docs.github.com/articles/about-github-s-ip-addresses/).\"\n\nThe API's response also includes a list of GitHub's domain names.\n\nThe values shown in the documentation's response are example values. You must always query the API directly to get the latest values.\n\n> [!NOTE]\n> This endpoint returns both IPv4 and IPv6 addresses. However, not all features support IPv6. You should refer to the specific documentation for each feature to determine if IPv6 is supported."
+  @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "meta/get",
       method: :get,
-      path: [],
       path_template: "/meta",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :meta, :get],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get all API versions\n\nPath: /versions\n\nMethod: get"
-  @spec get_all_versions(GitHubEx.Client.t()) :: result
-  @spec get_all_versions(GitHubEx.Client.t(), map()) :: result
-  def get_all_versions(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Meta, :get_all_versions},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_all_versions_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get all API versions\n\nGet all supported GitHub API versions."
+  @spec get_all_versions(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_all_versions(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_all_versions_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_all_versions_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_all_versions_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "meta/get-all-versions",
       method: :get,
-      path: [],
       path_template: "/versions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :meta, :get_all_versions],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get Octocat\n\nPath: /octocat\n\nMethod: get"
-  @spec get_octocat(GitHubEx.Client.t()) :: result
-  @spec get_octocat(GitHubEx.Client.t(), map()) :: result
-  def get_octocat(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Meta, :get_octocat},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_octocat_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"s", :s}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get Octocat\n\nGet the octocat as ASCII art"
+  @spec get_octocat(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_octocat(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_octocat_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_octocat_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_octocat_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "meta/get-octocat",
       method: :get,
-      path: [],
       path_template: "/octocat",
-      query: [{"s", :s}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :meta, :get_octocat],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get the Zen of GitHub\n\nPath: /zen\n\nMethod: get"
-  @spec get_zen(GitHubEx.Client.t()) :: result
-  @spec get_zen(GitHubEx.Client.t(), map()) :: result
-  def get_zen(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Meta, :get_zen},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_zen_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get the Zen of GitHub\n\nGet a random sentence from the Zen of GitHub"
+  @spec get_zen(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_zen(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_zen_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_zen_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_zen_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "meta/get-zen",
       method: :get,
-      path: [],
       path_template: "/zen",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :meta, :get_zen],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "GitHub API Root\n\nPath: /\n\nMethod: get"
-  @spec root(GitHubEx.Client.t()) :: result
-  @spec root(GitHubEx.Client.t(), map()) :: result
-  def root(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Meta, :root},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @root_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "GitHub API Root\n\nGet Hypermedia links to resources accessible in GitHub's REST API"
+  @spec root(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def root(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_root_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_root_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @root_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "meta/root",
       method: :get,
-      path: [],
       path_template: "/",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :meta, :root],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

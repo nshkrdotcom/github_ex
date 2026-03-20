@@ -1,125 +1,281 @@
 defmodule GitHubEx.EnterpriseTeams do
   @moduledoc """
-  Generated GitHub REST operations for the `EnterpriseTeams` namespace.
-
-  ## Operations
-
-  * `enterprise-teams/create`
-  * `enterprise-teams/list`
-  * `enterprise-teams/delete`
-  * `enterprise-teams/get`
-  * `enterprise-teams/update`
+  Generated Github Ex operations for enterprise teams.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @create_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Create an enterprise team\n\nPath: /enterprises/{enterprise}/teams\n\nMethod: post"
-  @spec create(GitHubEx.Client.t()) :: result
-  @spec create(GitHubEx.Client.t(), map()) :: result
-  def create(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.EnterpriseTeams, :create},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Create an enterprise team\n\nTo create an enterprise team, the authenticated user must be an owner of the enterprise."
+  @spec create(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-teams/create",
       method: :post,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/teams",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :enterprise_teams, :create],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an enterprise team\n\nPath: /enterprises/{enterprise}/teams/{team_slug}\n\nMethod: delete"
-  @spec delete(GitHubEx.Client.t()) :: result
-  @spec delete(GitHubEx.Client.t(), map()) :: result
-  def delete(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.EnterpriseTeams, :delete},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_partition_spec %{
+    path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an enterprise team\n\nTo delete an enterprise team, the authenticated user must be an enterprise owner.\n\nIf you are an enterprise owner, deleting an enterprise team will delete all of its IdP mappings as well."
+  @spec delete(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-teams/delete",
       method: :delete,
-      path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
       path_template: "/enterprises/{enterprise}/teams/{team_slug}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :enterprise_teams, :delete],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an enterprise team\n\nPath: /enterprises/{enterprise}/teams/{team_slug}\n\nMethod: get"
-  @spec get(GitHubEx.Client.t()) :: result
-  @spec get(GitHubEx.Client.t(), map()) :: result
-  def get(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.EnterpriseTeams, :get},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_partition_spec %{
+    path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an enterprise team\n\nGets a team using the team's slug. To create the slug, GitHub replaces special characters in the name string, changes all words to lowercase, and replaces spaces with a `-` separator and adds the \"ent:\" prefix. For example, \"My TEam Näme\" would become `ent:my-team-name`."
+  @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-teams/get",
       method: :get,
-      path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
       path_template: "/enterprises/{enterprise}/teams/{team_slug}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :enterprise_teams, :get],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List enterprise teams\n\nPath: /enterprises/{enterprise}/teams\n\nMethod: get"
-  @spec list(GitHubEx.Client.t()) :: result
-  @spec list(GitHubEx.Client.t(), map()) :: result
-  def list(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.EnterpriseTeams, :list},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List enterprise teams\n\nList all teams in the enterprise for the authenticated user"
+  @spec list(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-teams/list",
       method: :get,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/teams",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :enterprise_teams, :list],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Update an enterprise team\n\nPath: /enterprises/{enterprise}/teams/{team_slug}\n\nMethod: patch"
-  @spec update(GitHubEx.Client.t()) :: result
-  @spec update(GitHubEx.Client.t(), map()) :: result
-  def update(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.EnterpriseTeams, :update},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_partition_spec %{
+    path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update an enterprise team\n\nTo edit a team, the authenticated user must be an enterprise owner."
+  @spec update(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-teams/update",
       method: :patch,
-      path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
       path_template: "/enterprises/{enterprise}/teams/{team_slug}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :enterprise_teams, :update],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

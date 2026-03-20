@@ -1,131 +1,287 @@
 defmodule GitHubEx.Campaigns do
   @moduledoc """
-  Generated GitHub REST operations for the `Campaigns` namespace.
-
-  ## Operations
-
-  * `campaigns/create-campaign`
-  * `campaigns/list-org-campaigns`
-  * `campaigns/delete-campaign`
-  * `campaigns/get-campaign-summary`
-  * `campaigns/update-campaign`
+  Generated Github Ex operations for campaigns.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @create_campaign_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Create a campaign for an organization\n\nPath: /orgs/{org}/campaigns\n\nMethod: post"
-  @spec create_campaign(GitHubEx.Client.t()) :: result
-  @spec create_campaign(GitHubEx.Client.t(), map()) :: result
-  def create_campaign(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Campaigns, :create_campaign},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Create a campaign for an organization\n\nCreate a campaign for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint.\n\nFine-grained tokens must have the \"Code scanning alerts\" repository permissions (read) on all repositories included\nin the campaign."
+  @spec create_campaign(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_campaign(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_campaign_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_campaign_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_campaign_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "campaigns/create-campaign",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/campaigns",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :campaigns, :create_campaign],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a campaign for an organization\n\nPath: /orgs/{org}/campaigns/{campaign_number}\n\nMethod: delete"
-  @spec delete_campaign(GitHubEx.Client.t()) :: result
-  @spec delete_campaign(GitHubEx.Client.t(), map()) :: result
-  def delete_campaign(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Campaigns, :delete_campaign},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_campaign_partition_spec %{
+    path: [{"org", :org}, {"campaign_number", :campaign_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a campaign for an organization\n\nDeletes a campaign in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
+  @spec delete_campaign(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_campaign(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_campaign_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_campaign_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_campaign_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "campaigns/delete-campaign",
       method: :delete,
-      path: [{"org", :org}, {"campaign_number", :campaign_number}],
       path_template: "/orgs/{org}/campaigns/{campaign_number}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :campaigns, :delete_campaign],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a campaign for an organization\n\nPath: /orgs/{org}/campaigns/{campaign_number}\n\nMethod: get"
-  @spec get_campaign_summary(GitHubEx.Client.t()) :: result
-  @spec get_campaign_summary(GitHubEx.Client.t(), map()) :: result
-  def get_campaign_summary(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Campaigns, :get_campaign_summary},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_campaign_summary_partition_spec %{
+    path: [{"org", :org}, {"campaign_number", :campaign_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a campaign for an organization\n\nGets a campaign for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
+  @spec get_campaign_summary(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_campaign_summary(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_campaign_summary_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_campaign_summary_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_campaign_summary_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "campaigns/get-campaign-summary",
       method: :get,
-      path: [{"org", :org}, {"campaign_number", :campaign_number}],
       path_template: "/orgs/{org}/campaigns/{campaign_number}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :campaigns, :get_campaign_summary],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List campaigns for an organization\n\nPath: /orgs/{org}/campaigns\n\nMethod: get"
-  @spec list_org_campaigns(GitHubEx.Client.t()) :: result
-  @spec list_org_campaigns(GitHubEx.Client.t(), map()) :: result
-  def list_org_campaigns(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Campaigns, :list_org_campaigns},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_org_campaigns_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"page", :page},
+      {"per_page", :per_page},
+      {"direction", :direction},
+      {"state", :state},
+      {"sort", :sort}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List campaigns for an organization\n\nLists campaigns in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
+  @spec list_org_campaigns(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_org_campaigns(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_org_campaigns_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_org_campaigns(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_org_campaigns(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_org_campaigns_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_org_campaigns_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_org_campaigns_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "campaigns/list-org-campaigns",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/campaigns",
-      query: [
-        {"page", :page},
-        {"per_page", :per_page},
-        {"direction", :direction},
-        {"state", :state},
-        {"sort", :sort}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :campaigns, :list_org_campaigns],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Update a campaign\n\nPath: /orgs/{org}/campaigns/{campaign_number}\n\nMethod: patch"
-  @spec update_campaign(GitHubEx.Client.t()) :: result
-  @spec update_campaign(GitHubEx.Client.t(), map()) :: result
-  def update_campaign(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Campaigns, :update_campaign},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_campaign_partition_spec %{
+    path: [{"org", :org}, {"campaign_number", :campaign_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a campaign\n\nUpdates a campaign in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
+  @spec update_campaign(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_campaign(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_campaign_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_campaign_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_campaign_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "campaigns/update-campaign",
       method: :patch,
-      path: [{"org", :org}, {"campaign_number", :campaign_number}],
       path_template: "/orgs/{org}/campaigns/{campaign_number}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :campaigns, :update_campaign],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

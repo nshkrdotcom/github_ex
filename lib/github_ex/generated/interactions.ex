@@ -1,217 +1,461 @@
 defmodule GitHubEx.Interactions do
   @moduledoc """
-  Generated GitHub REST operations for the `Interactions` namespace.
-
-  ## Operations
-
-  * `interactions/get-restrictions-for-org`
-  * `interactions/remove-restrictions-for-org`
-  * `interactions/set-restrictions-for-org`
-  * `interactions/get-restrictions-for-repo`
-  * `interactions/remove-restrictions-for-repo`
-  * `interactions/set-restrictions-for-repo`
-  * `interactions/get-restrictions-for-authenticated-user`
-  * `interactions/remove-restrictions-for-authenticated-user`
-  * `interactions/set-restrictions-for-authenticated-user`
+  Generated Github Ex operations for interactions.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @get_restrictions_for_authenticated_user_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Get interaction restrictions for your public repositories\n\nPath: /user/interaction-limits\n\nMethod: get"
-  @spec get_restrictions_for_authenticated_user(GitHubEx.Client.t()) :: result
-  @spec get_restrictions_for_authenticated_user(GitHubEx.Client.t(), map()) :: result
-  def get_restrictions_for_authenticated_user(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Interactions, :get_restrictions_for_authenticated_user},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Get interaction restrictions for your public repositories\n\nShows which type of GitHub user can interact with your public repositories and when the restriction expires."
+  @spec get_restrictions_for_authenticated_user(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_restrictions_for_authenticated_user(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_restrictions_for_authenticated_user_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_restrictions_for_authenticated_user_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_restrictions_for_authenticated_user_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "interactions/get-restrictions-for-authenticated-user",
       method: :get,
-      path: [],
       path_template: "/user/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :interactions, :get_restrictions_for_authenticated_user],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get interaction restrictions for an organization\n\nPath: /orgs/{org}/interaction-limits\n\nMethod: get"
-  @spec get_restrictions_for_org(GitHubEx.Client.t()) :: result
-  @spec get_restrictions_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_restrictions_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Interactions, :get_restrictions_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_restrictions_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get interaction restrictions for an organization\n\nShows which type of GitHub user can interact with this organization and when the restriction expires. If there is no restrictions, you will see an empty response."
+  @spec get_restrictions_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_restrictions_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_restrictions_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_restrictions_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_restrictions_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "interactions/get-restrictions-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :interactions, :get_restrictions_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get interaction restrictions for a repository\n\nPath: /repos/{owner}/{repo}/interaction-limits\n\nMethod: get"
-  @spec get_restrictions_for_repo(GitHubEx.Client.t()) :: result
-  @spec get_restrictions_for_repo(GitHubEx.Client.t(), map()) :: result
-  def get_restrictions_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Interactions, :get_restrictions_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_restrictions_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get interaction restrictions for a repository\n\nShows which type of GitHub user can interact with this repository and when the restriction expires. If there are no restrictions, you will see an empty response."
+  @spec get_restrictions_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_restrictions_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_restrictions_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_restrictions_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_restrictions_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "interactions/get-restrictions-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :interactions, :get_restrictions_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove interaction restrictions from your public repositories\n\nPath: /user/interaction-limits\n\nMethod: delete"
-  @spec remove_restrictions_for_authenticated_user(GitHubEx.Client.t()) :: result
-  @spec remove_restrictions_for_authenticated_user(GitHubEx.Client.t(), map()) :: result
-  def remove_restrictions_for_authenticated_user(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Interactions, :remove_restrictions_for_authenticated_user},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_restrictions_for_authenticated_user_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove interaction restrictions from your public repositories\n\nRemoves any interaction restrictions from your public repositories."
+  @spec remove_restrictions_for_authenticated_user(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_restrictions_for_authenticated_user(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_restrictions_for_authenticated_user_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_restrictions_for_authenticated_user_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @remove_restrictions_for_authenticated_user_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "interactions/remove-restrictions-for-authenticated-user",
       method: :delete,
-      path: [],
       path_template: "/user/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :interactions, :remove_restrictions_for_authenticated_user],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove interaction restrictions for an organization\n\nPath: /orgs/{org}/interaction-limits\n\nMethod: delete"
-  @spec remove_restrictions_for_org(GitHubEx.Client.t()) :: result
-  @spec remove_restrictions_for_org(GitHubEx.Client.t(), map()) :: result
-  def remove_restrictions_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Interactions, :remove_restrictions_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_restrictions_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove interaction restrictions for an organization\n\nRemoves all interaction restrictions from public repositories in the given organization. You must be an organization owner to remove restrictions."
+  @spec remove_restrictions_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def remove_restrictions_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_restrictions_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_restrictions_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @remove_restrictions_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "interactions/remove-restrictions-for-org",
       method: :delete,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :interactions, :remove_restrictions_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove interaction restrictions for a repository\n\nPath: /repos/{owner}/{repo}/interaction-limits\n\nMethod: delete"
-  @spec remove_restrictions_for_repo(GitHubEx.Client.t()) :: result
-  @spec remove_restrictions_for_repo(GitHubEx.Client.t(), map()) :: result
-  def remove_restrictions_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Interactions, :remove_restrictions_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_restrictions_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove interaction restrictions for a repository\n\nRemoves all interaction restrictions from the given repository. You must have owner or admin access to remove restrictions. If the interaction limit is set for the user or organization that owns this repository, you will receive a `409 Conflict` response and will not be able to use this endpoint to change the interaction limit for a single repository."
+  @spec remove_restrictions_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def remove_restrictions_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_restrictions_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_restrictions_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @remove_restrictions_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "interactions/remove-restrictions-for-repo",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :interactions, :remove_restrictions_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set interaction restrictions for your public repositories\n\nPath: /user/interaction-limits\n\nMethod: put"
-  @spec set_restrictions_for_authenticated_user(GitHubEx.Client.t()) :: result
-  @spec set_restrictions_for_authenticated_user(GitHubEx.Client.t(), map()) :: result
-  def set_restrictions_for_authenticated_user(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Interactions, :set_restrictions_for_authenticated_user},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_restrictions_for_authenticated_user_partition_spec %{
+    path: [],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set interaction restrictions for your public repositories\n\nTemporarily restricts which type of GitHub user can interact with your public repositories. Setting the interaction limit at the user level will overwrite any interaction limits that are set for individual repositories owned by the user."
+  @spec set_restrictions_for_authenticated_user(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_restrictions_for_authenticated_user(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_restrictions_for_authenticated_user_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_restrictions_for_authenticated_user_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_restrictions_for_authenticated_user_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "interactions/set-restrictions-for-authenticated-user",
       method: :put,
-      path: [],
       path_template: "/user/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :interactions, :set_restrictions_for_authenticated_user],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set interaction restrictions for an organization\n\nPath: /orgs/{org}/interaction-limits\n\nMethod: put"
-  @spec set_restrictions_for_org(GitHubEx.Client.t()) :: result
-  @spec set_restrictions_for_org(GitHubEx.Client.t(), map()) :: result
-  def set_restrictions_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Interactions, :set_restrictions_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_restrictions_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set interaction restrictions for an organization\n\nTemporarily restricts interactions to a certain type of GitHub user in any public repository in the given organization. You must be an organization owner to set these restrictions. Setting the interaction limit at the organization level will overwrite any interaction limits that are set for individual repositories owned by the organization."
+  @spec set_restrictions_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def set_restrictions_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_restrictions_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_restrictions_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @set_restrictions_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "interactions/set-restrictions-for-org",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :interactions, :set_restrictions_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set interaction restrictions for a repository\n\nPath: /repos/{owner}/{repo}/interaction-limits\n\nMethod: put"
-  @spec set_restrictions_for_repo(GitHubEx.Client.t()) :: result
-  @spec set_restrictions_for_repo(GitHubEx.Client.t(), map()) :: result
-  def set_restrictions_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Interactions, :set_restrictions_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_restrictions_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set interaction restrictions for a repository\n\nTemporarily restricts interactions to a certain type of GitHub user within the given repository. You must have owner or admin access to set these restrictions. If an interaction limit is set for the user or organization that owns this repository, you will receive a `409 Conflict` response and will not be able to use this endpoint to change the interaction limit for a single repository."
+  @spec set_restrictions_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def set_restrictions_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_restrictions_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_restrictions_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @set_restrictions_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "interactions/set-restrictions-for-repo",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/interaction-limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :interactions, :set_restrictions_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

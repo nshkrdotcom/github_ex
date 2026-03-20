@@ -33,32 +33,7 @@ defmodule GitHubEx.AuthParser do
       when is_binary(markdown) and kind in [:fine_grained_pat, :github_apps] do
     markdown
     |> String.split("\n")
-    |> Enum.reduce(%{acc: %{}, current: nil}, fn line, state ->
-      cond do
-        heading = parse_permission_heading(line) ->
-          %{state | current: heading}
-
-        row = parse_permission_row(line) ->
-          case state.current do
-            nil ->
-              state
-
-            current ->
-              entry =
-                current
-                |> Map.merge(%{
-                  access: normalize_access(row.access),
-                  additional_permissions: additional_permissions?(row.additional_permissions)
-                })
-                |> maybe_put_token_types(kind, row.tokens)
-
-              %{state | acc: merge_permission_entry(state.acc, row, entry)}
-          end
-
-        true ->
-          state
-      end
-    end)
+    |> Enum.reduce(%{acc: %{}, current: nil}, &reduce_permission_line(&1, &2, kind))
     |> Map.fetch!(:acc)
     |> Map.new(fn {key, entries} ->
       {key, entries |> Enum.reverse() |> Enum.uniq()}
@@ -81,6 +56,33 @@ defmodule GitHubEx.AuthParser do
         |> Enum.flat_map(&parse_prog_access_permissions/1)
         |> Enum.uniq()
     }
+  end
+
+  defp reduce_permission_line(line, state, kind) do
+    cond do
+      heading = parse_permission_heading(line) ->
+        %{state | current: heading}
+
+      row = parse_permission_row(line) ->
+        merge_permission_row(state, row, kind)
+
+      true ->
+        state
+    end
+  end
+
+  defp merge_permission_row(%{current: nil} = state, _row, _kind), do: state
+
+  defp merge_permission_row(%{acc: acc, current: current} = state, row, kind) do
+    entry =
+      current
+      |> Map.merge(%{
+        access: normalize_access(row.access),
+        additional_permissions: additional_permissions?(row.additional_permissions)
+      })
+      |> maybe_put_token_types(kind, row.tokens)
+
+    %{state | acc: merge_permission_entry(acc, row, entry)}
   end
 
   @spec extract_legacy_scope_hints(String.t() | nil) :: [String.t()]

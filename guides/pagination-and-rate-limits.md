@@ -26,10 +26,19 @@ response.links["next"]
 response.rate_limit.remaining
 ```
 
-## Generated List Helpers
+## Generated Stream Helpers
 
-`GitHubEx.Pagination` layers header-aware iteration on top of generated
-endpoint functions:
+The shared compiler emits `stream_*` wrappers for paginated operations. They
+follow GitHub `Link` headers and unwrap the current page through
+`Pristine.Operation.items/2`:
+
+```elixir
+GitHubEx.Repos.stream_list_for_authenticated_user(client, %{"per_page" => 100})
+|> Enum.take(150)
+```
+
+`GitHubEx.Pagination` still exists when you want to drive pagination manually
+from an endpoint function:
 
 ```elixir
 {:ok, repos} =

@@ -11,6 +11,18 @@
 The auth matrix depends on both the pinned OpenAPI file and the committed
 GitHub Docs auth snapshots.
 
+## Generation Model
+
+Normal SDK generation now runs through the shared `pristine_codegen` compiler:
+
+- provider definition: `codegen/github_ex/codegen/provider.ex`
+- OpenAPI source plugin: `codegen/github_ex/codegen/plugins/source.ex`
+- provider auth artifact support: `codegen/github_ex/auth_manifest.ex`
+
+The generated request surface compiles straight to `Pristine.Operation` and
+direct runtime execution. There is no repo-local string-template fallback and
+no `GitHubEx.GeneratedSupport` shim in the active path.
+
 ## Refresh the OpenAPI Spec
 
 ```bash
@@ -50,11 +62,18 @@ mix github.generate
 Generated outputs land in:
 
 - `lib/github_ex/generated`
+- `priv/generated/provider_ir.json`
+- `priv/generated/generation_manifest.json`
+- `priv/generated/docs_inventory.json`
+- `priv/generated/operation_auth_policies.json`
+- `priv/generated/auth_manifest.json`
+- `guides/auth-capability-matrix.md`
+
+Legacy artifacts that must stay deleted:
+
 - `priv/generated/manifest.json`
 - `priv/generated/docs_manifest.json`
-- `priv/generated/auth_manifest.json`
 - `priv/generated/open_api_state.snapshot.term`
-- `guides/auth-capability-matrix.md`
 
 ## Verification
 
@@ -69,4 +88,4 @@ mix docs
 ```
 
 When the pinned OpenAPI spec changes or the GitHub Docs auth snapshots change,
-regenerate the auth manifest and rerun the full verification loop.
+rerun `mix github.generate` and then the full verification loop.

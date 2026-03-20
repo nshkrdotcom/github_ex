@@ -3,7 +3,7 @@ defmodule GitHubEx.TestTransport do
 
   @behaviour Pristine.Ports.Transport
 
-  alias Pristine.SDK.Response
+  alias Pristine.Core.Response
 
   @impl true
   def send(request, %{transport_opts: transport_opts} = context)
@@ -19,6 +19,6 @@ defmodule GitHubEx.TestTransport do
   end
 
   defp default_response do
-    {:ok, Response.new(status: 200, headers: %{}, body: "{}")}
+    {:ok, %Response{status: 200, headers: %{}, body: "{}"}}
   end
 end

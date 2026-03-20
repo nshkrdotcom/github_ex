@@ -1,11 +1,11 @@
 defmodule GitHubEx.OAuth do
   @moduledoc """
-  GitHub OAuth helper functions built on the shared `Pristine.SDK.OAuth2`
+  GitHub OAuth helper functions built on the shared `Pristine.OAuth2`
   boundary.
   """
 
   alias GitHubEx.Client
-  alias Pristine.SDK.OAuth2
+  alias Pristine.OAuth2
 
   @oauth_client_opts [
     :accept,

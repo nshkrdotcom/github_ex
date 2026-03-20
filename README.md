@@ -19,6 +19,12 @@ the right credential for the endpoint you want to call. This repo now ships a
 generated [Auth Capability Matrix](guides/auth-capability-matrix.md) so that
 auth guidance comes from committed data instead of memory.
 
+Normal request-surface generation now flows through
+`codegen/github_ex/codegen/provider.ex` and the shared `pristine_codegen`
+compiler. Generated modules build `Pristine.Operation` values and call
+`Pristine.execute/3` directly, with compiler-emitted `stream_*` wrappers for
+paginated endpoints.
+
 ## Authentication Start Here
 
 ### 1. I want to run the bundled examples today
@@ -169,6 +175,15 @@ GitHub currently reports supported REST API versions `2026-03-10` and
 pins `2026-03-10` instead of silently drifting.
 
 ## Verification
+
+`mix github.generate` delegates to the shared compiler and refreshes the final
+committed artifact contract:
+
+- `priv/generated/provider_ir.json`
+- `priv/generated/generation_manifest.json`
+- `priv/generated/docs_inventory.json`
+- `priv/generated/operation_auth_policies.json`
+- `priv/generated/auth_manifest.json`
 
 ```bash
 mix github.generate

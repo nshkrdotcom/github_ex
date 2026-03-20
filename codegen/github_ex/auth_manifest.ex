@@ -3,6 +3,7 @@ defmodule GitHubEx.AuthManifest do
 
   alias GitHubEx.AuthParser
   alias GitHubEx.AuthSources
+  alias PristineCodegen.{JSON, ProviderIR}
 
   @supported_methods ~w(get post put patch delete head options)
   @example_lookup_order [
@@ -36,7 +37,7 @@ defmodule GitHubEx.AuthManifest do
 
     File.write!(
       manifest_paths.auth_manifest_path,
-      Jason.encode_to_iodata!(manifest, pretty: true)
+      JSON.encode!(manifest)
     )
 
     File.write!(manifest_paths.auth_matrix_guide_path, build_guide(manifest))
@@ -44,9 +45,42 @@ defmodule GitHubEx.AuthManifest do
     manifest
   end
 
+  @spec render(ProviderIR.t(), keyword()) :: %{manifest: map(), guide: String.t()}
+  def render(%ProviderIR{} = provider_ir, opts \\ []) when is_list(opts) do
+    spec =
+      opts
+      |> AuthSources.paths()
+      |> Map.fetch!(:spec_path)
+      |> File.read!()
+      |> Jason.decode!()
+
+    manifest =
+      opts
+      |> AuthSources.load!()
+      |> build(spec, provider_ir.operations)
+
+    %{guide: build_guide(manifest), manifest: manifest}
+  end
+
+  @spec write!(ProviderIR.t(), keyword()) :: map()
+  def write!(%ProviderIR{} = provider_ir, opts \\ []) when is_list(opts) do
+    %{guide: guide, manifest: manifest} = render(provider_ir, opts)
+    manifest_paths = paths(opts)
+
+    File.write!(
+      manifest_paths.auth_manifest_path,
+      JSON.encode!(manifest)
+    )
+
+    File.write!(manifest_paths.auth_matrix_guide_path, guide)
+
+    manifest
+  end
+
   @spec build(map(), map(), [map()]) :: map()
   def build(bundle, spec, operations)
       when is_map(bundle) and is_map(spec) and is_list(operations) do
+    operations = Enum.map(operations, &normalize_operation/1)
     parsed = parse_sources(bundle)
     spec_index = build_spec_index(spec)
 
@@ -242,6 +276,45 @@ defmodule GitHubEx.AuthManifest do
     |> Map.new()
   end
 
+  defp normalize_operation(%ProviderIR.Operation{} = operation) do
+    %{
+      auth_strategy:
+        if(operation.auth_policy_id == "github.oauth_application_client_credentials",
+          do: :oauth_application,
+          else: :default
+        ),
+      function: operation.function,
+      method: operation.method,
+      module: operation.module |> Module.split() |> List.last(),
+      operation_id: operation.id,
+      path: operation.path_template
+    }
+  end
+
+  defp normalize_operation(operation) when is_map(operation) do
+    %{
+      auth_strategy:
+        Map.get(operation, :auth_strategy, Map.get(operation, "auth_strategy", :default)),
+      function: Map.get(operation, :function, Map.get(operation, "function")),
+      method: Map.get(operation, :method, Map.get(operation, "method")),
+      module:
+        Map.get(operation, :module, Map.get(operation, "module"))
+        |> normalize_operation_module(),
+      operation_id:
+        Map.get(operation, :operation_id, Map.get(operation, "operation_id", operation[:id])),
+      path: Map.get(operation, :path, Map.get(operation, "path", operation[:path_template]))
+    }
+  end
+
+  defp normalize_operation_module(module) when is_atom(module) do
+    module
+    |> Module.split()
+    |> List.last()
+  end
+
+  defp normalize_operation_module(module) when is_binary(module), do: module
+  defp normalize_operation_module(_module), do: "Misc"
+
   defp build_operation_entry(operation, spec_entry, parsed) do
     key = AuthParser.normalize_endpoint_key(operation.method, operation.path)
     endpoint_prog_access_entry = Map.get(parsed.endpoint_prog_access, key)
@@ -290,46 +363,27 @@ defmodule GitHubEx.AuthManifest do
       )
 
     token_support =
-      if special_auth.oauth_application do
-        %{
-          classic_pat: false,
-          fine_grained_pat: false,
-          github_app_installation: false,
-          github_app_user: false,
-          oauth_access_token: false
-        }
-      else
-        %{
-          classic_pat: legacy_support_value(legacy_flags.classic_pat),
-          fine_grained_pat: fg_pat_support,
-          github_app_installation: app_install_support,
-          github_app_user: app_user_support,
-          oauth_access_token: legacy_support_value(legacy_flags.oauth_access_token)
-        }
-      end
+      token_support_for(
+        special_auth,
+        legacy_flags,
+        fg_pat_support,
+        app_install_support,
+        app_user_support
+      )
 
     notes =
-      [
-        if(special_auth.oauth_application,
-          do: "Uses OAuth application client credentials instead of bearer-token auth."
-        ),
-        if(endpoint_prog_access && endpoint_prog_access.allow_permissionless_access,
-          do:
-            "Endpoint progAccess indicates that no explicit fine-grained PAT permission is required."
-        ),
-        if(endpoint_prog_access && endpoint_prog_access.allows_public_read,
-          do:
-            "Endpoint progAccess indicates that public data can be read without private-resource permission grants."
-        ),
-        if(
-          AuthParser.mentions_github_app_only?(spec_entry.description) and
-            (fg_pat_support == true or app_user_support == true),
-          do:
-            "Conflict: OpenAPI prose still says GitHub App only, but endpoint progAccess marks fine-grained PAT or GitHub App user-token support."
-        )
-      ] ++
-        fg_pat_notes ++
-        app_install_notes ++ app_user_notes ++ permission_notes ++ app_permission_notes
+      operation_notes(%{
+        app_install_notes: app_install_notes,
+        app_permission_notes: app_permission_notes,
+        app_user_notes: app_user_notes,
+        app_user_support: app_user_support,
+        endpoint_prog_access: endpoint_prog_access,
+        fg_pat_notes: fg_pat_notes,
+        fg_pat_support: fg_pat_support,
+        permission_notes: permission_notes,
+        special_auth: special_auth,
+        spec_entry: spec_entry
+      })
 
     clean_notes = notes |> Enum.reject(&is_nil/1) |> Enum.uniq()
 
@@ -393,28 +447,11 @@ defmodule GitHubEx.AuthManifest do
   end
 
   defp resolve_app_support(kind, key, support_set, permissions, endpoint_prog_access) do
+    %{label: label, prog_support: prog_support, token_type: token_type} =
+      app_support_metadata(kind, endpoint_prog_access)
+
     support_page = MapSet.member?(support_set, key)
-
-    permission_table =
-      Enum.any?(permissions, fn permission ->
-        token_type = if(kind == :github_app_installation, do: "IAT", else: "UAT")
-        token_type in permission.token_types
-      end)
-
-    prog_support =
-      case kind do
-        :github_app_installation ->
-          endpoint_prog_access && endpoint_prog_access.github_app_installation
-
-        :github_app_user ->
-          endpoint_prog_access && endpoint_prog_access.github_app_user
-      end
-
-    label =
-      case kind do
-        :github_app_installation -> "GitHub App installation-token"
-        :github_app_user -> "GitHub App user-token"
-      end
+    permission_table = Enum.any?(permissions, &(token_type in &1.token_types))
 
     conflict_messages =
       []
@@ -431,6 +468,22 @@ defmodule GitHubEx.AuthManifest do
       if(conflict_messages == [], do: support_page, else: "conflict"),
       conflict_messages,
       conflict_messages != []
+    }
+  end
+
+  defp app_support_metadata(:github_app_installation, endpoint_prog_access) do
+    %{
+      label: "GitHub App installation-token",
+      prog_support: endpoint_prog_access && endpoint_prog_access.github_app_installation,
+      token_type: "IAT"
+    }
+  end
+
+  defp app_support_metadata(:github_app_user, endpoint_prog_access) do
+    %{
+      label: "GitHub App user-token",
+      prog_support: endpoint_prog_access && endpoint_prog_access.github_app_user,
+      token_type: "UAT"
     }
   end
 
@@ -609,8 +662,88 @@ defmodule GitHubEx.AuthManifest do
 
       true ->
         operation.fine_grained_permissions
-        |> Enum.map(fn permission -> "#{permission.permission}: #{permission.access}" end)
-        |> Enum.join(", ")
+        |> Enum.map_join(", ", fn permission ->
+          "#{permission.permission}: #{permission.access}"
+        end)
+    end
+  end
+
+  defp token_support_for(
+         %{oauth_application: true},
+         _legacy_flags,
+         _fg_pat_support,
+         _app_install_support,
+         _app_user_support
+       ) do
+    %{
+      classic_pat: false,
+      fine_grained_pat: false,
+      github_app_installation: false,
+      github_app_user: false,
+      oauth_access_token: false
+    }
+  end
+
+  defp token_support_for(
+         _special_auth,
+         legacy_flags,
+         fg_pat_support,
+         app_install_support,
+         app_user_support
+       ) do
+    %{
+      classic_pat: legacy_support_value(legacy_flags.classic_pat),
+      fine_grained_pat: fg_pat_support,
+      github_app_installation: app_install_support,
+      github_app_user: app_user_support,
+      oauth_access_token: legacy_support_value(legacy_flags.oauth_access_token)
+    }
+  end
+
+  defp operation_notes(%{
+         app_install_notes: app_install_notes,
+         app_permission_notes: app_permission_notes,
+         app_user_notes: app_user_notes,
+         app_user_support: app_user_support,
+         endpoint_prog_access: endpoint_prog_access,
+         fg_pat_notes: fg_pat_notes,
+         fg_pat_support: fg_pat_support,
+         permission_notes: permission_notes,
+         special_auth: special_auth,
+         spec_entry: spec_entry
+       }) do
+    [
+      oauth_application_note(special_auth),
+      permissionless_access_note(endpoint_prog_access),
+      public_read_note(endpoint_prog_access),
+      github_app_only_conflict_note(spec_entry, fg_pat_support, app_user_support)
+    ] ++
+      fg_pat_notes ++
+      app_install_notes ++ app_user_notes ++ permission_notes ++ app_permission_notes
+  end
+
+  defp oauth_application_note(%{oauth_application: true}) do
+    "Uses OAuth application client credentials instead of bearer-token auth."
+  end
+
+  defp oauth_application_note(_special_auth), do: nil
+
+  defp permissionless_access_note(%{allow_permissionless_access: true}) do
+    "Endpoint progAccess indicates that no explicit fine-grained PAT permission is required."
+  end
+
+  defp permissionless_access_note(_endpoint_prog_access), do: nil
+
+  defp public_read_note(%{allows_public_read: true}) do
+    "Endpoint progAccess indicates that public data can be read without private-resource permission grants."
+  end
+
+  defp public_read_note(_endpoint_prog_access), do: nil
+
+  defp github_app_only_conflict_note(spec_entry, fg_pat_support, app_user_support) do
+    if AuthParser.mentions_github_app_only?(spec_entry.description) and
+         (fg_pat_support == true or app_user_support == true) do
+      "Conflict: OpenAPI prose still says GitHub App only, but endpoint progAccess marks fine-grained PAT or GitHub App user-token support."
     end
   end
 

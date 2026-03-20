@@ -1,562 +1,1366 @@
 defmodule GitHubEx.Dependabot do
   @moduledoc """
-  Generated GitHub REST operations for the `Dependabot` namespace.
-
-  ## Operations
-
-  * `dependabot/list-alerts-for-enterprise`
-  * `dependabot/repository-access-for-org`
-  * `dependabot/update-repository-access-for-org`
-  * `dependabot/set-repository-access-default-level`
-  * `dependabot/list-alerts-for-org`
-  * `dependabot/list-org-secrets`
-  * `dependabot/get-org-public-key`
-  * `dependabot/create-or-update-org-secret`
-  * `dependabot/delete-org-secret`
-  * `dependabot/get-org-secret`
-  * `dependabot/list-selected-repos-for-org-secret`
-  * `dependabot/set-selected-repos-for-org-secret`
-  * `dependabot/add-selected-repo-to-org-secret`
-  * `dependabot/remove-selected-repo-from-org-secret`
-  * `dependabot/list-alerts-for-repo`
-  * `dependabot/get-alert`
-  * `dependabot/update-alert`
-  * `dependabot/list-repo-secrets`
-  * `dependabot/get-repo-public-key`
-  * `dependabot/create-or-update-repo-secret`
-  * `dependabot/delete-repo-secret`
-  * `dependabot/get-repo-secret`
+  Generated Github Ex operations for dependabot.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @add_selected_repo_to_org_secret_partition_spec %{
+    path: [
+      {"org", :org},
+      {"secret_name", :secret_name},
+      {"repository_id", :repository_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Add selected repository to an organization secret\n\nPath: /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}\n\nMethod: put"
-  @spec add_selected_repo_to_org_secret(GitHubEx.Client.t()) :: result
-  @spec add_selected_repo_to_org_secret(GitHubEx.Client.t(), map()) :: result
-  def add_selected_repo_to_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :add_selected_repo_to_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Add selected repository to an organization secret\n\nAdds a repository to an organization secret when the `visibility` for\nrepository access is set to `selected`. The visibility is set when you [Create or\nupdate an organization secret](https://docs.github.com/rest/dependabot/secrets#create-or-update-an-organization-secret).\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec add_selected_repo_to_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def add_selected_repo_to_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_selected_repo_to_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_selected_repo_to_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @add_selected_repo_to_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/add-selected-repo-to-org-secret",
       method: :put,
-      path: [{"org", :org}, {"secret_name", :secret_name}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependabot, :add_selected_repo_to_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create or update an organization secret\n\nPath: /orgs/{org}/dependabot/secrets/{secret_name}\n\nMethod: put"
-  @spec create_or_update_org_secret(GitHubEx.Client.t()) :: result
-  @spec create_or_update_org_secret(GitHubEx.Client.t(), map()) :: result
-  def create_or_update_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Dependabot, :create_or_update_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_or_update_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create or update an organization secret\n\nCreates or updates an organization secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec create_or_update_org_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_or_update_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_or_update_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_or_update_org_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_or_update_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/create-or-update-org-secret",
       method: :put,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/dependabot/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependabot, :create_or_update_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create or update a repository secret\n\nPath: /repos/{owner}/{repo}/dependabot/secrets/{secret_name}\n\nMethod: put"
-  @spec create_or_update_repo_secret(GitHubEx.Client.t()) :: result
-  @spec create_or_update_repo_secret(GitHubEx.Client.t(), map()) :: result
-  def create_or_update_repo_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Dependabot, :create_or_update_repo_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_or_update_repo_secret_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create or update a repository secret\n\nCreates or updates a repository secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_or_update_repo_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_or_update_repo_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_or_update_repo_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_or_update_repo_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_or_update_repo_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/create-or-update-repo-secret",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
       path_template: "/repos/{owner}/{repo}/dependabot/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependabot, :create_or_update_repo_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an organization secret\n\nPath: /orgs/{org}/dependabot/secrets/{secret_name}\n\nMethod: delete"
-  @spec delete_org_secret(GitHubEx.Client.t()) :: result
-  @spec delete_org_secret(GitHubEx.Client.t(), map()) :: result
-  def delete_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :delete_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an organization secret\n\nDeletes a secret in an organization using the secret name.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec delete_org_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_org_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/delete-org-secret",
       method: :delete,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/dependabot/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :dependabot, :delete_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a repository secret\n\nPath: /repos/{owner}/{repo}/dependabot/secrets/{secret_name}\n\nMethod: delete"
-  @spec delete_repo_secret(GitHubEx.Client.t()) :: result
-  @spec delete_repo_secret(GitHubEx.Client.t(), map()) :: result
-  def delete_repo_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :delete_repo_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_repo_secret_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a repository secret\n\nDeletes a secret in a repository using the secret name.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_repo_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_repo_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_repo_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_repo_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_repo_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/delete-repo-secret",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
       path_template: "/repos/{owner}/{repo}/dependabot/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :dependabot, :delete_repo_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a Dependabot alert\n\nPath: /repos/{owner}/{repo}/dependabot/alerts/{alert_number}\n\nMethod: get"
-  @spec get_alert(GitHubEx.Client.t()) :: result
-  @spec get_alert(GitHubEx.Client.t(), map()) :: result
-  def get_alert(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :get_alert},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_alert_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a Dependabot alert\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec get_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_alert(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_alert_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_alert_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_alert_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/get-alert",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
       path_template: "/repos/{owner}/{repo}/dependabot/alerts/{alert_number}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :get_alert],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an organization public key\n\nPath: /orgs/{org}/dependabot/secrets/public-key\n\nMethod: get"
-  @spec get_org_public_key(GitHubEx.Client.t()) :: result
-  @spec get_org_public_key(GitHubEx.Client.t(), map()) :: result
-  def get_org_public_key(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :get_org_public_key},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_org_public_key_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an organization public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_org_public_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_org_public_key(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_org_public_key_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_org_public_key_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_org_public_key_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/get-org-public-key",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/dependabot/secrets/public-key",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :get_org_public_key],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an organization secret\n\nPath: /orgs/{org}/dependabot/secrets/{secret_name}\n\nMethod: get"
-  @spec get_org_secret(GitHubEx.Client.t()) :: result
-  @spec get_org_secret(GitHubEx.Client.t(), map()) :: result
-  def get_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :get_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an organization secret\n\nGets a single organization secret without revealing its encrypted value.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_org_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_org_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/get-org-secret",
       method: :get,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/dependabot/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :get_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a repository public key\n\nPath: /repos/{owner}/{repo}/dependabot/secrets/public-key\n\nMethod: get"
-  @spec get_repo_public_key(GitHubEx.Client.t()) :: result
-  @spec get_repo_public_key(GitHubEx.Client.t(), map()) :: result
-  def get_repo_public_key(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :get_repo_public_key},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_repo_public_key_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a repository public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets. Anyone with read access\nto the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint if the repository is private."
+  @spec get_repo_public_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_repo_public_key(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_repo_public_key_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_repo_public_key_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_repo_public_key_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/get-repo-public-key",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/dependabot/secrets/public-key",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :get_repo_public_key],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a repository secret\n\nPath: /repos/{owner}/{repo}/dependabot/secrets/{secret_name}\n\nMethod: get"
-  @spec get_repo_secret(GitHubEx.Client.t()) :: result
-  @spec get_repo_secret(GitHubEx.Client.t(), map()) :: result
-  def get_repo_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :get_repo_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_repo_secret_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a repository secret\n\nGets a single repository secret without revealing its encrypted value.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_repo_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_repo_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_repo_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_repo_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_repo_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/get-repo-secret",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
       path_template: "/repos/{owner}/{repo}/dependabot/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :get_repo_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List Dependabot alerts for an enterprise\n\nPath: /enterprises/{enterprise}/dependabot/alerts\n\nMethod: get"
-  @spec list_alerts_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec list_alerts_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def list_alerts_for_enterprise(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :list_alerts_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_alerts_for_enterprise_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"state", :state},
+      {"severity", :severity},
+      {"ecosystem", :ecosystem},
+      {"package", :package},
+      {"epss_percentage", :epss_percentage},
+      {"has", :has},
+      {"assignee", :assignee},
+      {"scope", :scope},
+      {"sort", :sort},
+      {"direction", :direction},
+      {"before", :before},
+      {"after", :after},
+      {"per_page", :per_page}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List Dependabot alerts for an enterprise\n\nLists Dependabot alerts for repositories that are owned by the specified enterprise.\n\nThe authenticated user must be a member of the enterprise to use this endpoint.\n\nAlerts are only returned for organizations in the enterprise for which you are an organization owner or a security manager. For more information about security managers, see \"[Managing security managers in your organization](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/managing-security-managers-in-your-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint."
+  @spec list_alerts_for_enterprise(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_alerts_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_alerts_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_alerts_for_enterprise(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_alerts_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_alerts_for_enterprise_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_alerts_for_enterprise_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_alerts_for_enterprise_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/list-alerts-for-enterprise",
       method: :get,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/dependabot/alerts",
-      query: [
-        {"state", :state},
-        {"severity", :severity},
-        {"ecosystem", :ecosystem},
-        {"package", :package},
-        {"epss_percentage", :epss_percentage},
-        {"has", :has},
-        {"assignee", :assignee},
-        {"scope", :scope},
-        {"sort", :sort},
-        {"direction", :direction},
-        {"before", :before},
-        {"after", :after},
-        {"per_page", :per_page}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :list_alerts_for_enterprise],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List Dependabot alerts for an organization\n\nPath: /orgs/{org}/dependabot/alerts\n\nMethod: get"
-  @spec list_alerts_for_org(GitHubEx.Client.t()) :: result
-  @spec list_alerts_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_alerts_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :list_alerts_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_alerts_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"state", :state},
+      {"severity", :severity},
+      {"ecosystem", :ecosystem},
+      {"package", :package},
+      {"epss_percentage", :epss_percentage},
+      {"artifact_registry_url", :artifact_registry_url},
+      {"artifact_registry", :artifact_registry},
+      {"has", :has},
+      {"assignee", :assignee},
+      {"runtime_risk", :runtime_risk},
+      {"scope", :scope},
+      {"sort", :sort},
+      {"direction", :direction},
+      {"before", :before},
+      {"after", :after},
+      {"per_page", :per_page}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List Dependabot alerts for an organization\n\nLists Dependabot alerts for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec list_alerts_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_alerts_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_alerts_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_alerts_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_alerts_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_alerts_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_alerts_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_alerts_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/list-alerts-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/dependabot/alerts",
-      query: [
-        {"state", :state},
-        {"severity", :severity},
-        {"ecosystem", :ecosystem},
-        {"package", :package},
-        {"epss_percentage", :epss_percentage},
-        {"artifact_registry_url", :artifact_registry_url},
-        {"artifact_registry", :artifact_registry},
-        {"has", :has},
-        {"assignee", :assignee},
-        {"runtime_risk", :runtime_risk},
-        {"scope", :scope},
-        {"sort", :sort},
-        {"direction", :direction},
-        {"before", :before},
-        {"after", :after},
-        {"per_page", :per_page}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :list_alerts_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List Dependabot alerts for a repository\n\nPath: /repos/{owner}/{repo}/dependabot/alerts\n\nMethod: get"
-  @spec list_alerts_for_repo(GitHubEx.Client.t()) :: result
-  @spec list_alerts_for_repo(GitHubEx.Client.t(), map()) :: result
-  def list_alerts_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :list_alerts_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_alerts_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"state", :state},
+      {"severity", :severity},
+      {"ecosystem", :ecosystem},
+      {"package", :package},
+      {"manifest", :manifest},
+      {"epss_percentage", :epss_percentage},
+      {"has", :has},
+      {"assignee", :assignee},
+      {"scope", :scope},
+      {"sort", :sort},
+      {"direction", :direction},
+      {"before", :before},
+      {"after", :after},
+      {"per_page", :per_page}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List Dependabot alerts for a repository\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec list_alerts_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_alerts_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_alerts_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_alerts_for_repo(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_alerts_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_alerts_for_repo_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_alerts_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_alerts_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/list-alerts-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/dependabot/alerts",
-      query: [
-        {"state", :state},
-        {"severity", :severity},
-        {"ecosystem", :ecosystem},
-        {"package", :package},
-        {"manifest", :manifest},
-        {"epss_percentage", :epss_percentage},
-        {"has", :has},
-        {"assignee", :assignee},
-        {"scope", :scope},
-        {"sort", :sort},
-        {"direction", :direction},
-        {"before", :before},
-        {"after", :after},
-        {"per_page", :per_page}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :list_alerts_for_repo],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List organization secrets\n\nPath: /orgs/{org}/dependabot/secrets\n\nMethod: get"
-  @spec list_org_secrets(GitHubEx.Client.t()) :: result
-  @spec list_org_secrets(GitHubEx.Client.t(), map()) :: result
-  def list_org_secrets(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :list_org_secrets},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_org_secrets_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List organization secrets\n\nLists all secrets available in an organization without revealing their\nencrypted values.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_org_secrets(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_org_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_org_secrets_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_org_secrets(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_org_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_org_secrets_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_org_secrets_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_org_secrets_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/list-org-secrets",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/dependabot/secrets",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :list_org_secrets],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["secrets"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repository secrets\n\nPath: /repos/{owner}/{repo}/dependabot/secrets\n\nMethod: get"
-  @spec list_repo_secrets(GitHubEx.Client.t()) :: result
-  @spec list_repo_secrets(GitHubEx.Client.t(), map()) :: result
-  def list_repo_secrets(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :list_repo_secrets},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_repo_secrets_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repository secrets\n\nLists all secrets available in a repository without revealing their encrypted\nvalues.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_repo_secrets(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_repo_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_repo_secrets_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_repo_secrets(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_repo_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_repo_secrets_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_repo_secrets_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_repo_secrets_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/list-repo-secrets",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/dependabot/secrets",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :list_repo_secrets],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["secrets"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List selected repositories for an organization secret\n\nPath: /orgs/{org}/dependabot/secrets/{secret_name}/repositories\n\nMethod: get"
-  @spec list_selected_repos_for_org_secret(GitHubEx.Client.t()) :: result
-  @spec list_selected_repos_for_org_secret(GitHubEx.Client.t(), map()) :: result
-  def list_selected_repos_for_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :list_selected_repos_for_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_selected_repos_for_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"page", :page}, {"per_page", :per_page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List selected repositories for an organization secret\n\nLists all repositories that have been selected when the `visibility`\nfor repository access to a secret is set to `selected`.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_selected_repos_for_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_selected_repos_for_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_selected_repos_for_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_selected_repos_for_org_secret(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_selected_repos_for_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_selected_repos_for_org_secret_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_selected_repos_for_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_selected_repos_for_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/list-selected-repos-for-org-secret",
       method: :get,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/dependabot/secrets/{secret_name}/repositories",
-      query: [{"page", :page}, {"per_page", :per_page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :list_selected_repos_for_org_secret],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["repositories"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Remove selected repository from an organization secret\n\nPath: /orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}\n\nMethod: delete"
-  @spec remove_selected_repo_from_org_secret(GitHubEx.Client.t()) :: result
-  @spec remove_selected_repo_from_org_secret(GitHubEx.Client.t(), map()) :: result
-  def remove_selected_repo_from_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :remove_selected_repo_from_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_selected_repo_from_org_secret_partition_spec %{
+    path: [
+      {"org", :org},
+      {"secret_name", :secret_name},
+      {"repository_id", :repository_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove selected repository from an organization secret\n\nRemoves a repository from an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/dependabot/secrets#create-or-update-an-organization-secret).\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec remove_selected_repo_from_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_selected_repo_from_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_selected_repo_from_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_selected_repo_from_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @remove_selected_repo_from_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/remove-selected-repo-from-org-secret",
       method: :delete,
-      path: [{"org", :org}, {"secret_name", :secret_name}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :dependabot, :remove_selected_repo_from_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Lists the repositories Dependabot can access in an organization\n\nPath: /organizations/{org}/dependabot/repository-access\n\nMethod: get"
-  @spec repository_access_for_org(GitHubEx.Client.t()) :: result
-  @spec repository_access_for_org(GitHubEx.Client.t(), map()) :: result
-  def repository_access_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Dependabot, :repository_access_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @repository_access_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"page", :page}, {"per_page", :per_page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Lists the repositories Dependabot can access in an organization\n\nLists repositories that organization admins have allowed Dependabot to access when updating dependencies.\n> [!NOTE]\n>    This operation supports both server-to-server and user-to-server access.\nUnauthorized users will not see the existence of this endpoint."
+  @spec repository_access_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def repository_access_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_repository_access_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_repository_access_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_repository_access_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_repository_access_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_repository_access_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @repository_access_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/repository-access-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/organizations/{org}/dependabot/repository-access",
-      query: [{"page", :page}, {"per_page", :per_page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :dependabot, :repository_access_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["accessible_repositories"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Set the default repository access level for Dependabot\n\nPath: /organizations/{org}/dependabot/repository-access/default-level\n\nMethod: put"
-  @spec set_repository_access_default_level(GitHubEx.Client.t()) :: result
-  @spec set_repository_access_default_level(GitHubEx.Client.t(), map()) :: result
-  def set_repository_access_default_level(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Dependabot, :set_repository_access_default_level},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_repository_access_default_level_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set the default repository access level for Dependabot\n\nSets the default level of repository access Dependabot will have while performing an update.  Available values are:\n- 'public' - Dependabot will only have access to public repositories, unless access is explicitly granted to non-public repositories.\n- 'internal' - Dependabot will only have access to public and internal repositories, unless access is explicitly granted to private repositories.\n\nUnauthorized users will not see the existence of this endpoint.\n\nThis operation supports both server-to-server and user-to-server access."
+  @spec set_repository_access_default_level(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_repository_access_default_level(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_repository_access_default_level_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_repository_access_default_level_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_repository_access_default_level_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/set-repository-access-default-level",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/organizations/{org}/dependabot/repository-access/default-level",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependabot, :set_repository_access_default_level],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set selected repositories for an organization secret\n\nPath: /orgs/{org}/dependabot/secrets/{secret_name}/repositories\n\nMethod: put"
-  @spec set_selected_repos_for_org_secret(GitHubEx.Client.t()) :: result
-  @spec set_selected_repos_for_org_secret(GitHubEx.Client.t(), map()) :: result
-  def set_selected_repos_for_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Dependabot, :set_selected_repos_for_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_selected_repos_for_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set selected repositories for an organization secret\n\nReplaces all repositories for an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/dependabot/secrets#create-or-update-an-organization-secret).\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_selected_repos_for_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_selected_repos_for_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_selected_repos_for_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_selected_repos_for_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_selected_repos_for_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/set-selected-repos-for-org-secret",
       method: :put,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/dependabot/secrets/{secret_name}/repositories",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependabot, :set_selected_repos_for_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update a Dependabot alert\n\nPath: /repos/{owner}/{repo}/dependabot/alerts/{alert_number}\n\nMethod: patch"
-  @spec update_alert(GitHubEx.Client.t()) :: result
-  @spec update_alert(GitHubEx.Client.t(), map()) :: result
-  def update_alert(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Dependabot, :update_alert},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_alert_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a Dependabot alert\n\nThe authenticated user must have access to security alerts for the repository to use this endpoint. For more information, see \"[Granting access to security alerts](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-security-and-analysis-settings-for-your-repository#granting-access-to-security-alerts).\"\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec update_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_alert(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_alert_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_alert_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_alert_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/update-alert",
       method: :patch,
-      path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
       path_template: "/repos/{owner}/{repo}/dependabot/alerts/{alert_number}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependabot, :update_alert],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Updates Dependabot's repository access list for an organization\n\nPath: /organizations/{org}/dependabot/repository-access\n\nMethod: patch"
-  @spec update_repository_access_for_org(GitHubEx.Client.t()) :: result
-  @spec update_repository_access_for_org(GitHubEx.Client.t(), map()) :: result
-  def update_repository_access_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Dependabot, :update_repository_access_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_repository_access_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Updates Dependabot's repository access list for an organization\n\nUpdates repositories according to the list of repositories that organization admins have given Dependabot access to when they've updated dependencies.\n\n> [!NOTE]\n>    This operation supports both server-to-server and user-to-server access.\nUnauthorized users will not see the existence of this endpoint.\n\n**Example request body:**\n```json\n{\n  \"repository_ids_to_add\": [123, 456],\n  \"repository_ids_to_remove\": [789]\n}\n```"
+  @spec update_repository_access_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def update_repository_access_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_repository_access_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_repository_access_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @update_repository_access_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "dependabot/update-repository-access-for-org",
       method: :patch,
-      path: [{"org", :org}],
       path_template: "/organizations/{org}/dependabot/repository-access",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :dependabot, :update_repository_access_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

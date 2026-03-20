@@ -39,7 +39,10 @@ defmodule GitHubEx.MixProject do
 
   defp deps do
     [
-      {:pristine, "~> 0.1.0"},
+      {:pristine, path: "../pristine/apps/pristine_runtime"},
+      {:pristine_codegen, path: "../pristine/apps/pristine_codegen"},
+      {:pristine_provider_testkit,
+       path: "../pristine/apps/pristine_provider_testkit", only: :test},
       {:oapi_generator,
        github: "nshkrdotcom/open-api-generator",
        branch: "doc-generator-fix",
@@ -58,7 +61,7 @@ defmodule GitHubEx.MixProject do
 
   defp dialyzer do
     [
-      plt_add_apps: [:ex_unit, :mix, :oapi_generator, :pristine, :inets],
+      plt_add_apps: [:ex_unit, :mix, :oapi_generator, :pristine, :pristine_codegen, :inets],
       plt_core_path: "priv/plts/core",
       plt_local_path: Path.join("priv/plts/project", project_plt_fingerprint())
     ]
@@ -204,7 +207,8 @@ defmodule GitHubEx.MixProject do
       {"Tooling",
        [
          GitHubEx.Codegen,
-         GitHubEx.Codegen.Renderer,
+         GitHubEx.Codegen.Provider,
+         GitHubEx.Codegen.Plugins.Source,
          GitHubEx.Refresh,
          Mix.Tasks.Github.Auth.Lookup,
          Mix.Tasks.Github.Auth.Refresh,

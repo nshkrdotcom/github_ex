@@ -7,6 +7,7 @@ defmodule GitHubEx.Response do
   alias GitHubEx.RateLimitInfo
 
   @type t :: %__MODULE__{
+          body: term(),
           data: term(),
           elapsed_ms: non_neg_integer() | nil,
           headers: map(),
@@ -19,6 +20,7 @@ defmodule GitHubEx.Response do
         }
 
   defstruct [
+    :body,
     :data,
     :elapsed_ms,
     :headers,
@@ -30,12 +32,14 @@ defmodule GitHubEx.Response do
     :url
   ]
 
-  @spec new(Pristine.SDK.Response.t() | map(), keyword()) :: t()
+  @spec new(Pristine.Response.t() | map(), keyword()) :: t()
   def new(response, opts \\ []) when is_map(response) and is_list(opts) do
     headers = normalize_headers(Map.get(response, :headers, %{}))
+    data = Keyword.get(opts, :data)
 
     %__MODULE__{
-      data: Keyword.get(opts, :data),
+      body: data,
+      data: data,
       elapsed_ms: Keyword.get(opts, :elapsed_ms),
       headers: headers,
       links: RateLimitInfo.links(headers),

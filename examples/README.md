@@ -3,6 +3,11 @@
 These examples are strict real-service proofs for the GitHub REST API surface
 in this package.
 
+The normal request surface is generated through the shared `pristine`
+runtime/codegen stack. For paginated endpoints, the generated modules also
+expose `stream_*` helpers such as
+`GitHubEx.Repos.stream_list_for_authenticated_user/3`.
+
 Read these first if you have not created credentials yet:
 
 - [Authentication and OAuth](../guides/authentication-and-oauth.md)

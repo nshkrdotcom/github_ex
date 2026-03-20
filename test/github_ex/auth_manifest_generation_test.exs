@@ -4,18 +4,18 @@ defmodule GitHubEx.AuthManifestGenerationTest do
   alias GitHubEx.AuthParser
 
   @auth_manifest_path Path.expand("../../priv/generated/auth_manifest.json", __DIR__)
-  @generated_manifest_path Path.expand("../../priv/generated/manifest.json", __DIR__)
+  @provider_ir_path Path.expand("../../priv/generated/provider_ir.json", __DIR__)
   @auth_sources_dir Path.expand("../../priv/upstream/github_docs_auth", __DIR__)
 
   test "auth manifest covers every generated operation exactly once" do
     auth_manifest = load_json(@auth_manifest_path)
-    generated_manifest = load_json(@generated_manifest_path)
+    provider_ir = load_json(@provider_ir_path)
 
     assert auth_manifest["summary"]["operation_count"] == 1093
     assert length(auth_manifest["operations"]) == 1093
 
     assert Enum.map(auth_manifest["operations"], & &1["operation_id"]) |> Enum.sort() ==
-             Enum.map(generated_manifest["operations"], & &1["operation_id"]) |> Enum.sort()
+             Enum.map(provider_ir["operations"], & &1["id"]) |> Enum.sort()
   end
 
   test "structured support counts match the pinned GitHub docs indexes" do
@@ -31,11 +31,11 @@ defmodule GitHubEx.AuthManifestGenerationTest do
 
   test "all operations listed by GitHub's endpoint support pages exist in the SDK manifest" do
     generated_keys =
-      @generated_manifest_path
+      @provider_ir_path
       |> load_json()
       |> Map.fetch!("operations")
       |> Enum.map(fn operation ->
-        "#{String.upcase(operation["method"])} #{operation["path"]}"
+        "#{String.upcase(operation["method"])} #{operation["path_template"]}"
       end)
       |> MapSet.new()
 

@@ -181,39 +181,19 @@ defmodule GitHubEx.AuthSources do
         ordered: true,
         timeout: :timer.seconds(60)
       )
-      |> Enum.map(fn
-        {:ok, result} -> result
-        {:exit, reason} -> raise "failed to fetch endpoint progAccess: #{inspect(reason)}"
-      end)
+      |> Enum.map(&task_result!/1)
 
     operations =
       page_results
       |> Enum.flat_map(& &1.operations)
-      |> Enum.reduce(%{}, fn operation, acc ->
-        key = AuthParser.normalize_endpoint_key(operation.method, operation.path)
-
-        Map.update(acc, key, operation, fn existing ->
-          if existing == operation do
-            existing
-          else
-            raise "conflicting progAccess snapshot entries for #{key}"
-          end
-        end)
-      end)
+      |> Enum.reduce(%{}, &put_operation!/2)
 
     %{
       captured_at: captured_at,
       operation_count: map_size(operations),
       operations: operations,
       page_count: length(page_paths),
-      pages:
-        Enum.map(page_results, fn result ->
-          %{
-            operation_count: length(result.operations),
-            page_path: result.page_path,
-            page_url: result.page_url
-          }
-        end)
+      pages: Enum.map(page_results, &page_summary/1)
     }
   end
 
@@ -221,18 +201,7 @@ defmodule GitHubEx.AuthSources do
     spec
     |> Map.get("paths", %{})
     |> Enum.flat_map(fn {_path, methods} ->
-      methods
-      |> Enum.flat_map(fn
-        {method, operation}
-        when method in ["get", "post", "put", "patch", "delete", "head", "options"] ->
-          case get_in(operation, ["externalDocs", "url"]) do
-            nil -> []
-            url -> [normalize_page_path(url)]
-          end
-
-        _other ->
-          []
-      end)
+      Enum.flat_map(methods, &operation_page_paths/1)
     end)
     |> Enum.uniq()
   end
@@ -249,6 +218,41 @@ defmodule GitHubEx.AuthSources do
 
     path
   end
+
+  defp task_result!({:ok, result}), do: result
+
+  defp task_result!({:exit, reason}),
+    do: raise("failed to fetch endpoint progAccess: #{inspect(reason)}")
+
+  defp put_operation!(operation, acc) do
+    key = AuthParser.normalize_endpoint_key(operation.method, operation.path)
+
+    Map.update(acc, key, operation, fn existing ->
+      if existing == operation do
+        existing
+      else
+        raise "conflicting progAccess snapshot entries for #{key}"
+      end
+    end)
+  end
+
+  defp page_summary(result) do
+    %{
+      operation_count: length(result.operations),
+      page_path: result.page_path,
+      page_url: result.page_url
+    }
+  end
+
+  defp operation_page_paths({method, operation})
+       when method in ["get", "post", "put", "patch", "delete", "head", "options"] do
+    case get_in(operation, ["externalDocs", "url"]) do
+      nil -> []
+      url -> [normalize_page_path(url)]
+    end
+  end
+
+  defp operation_page_paths(_other), do: []
 
   defp fetch_page_prog_access!(page_path) do
     page_url = source_url(page_path)

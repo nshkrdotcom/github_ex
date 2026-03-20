@@ -1,148 +1,330 @@
 defmodule GitHubEx.PrivateRegistries do
   @moduledoc """
-  Generated GitHub REST operations for the `PrivateRegistries` namespace.
-
-  ## Operations
-
-  * `private-registries/create-org-private-registry`
-  * `private-registries/list-org-private-registries`
-  * `private-registries/get-org-public-key`
-  * `private-registries/delete-org-private-registry`
-  * `private-registries/get-org-private-registry`
-  * `private-registries/update-org-private-registry`
+  Generated Github Ex operations for private registries.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @create_org_private_registry_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Create a private registry for an organization\n\nPath: /orgs/{org}/private-registries\n\nMethod: post"
-  @spec create_org_private_registry(GitHubEx.Client.t()) :: result
-  @spec create_org_private_registry(GitHubEx.Client.t(), map()) :: result
-  def create_org_private_registry(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.PrivateRegistries, :create_org_private_registry},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Create a private registry for an organization\n\nCreates a private registry configuration with an encrypted value for an organization. Encrypt your secret using [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec create_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_org_private_registry(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_org_private_registry_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_org_private_registry_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_org_private_registry_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "private-registries/create-org-private-registry",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/private-registries",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :private_registries, :create_org_private_registry],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a private registry for an organization\n\nPath: /orgs/{org}/private-registries/{secret_name}\n\nMethod: delete"
-  @spec delete_org_private_registry(GitHubEx.Client.t()) :: result
-  @spec delete_org_private_registry(GitHubEx.Client.t(), map()) :: result
-  def delete_org_private_registry(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.PrivateRegistries, :delete_org_private_registry},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_org_private_registry_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a private registry for an organization\n\nDelete a private registry configuration at the organization-level.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec delete_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_org_private_registry(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_org_private_registry_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_org_private_registry_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_org_private_registry_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "private-registries/delete-org-private-registry",
       method: :delete,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/private-registries/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :private_registries, :delete_org_private_registry],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a private registry for an organization\n\nPath: /orgs/{org}/private-registries/{secret_name}\n\nMethod: get"
-  @spec get_org_private_registry(GitHubEx.Client.t()) :: result
-  @spec get_org_private_registry(GitHubEx.Client.t(), map()) :: result
-  def get_org_private_registry(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.PrivateRegistries, :get_org_private_registry},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_org_private_registry_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a private registry for an organization\n\nGet the configuration of a single private registry defined for an organization, omitting its encrypted value.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_org_private_registry(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_org_private_registry_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_org_private_registry_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_org_private_registry_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "private-registries/get-org-private-registry",
       method: :get,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/private-registries/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :private_registries, :get_org_private_registry],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get private registries public key for an organization\n\nPath: /orgs/{org}/private-registries/public-key\n\nMethod: get"
-  @spec get_org_public_key(GitHubEx.Client.t()) :: result
-  @spec get_org_public_key(GitHubEx.Client.t(), map()) :: result
-  def get_org_public_key(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.PrivateRegistries, :get_org_public_key},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_org_public_key_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get private registries public key for an organization\n\nGets the org public key, which is needed to encrypt private registry secrets. You need to encrypt a secret before you can create or update secrets.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_org_public_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_org_public_key(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_org_public_key_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_org_public_key_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_org_public_key_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "private-registries/get-org-public-key",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/private-registries/public-key",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :private_registries, :get_org_public_key],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List private registries for an organization\n\nPath: /orgs/{org}/private-registries\n\nMethod: get"
-  @spec list_org_private_registries(GitHubEx.Client.t()) :: result
-  @spec list_org_private_registries(GitHubEx.Client.t(), map()) :: result
-  def list_org_private_registries(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.PrivateRegistries, :list_org_private_registries},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_org_private_registries_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List private registries for an organization\n\nLists all private registry configurations available at the organization-level without revealing their encrypted\nvalues.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_org_private_registries(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_org_private_registries(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_org_private_registries_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_org_private_registries(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_org_private_registries(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_org_private_registries_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_org_private_registries_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_org_private_registries_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "private-registries/list-org-private-registries",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/private-registries",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :private_registries, :list_org_private_registries],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["configurations"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Update a private registry for an organization\n\nPath: /orgs/{org}/private-registries/{secret_name}\n\nMethod: patch"
-  @spec update_org_private_registry(GitHubEx.Client.t()) :: result
-  @spec update_org_private_registry(GitHubEx.Client.t(), map()) :: result
-  def update_org_private_registry(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.PrivateRegistries, :update_org_private_registry},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_org_private_registry_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a private registry for an organization\n\nUpdates a private registry configuration with an encrypted value for an organization. Encrypt your secret using [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec update_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_org_private_registry(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_org_private_registry_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_org_private_registry_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_org_private_registry_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "private-registries/update-org-private-registry",
       method: :patch,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/private-registries/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :private_registries, :update_org_private_registry],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

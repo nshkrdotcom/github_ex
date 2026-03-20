@@ -1,247 +1,571 @@
 defmodule GitHubEx.SecretScanning do
   @moduledoc """
-  Generated GitHub REST operations for the `SecretScanning` namespace.
-
-  ## Operations
-
-  * `secret-scanning/list-alerts-for-org`
-  * `secret-scanning/list-org-pattern-configs`
-  * `secret-scanning/update-org-pattern-configs`
-  * `secret-scanning/list-alerts-for-repo`
-  * `secret-scanning/get-alert`
-  * `secret-scanning/update-alert`
-  * `secret-scanning/list-locations-for-alert`
-  * `secret-scanning/create-push-protection-bypass`
-  * `secret-scanning/get-scan-history`
+  Generated Github Ex operations for secret scanning.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @create_push_protection_bypass_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Create a push protection bypass\n\nPath: /repos/{owner}/{repo}/secret-scanning/push-protection-bypasses\n\nMethod: post"
-  @spec create_push_protection_bypass(GitHubEx.Client.t()) :: result
-  @spec create_push_protection_bypass(GitHubEx.Client.t(), map()) :: result
-  def create_push_protection_bypass(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.SecretScanning, :create_push_protection_bypass},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Create a push protection bypass\n\nCreates a bypass for a previously push protected secret.\n\nThe authenticated user must be the original author of the committed secret.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_push_protection_bypass(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_push_protection_bypass(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_push_protection_bypass_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_push_protection_bypass_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @create_push_protection_bypass_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/create-push-protection-bypass",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/secret-scanning/push-protection-bypasses",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :secret_scanning, :create_push_protection_bypass],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a secret scanning alert\n\nPath: /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}\n\nMethod: get"
-  @spec get_alert(GitHubEx.Client.t()) :: result
-  @spec get_alert(GitHubEx.Client.t(), map()) :: result
-  def get_alert(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.SecretScanning, :get_alert},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_alert_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"hide_secret", :hide_secret}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a secret scanning alert\n\nGets a single secret scanning alert detected in an eligible repository.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec get_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_alert(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_alert_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_alert_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_alert_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/get-alert",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}",
-      query: [{"hide_secret", :hide_secret}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :secret_scanning, :get_alert],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get secret scanning scan history for a repository\n\nPath: /repos/{owner}/{repo}/secret-scanning/scan-history\n\nMethod: get"
-  @spec get_scan_history(GitHubEx.Client.t()) :: result
-  @spec get_scan_history(GitHubEx.Client.t(), map()) :: result
-  def get_scan_history(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.SecretScanning, :get_scan_history},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_scan_history_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get secret scanning scan history for a repository\n\nLists the latest default incremental and backfill scans by type for a repository. Scans from Copilot Secret Scanning are not included.\n\n> [!NOTE]\n> This endpoint requires [GitHub Advanced Security](https://docs.github.com/get-started/learning-about-github/about-github-advanced-security).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec get_scan_history(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_scan_history(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_scan_history_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_scan_history_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_scan_history_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/get-scan-history",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/secret-scanning/scan-history",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :secret_scanning, :get_scan_history],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List secret scanning alerts for an organization\n\nPath: /orgs/{org}/secret-scanning/alerts\n\nMethod: get"
-  @spec list_alerts_for_org(GitHubEx.Client.t()) :: result
-  @spec list_alerts_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_alerts_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.SecretScanning, :list_alerts_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_alerts_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"state", :state},
+      {"secret_type", :secret_type},
+      {"resolution", :resolution},
+      {"assignee", :assignee},
+      {"sort", :sort},
+      {"direction", :direction},
+      {"page", :page},
+      {"per_page", :per_page},
+      {"before", :before},
+      {"after", :after},
+      {"validity", :validity},
+      {"is_publicly_leaked", :is_publicly_leaked},
+      {"is_multi_repo", :is_multi_repo},
+      {"hide_secret", :hide_secret}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List secret scanning alerts for an organization\n\nLists secret scanning alerts for eligible repositories in an organization, from newest to oldest.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec list_alerts_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_alerts_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_alerts_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_alerts_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_alerts_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_alerts_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_alerts_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_alerts_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/list-alerts-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/secret-scanning/alerts",
-      query: [
-        {"state", :state},
-        {"secret_type", :secret_type},
-        {"resolution", :resolution},
-        {"assignee", :assignee},
-        {"sort", :sort},
-        {"direction", :direction},
-        {"page", :page},
-        {"per_page", :per_page},
-        {"before", :before},
-        {"after", :after},
-        {"validity", :validity},
-        {"is_publicly_leaked", :is_publicly_leaked},
-        {"is_multi_repo", :is_multi_repo},
-        {"hide_secret", :hide_secret}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :secret_scanning, :list_alerts_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List secret scanning alerts for a repository\n\nPath: /repos/{owner}/{repo}/secret-scanning/alerts\n\nMethod: get"
-  @spec list_alerts_for_repo(GitHubEx.Client.t()) :: result
-  @spec list_alerts_for_repo(GitHubEx.Client.t(), map()) :: result
-  def list_alerts_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.SecretScanning, :list_alerts_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_alerts_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"state", :state},
+      {"secret_type", :secret_type},
+      {"resolution", :resolution},
+      {"assignee", :assignee},
+      {"sort", :sort},
+      {"direction", :direction},
+      {"page", :page},
+      {"per_page", :per_page},
+      {"before", :before},
+      {"after", :after},
+      {"validity", :validity},
+      {"is_publicly_leaked", :is_publicly_leaked},
+      {"is_multi_repo", :is_multi_repo},
+      {"hide_secret", :hide_secret}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List secret scanning alerts for a repository\n\nLists secret scanning alerts for an eligible repository, from newest to oldest.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec list_alerts_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_alerts_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_alerts_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_alerts_for_repo(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_alerts_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_alerts_for_repo_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_alerts_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_alerts_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/list-alerts-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts",
-      query: [
-        {"state", :state},
-        {"secret_type", :secret_type},
-        {"resolution", :resolution},
-        {"assignee", :assignee},
-        {"sort", :sort},
-        {"direction", :direction},
-        {"page", :page},
-        {"per_page", :per_page},
-        {"before", :before},
-        {"after", :after},
-        {"validity", :validity},
-        {"is_publicly_leaked", :is_publicly_leaked},
-        {"is_multi_repo", :is_multi_repo},
-        {"hide_secret", :hide_secret}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :secret_scanning, :list_alerts_for_repo],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List locations for a secret scanning alert\n\nPath: /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations\n\nMethod: get"
-  @spec list_locations_for_alert(GitHubEx.Client.t()) :: result
-  @spec list_locations_for_alert(GitHubEx.Client.t(), map()) :: result
-  def list_locations_for_alert(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.SecretScanning, :list_locations_for_alert},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_locations_for_alert_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"page", :page}, {"per_page", :per_page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List locations for a secret scanning alert\n\nLists all locations for a given secret scanning alert for an eligible repository.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec list_locations_for_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_locations_for_alert(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_locations_for_alert_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_locations_for_alert(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_locations_for_alert(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_locations_for_alert_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_locations_for_alert_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_locations_for_alert_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/list-locations-for-alert",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations",
-      query: [{"page", :page}, {"per_page", :per_page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :secret_scanning, :list_locations_for_alert],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List organization pattern configurations\n\nPath: /orgs/{org}/secret-scanning/pattern-configurations\n\nMethod: get"
-  @spec list_org_pattern_configs(GitHubEx.Client.t()) :: result
-  @spec list_org_pattern_configs(GitHubEx.Client.t(), map()) :: result
-  def list_org_pattern_configs(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.SecretScanning, :list_org_pattern_configs},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_org_pattern_configs_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List organization pattern configurations\n\nLists the secret scanning pattern configurations for an organization.\n\nPersonal access tokens (classic) need the `read:org` scope to use this endpoint."
+  @spec list_org_pattern_configs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_org_pattern_configs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_org_pattern_configs_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_list_org_pattern_configs_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_org_pattern_configs_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/list-org-pattern-configs",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/secret-scanning/pattern-configurations",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :secret_scanning, :list_org_pattern_configs],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update a secret scanning alert\n\nPath: /repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}\n\nMethod: patch"
-  @spec update_alert(GitHubEx.Client.t()) :: result
-  @spec update_alert(GitHubEx.Client.t(), map()) :: result
-  def update_alert(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.SecretScanning, :update_alert},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_alert_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a secret scanning alert\n\nUpdates the status of a secret scanning alert in an eligible repository.\n\nYou can also use this endpoint to assign or unassign an alert to a user who has write access to the repository.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
+  @spec update_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_alert(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_alert_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_alert_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_alert_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/update-alert",
       method: :patch,
-      path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :secret_scanning, :update_alert],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update organization pattern configurations\n\nPath: /orgs/{org}/secret-scanning/pattern-configurations\n\nMethod: patch"
-  @spec update_org_pattern_configs(GitHubEx.Client.t()) :: result
-  @spec update_org_pattern_configs(GitHubEx.Client.t(), map()) :: result
-  def update_org_pattern_configs(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.SecretScanning, :update_org_pattern_configs},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_org_pattern_configs_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update organization pattern configurations\n\nUpdates the secret scanning pattern configurations for an organization.\n\nPersonal access tokens (classic) need the `write:org` scope to use this endpoint."
+  @spec update_org_pattern_configs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_org_pattern_configs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_org_pattern_configs_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_org_pattern_configs_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_org_pattern_configs_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "secret-scanning/update-org-pattern-configs",
       method: :patch,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/secret-scanning/pattern-configurations",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :secret_scanning, :update_org_pattern_configs],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

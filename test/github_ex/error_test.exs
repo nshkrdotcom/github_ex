@@ -2,7 +2,7 @@ defmodule GitHubEx.ErrorTest do
   use ExUnit.Case, async: true
 
   alias GitHubEx.Error
-  alias Pristine.SDK.Response
+  alias Pristine.Response
 
   test "maps structured github errors" do
     response =

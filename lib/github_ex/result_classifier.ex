@@ -4,7 +4,7 @@ defmodule GitHubEx.ResultClassifier do
   @behaviour Pristine.Ports.ResultClassifier
 
   alias GitHubEx.RateLimitInfo
-  alias Pristine.SDK.ResultClassification
+  alias Pristine.Core.ResultClassification
 
   @retryable_groups ["github.app_auth", "github.delete", "github.oauth", "github.read"]
   @upstream_failure_statuses [500, 502, 503, 504]

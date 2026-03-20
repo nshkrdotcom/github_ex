@@ -1,160 +1,342 @@
 defmodule GitHubEx.EnterpriseTeamMemberships do
   @moduledoc """
-  Generated GitHub REST operations for the `EnterpriseTeamMemberships` namespace.
-
-  ## Operations
-
-  * `enterprise-team-memberships/list`
-  * `enterprise-team-memberships/bulk-add`
-  * `enterprise-team-memberships/bulk-remove`
-  * `enterprise-team-memberships/add`
-  * `enterprise-team-memberships/get`
-  * `enterprise-team-memberships/remove`
+  Generated Github Ex operations for enterprise team memberships.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @add_partition_spec %{
+    path: [
+      {"enterprise", :enterprise},
+      {"enterprise-team", :enterprise_team},
+      {"username", :username}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Add team member\n\nPath: /enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}\n\nMethod: put"
-  @spec add(GitHubEx.Client.t()) :: result
-  @spec add(GitHubEx.Client.t(), map()) :: result
-  def add(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.EnterpriseTeamMemberships, :add},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Add team member\n\nAdd a team member to an enterprise team."
+  @spec add(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def add(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @add_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-team-memberships/add",
       method: :put,
-      path: [
-        {"enterprise", :enterprise},
-        {"enterprise-team", :enterprise_team},
-        {"username", :username}
-      ],
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :enterprise_team_memberships, :add],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Bulk add team members\n\nPath: /enterprises/{enterprise}/teams/{enterprise-team}/memberships/add\n\nMethod: post"
-  @spec bulk_add(GitHubEx.Client.t()) :: result
-  @spec bulk_add(GitHubEx.Client.t(), map()) :: result
-  def bulk_add(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.EnterpriseTeamMemberships, :bulk_add},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @bulk_add_partition_spec %{
+    path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Bulk add team members\n\nAdd multiple team members to an enterprise team."
+  @spec bulk_add(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def bulk_add(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_bulk_add_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_bulk_add_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @bulk_add_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-team-memberships/bulk-add",
       method: :post,
-      path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/memberships/add",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :enterprise_team_memberships, :bulk_add],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Bulk remove team members\n\nPath: /enterprises/{enterprise}/teams/{enterprise-team}/memberships/remove\n\nMethod: post"
-  @spec bulk_remove(GitHubEx.Client.t()) :: result
-  @spec bulk_remove(GitHubEx.Client.t(), map()) :: result
-  def bulk_remove(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.EnterpriseTeamMemberships, :bulk_remove},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @bulk_remove_partition_spec %{
+    path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Bulk remove team members\n\nRemove multiple team members from an enterprise team."
+  @spec bulk_remove(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def bulk_remove(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_bulk_remove_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_bulk_remove_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @bulk_remove_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-team-memberships/bulk-remove",
       method: :post,
-      path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/memberships/remove",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :enterprise_team_memberships, :bulk_remove],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get enterprise team membership\n\nPath: /enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}\n\nMethod: get"
-  @spec get(GitHubEx.Client.t()) :: result
-  @spec get(GitHubEx.Client.t(), map()) :: result
-  def get(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.EnterpriseTeamMemberships, :get},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_partition_spec %{
+    path: [
+      {"enterprise", :enterprise},
+      {"enterprise-team", :enterprise_team},
+      {"username", :username}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get enterprise team membership\n\nReturns whether the user is a member of the enterprise team."
+  @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-team-memberships/get",
       method: :get,
-      path: [
-        {"enterprise", :enterprise},
-        {"enterprise-team", :enterprise_team},
-        {"username", :username}
-      ],
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :enterprise_team_memberships, :get],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List members in an enterprise team\n\nPath: /enterprises/{enterprise}/teams/{enterprise-team}/memberships\n\nMethod: get"
-  @spec list(GitHubEx.Client.t()) :: result
-  @spec list(GitHubEx.Client.t(), map()) :: result
-  def list(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.EnterpriseTeamMemberships, :list},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_partition_spec %{
+    path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List members in an enterprise team\n\nLists all team members in an enterprise team."
+  @spec list(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-team-memberships/list",
       method: :get,
-      path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/memberships",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :enterprise_team_memberships, :list],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Remove team membership\n\nPath: /enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}\n\nMethod: delete"
-  @spec remove(GitHubEx.Client.t()) :: result
-  @spec remove(GitHubEx.Client.t(), map()) :: result
-  def remove(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.EnterpriseTeamMemberships, :remove},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_partition_spec %{
+    path: [
+      {"enterprise", :enterprise},
+      {"enterprise-team", :enterprise_team},
+      {"username", :username}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove team membership\n\nRemove membership of a specific user from a particular team in an enterprise."
+  @spec remove(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def remove(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @remove_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "enterprise-team-memberships/remove",
       method: :delete,
-      path: [
-        {"enterprise", :enterprise},
-        {"enterprise-team", :enterprise_team},
-        {"username", :username}
-      ],
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/memberships/{username}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :enterprise_team_memberships, :remove],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

@@ -1,380 +1,926 @@
 defmodule GitHubEx.Reactions do
   @moduledoc """
-  Generated GitHub REST operations for the `Reactions` namespace.
-
-  ## Operations
-
-  * `reactions/create-for-commit-comment`
-  * `reactions/list-for-commit-comment`
-  * `reactions/delete-for-commit-comment`
-  * `reactions/create-for-issue-comment`
-  * `reactions/list-for-issue-comment`
-  * `reactions/delete-for-issue-comment`
-  * `reactions/create-for-issue`
-  * `reactions/list-for-issue`
-  * `reactions/delete-for-issue`
-  * `reactions/create-for-pull-request-review-comment`
-  * `reactions/list-for-pull-request-review-comment`
-  * `reactions/delete-for-pull-request-comment`
-  * `reactions/create-for-release`
-  * `reactions/list-for-release`
-  * `reactions/delete-for-release`
+  Generated Github Ex operations for reactions.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @create_for_commit_comment_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Create reaction for a commit comment\n\nPath: /repos/{owner}/{repo}/comments/{comment_id}/reactions\n\nMethod: post"
-  @spec create_for_commit_comment(GitHubEx.Client.t()) :: result
-  @spec create_for_commit_comment(GitHubEx.Client.t(), map()) :: result
-  def create_for_commit_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Reactions, :create_for_commit_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Create reaction for a commit comment\n\nCreate a reaction to a [commit comment](https://docs.github.com/rest/commits/comments#get-a-commit-comment). A response with an HTTP `200` status means that you already added the reaction type to this commit comment."
+  @spec create_for_commit_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_for_commit_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_for_commit_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_for_commit_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_for_commit_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/create-for-commit-comment",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
       path_template: "/repos/{owner}/{repo}/comments/{comment_id}/reactions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :reactions, :create_for_commit_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create reaction for an issue\n\nPath: /repos/{owner}/{repo}/issues/{issue_number}/reactions\n\nMethod: post"
-  @spec create_for_issue(GitHubEx.Client.t()) :: result
-  @spec create_for_issue(GitHubEx.Client.t(), map()) :: result
-  def create_for_issue(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Reactions, :create_for_issue},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_for_issue_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"issue_number", :issue_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create reaction for an issue\n\nCreate a reaction to an [issue](https://docs.github.com/rest/issues/issues#get-an-issue). A response with an HTTP `200` status means that you already added the reaction type to this issue."
+  @spec create_for_issue(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_for_issue(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_for_issue_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_for_issue_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_for_issue_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/create-for-issue",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"issue_number", :issue_number}],
       path_template: "/repos/{owner}/{repo}/issues/{issue_number}/reactions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :reactions, :create_for_issue],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create reaction for an issue comment\n\nPath: /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions\n\nMethod: post"
-  @spec create_for_issue_comment(GitHubEx.Client.t()) :: result
-  @spec create_for_issue_comment(GitHubEx.Client.t(), map()) :: result
-  def create_for_issue_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Reactions, :create_for_issue_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_for_issue_comment_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create reaction for an issue comment\n\nCreate a reaction to an [issue comment](https://docs.github.com/rest/issues/comments#get-an-issue-comment). A response with an HTTP `200` status means that you already added the reaction type to this issue comment."
+  @spec create_for_issue_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_for_issue_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_for_issue_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_for_issue_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_for_issue_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/create-for-issue-comment",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
       path_template: "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :reactions, :create_for_issue_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create reaction for a pull request review comment\n\nPath: /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions\n\nMethod: post"
-  @spec create_for_pull_request_review_comment(GitHubEx.Client.t()) :: result
-  @spec create_for_pull_request_review_comment(GitHubEx.Client.t(), map()) :: result
-  def create_for_pull_request_review_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Reactions, :create_for_pull_request_review_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_for_pull_request_review_comment_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create reaction for a pull request review comment\n\nCreate a reaction to a [pull request review comment](https://docs.github.com/rest/pulls/comments#get-a-review-comment-for-a-pull-request). A response with an HTTP `200` status means that you already added the reaction type to this pull request review comment."
+  @spec create_for_pull_request_review_comment(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_for_pull_request_review_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_for_pull_request_review_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_for_pull_request_review_comment_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @create_for_pull_request_review_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/create-for-pull-request-review-comment",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :reactions, :create_for_pull_request_review_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create reaction for a release\n\nPath: /repos/{owner}/{repo}/releases/{release_id}/reactions\n\nMethod: post"
-  @spec create_for_release(GitHubEx.Client.t()) :: result
-  @spec create_for_release(GitHubEx.Client.t(), map()) :: result
-  def create_for_release(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Reactions, :create_for_release},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_for_release_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"release_id", :release_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create reaction for a release\n\nCreate a reaction to a [release](https://docs.github.com/rest/releases/releases#get-a-release). A response with a `Status: 200 OK` means that you already added the reaction type to this release."
+  @spec create_for_release(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_for_release(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_for_release_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_for_release_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_for_release_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/create-for-release",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"release_id", :release_id}],
       path_template: "/repos/{owner}/{repo}/releases/{release_id}/reactions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :reactions, :create_for_release],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a commit comment reaction\n\nPath: /repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}\n\nMethod: delete"
-  @spec delete_for_commit_comment(GitHubEx.Client.t()) :: result
-  @spec delete_for_commit_comment(GitHubEx.Client.t(), map()) :: result
-  def delete_for_commit_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :delete_for_commit_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_for_commit_comment_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"comment_id", :comment_id},
+      {"reaction_id", :reaction_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a commit comment reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE /repositories/:repository_id/comments/:comment_id/reactions/:reaction_id`.\n\nDelete a reaction to a [commit comment](https://docs.github.com/rest/commits/comments#get-a-commit-comment)."
+  @spec delete_for_commit_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_for_commit_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_for_commit_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_for_commit_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_for_commit_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/delete-for-commit-comment",
       method: :delete,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"comment_id", :comment_id},
-        {"reaction_id", :reaction_id}
-      ],
       path_template: "/repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :reactions, :delete_for_commit_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an issue reaction\n\nPath: /repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}\n\nMethod: delete"
-  @spec delete_for_issue(GitHubEx.Client.t()) :: result
-  @spec delete_for_issue(GitHubEx.Client.t(), map()) :: result
-  def delete_for_issue(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :delete_for_issue},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_for_issue_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"issue_number", :issue_number},
+      {"reaction_id", :reaction_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an issue reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE /repositories/:repository_id/issues/:issue_number/reactions/:reaction_id`.\n\nDelete a reaction to an [issue](https://docs.github.com/rest/issues/issues#get-an-issue)."
+  @spec delete_for_issue(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_for_issue(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_for_issue_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_for_issue_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_for_issue_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/delete-for-issue",
       method: :delete,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"issue_number", :issue_number},
-        {"reaction_id", :reaction_id}
-      ],
       path_template: "/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :reactions, :delete_for_issue],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an issue comment reaction\n\nPath: /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}\n\nMethod: delete"
-  @spec delete_for_issue_comment(GitHubEx.Client.t()) :: result
-  @spec delete_for_issue_comment(GitHubEx.Client.t(), map()) :: result
-  def delete_for_issue_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :delete_for_issue_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_for_issue_comment_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"comment_id", :comment_id},
+      {"reaction_id", :reaction_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an issue comment reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE delete /repositories/:repository_id/issues/comments/:comment_id/reactions/:reaction_id`.\n\nDelete a reaction to an [issue comment](https://docs.github.com/rest/issues/comments#get-an-issue-comment)."
+  @spec delete_for_issue_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_for_issue_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_for_issue_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_for_issue_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_for_issue_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/delete-for-issue-comment",
       method: :delete,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"comment_id", :comment_id},
-        {"reaction_id", :reaction_id}
-      ],
       path_template: "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :reactions, :delete_for_issue_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a pull request comment reaction\n\nPath: /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}\n\nMethod: delete"
-  @spec delete_for_pull_request_comment(GitHubEx.Client.t()) :: result
-  @spec delete_for_pull_request_comment(GitHubEx.Client.t(), map()) :: result
-  def delete_for_pull_request_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :delete_for_pull_request_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_for_pull_request_comment_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"comment_id", :comment_id},
+      {"reaction_id", :reaction_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a pull request comment reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE /repositories/:repository_id/pulls/comments/:comment_id/reactions/:reaction_id.`\n\nDelete a reaction to a [pull request review comment](https://docs.github.com/rest/pulls/comments#get-a-review-comment-for-a-pull-request)."
+  @spec delete_for_pull_request_comment(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def delete_for_pull_request_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_for_pull_request_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_for_pull_request_comment_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @delete_for_pull_request_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/delete-for-pull-request-comment",
       method: :delete,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"comment_id", :comment_id},
-        {"reaction_id", :reaction_id}
-      ],
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :reactions, :delete_for_pull_request_comment],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a release reaction\n\nPath: /repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}\n\nMethod: delete"
-  @spec delete_for_release(GitHubEx.Client.t()) :: result
-  @spec delete_for_release(GitHubEx.Client.t(), map()) :: result
-  def delete_for_release(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :delete_for_release},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_for_release_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"release_id", :release_id},
+      {"reaction_id", :reaction_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a release reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE delete /repositories/:repository_id/releases/:release_id/reactions/:reaction_id`.\n\nDelete a reaction to a [release](https://docs.github.com/rest/releases/releases#get-a-release)."
+  @spec delete_for_release(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_for_release(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_for_release_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_for_release_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_for_release_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/delete-for-release",
       method: :delete,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"release_id", :release_id},
-        {"reaction_id", :reaction_id}
-      ],
       path_template: "/repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :reactions, :delete_for_release],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List reactions for a commit comment\n\nPath: /repos/{owner}/{repo}/comments/{comment_id}/reactions\n\nMethod: get"
-  @spec list_for_commit_comment(GitHubEx.Client.t()) :: result
-  @spec list_for_commit_comment(GitHubEx.Client.t(), map()) :: result
-  def list_for_commit_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :list_for_commit_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_for_commit_comment_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List reactions for a commit comment\n\nList the reactions to a [commit comment](https://docs.github.com/rest/commits/comments#get-a-commit-comment)."
+  @spec list_for_commit_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_for_commit_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_for_commit_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_for_commit_comment(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_for_commit_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_for_commit_comment_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_for_commit_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_for_commit_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/list-for-commit-comment",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
       path_template: "/repos/{owner}/{repo}/comments/{comment_id}/reactions",
-      query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :reactions, :list_for_commit_comment],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List reactions for an issue\n\nPath: /repos/{owner}/{repo}/issues/{issue_number}/reactions\n\nMethod: get"
-  @spec list_for_issue(GitHubEx.Client.t()) :: result
-  @spec list_for_issue(GitHubEx.Client.t(), map()) :: result
-  def list_for_issue(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :list_for_issue},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_for_issue_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"issue_number", :issue_number}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List reactions for an issue\n\nList the reactions to an [issue](https://docs.github.com/rest/issues/issues#get-an-issue)."
+  @spec list_for_issue(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_for_issue(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_for_issue_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_for_issue(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_for_issue(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_for_issue_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_for_issue_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_for_issue_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/list-for-issue",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"issue_number", :issue_number}],
       path_template: "/repos/{owner}/{repo}/issues/{issue_number}/reactions",
-      query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :reactions, :list_for_issue],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List reactions for an issue comment\n\nPath: /repos/{owner}/{repo}/issues/comments/{comment_id}/reactions\n\nMethod: get"
-  @spec list_for_issue_comment(GitHubEx.Client.t()) :: result
-  @spec list_for_issue_comment(GitHubEx.Client.t(), map()) :: result
-  def list_for_issue_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :list_for_issue_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_for_issue_comment_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List reactions for an issue comment\n\nList the reactions to an [issue comment](https://docs.github.com/rest/issues/comments#get-an-issue-comment)."
+  @spec list_for_issue_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_for_issue_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_for_issue_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_for_issue_comment(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_for_issue_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_for_issue_comment_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_for_issue_comment_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_for_issue_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/list-for-issue-comment",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
       path_template: "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
-      query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :reactions, :list_for_issue_comment],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List reactions for a pull request review comment\n\nPath: /repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions\n\nMethod: get"
-  @spec list_for_pull_request_review_comment(GitHubEx.Client.t()) :: result
-  @spec list_for_pull_request_review_comment(GitHubEx.Client.t(), map()) :: result
-  def list_for_pull_request_review_comment(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :list_for_pull_request_review_comment},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_for_pull_request_review_comment_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List reactions for a pull request review comment\n\nList the reactions to a [pull request review comment](https://docs.github.com/rest/pulls/comments#get-a-review-comment-for-a-pull-request)."
+  @spec list_for_pull_request_review_comment(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_for_pull_request_review_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_for_pull_request_review_comment_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_for_pull_request_review_comment(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_for_pull_request_review_comment(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_for_pull_request_review_comment_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_for_pull_request_review_comment_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_for_pull_request_review_comment_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/list-for-pull-request-review-comment",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
-      query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :reactions, :list_for_pull_request_review_comment],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List reactions for a release\n\nPath: /repos/{owner}/{repo}/releases/{release_id}/reactions\n\nMethod: get"
-  @spec list_for_release(GitHubEx.Client.t()) :: result
-  @spec list_for_release(GitHubEx.Client.t(), map()) :: result
-  def list_for_release(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Reactions, :list_for_release},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_for_release_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"release_id", :release_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List reactions for a release\n\nList the reactions to a [release](https://docs.github.com/rest/releases/releases#get-a-release)."
+  @spec list_for_release(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_for_release(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_for_release_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_for_release(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_for_release(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_for_release_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_for_release_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_for_release_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "reactions/list-for-release",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"release_id", :release_id}],
       path_template: "/repos/{owner}/{repo}/releases/{release_id}/reactions",
-      query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :reactions, :list_for_release],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 end

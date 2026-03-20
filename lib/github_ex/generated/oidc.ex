@@ -1,199 +1,520 @@
 defmodule GitHubEx.Oidc do
   @moduledoc """
-  Generated GitHub REST operations for the `Oidc` namespace.
-
-  ## Operations
-
-  * `oidc/create-oidc-custom-property-inclusion-for-enterprise`
-  * `oidc/list-oidc-custom-property-inclusions-for-enterprise`
-  * `oidc/delete-oidc-custom-property-inclusion-for-enterprise`
-  * `oidc/create-oidc-custom-property-inclusion-for-org`
-  * `oidc/list-oidc-custom-property-inclusions-for-org`
-  * `oidc/delete-oidc-custom-property-inclusion-for-org`
-  * `oidc/get-oidc-custom-sub-template-for-org`
-  * `oidc/update-oidc-custom-sub-template-for-org`
+  Generated Github Ex operations for oidc.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @create_oidc_custom_property_inclusion_for_enterprise_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Create an OIDC custom property inclusion for an enterprise\n\nPath: /enterprises/{enterprise}/actions/oidc/customization/properties/repo\n\nMethod: post"
-  @spec create_oidc_custom_property_inclusion_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec create_oidc_custom_property_inclusion_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def create_oidc_custom_property_inclusion_for_enterprise(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Oidc, :create_oidc_custom_property_inclusion_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Create an OIDC custom property inclusion for an enterprise\n\nAdds a repository custom property to be included in the OIDC token for repository actions in an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
+  @spec create_oidc_custom_property_inclusion_for_enterprise(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_oidc_custom_property_inclusion_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_oidc_custom_property_inclusion_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_oidc_custom_property_inclusion_for_enterprise_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @create_oidc_custom_property_inclusion_for_enterprise_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "oidc/create-oidc-custom-property-inclusion-for-enterprise",
       method: :post,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/actions/oidc/customization/properties/repo",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :oidc,
+          :create_oidc_custom_property_inclusion_for_enterprise
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create an OIDC custom property inclusion for an organization\n\nPath: /orgs/{org}/actions/oidc/customization/properties/repo\n\nMethod: post"
-  @spec create_oidc_custom_property_inclusion_for_org(GitHubEx.Client.t()) :: result
-  @spec create_oidc_custom_property_inclusion_for_org(GitHubEx.Client.t(), map()) :: result
-  def create_oidc_custom_property_inclusion_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Oidc, :create_oidc_custom_property_inclusion_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_oidc_custom_property_inclusion_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create an OIDC custom property inclusion for an organization\n\nAdds a repository custom property to be included in the OIDC token for repository actions in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec create_oidc_custom_property_inclusion_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_oidc_custom_property_inclusion_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_oidc_custom_property_inclusion_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_oidc_custom_property_inclusion_for_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @create_oidc_custom_property_inclusion_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "oidc/create-oidc-custom-property-inclusion-for-org",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/oidc/customization/properties/repo",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :oidc, :create_oidc_custom_property_inclusion_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an OIDC custom property inclusion for an enterprise\n\nPath: /enterprises/{enterprise}/actions/oidc/customization/properties/repo/{custom_property_name}\n\nMethod: delete"
-  @spec delete_oidc_custom_property_inclusion_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec delete_oidc_custom_property_inclusion_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def delete_oidc_custom_property_inclusion_for_enterprise(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Oidc, :delete_oidc_custom_property_inclusion_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_oidc_custom_property_inclusion_for_enterprise_partition_spec %{
+    path: [
+      {"enterprise", :enterprise},
+      {"custom_property_name", :custom_property_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an OIDC custom property inclusion for an enterprise\n\nRemoves a repository custom property from being included in the OIDC token for repository actions in an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
+  @spec delete_oidc_custom_property_inclusion_for_enterprise(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def delete_oidc_custom_property_inclusion_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_oidc_custom_property_inclusion_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_oidc_custom_property_inclusion_for_enterprise_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @delete_oidc_custom_property_inclusion_for_enterprise_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "oidc/delete-oidc-custom-property-inclusion-for-enterprise",
       method: :delete,
-      path: [{"enterprise", :enterprise}, {"custom_property_name", :custom_property_name}],
       path_template:
         "/enterprises/{enterprise}/actions/oidc/customization/properties/repo/{custom_property_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :oidc,
+          :delete_oidc_custom_property_inclusion_for_enterprise
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an OIDC custom property inclusion for an organization\n\nPath: /orgs/{org}/actions/oidc/customization/properties/repo/{custom_property_name}\n\nMethod: delete"
-  @spec delete_oidc_custom_property_inclusion_for_org(GitHubEx.Client.t()) :: result
-  @spec delete_oidc_custom_property_inclusion_for_org(GitHubEx.Client.t(), map()) :: result
-  def delete_oidc_custom_property_inclusion_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Oidc, :delete_oidc_custom_property_inclusion_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_oidc_custom_property_inclusion_for_org_partition_spec %{
+    path: [{"org", :org}, {"custom_property_name", :custom_property_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an OIDC custom property inclusion for an organization\n\nRemoves a repository custom property from being included in the OIDC token for repository actions in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec delete_oidc_custom_property_inclusion_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def delete_oidc_custom_property_inclusion_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_oidc_custom_property_inclusion_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_oidc_custom_property_inclusion_for_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @delete_oidc_custom_property_inclusion_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "oidc/delete-oidc-custom-property-inclusion-for-org",
       method: :delete,
-      path: [{"org", :org}, {"custom_property_name", :custom_property_name}],
       path_template:
         "/orgs/{org}/actions/oidc/customization/properties/repo/{custom_property_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :oidc, :delete_oidc_custom_property_inclusion_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get the customization template for an OIDC subject claim for an organization\n\nPath: /orgs/{org}/actions/oidc/customization/sub\n\nMethod: get"
-  @spec get_oidc_custom_sub_template_for_org(GitHubEx.Client.t()) :: result
-  @spec get_oidc_custom_sub_template_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_oidc_custom_sub_template_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Oidc, :get_oidc_custom_sub_template_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_oidc_custom_sub_template_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get the customization template for an OIDC subject claim for an organization\n\nGets the customization template for an OpenID Connect (OIDC) subject claim.\n\nOAuth app tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
+  @spec get_oidc_custom_sub_template_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_oidc_custom_sub_template_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_oidc_custom_sub_template_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_oidc_custom_sub_template_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_oidc_custom_sub_template_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "oidc/get-oidc-custom-sub-template-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/oidc/customization/sub",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :oidc, :get_oidc_custom_sub_template_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List OIDC custom property inclusions for an enterprise\n\nPath: /enterprises/{enterprise}/actions/oidc/customization/properties/repo\n\nMethod: get"
-  @spec list_oidc_custom_property_inclusions_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec list_oidc_custom_property_inclusions_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def list_oidc_custom_property_inclusions_for_enterprise(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Oidc, :list_oidc_custom_property_inclusions_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_oidc_custom_property_inclusions_for_enterprise_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List OIDC custom property inclusions for an enterprise\n\nLists the repository custom properties that are included in the OIDC token for repository actions in an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
+  @spec list_oidc_custom_property_inclusions_for_enterprise(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_oidc_custom_property_inclusions_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_oidc_custom_property_inclusions_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_oidc_custom_property_inclusions_for_enterprise(term(), map(), keyword()) ::
+          Enumerable.t()
+  def stream_list_oidc_custom_property_inclusions_for_enterprise(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_oidc_custom_property_inclusions_for_enterprise_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_oidc_custom_property_inclusions_for_enterprise_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_oidc_custom_property_inclusions_for_enterprise_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "oidc/list-oidc-custom-property-inclusions-for-enterprise",
       method: :get,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/actions/oidc/customization/properties/repo",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :oidc, :list_oidc_custom_property_inclusions_for_enterprise],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List OIDC custom property inclusions for an organization\n\nPath: /orgs/{org}/actions/oidc/customization/properties/repo\n\nMethod: get"
-  @spec list_oidc_custom_property_inclusions_for_org(GitHubEx.Client.t()) :: result
-  @spec list_oidc_custom_property_inclusions_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_oidc_custom_property_inclusions_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Oidc, :list_oidc_custom_property_inclusions_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_oidc_custom_property_inclusions_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List OIDC custom property inclusions for an organization\n\nLists the repository custom properties that are included in the OIDC token for repository actions in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
+  @spec list_oidc_custom_property_inclusions_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_oidc_custom_property_inclusions_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_oidc_custom_property_inclusions_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_oidc_custom_property_inclusions_for_org(term(), map(), keyword()) ::
+          Enumerable.t()
+  def stream_list_oidc_custom_property_inclusions_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_oidc_custom_property_inclusions_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_oidc_custom_property_inclusions_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_oidc_custom_property_inclusions_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "oidc/list-oidc-custom-property-inclusions-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/oidc/customization/properties/repo",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :oidc, :list_oidc_custom_property_inclusions_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Set the customization template for an OIDC subject claim for an organization\n\nPath: /orgs/{org}/actions/oidc/customization/sub\n\nMethod: put"
-  @spec update_oidc_custom_sub_template_for_org(GitHubEx.Client.t()) :: result
-  @spec update_oidc_custom_sub_template_for_org(GitHubEx.Client.t(), map()) :: result
-  def update_oidc_custom_sub_template_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Oidc, :update_oidc_custom_sub_template_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_oidc_custom_sub_template_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set the customization template for an OIDC subject claim for an organization\n\nCreates or updates the customization template for an OpenID Connect (OIDC) subject claim.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
+  @spec update_oidc_custom_sub_template_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def update_oidc_custom_sub_template_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_oidc_custom_sub_template_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_oidc_custom_sub_template_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @update_oidc_custom_sub_template_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "oidc/update-oidc-custom-sub-template-for-org",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/oidc/customization/sub",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :oidc, :update_oidc_custom_sub_template_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end

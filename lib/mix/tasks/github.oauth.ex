@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Github.Oauth do
   use Mix.Task
 
   alias GitHubEx.OAuthTokenFile
-  alias Pristine.SDK.OAuth2.Error
+  alias Pristine.OAuth2.Error
 
   @default_timeout_ms 120_000
   @interactive_switches [
@@ -130,7 +130,7 @@ defmodule Mix.Tasks.Github.Oauth do
   end
 
   defp oauth2_module do
-    Application.get_env(:github_ex, :oauth2_module, Module.concat([Pristine, SDK, OAuth2]))
+    Application.get_env(:github_ex, :oauth2_module, Pristine.OAuth2)
   end
 
   defp saved_token_module do

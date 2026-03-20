@@ -1,4422 +1,10935 @@
 defmodule GitHubEx.Actions do
   @moduledoc """
-  Generated GitHub REST operations for the `Actions` namespace.
-
-  ## Operations
-
-  * `actions/get-actions-cache-retention-limit-for-enterprise`
-  * `actions/set-actions-cache-retention-limit-for-enterprise`
-  * `actions/get-actions-cache-storage-limit-for-enterprise`
-  * `actions/set-actions-cache-storage-limit-for-enterprise`
-  * `actions/get-actions-cache-retention-limit-for-organization`
-  * `actions/set-actions-cache-retention-limit-for-organization`
-  * `actions/get-actions-cache-storage-limit-for-organization`
-  * `actions/set-actions-cache-storage-limit-for-organization`
-  * `actions/get-actions-cache-usage-for-org`
-  * `actions/get-actions-cache-usage-by-repo-for-org`
-  * `actions/create-hosted-runner-for-org`
-  * `actions/list-hosted-runners-for-org`
-  * `actions/list-custom-images-for-org`
-  * `actions/delete-custom-image-from-org`
-  * `actions/get-custom-image-for-org`
-  * `actions/list-custom-image-versions-for-org`
-  * `actions/delete-custom-image-version-from-org`
-  * `actions/get-custom-image-version-for-org`
-  * `actions/get-hosted-runners-github-owned-images-for-org`
-  * `actions/get-hosted-runners-partner-images-for-org`
-  * `actions/get-hosted-runners-limits-for-org`
-  * `actions/get-hosted-runners-machine-specs-for-org`
-  * `actions/get-hosted-runners-platforms-for-org`
-  * `actions/delete-hosted-runner-for-org`
-  * `actions/get-hosted-runner-for-org`
-  * `actions/update-hosted-runner-for-org`
-  * `actions/get-github-actions-permissions-organization`
-  * `actions/set-github-actions-permissions-organization`
-  * `actions/get-artifact-and-log-retention-settings-organization`
-  * `actions/set-artifact-and-log-retention-settings-organization`
-  * `actions/get-fork-pr-contributor-approval-permissions-organization`
-  * `actions/set-fork-pr-contributor-approval-permissions-organization`
-  * `actions/get-private-repo-fork-pr-workflows-settings-organization`
-  * `actions/set-private-repo-fork-pr-workflows-settings-organization`
-  * `actions/list-selected-repositories-enabled-github-actions-organization`
-  * `actions/set-selected-repositories-enabled-github-actions-organization`
-  * `actions/disable-selected-repository-github-actions-organization`
-  * `actions/enable-selected-repository-github-actions-organization`
-  * `actions/get-allowed-actions-organization`
-  * `actions/set-allowed-actions-organization`
-  * `actions/get-self-hosted-runners-permissions-organization`
-  * `actions/set-self-hosted-runners-permissions-organization`
-  * `actions/list-selected-repositories-self-hosted-runners-organization`
-  * `actions/set-selected-repositories-self-hosted-runners-organization`
-  * `actions/disable-selected-repository-self-hosted-runners-organization`
-  * `actions/enable-selected-repository-self-hosted-runners-organization`
-  * `actions/get-github-actions-default-workflow-permissions-organization`
-  * `actions/set-github-actions-default-workflow-permissions-organization`
-  * `actions/create-self-hosted-runner-group-for-org`
-  * `actions/list-self-hosted-runner-groups-for-org`
-  * `actions/delete-self-hosted-runner-group-from-org`
-  * `actions/get-self-hosted-runner-group-for-org`
-  * `actions/update-self-hosted-runner-group-for-org`
-  * `actions/list-github-hosted-runners-in-group-for-org`
-  * `actions/list-repo-access-to-self-hosted-runner-group-in-org`
-  * `actions/set-repo-access-to-self-hosted-runner-group-in-org`
-  * `actions/add-repo-access-to-self-hosted-runner-group-in-org`
-  * `actions/remove-repo-access-to-self-hosted-runner-group-in-org`
-  * `actions/list-self-hosted-runners-in-group-for-org`
-  * `actions/set-self-hosted-runners-in-group-for-org`
-  * `actions/add-self-hosted-runner-to-group-for-org`
-  * `actions/remove-self-hosted-runner-from-group-for-org`
-  * `actions/list-self-hosted-runners-for-org`
-  * `actions/list-runner-applications-for-org`
-  * `actions/generate-runner-jitconfig-for-org`
-  * `actions/create-registration-token-for-org`
-  * `actions/create-remove-token-for-org`
-  * `actions/delete-self-hosted-runner-from-org`
-  * `actions/get-self-hosted-runner-for-org`
-  * `actions/add-custom-labels-to-self-hosted-runner-for-org`
-  * `actions/list-labels-for-self-hosted-runner-for-org`
-  * `actions/remove-all-custom-labels-from-self-hosted-runner-for-org`
-  * `actions/set-custom-labels-for-self-hosted-runner-for-org`
-  * `actions/remove-custom-label-from-self-hosted-runner-for-org`
-  * `actions/list-org-secrets`
-  * `actions/get-org-public-key`
-  * `actions/create-or-update-org-secret`
-  * `actions/delete-org-secret`
-  * `actions/get-org-secret`
-  * `actions/list-selected-repos-for-org-secret`
-  * `actions/set-selected-repos-for-org-secret`
-  * `actions/add-selected-repo-to-org-secret`
-  * `actions/remove-selected-repo-from-org-secret`
-  * `actions/create-org-variable`
-  * `actions/list-org-variables`
-  * `actions/delete-org-variable`
-  * `actions/get-org-variable`
-  * `actions/update-org-variable`
-  * `actions/list-selected-repos-for-org-variable`
-  * `actions/set-selected-repos-for-org-variable`
-  * `actions/add-selected-repo-to-org-variable`
-  * `actions/remove-selected-repo-from-org-variable`
-  * `actions/list-artifacts-for-repo`
-  * `actions/delete-artifact`
-  * `actions/get-artifact`
-  * `actions/download-artifact`
-  * `actions/get-actions-cache-retention-limit-for-repository`
-  * `actions/set-actions-cache-retention-limit-for-repository`
-  * `actions/get-actions-cache-storage-limit-for-repository`
-  * `actions/set-actions-cache-storage-limit-for-repository`
-  * `actions/get-actions-cache-usage`
-  * `actions/delete-actions-cache-by-key`
-  * `actions/get-actions-cache-list`
-  * `actions/delete-actions-cache-by-id`
-  * `actions/get-job-for-workflow-run`
-  * `actions/download-job-logs-for-workflow-run`
-  * `actions/re-run-job-for-workflow-run`
-  * `actions/get-custom-oidc-sub-claim-for-repo`
-  * `actions/set-custom-oidc-sub-claim-for-repo`
-  * `actions/list-repo-organization-secrets`
-  * `actions/list-repo-organization-variables`
-  * `actions/get-github-actions-permissions-repository`
-  * `actions/set-github-actions-permissions-repository`
-  * `actions/get-workflow-access-to-repository`
-  * `actions/set-workflow-access-to-repository`
-  * `actions/get-artifact-and-log-retention-settings-repository`
-  * `actions/set-artifact-and-log-retention-settings-repository`
-  * `actions/get-fork-pr-contributor-approval-permissions-repository`
-  * `actions/set-fork-pr-contributor-approval-permissions-repository`
-  * `actions/get-private-repo-fork-pr-workflows-settings-repository`
-  * `actions/set-private-repo-fork-pr-workflows-settings-repository`
-  * `actions/get-allowed-actions-repository`
-  * `actions/set-allowed-actions-repository`
-  * `actions/get-github-actions-default-workflow-permissions-repository`
-  * `actions/set-github-actions-default-workflow-permissions-repository`
-  * `actions/list-self-hosted-runners-for-repo`
-  * `actions/list-runner-applications-for-repo`
-  * `actions/generate-runner-jitconfig-for-repo`
-  * `actions/create-registration-token-for-repo`
-  * `actions/create-remove-token-for-repo`
-  * `actions/delete-self-hosted-runner-from-repo`
-  * `actions/get-self-hosted-runner-for-repo`
-  * `actions/add-custom-labels-to-self-hosted-runner-for-repo`
-  * `actions/list-labels-for-self-hosted-runner-for-repo`
-  * `actions/remove-all-custom-labels-from-self-hosted-runner-for-repo`
-  * `actions/set-custom-labels-for-self-hosted-runner-for-repo`
-  * `actions/remove-custom-label-from-self-hosted-runner-for-repo`
-  * `actions/list-workflow-runs-for-repo`
-  * `actions/delete-workflow-run`
-  * `actions/get-workflow-run`
-  * `actions/get-reviews-for-run`
-  * `actions/approve-workflow-run`
-  * `actions/list-workflow-run-artifacts`
-  * `actions/get-workflow-run-attempt`
-  * `actions/list-jobs-for-workflow-run-attempt`
-  * `actions/download-workflow-run-attempt-logs`
-  * `actions/cancel-workflow-run`
-  * `actions/review-custom-gates-for-run`
-  * `actions/force-cancel-workflow-run`
-  * `actions/list-jobs-for-workflow-run`
-  * `actions/delete-workflow-run-logs`
-  * `actions/download-workflow-run-logs`
-  * `actions/get-pending-deployments-for-run`
-  * `actions/review-pending-deployments-for-run`
-  * `actions/re-run-workflow`
-  * `actions/re-run-workflow-failed-jobs`
-  * `actions/get-workflow-run-usage`
-  * `actions/list-repo-secrets`
-  * `actions/get-repo-public-key`
-  * `actions/create-or-update-repo-secret`
-  * `actions/delete-repo-secret`
-  * `actions/get-repo-secret`
-  * `actions/create-repo-variable`
-  * `actions/list-repo-variables`
-  * `actions/delete-repo-variable`
-  * `actions/get-repo-variable`
-  * `actions/update-repo-variable`
-  * `actions/list-repo-workflows`
-  * `actions/get-workflow`
-  * `actions/disable-workflow`
-  * `actions/create-workflow-dispatch`
-  * `actions/enable-workflow`
-  * `actions/list-workflow-runs`
-  * `actions/get-workflow-usage`
-  * `actions/list-environment-secrets`
-  * `actions/get-environment-public-key`
-  * `actions/create-or-update-environment-secret`
-  * `actions/delete-environment-secret`
-  * `actions/get-environment-secret`
-  * `actions/create-environment-variable`
-  * `actions/list-environment-variables`
-  * `actions/delete-environment-variable`
-  * `actions/get-environment-variable`
-  * `actions/update-environment-variable`
+  Generated Github Ex operations for actions.
   """
 
-  @type result :: {:ok, term()} | {:error, GitHubEx.Error.t()}
+  @add_custom_labels_to_self_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
 
-  @doc "Add custom labels to a self-hosted runner for an organization\n\nPath: /orgs/{org}/actions/runners/{runner_id}/labels\n\nMethod: post"
-  @spec add_custom_labels_to_self_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec add_custom_labels_to_self_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def add_custom_labels_to_self_hosted_runner_for_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :add_custom_labels_to_self_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @doc "Add custom labels to a self-hosted runner for an organization\n\nAdds custom labels to a self-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec add_custom_labels_to_self_hosted_runner_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def add_custom_labels_to_self_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_custom_labels_to_self_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_custom_labels_to_self_hosted_runner_for_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @add_custom_labels_to_self_hosted_runner_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/add-custom-labels-to-self-hosted-runner-for-org",
       method: :post,
-      path: [{"org", :org}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :add_custom_labels_to_self_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Add custom labels to a self-hosted runner for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/{runner_id}/labels\n\nMethod: post"
-  @spec add_custom_labels_to_self_hosted_runner_for_repo(GitHubEx.Client.t()) :: result
-  @spec add_custom_labels_to_self_hosted_runner_for_repo(GitHubEx.Client.t(), map()) :: result
-  def add_custom_labels_to_self_hosted_runner_for_repo(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :add_custom_labels_to_self_hosted_runner_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @add_custom_labels_to_self_hosted_runner_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Add custom labels to a self-hosted runner for a repository\n\nAdds custom labels to a self-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec add_custom_labels_to_self_hosted_runner_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def add_custom_labels_to_self_hosted_runner_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_custom_labels_to_self_hosted_runner_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_custom_labels_to_self_hosted_runner_for_repo_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @add_custom_labels_to_self_hosted_runner_for_repo_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/add-custom-labels-to-self-hosted-runner-for-repo",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
       path_template: "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :add_custom_labels_to_self_hosted_runner_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Add repository access to a self-hosted runner group in an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}\n\nMethod: put"
-  @spec add_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t()) :: result
-  @spec add_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t(), map()) :: result
-  def add_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :add_repo_access_to_self_hosted_runner_group_in_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @add_repo_access_to_self_hosted_runner_group_in_org_partition_spec %{
+    path: [
+      {"org", :org},
+      {"runner_group_id", :runner_group_id},
+      {"repository_id", :repository_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Add repository access to a self-hosted runner group in an organization\n\nAdds a repository to the list of repositories that can access a self-hosted runner group. The runner group must have `visibility` set to `selected`. For more information, see \"[Create a self-hosted runner group for an organization](#create-a-self-hosted-runner-group-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec add_repo_access_to_self_hosted_runner_group_in_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def add_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @add_repo_access_to_self_hosted_runner_group_in_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/add-repo-access-to-self-hosted-runner-group-in-org",
       method: :put,
-      path: [
-        {"org", :org},
-        {"runner_group_id", :runner_group_id},
-        {"repository_id", :repository_id}
-      ],
       path_template:
         "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :add_repo_access_to_self_hosted_runner_group_in_org
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Add selected repository to an organization secret\n\nPath: /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}\n\nMethod: put"
-  @spec add_selected_repo_to_org_secret(GitHubEx.Client.t()) :: result
-  @spec add_selected_repo_to_org_secret(GitHubEx.Client.t(), map()) :: result
-  def add_selected_repo_to_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :add_selected_repo_to_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @add_selected_repo_to_org_secret_partition_spec %{
+    path: [
+      {"org", :org},
+      {"secret_name", :secret_name},
+      {"repository_id", :repository_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Add selected repository to an organization secret\n\nAdds a repository to an organization secret when the `visibility` for\nrepository access is set to `selected`. For more information about setting the visibility, see [Create or\nupdate an organization secret](https://docs.github.com/rest/actions/secrets#create-or-update-an-organization-secret).\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec add_selected_repo_to_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def add_selected_repo_to_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_selected_repo_to_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_selected_repo_to_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @add_selected_repo_to_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/add-selected-repo-to-org-secret",
       method: :put,
-      path: [{"org", :org}, {"secret_name", :secret_name}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :add_selected_repo_to_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Add selected repository to an organization variable\n\nPath: /orgs/{org}/actions/variables/{name}/repositories/{repository_id}\n\nMethod: put"
-  @spec add_selected_repo_to_org_variable(GitHubEx.Client.t()) :: result
-  @spec add_selected_repo_to_org_variable(GitHubEx.Client.t(), map()) :: result
-  def add_selected_repo_to_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :add_selected_repo_to_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @add_selected_repo_to_org_variable_partition_spec %{
+    path: [{"org", :org}, {"name", :name}, {"repository_id", :repository_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Add selected repository to an organization variable\n\nAdds a repository to an organization variable that is available to selected repositories.\nOrganization variables that are available to selected repositories have their `visibility` field set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec add_selected_repo_to_org_variable(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def add_selected_repo_to_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_selected_repo_to_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_selected_repo_to_org_variable_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @add_selected_repo_to_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/add-selected-repo-to-org-variable",
       method: :put,
-      path: [{"org", :org}, {"name", :name}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/actions/variables/{name}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :add_selected_repo_to_org_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Add a self-hosted runner to a group for an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}\n\nMethod: put"
-  @spec add_self_hosted_runner_to_group_for_org(GitHubEx.Client.t()) :: result
-  @spec add_self_hosted_runner_to_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def add_self_hosted_runner_to_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :add_self_hosted_runner_to_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @add_self_hosted_runner_to_group_for_org_partition_spec %{
+    path: [
+      {"org", :org},
+      {"runner_group_id", :runner_group_id},
+      {"runner_id", :runner_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Add a self-hosted runner to a group for an organization\n\nAdds a self-hosted runner to a runner group configured in an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec add_self_hosted_runner_to_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def add_self_hosted_runner_to_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_add_self_hosted_runner_to_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_add_self_hosted_runner_to_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @add_self_hosted_runner_to_group_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/add-self-hosted-runner-to-group-for-org",
       method: :put,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :add_self_hosted_runner_to_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Approve a workflow run for a fork pull request\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/approve\n\nMethod: post"
-  @spec approve_workflow_run(GitHubEx.Client.t()) :: result
-  @spec approve_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def approve_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :approve_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @approve_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Approve a workflow run for a fork pull request\n\nApproves a workflow run for a pull request from a public fork of a first time contributor. For more information, see [\"Approving workflow runs from public forks](https://docs.github.com/actions/managing-workflow-runs/approving-workflow-runs-from-public-forks).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec approve_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def approve_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_approve_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_approve_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @approve_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/approve-workflow-run",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/approve",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :approve_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Cancel a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/cancel\n\nMethod: post"
-  @spec cancel_workflow_run(GitHubEx.Client.t()) :: result
-  @spec cancel_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def cancel_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :cancel_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @cancel_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Cancel a workflow run\n\nCancels a workflow run using its `id`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec cancel_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def cancel_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_cancel_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_cancel_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @cancel_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/cancel-workflow-run",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/cancel",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :cancel_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create an environment variable\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/variables\n\nMethod: post"
-  @spec create_environment_variable(GitHubEx.Client.t()) :: result
-  @spec create_environment_variable(GitHubEx.Client.t(), map()) :: result
-  def create_environment_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_environment_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_environment_variable_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create an environment variable\n\nCreate an environment variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_environment_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_environment_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_environment_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_environment_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_environment_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-environment-variable",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"environment_name", :environment_name}],
       path_template: "/repos/{owner}/{repo}/environments/{environment_name}/variables",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_environment_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a GitHub-hosted runner for an organization\n\nPath: /orgs/{org}/actions/hosted-runners\n\nMethod: post"
-  @spec create_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec create_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def create_hosted_runner_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a GitHub-hosted runner for an organization\n\nCreates a GitHub-hosted runner for an organization.\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec create_hosted_runner_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_hosted_runner_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_hosted_runner_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-hosted-runner-for-org",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create or update an environment secret\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}\n\nMethod: put"
-  @spec create_or_update_environment_secret(GitHubEx.Client.t()) :: result
-  @spec create_or_update_environment_secret(GitHubEx.Client.t(), map()) :: result
-  def create_or_update_environment_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_or_update_environment_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_or_update_environment_secret_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name},
+      {"secret_name", :secret_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create or update an environment secret\n\nCreates or updates an environment secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_or_update_environment_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_or_update_environment_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_or_update_environment_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_or_update_environment_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @create_or_update_environment_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-or-update-environment-secret",
       method: :put,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"environment_name", :environment_name},
-        {"secret_name", :secret_name}
-      ],
       path_template:
         "/repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_or_update_environment_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create or update an organization secret\n\nPath: /orgs/{org}/actions/secrets/{secret_name}\n\nMethod: put"
-  @spec create_or_update_org_secret(GitHubEx.Client.t()) :: result
-  @spec create_or_update_org_secret(GitHubEx.Client.t(), map()) :: result
-  def create_or_update_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_or_update_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_or_update_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create or update an organization secret\n\nCreates or updates an organization secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_or_update_org_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_or_update_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_or_update_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_or_update_org_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_or_update_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-or-update-org-secret",
       method: :put,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/actions/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_or_update_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create or update a repository secret\n\nPath: /repos/{owner}/{repo}/actions/secrets/{secret_name}\n\nMethod: put"
-  @spec create_or_update_repo_secret(GitHubEx.Client.t()) :: result
-  @spec create_or_update_repo_secret(GitHubEx.Client.t(), map()) :: result
-  def create_or_update_repo_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_or_update_repo_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_or_update_repo_secret_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create or update a repository secret\n\nCreates or updates a repository secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_or_update_repo_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_or_update_repo_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_or_update_repo_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_or_update_repo_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_or_update_repo_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-or-update-repo-secret",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
       path_template: "/repos/{owner}/{repo}/actions/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_or_update_repo_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create an organization variable\n\nPath: /orgs/{org}/actions/variables\n\nMethod: post"
-  @spec create_org_variable(GitHubEx.Client.t()) :: result
-  @spec create_org_variable(GitHubEx.Client.t(), map()) :: result
-  def create_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_org_variable_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create an organization variable\n\nCreates an organization variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_org_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_org_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-org-variable",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/variables",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_org_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a registration token for an organization\n\nPath: /orgs/{org}/actions/runners/registration-token\n\nMethod: post"
-  @spec create_registration_token_for_org(GitHubEx.Client.t()) :: result
-  @spec create_registration_token_for_org(GitHubEx.Client.t(), map()) :: result
-  def create_registration_token_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :create_registration_token_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_registration_token_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a registration token for an organization\n\nReturns a token that you can pass to the `config` script. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to configure your self-hosted runner:\n\n```\n./config.sh --url https://github.com/octo-org --token TOKEN\n```\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_registration_token_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_registration_token_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_registration_token_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_registration_token_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @create_registration_token_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-registration-token-for-org",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/runners/registration-token",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_registration_token_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a registration token for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/registration-token\n\nMethod: post"
-  @spec create_registration_token_for_repo(GitHubEx.Client.t()) :: result
-  @spec create_registration_token_for_repo(GitHubEx.Client.t(), map()) :: result
-  def create_registration_token_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :create_registration_token_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_registration_token_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a registration token for a repository\n\nReturns a token that you can pass to the `config` script. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to configure your self-hosted runner:\n\n```\n./config.sh --url https://github.com/octo-org --token TOKEN\n```\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_registration_token_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_registration_token_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_registration_token_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_registration_token_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @create_registration_token_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-registration-token-for-repo",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/runners/registration-token",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_registration_token_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a remove token for an organization\n\nPath: /orgs/{org}/actions/runners/remove-token\n\nMethod: post"
-  @spec create_remove_token_for_org(GitHubEx.Client.t()) :: result
-  @spec create_remove_token_for_org(GitHubEx.Client.t(), map()) :: result
-  def create_remove_token_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :create_remove_token_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_remove_token_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a remove token for an organization\n\nReturns a token that you can pass to the `config` script to remove a self-hosted runner from an organization. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to remove your self-hosted runner from an organization:\n\n```\n./config.sh remove --token TOKEN\n```\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_remove_token_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_remove_token_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_remove_token_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_remove_token_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_remove_token_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-remove-token-for-org",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/runners/remove-token",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_remove_token_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a remove token for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/remove-token\n\nMethod: post"
-  @spec create_remove_token_for_repo(GitHubEx.Client.t()) :: result
-  @spec create_remove_token_for_repo(GitHubEx.Client.t(), map()) :: result
-  def create_remove_token_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :create_remove_token_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_remove_token_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a remove token for a repository\n\nReturns a token that you can pass to the `config` script to remove a self-hosted runner from an repository. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to remove your self-hosted runner from an organization:\n\n```\n./config.sh remove --token TOKEN\n```\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_remove_token_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_remove_token_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_remove_token_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_remove_token_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_remove_token_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-remove-token-for-repo",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/runners/remove-token",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_remove_token_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a repository variable\n\nPath: /repos/{owner}/{repo}/actions/variables\n\nMethod: post"
-  @spec create_repo_variable(GitHubEx.Client.t()) :: result
-  @spec create_repo_variable(GitHubEx.Client.t(), map()) :: result
-  def create_repo_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_repo_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_repo_variable_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a repository variable\n\nCreates a repository variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_repo_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_repo_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_repo_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_repo_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_repo_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-repo-variable",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/variables",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_repo_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a self-hosted runner group for an organization\n\nPath: /orgs/{org}/actions/runner-groups\n\nMethod: post"
-  @spec create_self_hosted_runner_group_for_org(GitHubEx.Client.t()) :: result
-  @spec create_self_hosted_runner_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def create_self_hosted_runner_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_self_hosted_runner_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_self_hosted_runner_group_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a self-hosted runner group for an organization\n\nCreates a new self-hosted runner group for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec create_self_hosted_runner_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def create_self_hosted_runner_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_self_hosted_runner_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_self_hosted_runner_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @create_self_hosted_runner_group_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/create-self-hosted-runner-group-for-org",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/runner-groups",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_self_hosted_runner_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create a workflow dispatch event\n\nPath: /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches\n\nMethod: post"
-  @spec create_workflow_dispatch(GitHubEx.Client.t()) :: result
-  @spec create_workflow_dispatch(GitHubEx.Client.t(), map()) :: result
-  def create_workflow_dispatch(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :create_workflow_dispatch},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @create_workflow_dispatch_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create a workflow dispatch event\n\nYou can use this endpoint to manually trigger a GitHub Actions workflow run. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nYou must configure your GitHub Actions workflow to run when the [`workflow_dispatch` webhook](/developers/webhooks-and-events/webhook-events-and-payloads#workflow_dispatch) event occurs. The `inputs` are configured in the workflow file. For more information about how to configure the `workflow_dispatch` event in the workflow file, see \"[Events that trigger workflows](/actions/reference/events-that-trigger-workflows#workflow_dispatch).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec create_workflow_dispatch(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def create_workflow_dispatch(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_create_workflow_dispatch_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_create_workflow_dispatch_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @create_workflow_dispatch_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/create-workflow-dispatch",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
       path_template: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :create_workflow_dispatch],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a GitHub Actions cache for a repository (using a cache ID)\n\nPath: /repos/{owner}/{repo}/actions/caches/{cache_id}\n\nMethod: delete"
-  @spec delete_actions_cache_by_id(GitHubEx.Client.t()) :: result
-  @spec delete_actions_cache_by_id(GitHubEx.Client.t(), map()) :: result
-  def delete_actions_cache_by_id(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_actions_cache_by_id},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_actions_cache_by_id_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"cache_id", :cache_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a GitHub Actions cache for a repository (using a cache ID)\n\nDeletes a GitHub Actions cache for a repository, using a cache ID.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_actions_cache_by_id(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_actions_cache_by_id(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_actions_cache_by_id_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_actions_cache_by_id_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_actions_cache_by_id_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-actions-cache-by-id",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"cache_id", :cache_id}],
       path_template: "/repos/{owner}/{repo}/actions/caches/{cache_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_actions_cache_by_id],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete GitHub Actions caches for a repository (using a cache key)\n\nPath: /repos/{owner}/{repo}/actions/caches\n\nMethod: delete"
-  @spec delete_actions_cache_by_key(GitHubEx.Client.t()) :: result
-  @spec delete_actions_cache_by_key(GitHubEx.Client.t(), map()) :: result
-  def delete_actions_cache_by_key(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_actions_cache_by_key},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_actions_cache_by_key_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"key", :key}, {"ref", :ref}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete GitHub Actions caches for a repository (using a cache key)\n\nDeletes one or more GitHub Actions caches for a repository, using a complete cache key. By default, all caches that match the provided key are deleted, but you can optionally provide a Git ref to restrict deletions to caches that match both the provided key and the Git ref.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_actions_cache_by_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_actions_cache_by_key(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_actions_cache_by_key_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_actions_cache_by_key_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_actions_cache_by_key_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-actions-cache-by-key",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/caches",
-      query: [{"key", :key}, {"ref", :ref}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_actions_cache_by_key],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an artifact\n\nPath: /repos/{owner}/{repo}/actions/artifacts/{artifact_id}\n\nMethod: delete"
-  @spec delete_artifact(GitHubEx.Client.t()) :: result
-  @spec delete_artifact(GitHubEx.Client.t(), map()) :: result
-  def delete_artifact(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_artifact},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_artifact_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"artifact_id", :artifact_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an artifact\n\nDeletes an artifact for a workflow run.\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_artifact(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_artifact(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_artifact_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_artifact_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_artifact_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-artifact",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"artifact_id", :artifact_id}],
       path_template: "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_artifact],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a custom image from the organization\n\nPath: /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}\n\nMethod: delete"
-  @spec delete_custom_image_from_org(GitHubEx.Client.t()) :: result
-  @spec delete_custom_image_from_org(GitHubEx.Client.t(), map()) :: result
-  def delete_custom_image_from_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_custom_image_from_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_custom_image_from_org_partition_spec %{
+    path: [{"org", :org}, {"image_definition_id", :image_definition_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a custom image from the organization\n\nDelete a custom image from the organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec delete_custom_image_from_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_custom_image_from_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_custom_image_from_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_custom_image_from_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_custom_image_from_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-custom-image-from-org",
       method: :delete,
-      path: [{"org", :org}, {"image_definition_id", :image_definition_id}],
       path_template: "/orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_custom_image_from_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an image version of custom image from the organization\n\nPath: /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions/{version}\n\nMethod: delete"
-  @spec delete_custom_image_version_from_org(GitHubEx.Client.t()) :: result
-  @spec delete_custom_image_version_from_org(GitHubEx.Client.t(), map()) :: result
-  def delete_custom_image_version_from_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_custom_image_version_from_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_custom_image_version_from_org_partition_spec %{
+    path: [
+      {"org", :org},
+      {"image_definition_id", :image_definition_id},
+      {"version", :version}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an image version of custom image from the organization\n\nDelete an image version of custom image from the organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec delete_custom_image_version_from_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def delete_custom_image_version_from_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_custom_image_version_from_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_custom_image_version_from_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @delete_custom_image_version_from_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-custom-image-version-from-org",
       method: :delete,
-      path: [{"org", :org}, {"image_definition_id", :image_definition_id}, {"version", :version}],
       path_template:
         "/orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions/{version}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_custom_image_version_from_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an environment secret\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}\n\nMethod: delete"
-  @spec delete_environment_secret(GitHubEx.Client.t()) :: result
-  @spec delete_environment_secret(GitHubEx.Client.t(), map()) :: result
-  def delete_environment_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_environment_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_environment_secret_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name},
+      {"secret_name", :secret_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an environment secret\n\nDeletes a secret in an environment using the secret name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_environment_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_environment_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_environment_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_environment_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_environment_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-environment-secret",
       method: :delete,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"environment_name", :environment_name},
-        {"secret_name", :secret_name}
-      ],
       path_template:
         "/repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_environment_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an environment variable\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/variables/{name}\n\nMethod: delete"
-  @spec delete_environment_variable(GitHubEx.Client.t()) :: result
-  @spec delete_environment_variable(GitHubEx.Client.t(), map()) :: result
-  def delete_environment_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_environment_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_environment_variable_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"name", :name},
+      {"environment_name", :environment_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an environment variable\n\nDeletes an environment variable using the variable name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_environment_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_environment_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_environment_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_environment_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_environment_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-environment-variable",
       method: :delete,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"name", :name},
-        {"environment_name", :environment_name}
-      ],
       path_template: "/repos/{owner}/{repo}/environments/{environment_name}/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_environment_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a GitHub-hosted runner for an organization\n\nPath: /orgs/{org}/actions/hosted-runners/{hosted_runner_id}\n\nMethod: delete"
-  @spec delete_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec delete_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def delete_hosted_runner_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a GitHub-hosted runner for an organization\n\nDeletes a GitHub-hosted runner for an organization."
+  @spec delete_hosted_runner_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_hosted_runner_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_hosted_runner_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-hosted-runner-for-org",
       method: :delete,
-      path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
       path_template: "/orgs/{org}/actions/hosted-runners/{hosted_runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an organization secret\n\nPath: /orgs/{org}/actions/secrets/{secret_name}\n\nMethod: delete"
-  @spec delete_org_secret(GitHubEx.Client.t()) :: result
-  @spec delete_org_secret(GitHubEx.Client.t(), map()) :: result
-  def delete_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an organization secret\n\nDeletes a secret in an organization using the secret name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_org_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_org_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-org-secret",
       method: :delete,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/actions/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete an organization variable\n\nPath: /orgs/{org}/actions/variables/{name}\n\nMethod: delete"
-  @spec delete_org_variable(GitHubEx.Client.t()) :: result
-  @spec delete_org_variable(GitHubEx.Client.t(), map()) :: result
-  def delete_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_org_variable_partition_spec %{
+    path: [{"org", :org}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete an organization variable\n\nDeletes an organization variable using the variable name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_org_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_org_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-org-variable",
       method: :delete,
-      path: [{"org", :org}, {"name", :name}],
       path_template: "/orgs/{org}/actions/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_org_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a repository secret\n\nPath: /repos/{owner}/{repo}/actions/secrets/{secret_name}\n\nMethod: delete"
-  @spec delete_repo_secret(GitHubEx.Client.t()) :: result
-  @spec delete_repo_secret(GitHubEx.Client.t(), map()) :: result
-  def delete_repo_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_repo_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_repo_secret_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a repository secret\n\nDeletes a secret in a repository using the secret name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_repo_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_repo_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_repo_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_repo_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_repo_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-repo-secret",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
       path_template: "/repos/{owner}/{repo}/actions/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_repo_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a repository variable\n\nPath: /repos/{owner}/{repo}/actions/variables/{name}\n\nMethod: delete"
-  @spec delete_repo_variable(GitHubEx.Client.t()) :: result
-  @spec delete_repo_variable(GitHubEx.Client.t(), map()) :: result
-  def delete_repo_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_repo_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_repo_variable_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a repository variable\n\nDeletes a repository variable using the variable name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_repo_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_repo_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_repo_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_repo_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_repo_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-repo-variable",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
       path_template: "/repos/{owner}/{repo}/actions/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_repo_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a self-hosted runner from an organization\n\nPath: /orgs/{org}/actions/runners/{runner_id}\n\nMethod: delete"
-  @spec delete_self_hosted_runner_from_org(GitHubEx.Client.t()) :: result
-  @spec delete_self_hosted_runner_from_org(GitHubEx.Client.t(), map()) :: result
-  def delete_self_hosted_runner_from_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_self_hosted_runner_from_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_self_hosted_runner_from_org_partition_spec %{
+    path: [{"org", :org}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a self-hosted runner from an organization\n\nForces the removal of a self-hosted runner from an organization. You can use this endpoint to completely remove the runner when the machine you were using no longer exists.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_self_hosted_runner_from_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def delete_self_hosted_runner_from_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_self_hosted_runner_from_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_self_hosted_runner_from_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @delete_self_hosted_runner_from_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-self-hosted-runner-from-org",
       method: :delete,
-      path: [{"org", :org}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runners/{runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_self_hosted_runner_from_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a self-hosted runner from a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/{runner_id}\n\nMethod: delete"
-  @spec delete_self_hosted_runner_from_repo(GitHubEx.Client.t()) :: result
-  @spec delete_self_hosted_runner_from_repo(GitHubEx.Client.t(), map()) :: result
-  def delete_self_hosted_runner_from_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_self_hosted_runner_from_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_self_hosted_runner_from_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a self-hosted runner from a repository\n\nForces the removal of a self-hosted runner from a repository. You can use this endpoint to completely remove the runner when the machine you were using no longer exists.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_self_hosted_runner_from_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def delete_self_hosted_runner_from_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_self_hosted_runner_from_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_self_hosted_runner_from_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @delete_self_hosted_runner_from_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-self-hosted-runner-from-repo",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
       path_template: "/repos/{owner}/{repo}/actions/runners/{runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_self_hosted_runner_from_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a self-hosted runner group from an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}\n\nMethod: delete"
-  @spec delete_self_hosted_runner_group_from_org(GitHubEx.Client.t()) :: result
-  @spec delete_self_hosted_runner_group_from_org(GitHubEx.Client.t(), map()) :: result
-  def delete_self_hosted_runner_group_from_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_self_hosted_runner_group_from_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_self_hosted_runner_group_from_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a self-hosted runner group from an organization\n\nDeletes a self-hosted runner group for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec delete_self_hosted_runner_group_from_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def delete_self_hosted_runner_group_from_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_self_hosted_runner_group_from_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_self_hosted_runner_group_from_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @delete_self_hosted_runner_group_from_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-self-hosted-runner-group-from-org",
       method: :delete,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_self_hosted_runner_group_from_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}\n\nMethod: delete"
-  @spec delete_workflow_run(GitHubEx.Client.t()) :: result
-  @spec delete_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def delete_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete a workflow run\n\nDeletes a specific workflow run.\n\nAnyone with write access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-workflow-run",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Delete workflow run logs\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/logs\n\nMethod: delete"
-  @spec delete_workflow_run_logs(GitHubEx.Client.t()) :: result
-  @spec delete_workflow_run_logs(GitHubEx.Client.t(), map()) :: result
-  def delete_workflow_run_logs(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :delete_workflow_run_logs},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @delete_workflow_run_logs_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Delete workflow run logs\n\nDeletes all logs for a workflow run.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec delete_workflow_run_logs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def delete_workflow_run_logs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_delete_workflow_run_logs_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_delete_workflow_run_logs_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @delete_workflow_run_logs_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/delete-workflow-run-logs",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/logs",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :delete_workflow_run_logs],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Disable a selected repository for GitHub Actions in an organization\n\nPath: /orgs/{org}/actions/permissions/repositories/{repository_id}\n\nMethod: delete"
-  @spec disable_selected_repository_github_actions_organization(GitHubEx.Client.t()) :: result
-  @spec disable_selected_repository_github_actions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def disable_selected_repository_github_actions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :disable_selected_repository_github_actions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @disable_selected_repository_github_actions_organization_partition_spec %{
+    path: [{"org", :org}, {"repository_id", :repository_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Disable a selected repository for GitHub Actions in an organization\n\nRemoves a repository from the list of selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec disable_selected_repository_github_actions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def disable_selected_repository_github_actions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_disable_selected_repository_github_actions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_disable_selected_repository_github_actions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @disable_selected_repository_github_actions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/disable-selected-repository-github-actions-organization",
       method: :delete,
-      path: [{"org", :org}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/actions/permissions/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :disable_selected_repository_github_actions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove a repository from the list of repositories allowed to use self-hosted runners in an organization\n\nPath: /orgs/{org}/actions/permissions/self-hosted-runners/repositories/{repository_id}\n\nMethod: delete"
-  @spec disable_selected_repository_self_hosted_runners_organization(GitHubEx.Client.t()) ::
-          result
-  @spec disable_selected_repository_self_hosted_runners_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def disable_selected_repository_self_hosted_runners_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :disable_selected_repository_self_hosted_runners_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @disable_selected_repository_self_hosted_runners_organization_partition_spec %{
+    path: [{"org", :org}, {"repository_id", :repository_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove a repository from the list of repositories allowed to use self-hosted runners in an organization\n\nRemoves a repository from the list of repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec disable_selected_repository_self_hosted_runners_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def disable_selected_repository_self_hosted_runners_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    operation =
+      build_disable_selected_repository_self_hosted_runners_organization_operation(params)
+
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_disable_selected_repository_self_hosted_runners_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @disable_selected_repository_self_hosted_runners_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/disable-selected-repository-self-hosted-runners-organization",
       method: :delete,
-      path: [{"org", :org}, {"repository_id", :repository_id}],
       path_template:
         "/orgs/{org}/actions/permissions/self-hosted-runners/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :disable_selected_repository_self_hosted_runners_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Disable a workflow\n\nPath: /repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable\n\nMethod: put"
-  @spec disable_workflow(GitHubEx.Client.t()) :: result
-  @spec disable_workflow(GitHubEx.Client.t(), map()) :: result
-  def disable_workflow(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :disable_workflow},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @disable_workflow_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Disable a workflow\n\nDisables a workflow and sets the `state` of the workflow to `disabled_manually`. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec disable_workflow(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def disable_workflow(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_disable_workflow_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_disable_workflow_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @disable_workflow_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/disable-workflow",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
       path_template: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :disable_workflow],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Download an artifact\n\nPath: /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}\n\nMethod: get"
-  @spec download_artifact(GitHubEx.Client.t()) :: result
-  @spec download_artifact(GitHubEx.Client.t(), map()) :: result
-  def download_artifact(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :download_artifact},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @download_artifact_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"artifact_id", :artifact_id},
+      {"archive_format", :archive_format}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Download an artifact\n\nGets a redirect URL to download an archive for a repository. This URL expires after 1 minute. Look for `Location:` in\nthe response header to find the URL for the download. The `:archive_format` must be `zip`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec download_artifact(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def download_artifact(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_download_artifact_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_download_artifact_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @download_artifact_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/download-artifact",
       method: :get,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"artifact_id", :artifact_id},
-        {"archive_format", :archive_format}
-      ],
       path_template: "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :download_artifact],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Download job logs for a workflow run\n\nPath: /repos/{owner}/{repo}/actions/jobs/{job_id}/logs\n\nMethod: get"
-  @spec download_job_logs_for_workflow_run(GitHubEx.Client.t()) :: result
-  @spec download_job_logs_for_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def download_job_logs_for_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :download_job_logs_for_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @download_job_logs_for_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Download job logs for a workflow run\n\nGets a redirect URL to download a plain text file of logs for a workflow job. This link expires after 1 minute. Look\nfor `Location:` in the response header to find the URL for the download.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec download_job_logs_for_workflow_run(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def download_job_logs_for_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_download_job_logs_for_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_download_job_logs_for_workflow_run_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @download_job_logs_for_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/download-job-logs-for-workflow-run",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
       path_template: "/repos/{owner}/{repo}/actions/jobs/{job_id}/logs",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :download_job_logs_for_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Download workflow run attempt logs\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs\n\nMethod: get"
-  @spec download_workflow_run_attempt_logs(GitHubEx.Client.t()) :: result
-  @spec download_workflow_run_attempt_logs(GitHubEx.Client.t(), map()) :: result
-  def download_workflow_run_attempt_logs(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :download_workflow_run_attempt_logs},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @download_workflow_run_attempt_logs_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"run_id", :run_id},
+      {"attempt_number", :attempt_number}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Download workflow run attempt logs\n\nGets a redirect URL to download an archive of log files for a specific workflow run attempt. This link expires after\n1 minute. Look for `Location:` in the response header to find the URL for the download.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec download_workflow_run_attempt_logs(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def download_workflow_run_attempt_logs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_download_workflow_run_attempt_logs_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_download_workflow_run_attempt_logs_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @download_workflow_run_attempt_logs_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/download-workflow-run-attempt-logs",
       method: :get,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"run_id", :run_id},
-        {"attempt_number", :attempt_number}
-      ],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :download_workflow_run_attempt_logs],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Download workflow run logs\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/logs\n\nMethod: get"
-  @spec download_workflow_run_logs(GitHubEx.Client.t()) :: result
-  @spec download_workflow_run_logs(GitHubEx.Client.t(), map()) :: result
-  def download_workflow_run_logs(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :download_workflow_run_logs},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @download_workflow_run_logs_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Download workflow run logs\n\nGets a redirect URL to download an archive of log files for a workflow run. This link expires after 1 minute. Look for\n`Location:` in the response header to find the URL for the download.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec download_workflow_run_logs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def download_workflow_run_logs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_download_workflow_run_logs_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_download_workflow_run_logs_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @download_workflow_run_logs_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/download-workflow-run-logs",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/logs",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :download_workflow_run_logs],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Enable a selected repository for GitHub Actions in an organization\n\nPath: /orgs/{org}/actions/permissions/repositories/{repository_id}\n\nMethod: put"
-  @spec enable_selected_repository_github_actions_organization(GitHubEx.Client.t()) :: result
-  @spec enable_selected_repository_github_actions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def enable_selected_repository_github_actions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :enable_selected_repository_github_actions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @enable_selected_repository_github_actions_organization_partition_spec %{
+    path: [{"org", :org}, {"repository_id", :repository_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Enable a selected repository for GitHub Actions in an organization\n\nAdds a repository to the list of selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec enable_selected_repository_github_actions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def enable_selected_repository_github_actions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_enable_selected_repository_github_actions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_enable_selected_repository_github_actions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @enable_selected_repository_github_actions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/enable-selected-repository-github-actions-organization",
       method: :put,
-      path: [{"org", :org}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/actions/permissions/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :enable_selected_repository_github_actions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Add a repository to the list of repositories allowed to use self-hosted runners in an organization\n\nPath: /orgs/{org}/actions/permissions/self-hosted-runners/repositories/{repository_id}\n\nMethod: put"
-  @spec enable_selected_repository_self_hosted_runners_organization(GitHubEx.Client.t()) :: result
-  @spec enable_selected_repository_self_hosted_runners_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def enable_selected_repository_self_hosted_runners_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :enable_selected_repository_self_hosted_runners_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @enable_selected_repository_self_hosted_runners_organization_partition_spec %{
+    path: [{"org", :org}, {"repository_id", :repository_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Add a repository to the list of repositories allowed to use self-hosted runners in an organization\n\nAdds a repository to the list of repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec enable_selected_repository_self_hosted_runners_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def enable_selected_repository_self_hosted_runners_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    operation =
+      build_enable_selected_repository_self_hosted_runners_organization_operation(params)
+
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_enable_selected_repository_self_hosted_runners_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @enable_selected_repository_self_hosted_runners_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/enable-selected-repository-self-hosted-runners-organization",
       method: :put,
-      path: [{"org", :org}, {"repository_id", :repository_id}],
       path_template:
         "/orgs/{org}/actions/permissions/self-hosted-runners/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :enable_selected_repository_self_hosted_runners_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Enable a workflow\n\nPath: /repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable\n\nMethod: put"
-  @spec enable_workflow(GitHubEx.Client.t()) :: result
-  @spec enable_workflow(GitHubEx.Client.t(), map()) :: result
-  def enable_workflow(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :enable_workflow},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @enable_workflow_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Enable a workflow\n\nEnables a workflow and sets the `state` of the workflow to `active`. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec enable_workflow(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def enable_workflow(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_enable_workflow_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_enable_workflow_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @enable_workflow_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/enable-workflow",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
       path_template: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :enable_workflow],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Force cancel a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel\n\nMethod: post"
-  @spec force_cancel_workflow_run(GitHubEx.Client.t()) :: result
-  @spec force_cancel_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def force_cancel_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :force_cancel_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @force_cancel_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Force cancel a workflow run\n\nCancels a workflow run and bypasses conditions that would otherwise cause a workflow execution to continue, such as an `always()` condition on a job.\nYou should only use this endpoint to cancel a workflow run when the workflow run is not responding to [`POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel`](/rest/actions/workflow-runs#cancel-a-workflow-run).\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec force_cancel_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def force_cancel_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_force_cancel_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_force_cancel_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @force_cancel_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/force-cancel-workflow-run",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :force_cancel_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create configuration for a just-in-time runner for an organization\n\nPath: /orgs/{org}/actions/runners/generate-jitconfig\n\nMethod: post"
-  @spec generate_runner_jitconfig_for_org(GitHubEx.Client.t()) :: result
-  @spec generate_runner_jitconfig_for_org(GitHubEx.Client.t(), map()) :: result
-  def generate_runner_jitconfig_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :generate_runner_jitconfig_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @generate_runner_jitconfig_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create configuration for a just-in-time runner for an organization\n\nGenerates a configuration that can be passed to the runner application at startup.\n\nThe authenticated user must have admin access to the organization.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec generate_runner_jitconfig_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def generate_runner_jitconfig_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_generate_runner_jitconfig_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_generate_runner_jitconfig_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @generate_runner_jitconfig_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/generate-runner-jitconfig-for-org",
       method: :post,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/runners/generate-jitconfig",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :generate_runner_jitconfig_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Create configuration for a just-in-time runner for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/generate-jitconfig\n\nMethod: post"
-  @spec generate_runner_jitconfig_for_repo(GitHubEx.Client.t()) :: result
-  @spec generate_runner_jitconfig_for_repo(GitHubEx.Client.t(), map()) :: result
-  def generate_runner_jitconfig_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :generate_runner_jitconfig_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @generate_runner_jitconfig_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Create configuration for a just-in-time runner for a repository\n\nGenerates a configuration that can be passed to the runner application at startup.\n\nThe authenticated user must have admin access to the repository.\n\nOAuth tokens and personal access tokens (classic) need the`repo` scope to use this endpoint."
+  @spec generate_runner_jitconfig_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def generate_runner_jitconfig_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_generate_runner_jitconfig_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_generate_runner_jitconfig_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @generate_runner_jitconfig_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/generate-runner-jitconfig-for-repo",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/runners/generate-jitconfig",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :generate_runner_jitconfig_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List GitHub Actions caches for a repository\n\nPath: /repos/{owner}/{repo}/actions/caches\n\nMethod: get"
-  @spec get_actions_cache_list(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_list(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_list(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_list},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_list_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"per_page", :per_page},
+      {"page", :page},
+      {"ref", :ref},
+      {"key", :key},
+      {"sort", :sort},
+      {"direction", :direction}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List GitHub Actions caches for a repository\n\nLists the GitHub Actions caches for a repository.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_actions_cache_list(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_actions_cache_list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_list_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_get_actions_cache_list(term(), map(), keyword()) :: Enumerable.t()
+  def stream_get_actions_cache_list(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_get_actions_cache_list_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_get_actions_cache_list_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_actions_cache_list_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-list",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/caches",
-      query: [
-        {"per_page", :per_page},
-        {"page", :page},
-        {"ref", :ref},
-        {"key", :key},
-        {"sort", :sort},
-        {"direction", :direction}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_list],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["actions_caches"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Get GitHub Actions cache retention limit for an enterprise\n\nPath: /enterprises/{enterprise}/actions/cache/retention-limit\n\nMethod: get"
-  @spec get_actions_cache_retention_limit_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_retention_limit_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_retention_limit_for_enterprise(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_retention_limit_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_retention_limit_for_enterprise_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache retention limit for an enterprise\n\nGets GitHub Actions cache retention limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
+  @spec get_actions_cache_retention_limit_for_enterprise(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_retention_limit_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_retention_limit_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_retention_limit_for_enterprise_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_actions_cache_retention_limit_for_enterprise_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-retention-limit-for-enterprise",
       method: :get,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/actions/cache/retention-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_retention_limit_for_enterprise],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions cache retention limit for an organization\n\nPath: /organizations/{org}/actions/cache/retention-limit\n\nMethod: get"
-  @spec get_actions_cache_retention_limit_for_organization(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_retention_limit_for_organization(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_retention_limit_for_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_retention_limit_for_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_retention_limit_for_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache retention limit for an organization\n\nGets GitHub Actions cache retention limit for an organization. All repositories under this\norganization may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
+  @spec get_actions_cache_retention_limit_for_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_retention_limit_for_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_retention_limit_for_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_retention_limit_for_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_actions_cache_retention_limit_for_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-retention-limit-for-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/organizations/{org}/actions/cache/retention-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_actions_cache_retention_limit_for_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions cache retention limit for a repository\n\nPath: /repos/{owner}/{repo}/actions/cache/retention-limit\n\nMethod: get"
-  @spec get_actions_cache_retention_limit_for_repository(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_retention_limit_for_repository(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_retention_limit_for_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_retention_limit_for_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_retention_limit_for_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache retention limit for a repository\n\nGets GitHub Actions cache retention limit for a repository. This determines how long caches will be retained for, if\nnot manually removed or evicted due to size constraints.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
+  @spec get_actions_cache_retention_limit_for_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_retention_limit_for_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_retention_limit_for_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_retention_limit_for_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_actions_cache_retention_limit_for_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-retention-limit-for-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/cache/retention-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_retention_limit_for_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions cache storage limit for an enterprise\n\nPath: /enterprises/{enterprise}/actions/cache/storage-limit\n\nMethod: get"
-  @spec get_actions_cache_storage_limit_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_storage_limit_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_storage_limit_for_enterprise(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_storage_limit_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_storage_limit_for_enterprise_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache storage limit for an enterprise\n\nGets GitHub Actions cache storage limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
+  @spec get_actions_cache_storage_limit_for_enterprise(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_storage_limit_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_storage_limit_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_storage_limit_for_enterprise_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_actions_cache_storage_limit_for_enterprise_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-storage-limit-for-enterprise",
       method: :get,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/actions/cache/storage-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_storage_limit_for_enterprise],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions cache storage limit for an organization\n\nPath: /organizations/{org}/actions/cache/storage-limit\n\nMethod: get"
-  @spec get_actions_cache_storage_limit_for_organization(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_storage_limit_for_organization(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_storage_limit_for_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_storage_limit_for_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_storage_limit_for_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache storage limit for an organization\n\nGets GitHub Actions cache storage limit for an organization. All repositories under this\norganization may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
+  @spec get_actions_cache_storage_limit_for_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_storage_limit_for_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_storage_limit_for_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_storage_limit_for_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_actions_cache_storage_limit_for_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-storage-limit-for-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/organizations/{org}/actions/cache/storage-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_storage_limit_for_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions cache storage limit for a repository\n\nPath: /repos/{owner}/{repo}/actions/cache/storage-limit\n\nMethod: get"
-  @spec get_actions_cache_storage_limit_for_repository(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_storage_limit_for_repository(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_storage_limit_for_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_storage_limit_for_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_storage_limit_for_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache storage limit for a repository\n\nGets GitHub Actions cache storage limit for a repository. This determines the maximum size of caches that can be\nstored before eviction occurs.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
+  @spec get_actions_cache_storage_limit_for_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_storage_limit_for_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_storage_limit_for_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_storage_limit_for_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_actions_cache_storage_limit_for_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-storage-limit-for-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/cache/storage-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_storage_limit_for_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions cache usage for a repository\n\nPath: /repos/{owner}/{repo}/actions/cache/usage\n\nMethod: get"
-  @spec get_actions_cache_usage(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_usage(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_usage(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_usage},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_usage_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache usage for a repository\n\nGets GitHub Actions cache usage for a repository.\nThe data fetched using this API is refreshed approximately every 5 minutes, so values returned from this endpoint may take at least 5 minutes to get updated.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_actions_cache_usage(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_actions_cache_usage(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_usage_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_usage_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_actions_cache_usage_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-usage",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/cache/usage",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_usage],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List repositories with GitHub Actions cache usage for an organization\n\nPath: /orgs/{org}/actions/cache/usage-by-repository\n\nMethod: get"
-  @spec get_actions_cache_usage_by_repo_for_org(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_usage_by_repo_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_usage_by_repo_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_usage_by_repo_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_usage_by_repo_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repositories with GitHub Actions cache usage for an organization\n\nLists repositories and their GitHub Actions cache usage for an organization.\nThe data fetched using this API is refreshed approximately every 5 minutes, so values returned from this endpoint may take at least 5 minutes to get updated.\n\nOAuth tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
+  @spec get_actions_cache_usage_by_repo_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_usage_by_repo_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_usage_by_repo_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_get_actions_cache_usage_by_repo_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_get_actions_cache_usage_by_repo_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_get_actions_cache_usage_by_repo_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_get_actions_cache_usage_by_repo_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_actions_cache_usage_by_repo_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-usage-by-repo-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/cache/usage-by-repository",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_usage_by_repo_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["repository_cache_usages"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Get GitHub Actions cache usage for an organization\n\nPath: /orgs/{org}/actions/cache/usage\n\nMethod: get"
-  @spec get_actions_cache_usage_for_org(GitHubEx.Client.t()) :: result
-  @spec get_actions_cache_usage_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_actions_cache_usage_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_actions_cache_usage_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_actions_cache_usage_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions cache usage for an organization\n\nGets the total GitHub Actions cache usage for an organization.\nThe data fetched using this API is refreshed approximately every 5 minutes, so values returned from this endpoint may take at least 5 minutes to get updated.\n\nOAuth tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
+  @spec get_actions_cache_usage_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_actions_cache_usage_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_actions_cache_usage_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_actions_cache_usage_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_actions_cache_usage_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-actions-cache-usage-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/cache/usage",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_actions_cache_usage_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get allowed actions and reusable workflows for an organization\n\nPath: /orgs/{org}/actions/permissions/selected-actions\n\nMethod: get"
-  @spec get_allowed_actions_organization(GitHubEx.Client.t()) :: result
-  @spec get_allowed_actions_organization(GitHubEx.Client.t(), map()) :: result
-  def get_allowed_actions_organization(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_allowed_actions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_allowed_actions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get allowed actions and reusable workflows for an organization\n\nGets the selected actions and reusable workflows that are allowed in an organization. To use this endpoint, the organization permission policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_allowed_actions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_allowed_actions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_allowed_actions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_allowed_actions_organization_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_allowed_actions_organization_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-allowed-actions-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/selected-actions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_allowed_actions_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get allowed actions and reusable workflows for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/selected-actions\n\nMethod: get"
-  @spec get_allowed_actions_repository(GitHubEx.Client.t()) :: result
-  @spec get_allowed_actions_repository(GitHubEx.Client.t(), map()) :: result
-  def get_allowed_actions_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_allowed_actions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_allowed_actions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get allowed actions and reusable workflows for a repository\n\nGets the settings for selected actions and reusable workflows that are allowed in a repository. To use this endpoint, the repository policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for a repository](#set-github-actions-permissions-for-a-repository).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_allowed_actions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_allowed_actions_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_allowed_actions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_allowed_actions_repository_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_allowed_actions_repository_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-allowed-actions-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/selected-actions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_allowed_actions_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an artifact\n\nPath: /repos/{owner}/{repo}/actions/artifacts/{artifact_id}\n\nMethod: get"
-  @spec get_artifact(GitHubEx.Client.t()) :: result
-  @spec get_artifact(GitHubEx.Client.t(), map()) :: result
-  def get_artifact(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_artifact},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_artifact_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"artifact_id", :artifact_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an artifact\n\nGets a specific artifact for a workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_artifact(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_artifact(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_artifact_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_artifact_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_artifact_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-artifact",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"artifact_id", :artifact_id}],
       path_template: "/repos/{owner}/{repo}/actions/artifacts/{artifact_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_artifact],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get artifact and log retention settings for an organization\n\nPath: /orgs/{org}/actions/permissions/artifact-and-log-retention\n\nMethod: get"
-  @spec get_artifact_and_log_retention_settings_organization(GitHubEx.Client.t()) :: result
-  @spec get_artifact_and_log_retention_settings_organization(GitHubEx.Client.t(), map()) :: result
-  def get_artifact_and_log_retention_settings_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_artifact_and_log_retention_settings_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_artifact_and_log_retention_settings_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get artifact and log retention settings for an organization\n\nGets artifact and log retention settings for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec get_artifact_and_log_retention_settings_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_artifact_and_log_retention_settings_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_artifact_and_log_retention_settings_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_artifact_and_log_retention_settings_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_artifact_and_log_retention_settings_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-artifact-and-log-retention-settings-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/artifact-and-log-retention",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_artifact_and_log_retention_settings_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get artifact and log retention settings for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/artifact-and-log-retention\n\nMethod: get"
-  @spec get_artifact_and_log_retention_settings_repository(GitHubEx.Client.t()) :: result
-  @spec get_artifact_and_log_retention_settings_repository(GitHubEx.Client.t(), map()) :: result
-  def get_artifact_and_log_retention_settings_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_artifact_and_log_retention_settings_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_artifact_and_log_retention_settings_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get artifact and log retention settings for a repository\n\nGets artifact and log retention settings for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_artifact_and_log_retention_settings_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_artifact_and_log_retention_settings_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_artifact_and_log_retention_settings_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_artifact_and_log_retention_settings_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_artifact_and_log_retention_settings_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-artifact-and-log-retention-settings-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/artifact-and-log-retention",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_artifact_and_log_retention_settings_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a custom image definition for GitHub Actions Hosted Runners\n\nPath: /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}\n\nMethod: get"
-  @spec get_custom_image_for_org(GitHubEx.Client.t()) :: result
-  @spec get_custom_image_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_custom_image_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_custom_image_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_custom_image_for_org_partition_spec %{
+    path: [{"org", :org}, {"image_definition_id", :image_definition_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a custom image definition for GitHub Actions Hosted Runners\n\nGet a custom image definition for GitHub Actions Hosted Runners.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec get_custom_image_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_custom_image_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_custom_image_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_custom_image_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_custom_image_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-custom-image-for-org",
       method: :get,
-      path: [{"org", :org}, {"image_definition_id", :image_definition_id}],
       path_template: "/orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_custom_image_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an image version of a custom image for GitHub Actions Hosted Runners\n\nPath: /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions/{version}\n\nMethod: get"
-  @spec get_custom_image_version_for_org(GitHubEx.Client.t()) :: result
-  @spec get_custom_image_version_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_custom_image_version_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_custom_image_version_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_custom_image_version_for_org_partition_spec %{
+    path: [
+      {"org", :org},
+      {"image_definition_id", :image_definition_id},
+      {"version", :version}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an image version of a custom image for GitHub Actions Hosted Runners\n\nGet an image version of a custom image for GitHub Actions Hosted Runners.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec get_custom_image_version_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_custom_image_version_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_custom_image_version_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_custom_image_version_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_custom_image_version_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-custom-image-version-for-org",
       method: :get,
-      path: [{"org", :org}, {"image_definition_id", :image_definition_id}, {"version", :version}],
       path_template:
         "/orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions/{version}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_custom_image_version_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get the customization template for an OIDC subject claim for a repository\n\nPath: /repos/{owner}/{repo}/actions/oidc/customization/sub\n\nMethod: get"
-  @spec get_custom_oidc_sub_claim_for_repo(GitHubEx.Client.t()) :: result
-  @spec get_custom_oidc_sub_claim_for_repo(GitHubEx.Client.t(), map()) :: result
-  def get_custom_oidc_sub_claim_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_custom_oidc_sub_claim_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_custom_oidc_sub_claim_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get the customization template for an OIDC subject claim for a repository\n\nGets the customization template for an OpenID Connect (OIDC) subject claim.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_custom_oidc_sub_claim_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_custom_oidc_sub_claim_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_custom_oidc_sub_claim_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_custom_oidc_sub_claim_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_custom_oidc_sub_claim_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-custom-oidc-sub-claim-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/oidc/customization/sub",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_custom_oidc_sub_claim_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an environment public key\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/secrets/public-key\n\nMethod: get"
-  @spec get_environment_public_key(GitHubEx.Client.t()) :: result
-  @spec get_environment_public_key(GitHubEx.Client.t(), map()) :: result
-  def get_environment_public_key(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_environment_public_key},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_environment_public_key_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an environment public key\n\nGet the public key for an environment, which you need to encrypt environment\nsecrets. You need to encrypt a secret before you can create or update secrets.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_environment_public_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_environment_public_key(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_environment_public_key_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_environment_public_key_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_environment_public_key_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-environment-public-key",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"environment_name", :environment_name}],
       path_template: "/repos/{owner}/{repo}/environments/{environment_name}/secrets/public-key",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_environment_public_key],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an environment secret\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}\n\nMethod: get"
-  @spec get_environment_secret(GitHubEx.Client.t()) :: result
-  @spec get_environment_secret(GitHubEx.Client.t(), map()) :: result
-  def get_environment_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_environment_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_environment_secret_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name},
+      {"secret_name", :secret_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an environment secret\n\nGets a single environment secret without revealing its encrypted value.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_environment_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_environment_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_environment_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_environment_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_environment_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-environment-secret",
       method: :get,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"environment_name", :environment_name},
-        {"secret_name", :secret_name}
-      ],
       path_template:
         "/repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_environment_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an environment variable\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/variables/{name}\n\nMethod: get"
-  @spec get_environment_variable(GitHubEx.Client.t()) :: result
-  @spec get_environment_variable(GitHubEx.Client.t(), map()) :: result
-  def get_environment_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_environment_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_environment_variable_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name},
+      {"name", :name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an environment variable\n\nGets a specific variable in an environment.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_environment_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_environment_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_environment_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_environment_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_environment_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-environment-variable",
       method: :get,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"environment_name", :environment_name},
-        {"name", :name}
-      ],
       path_template: "/repos/{owner}/{repo}/environments/{environment_name}/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_environment_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get fork PR contributor approval permissions for an organization\n\nPath: /orgs/{org}/actions/permissions/fork-pr-contributor-approval\n\nMethod: get"
-  @spec get_fork_pr_contributor_approval_permissions_organization(GitHubEx.Client.t()) :: result
-  @spec get_fork_pr_contributor_approval_permissions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def get_fork_pr_contributor_approval_permissions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_fork_pr_contributor_approval_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_fork_pr_contributor_approval_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get fork PR contributor approval permissions for an organization\n\nGets the fork PR contributor approval policy for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec get_fork_pr_contributor_approval_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_fork_pr_contributor_approval_permissions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_fork_pr_contributor_approval_permissions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_fork_pr_contributor_approval_permissions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_fork_pr_contributor_approval_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-fork-pr-contributor-approval-permissions-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/fork-pr-contributor-approval",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_fork_pr_contributor_approval_permissions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get fork PR contributor approval permissions for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/fork-pr-contributor-approval\n\nMethod: get"
-  @spec get_fork_pr_contributor_approval_permissions_repository(GitHubEx.Client.t()) :: result
-  @spec get_fork_pr_contributor_approval_permissions_repository(GitHubEx.Client.t(), map()) ::
-          result
-  def get_fork_pr_contributor_approval_permissions_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_fork_pr_contributor_approval_permissions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_fork_pr_contributor_approval_permissions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get fork PR contributor approval permissions for a repository\n\nGets the fork PR contributor approval policy for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_fork_pr_contributor_approval_permissions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_fork_pr_contributor_approval_permissions_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_fork_pr_contributor_approval_permissions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_fork_pr_contributor_approval_permissions_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_fork_pr_contributor_approval_permissions_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-fork-pr-contributor-approval-permissions-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/fork-pr-contributor-approval",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_fork_pr_contributor_approval_permissions_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get default workflow permissions for an organization\n\nPath: /orgs/{org}/actions/permissions/workflow\n\nMethod: get"
-  @spec get_github_actions_default_workflow_permissions_organization(GitHubEx.Client.t()) ::
-          result
-  @spec get_github_actions_default_workflow_permissions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def get_github_actions_default_workflow_permissions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_github_actions_default_workflow_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_github_actions_default_workflow_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get default workflow permissions for an organization\n\nGets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in an organization,\nas well as whether GitHub Actions can submit approving pull request reviews. For more information, see\n\"[Setting the permissions of the GITHUB_TOKEN for your organization](https://docs.github.com/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization#setting-the-permissions-of-the-github_token-for-your-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_github_actions_default_workflow_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_github_actions_default_workflow_permissions_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    operation =
+      build_get_github_actions_default_workflow_permissions_organization_operation(params)
+
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_github_actions_default_workflow_permissions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_github_actions_default_workflow_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-github-actions-default-workflow-permissions-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/workflow",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_github_actions_default_workflow_permissions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get default workflow permissions for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/workflow\n\nMethod: get"
-  @spec get_github_actions_default_workflow_permissions_repository(GitHubEx.Client.t()) :: result
-  @spec get_github_actions_default_workflow_permissions_repository(GitHubEx.Client.t(), map()) ::
-          result
-  def get_github_actions_default_workflow_permissions_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_github_actions_default_workflow_permissions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_github_actions_default_workflow_permissions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get default workflow permissions for a repository\n\nGets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in a repository,\nas well as if GitHub Actions can submit approving pull request reviews.\nFor more information, see \"[Setting the permissions of the GITHUB_TOKEN for your repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#setting-the-permissions-of-the-github_token-for-your-repository).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_github_actions_default_workflow_permissions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_github_actions_default_workflow_permissions_repository(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_github_actions_default_workflow_permissions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_github_actions_default_workflow_permissions_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_github_actions_default_workflow_permissions_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-github-actions-default-workflow-permissions-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/workflow",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_github_actions_default_workflow_permissions_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions permissions for an organization\n\nPath: /orgs/{org}/actions/permissions\n\nMethod: get"
-  @spec get_github_actions_permissions_organization(GitHubEx.Client.t()) :: result
-  @spec get_github_actions_permissions_organization(GitHubEx.Client.t(), map()) :: result
-  def get_github_actions_permissions_organization(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_github_actions_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_github_actions_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions permissions for an organization\n\nGets the GitHub Actions permissions policy for repositories and allowed actions and reusable workflows in an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_github_actions_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_github_actions_permissions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_github_actions_permissions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_github_actions_permissions_organization_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_github_actions_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-github-actions-permissions-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_github_actions_permissions_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub Actions permissions for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions\n\nMethod: get"
-  @spec get_github_actions_permissions_repository(GitHubEx.Client.t()) :: result
-  @spec get_github_actions_permissions_repository(GitHubEx.Client.t(), map()) :: result
-  def get_github_actions_permissions_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_github_actions_permissions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_github_actions_permissions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub Actions permissions for a repository\n\nGets the GitHub Actions permissions policy for a repository, including whether GitHub Actions is enabled and the actions and reusable workflows allowed to run in the repository.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_github_actions_permissions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_github_actions_permissions_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_github_actions_permissions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_github_actions_permissions_repository_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_github_actions_permissions_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-github-actions-permissions-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_github_actions_permissions_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a GitHub-hosted runner for an organization\n\nPath: /orgs/{org}/actions/hosted-runners/{hosted_runner_id}\n\nMethod: get"
-  @spec get_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec get_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_hosted_runner_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a GitHub-hosted runner for an organization\n\nGets a GitHub-hosted runner configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec get_hosted_runner_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_hosted_runner_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_hosted_runner_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-hosted-runner-for-org",
       method: :get,
-      path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
       path_template: "/orgs/{org}/actions/hosted-runners/{hosted_runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub-owned images for GitHub-hosted runners in an organization\n\nPath: /orgs/{org}/actions/hosted-runners/images/github-owned\n\nMethod: get"
-  @spec get_hosted_runners_github_owned_images_for_org(GitHubEx.Client.t()) :: result
-  @spec get_hosted_runners_github_owned_images_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_hosted_runners_github_owned_images_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_hosted_runners_github_owned_images_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_hosted_runners_github_owned_images_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub-owned images for GitHub-hosted runners in an organization\n\nGet the list of GitHub-owned images available for GitHub-hosted runners for an organization."
+  @spec get_hosted_runners_github_owned_images_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_hosted_runners_github_owned_images_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_hosted_runners_github_owned_images_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_hosted_runners_github_owned_images_for_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_hosted_runners_github_owned_images_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-hosted-runners-github-owned-images-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners/images/github-owned",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_hosted_runners_github_owned_images_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get limits on GitHub-hosted runners for an organization\n\nPath: /orgs/{org}/actions/hosted-runners/limits\n\nMethod: get"
-  @spec get_hosted_runners_limits_for_org(GitHubEx.Client.t()) :: result
-  @spec get_hosted_runners_limits_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_hosted_runners_limits_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_hosted_runners_limits_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_hosted_runners_limits_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get limits on GitHub-hosted runners for an organization\n\nGet the GitHub-hosted runners limits for an organization."
+  @spec get_hosted_runners_limits_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_hosted_runners_limits_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_hosted_runners_limits_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_hosted_runners_limits_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_hosted_runners_limits_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-hosted-runners-limits-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners/limits",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_hosted_runners_limits_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get GitHub-hosted runners machine specs for an organization\n\nPath: /orgs/{org}/actions/hosted-runners/machine-sizes\n\nMethod: get"
-  @spec get_hosted_runners_machine_specs_for_org(GitHubEx.Client.t()) :: result
-  @spec get_hosted_runners_machine_specs_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_hosted_runners_machine_specs_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_hosted_runners_machine_specs_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_hosted_runners_machine_specs_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get GitHub-hosted runners machine specs for an organization\n\nGet the list of machine specs available for GitHub-hosted runners for an organization."
+  @spec get_hosted_runners_machine_specs_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_hosted_runners_machine_specs_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_hosted_runners_machine_specs_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_hosted_runners_machine_specs_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_hosted_runners_machine_specs_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-hosted-runners-machine-specs-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners/machine-sizes",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_hosted_runners_machine_specs_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get partner images for GitHub-hosted runners in an organization\n\nPath: /orgs/{org}/actions/hosted-runners/images/partner\n\nMethod: get"
-  @spec get_hosted_runners_partner_images_for_org(GitHubEx.Client.t()) :: result
-  @spec get_hosted_runners_partner_images_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_hosted_runners_partner_images_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_hosted_runners_partner_images_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_hosted_runners_partner_images_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get partner images for GitHub-hosted runners in an organization\n\nGet the list of partner images available for GitHub-hosted runners for an organization."
+  @spec get_hosted_runners_partner_images_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_hosted_runners_partner_images_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_hosted_runners_partner_images_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_hosted_runners_partner_images_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_hosted_runners_partner_images_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-hosted-runners-partner-images-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners/images/partner",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_hosted_runners_partner_images_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get platforms for GitHub-hosted runners in an organization\n\nPath: /orgs/{org}/actions/hosted-runners/platforms\n\nMethod: get"
-  @spec get_hosted_runners_platforms_for_org(GitHubEx.Client.t()) :: result
-  @spec get_hosted_runners_platforms_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_hosted_runners_platforms_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_hosted_runners_platforms_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_hosted_runners_platforms_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get platforms for GitHub-hosted runners in an organization\n\nGet the list of platforms available for GitHub-hosted runners for an organization."
+  @spec get_hosted_runners_platforms_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_hosted_runners_platforms_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_hosted_runners_platforms_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_hosted_runners_platforms_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_hosted_runners_platforms_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-hosted-runners-platforms-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners/platforms",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_hosted_runners_platforms_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a job for a workflow run\n\nPath: /repos/{owner}/{repo}/actions/jobs/{job_id}\n\nMethod: get"
-  @spec get_job_for_workflow_run(GitHubEx.Client.t()) :: result
-  @spec get_job_for_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def get_job_for_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_job_for_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_job_for_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a job for a workflow run\n\nGets a specific job in a workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_job_for_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_job_for_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_job_for_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_job_for_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_job_for_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-job-for-workflow-run",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
       path_template: "/repos/{owner}/{repo}/actions/jobs/{job_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_job_for_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an organization public key\n\nPath: /orgs/{org}/actions/secrets/public-key\n\nMethod: get"
-  @spec get_org_public_key(GitHubEx.Client.t()) :: result
-  @spec get_org_public_key(GitHubEx.Client.t(), map()) :: result
-  def get_org_public_key(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_org_public_key},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_org_public_key_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an organization public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets.\n\nThe authenticated user must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_org_public_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_org_public_key(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_org_public_key_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_org_public_key_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_org_public_key_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-org-public-key",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/secrets/public-key",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_org_public_key],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an organization secret\n\nPath: /orgs/{org}/actions/secrets/{secret_name}\n\nMethod: get"
-  @spec get_org_secret(GitHubEx.Client.t()) :: result
-  @spec get_org_secret(GitHubEx.Client.t(), map()) :: result
-  def get_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an organization secret\n\nGets a single organization secret without revealing its encrypted value.\n\nThe authenticated user must have collaborator access to a repository to create, update, or read secrets\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_org_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_org_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-org-secret",
       method: :get,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/actions/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get an organization variable\n\nPath: /orgs/{org}/actions/variables/{name}\n\nMethod: get"
-  @spec get_org_variable(GitHubEx.Client.t()) :: result
-  @spec get_org_variable(GitHubEx.Client.t(), map()) :: result
-  def get_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_org_variable_partition_spec %{
+    path: [{"org", :org}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get an organization variable\n\nGets a specific variable in an organization.\n\nThe authenticated user must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_org_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_org_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-org-variable",
       method: :get,
-      path: [{"org", :org}, {"name", :name}],
       path_template: "/orgs/{org}/actions/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_org_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get pending deployments for a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments\n\nMethod: get"
-  @spec get_pending_deployments_for_run(GitHubEx.Client.t()) :: result
-  @spec get_pending_deployments_for_run(GitHubEx.Client.t(), map()) :: result
-  def get_pending_deployments_for_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_pending_deployments_for_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_pending_deployments_for_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get pending deployments for a workflow run\n\nGet all deployment environments for a workflow run that are waiting for protection rules to pass.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_pending_deployments_for_run(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_pending_deployments_for_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_pending_deployments_for_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_pending_deployments_for_run_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_pending_deployments_for_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-pending-deployments-for-run",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_pending_deployments_for_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get private repo fork PR workflow settings for an organization\n\nPath: /orgs/{org}/actions/permissions/fork-pr-workflows-private-repos\n\nMethod: get"
-  @spec get_private_repo_fork_pr_workflows_settings_organization(GitHubEx.Client.t()) :: result
-  @spec get_private_repo_fork_pr_workflows_settings_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def get_private_repo_fork_pr_workflows_settings_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_private_repo_fork_pr_workflows_settings_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_private_repo_fork_pr_workflows_settings_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get private repo fork PR workflow settings for an organization\n\nGets the settings for whether workflows from fork pull requests can run on private repositories in an organization."
+  @spec get_private_repo_fork_pr_workflows_settings_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_private_repo_fork_pr_workflows_settings_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_private_repo_fork_pr_workflows_settings_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_private_repo_fork_pr_workflows_settings_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_private_repo_fork_pr_workflows_settings_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-private-repo-fork-pr-workflows-settings-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/fork-pr-workflows-private-repos",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_private_repo_fork_pr_workflows_settings_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get private repo fork PR workflow settings for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/fork-pr-workflows-private-repos\n\nMethod: get"
-  @spec get_private_repo_fork_pr_workflows_settings_repository(GitHubEx.Client.t()) :: result
-  @spec get_private_repo_fork_pr_workflows_settings_repository(GitHubEx.Client.t(), map()) ::
-          result
-  def get_private_repo_fork_pr_workflows_settings_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_private_repo_fork_pr_workflows_settings_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_private_repo_fork_pr_workflows_settings_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get private repo fork PR workflow settings for a repository\n\nGets the settings for whether workflows from fork pull requests can run on a private repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_private_repo_fork_pr_workflows_settings_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_private_repo_fork_pr_workflows_settings_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_private_repo_fork_pr_workflows_settings_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_private_repo_fork_pr_workflows_settings_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_private_repo_fork_pr_workflows_settings_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-private-repo-fork-pr-workflows-settings-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/fork-pr-workflows-private-repos",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :get_private_repo_fork_pr_workflows_settings_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a repository public key\n\nPath: /repos/{owner}/{repo}/actions/secrets/public-key\n\nMethod: get"
-  @spec get_repo_public_key(GitHubEx.Client.t()) :: result
-  @spec get_repo_public_key(GitHubEx.Client.t(), map()) :: result
-  def get_repo_public_key(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_repo_public_key},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_repo_public_key_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a repository public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_repo_public_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_repo_public_key(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_repo_public_key_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_repo_public_key_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_repo_public_key_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-repo-public-key",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/secrets/public-key",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_repo_public_key],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a repository secret\n\nPath: /repos/{owner}/{repo}/actions/secrets/{secret_name}\n\nMethod: get"
-  @spec get_repo_secret(GitHubEx.Client.t()) :: result
-  @spec get_repo_secret(GitHubEx.Client.t(), map()) :: result
-  def get_repo_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_repo_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_repo_secret_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a repository secret\n\nGets a single repository secret without revealing its encrypted value.\n\nThe authenticated user must have collaborator access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_repo_secret(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_repo_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_repo_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_repo_secret_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_repo_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-repo-secret",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
       path_template: "/repos/{owner}/{repo}/actions/secrets/{secret_name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_repo_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a repository variable\n\nPath: /repos/{owner}/{repo}/actions/variables/{name}\n\nMethod: get"
-  @spec get_repo_variable(GitHubEx.Client.t()) :: result
-  @spec get_repo_variable(GitHubEx.Client.t(), map()) :: result
-  def get_repo_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_repo_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_repo_variable_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a repository variable\n\nGets a specific variable in a repository.\n\nThe authenticated user must have collaborator access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_repo_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_repo_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_repo_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_repo_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_repo_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-repo-variable",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
       path_template: "/repos/{owner}/{repo}/actions/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_repo_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get the review history for a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/approvals\n\nMethod: get"
-  @spec get_reviews_for_run(GitHubEx.Client.t()) :: result
-  @spec get_reviews_for_run(GitHubEx.Client.t(), map()) :: result
-  def get_reviews_for_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_reviews_for_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_reviews_for_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get the review history for a workflow run\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec get_reviews_for_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_reviews_for_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_reviews_for_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_reviews_for_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_reviews_for_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-reviews-for-run",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/approvals",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_reviews_for_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a self-hosted runner for an organization\n\nPath: /orgs/{org}/actions/runners/{runner_id}\n\nMethod: get"
-  @spec get_self_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec get_self_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_self_hosted_runner_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_self_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_self_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a self-hosted runner for an organization\n\nGets a specific self-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec get_self_hosted_runner_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_self_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_self_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_self_hosted_runner_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_self_hosted_runner_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-self-hosted-runner-for-org",
       method: :get,
-      path: [{"org", :org}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runners/{runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_self_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a self-hosted runner for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/{runner_id}\n\nMethod: get"
-  @spec get_self_hosted_runner_for_repo(GitHubEx.Client.t()) :: result
-  @spec get_self_hosted_runner_for_repo(GitHubEx.Client.t(), map()) :: result
-  def get_self_hosted_runner_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_self_hosted_runner_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_self_hosted_runner_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a self-hosted runner for a repository\n\nGets a specific self-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_self_hosted_runner_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_self_hosted_runner_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_self_hosted_runner_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_self_hosted_runner_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_self_hosted_runner_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-self-hosted-runner-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
       path_template: "/repos/{owner}/{repo}/actions/runners/{runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_self_hosted_runner_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a self-hosted runner group for an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}\n\nMethod: get"
-  @spec get_self_hosted_runner_group_for_org(GitHubEx.Client.t()) :: result
-  @spec get_self_hosted_runner_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def get_self_hosted_runner_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_self_hosted_runner_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_self_hosted_runner_group_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a self-hosted runner group for an organization\n\nGets a specific self-hosted runner group for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec get_self_hosted_runner_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_self_hosted_runner_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_self_hosted_runner_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_self_hosted_runner_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_self_hosted_runner_group_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-self-hosted-runner-group-for-org",
       method: :get,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_self_hosted_runner_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get self-hosted runners settings for an organization\n\nPath: /orgs/{org}/actions/permissions/self-hosted-runners\n\nMethod: get"
-  @spec get_self_hosted_runners_permissions_organization(GitHubEx.Client.t()) :: result
-  @spec get_self_hosted_runners_permissions_organization(GitHubEx.Client.t(), map()) :: result
-  def get_self_hosted_runners_permissions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_self_hosted_runners_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_self_hosted_runners_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get self-hosted runners settings for an organization\n\nGets the settings for self-hosted runners for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec get_self_hosted_runners_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_self_hosted_runners_permissions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_self_hosted_runners_permissions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_self_hosted_runners_permissions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @get_self_hosted_runners_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/get-self-hosted-runners-permissions-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/self-hosted-runners",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_self_hosted_runners_permissions_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a workflow\n\nPath: /repos/{owner}/{repo}/actions/workflows/{workflow_id}\n\nMethod: get"
-  @spec get_workflow(GitHubEx.Client.t()) :: result
-  @spec get_workflow(GitHubEx.Client.t(), map()) :: result
-  def get_workflow(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_workflow},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_workflow_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a workflow\n\nGets a specific workflow. You can replace `workflow_id` with the workflow\nfile name. For example, you could use `main.yaml`.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec get_workflow(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_workflow(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_workflow_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_workflow_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_workflow_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-workflow",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
       path_template: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_workflow],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get the level of access for workflows outside of the repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/access\n\nMethod: get"
-  @spec get_workflow_access_to_repository(GitHubEx.Client.t()) :: result
-  @spec get_workflow_access_to_repository(GitHubEx.Client.t(), map()) :: result
-  def get_workflow_access_to_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_workflow_access_to_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_workflow_access_to_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get the level of access for workflows outside of the repository\n\nGets the level of access that workflows outside of the repository have to actions and reusable workflows in the repository.\nThis endpoint only applies to private repositories.\nFor more information, see \"[Allowing access to components in a private repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#allowing-access-to-components-in-a-private-repository).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec get_workflow_access_to_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def get_workflow_access_to_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_workflow_access_to_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_workflow_access_to_repository_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @get_workflow_access_to_repository_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-workflow-access-to-repository",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/access",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_workflow_access_to_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}\n\nMethod: get"
-  @spec get_workflow_run(GitHubEx.Client.t()) :: result
-  @spec get_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def get_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"exclude_pull_requests", :exclude_pull_requests}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a workflow run\n\nGets a specific workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec get_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-workflow-run",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}",
-      query: [{"exclude_pull_requests", :exclude_pull_requests}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get a workflow run attempt\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}\n\nMethod: get"
-  @spec get_workflow_run_attempt(GitHubEx.Client.t()) :: result
-  @spec get_workflow_run_attempt(GitHubEx.Client.t(), map()) :: result
-  def get_workflow_run_attempt(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_workflow_run_attempt},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_workflow_run_attempt_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"run_id", :run_id},
+      {"attempt_number", :attempt_number}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"exclude_pull_requests", :exclude_pull_requests}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get a workflow run attempt\n\nGets a specific workflow run attempt.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec get_workflow_run_attempt(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_workflow_run_attempt(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_workflow_run_attempt_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_workflow_run_attempt_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_workflow_run_attempt_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-workflow-run-attempt",
       method: :get,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"run_id", :run_id},
-        {"attempt_number", :attempt_number}
-      ],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}",
-      query: [{"exclude_pull_requests", :exclude_pull_requests}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_workflow_run_attempt],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get workflow run usage\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/timing\n\nMethod: get"
-  @spec get_workflow_run_usage(GitHubEx.Client.t()) :: result
-  @spec get_workflow_run_usage(GitHubEx.Client.t(), map()) :: result
-  def get_workflow_run_usage(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_workflow_run_usage},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_workflow_run_usage_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get workflow run usage\n\n> [!WARNING]  \n> This endpoint is in the process of closing down. Refer to \"[Actions Get workflow usage and Get workflow run usage endpoints closing down](https://github.blog/changelog/2025-02-02-actions-get-workflow-usage-and-get-workflow-run-usage-endpoints-closing-down/)\" for more information.\n\nGets the number of billable minutes and total run time for a specific workflow run. Billable minutes only apply to workflows in private repositories that use GitHub-hosted runners. Usage is listed for each GitHub-hosted runner operating system in milliseconds. Any job re-runs are also included in the usage. The usage does not include the multiplier for macOS and Windows runners and is not rounded up to the nearest whole minute. For more information, see \"[Managing billing for GitHub Actions](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-actions)\".\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec get_workflow_run_usage(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_workflow_run_usage(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_workflow_run_usage_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_workflow_run_usage_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_workflow_run_usage_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-workflow-run-usage",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/timing",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_workflow_run_usage],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Get workflow usage\n\nPath: /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing\n\nMethod: get"
-  @spec get_workflow_usage(GitHubEx.Client.t()) :: result
-  @spec get_workflow_usage(GitHubEx.Client.t(), map()) :: result
-  def get_workflow_usage(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :get_workflow_usage},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @get_workflow_usage_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Get workflow usage\n\n> [!WARNING]  \n> This endpoint is in the process of closing down. Refer to \"[Actions Get workflow usage and Get workflow run usage endpoints closing down](https://github.blog/changelog/2025-02-02-actions-get-workflow-usage-and-get-workflow-run-usage-endpoints-closing-down/)\" for more information.\n\nGets the number of billable minutes used by a specific workflow during the current billing cycle. Billable minutes only apply to workflows in private repositories that use GitHub-hosted runners. Usage is listed for each GitHub-hosted runner operating system in milliseconds. Any job re-runs are also included in the usage. The usage does not include the multiplier for macOS and Windows runners and is not rounded up to the nearest whole minute. For more information, see \"[Managing billing for GitHub Actions](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-actions)\".\n\nYou can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec get_workflow_usage(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def get_workflow_usage(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_get_workflow_usage_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_get_workflow_usage_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @get_workflow_usage_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/get-workflow-usage",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
       path_template: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :get_workflow_usage],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "List artifacts for a repository\n\nPath: /repos/{owner}/{repo}/actions/artifacts\n\nMethod: get"
-  @spec list_artifacts_for_repo(GitHubEx.Client.t()) :: result
-  @spec list_artifacts_for_repo(GitHubEx.Client.t(), map()) :: result
-  def list_artifacts_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_artifacts_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_artifacts_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}, {"name", :name}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List artifacts for a repository\n\nLists all artifacts for a repository.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec list_artifacts_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_artifacts_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_artifacts_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_artifacts_for_repo(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_artifacts_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_artifacts_for_repo_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_artifacts_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_artifacts_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-artifacts-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/artifacts",
-      query: [{"per_page", :per_page}, {"page", :page}, {"name", :name}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_artifacts_for_repo],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["artifacts"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List image versions of a custom image for an organization\n\nPath: /orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions\n\nMethod: get"
-  @spec list_custom_image_versions_for_org(GitHubEx.Client.t()) :: result
-  @spec list_custom_image_versions_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_custom_image_versions_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_custom_image_versions_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_custom_image_versions_for_org_partition_spec %{
+    path: [{"image_definition_id", :image_definition_id}, {"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List image versions of a custom image for an organization\n\nList image versions of a custom image for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec list_custom_image_versions_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_custom_image_versions_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_custom_image_versions_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_custom_image_versions_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_custom_image_versions_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_custom_image_versions_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_custom_image_versions_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_custom_image_versions_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-custom-image-versions-for-org",
       method: :get,
-      path: [{"image_definition_id", :image_definition_id}, {"org", :org}],
       path_template:
         "/orgs/{org}/actions/hosted-runners/images/custom/{image_definition_id}/versions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_custom_image_versions_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["image_versions"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List custom images for an organization\n\nPath: /orgs/{org}/actions/hosted-runners/images/custom\n\nMethod: get"
-  @spec list_custom_images_for_org(GitHubEx.Client.t()) :: result
-  @spec list_custom_images_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_custom_images_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_custom_images_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_custom_images_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List custom images for an organization\n\nList custom images for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec list_custom_images_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_custom_images_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_custom_images_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_custom_images_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_custom_images_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_custom_images_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_custom_images_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_custom_images_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-custom-images-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners/images/custom",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_custom_images_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["images"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List environment secrets\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/secrets\n\nMethod: get"
-  @spec list_environment_secrets(GitHubEx.Client.t()) :: result
-  @spec list_environment_secrets(GitHubEx.Client.t(), map()) :: result
-  def list_environment_secrets(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_environment_secrets},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_environment_secrets_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List environment secrets\n\nLists all secrets available in an environment without revealing their\nencrypted values.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_environment_secrets(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_environment_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_environment_secrets_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_environment_secrets(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_environment_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_environment_secrets_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_environment_secrets_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_environment_secrets_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-environment-secrets",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"environment_name", :environment_name}],
       path_template: "/repos/{owner}/{repo}/environments/{environment_name}/secrets",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_environment_secrets],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["secrets"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List environment variables\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/variables\n\nMethod: get"
-  @spec list_environment_variables(GitHubEx.Client.t()) :: result
-  @spec list_environment_variables(GitHubEx.Client.t(), map()) :: result
-  def list_environment_variables(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_environment_variables},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_environment_variables_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"environment_name", :environment_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List environment variables\n\nLists all environment variables.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_environment_variables(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_environment_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_environment_variables_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_environment_variables(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_environment_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_environment_variables_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_environment_variables_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_environment_variables_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-environment-variables",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"environment_name", :environment_name}],
       path_template: "/repos/{owner}/{repo}/environments/{environment_name}/variables",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_environment_variables],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["variables"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List GitHub-hosted runners in a group for an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/hosted-runners\n\nMethod: get"
-  @spec list_github_hosted_runners_in_group_for_org(GitHubEx.Client.t()) :: result
-  @spec list_github_hosted_runners_in_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_github_hosted_runners_in_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_github_hosted_runners_in_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_github_hosted_runners_in_group_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List GitHub-hosted runners in a group for an organization\n\nLists the GitHub-hosted runners in an organization group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_github_hosted_runners_in_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_github_hosted_runners_in_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_github_hosted_runners_in_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_github_hosted_runners_in_group_for_org(term(), map(), keyword()) ::
+          Enumerable.t()
+  def stream_list_github_hosted_runners_in_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_github_hosted_runners_in_group_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_github_hosted_runners_in_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_github_hosted_runners_in_group_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/list-github-hosted-runners-in-group-for-org",
       method: :get,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}/hosted-runners",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_github_hosted_runners_in_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["runners"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List GitHub-hosted runners for an organization\n\nPath: /orgs/{org}/actions/hosted-runners\n\nMethod: get"
-  @spec list_hosted_runners_for_org(GitHubEx.Client.t()) :: result
-  @spec list_hosted_runners_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_hosted_runners_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_hosted_runners_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_hosted_runners_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List GitHub-hosted runners for an organization\n\nLists all GitHub-hosted runners configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `manage_runner:org` scope to use this endpoint."
+  @spec list_hosted_runners_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_hosted_runners_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_hosted_runners_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_hosted_runners_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_hosted_runners_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_hosted_runners_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_hosted_runners_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_hosted_runners_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-hosted-runners-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/hosted-runners",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_hosted_runners_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["runners"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List jobs for a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/jobs\n\nMethod: get"
-  @spec list_jobs_for_workflow_run(GitHubEx.Client.t()) :: result
-  @spec list_jobs_for_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def list_jobs_for_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_jobs_for_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_jobs_for_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"filter", :filter}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List jobs for a workflow run\n\nLists jobs for a workflow run. You can use parameters to narrow the list of results. For more information\nabout using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec list_jobs_for_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_jobs_for_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_jobs_for_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_jobs_for_workflow_run(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_jobs_for_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_jobs_for_workflow_run_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_jobs_for_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_jobs_for_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-jobs-for-workflow-run",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/jobs",
-      query: [{"filter", :filter}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_jobs_for_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["jobs"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List jobs for a workflow run attempt\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs\n\nMethod: get"
-  @spec list_jobs_for_workflow_run_attempt(GitHubEx.Client.t()) :: result
-  @spec list_jobs_for_workflow_run_attempt(GitHubEx.Client.t(), map()) :: result
-  def list_jobs_for_workflow_run_attempt(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_jobs_for_workflow_run_attempt},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_jobs_for_workflow_run_attempt_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"run_id", :run_id},
+      {"attempt_number", :attempt_number}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List jobs for a workflow run attempt\n\nLists jobs for a specific workflow run attempt. You can use parameters to narrow the list of results. For more information\nabout using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint  with a private repository."
+  @spec list_jobs_for_workflow_run_attempt(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_jobs_for_workflow_run_attempt(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_jobs_for_workflow_run_attempt_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_jobs_for_workflow_run_attempt(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_jobs_for_workflow_run_attempt(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_jobs_for_workflow_run_attempt_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_jobs_for_workflow_run_attempt_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_jobs_for_workflow_run_attempt_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-jobs-for-workflow-run-attempt",
       method: :get,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"run_id", :run_id},
-        {"attempt_number", :attempt_number}
-      ],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_jobs_for_workflow_run_attempt],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["jobs"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List labels for a self-hosted runner for an organization\n\nPath: /orgs/{org}/actions/runners/{runner_id}/labels\n\nMethod: get"
-  @spec list_labels_for_self_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec list_labels_for_self_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_labels_for_self_hosted_runner_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_labels_for_self_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_labels_for_self_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List labels for a self-hosted runner for an organization\n\nLists all labels for a self-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec list_labels_for_self_hosted_runner_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_labels_for_self_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_labels_for_self_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_labels_for_self_hosted_runner_for_org(term(), map(), keyword()) ::
+          Enumerable.t()
+  def stream_list_labels_for_self_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_labels_for_self_hosted_runner_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_labels_for_self_hosted_runner_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_labels_for_self_hosted_runner_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/list-labels-for-self-hosted-runner-for-org",
       method: :get,
-      path: [{"org", :org}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_labels_for_self_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["labels"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List labels for a self-hosted runner for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/{runner_id}/labels\n\nMethod: get"
-  @spec list_labels_for_self_hosted_runner_for_repo(GitHubEx.Client.t()) :: result
-  @spec list_labels_for_self_hosted_runner_for_repo(GitHubEx.Client.t(), map()) :: result
-  def list_labels_for_self_hosted_runner_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_labels_for_self_hosted_runner_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_labels_for_self_hosted_runner_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List labels for a self-hosted runner for a repository\n\nLists all labels for a self-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_labels_for_self_hosted_runner_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_labels_for_self_hosted_runner_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_labels_for_self_hosted_runner_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_labels_for_self_hosted_runner_for_repo(term(), map(), keyword()) ::
+          Enumerable.t()
+  def stream_list_labels_for_self_hosted_runner_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_labels_for_self_hosted_runner_for_repo_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_labels_for_self_hosted_runner_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_labels_for_self_hosted_runner_for_repo_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/list-labels-for-self-hosted-runner-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
       path_template: "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_labels_for_self_hosted_runner_for_repo],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["labels"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List organization secrets\n\nPath: /orgs/{org}/actions/secrets\n\nMethod: get"
-  @spec list_org_secrets(GitHubEx.Client.t()) :: result
-  @spec list_org_secrets(GitHubEx.Client.t(), map()) :: result
-  def list_org_secrets(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_org_secrets},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_org_secrets_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List organization secrets\n\nLists all secrets available in an organization without revealing their\nencrypted values.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec list_org_secrets(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_org_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_org_secrets_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_org_secrets(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_org_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_org_secrets_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_org_secrets_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_org_secrets_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-org-secrets",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/secrets",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_org_secrets],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["secrets"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List organization variables\n\nPath: /orgs/{org}/actions/variables\n\nMethod: get"
-  @spec list_org_variables(GitHubEx.Client.t()) :: result
-  @spec list_org_variables(GitHubEx.Client.t(), map()) :: result
-  def list_org_variables(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_org_variables},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_org_variables_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List organization variables\n\nLists all organization variables.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec list_org_variables(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_org_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_org_variables_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_org_variables(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_org_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_org_variables_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_org_variables_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_org_variables_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-org-variables",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/variables",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_org_variables],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["variables"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repository access to a self-hosted runner group in an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories\n\nMethod: get"
-  @spec list_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t()) :: result
-  @spec list_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t(), map()) :: result
-  def list_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_repo_access_to_self_hosted_runner_group_in_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_repo_access_to_self_hosted_runner_group_in_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"page", :page}, {"per_page", :per_page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repository access to a self-hosted runner group in an organization\n\nLists the repositories with access to a self-hosted runner group configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_repo_access_to_self_hosted_runner_group_in_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_repo_access_to_self_hosted_runner_group_in_org(term(), map(), keyword()) ::
+          Enumerable.t()
+  def stream_list_repo_access_to_self_hosted_runner_group_in_org(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_repo_access_to_self_hosted_runner_group_in_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_repo_access_to_self_hosted_runner_group_in_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/list-repo-access-to-self-hosted-runner-group-in-org",
       method: :get,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories",
-      query: [{"page", :page}, {"per_page", :per_page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :list_repo_access_to_self_hosted_runner_group_in_org
+        ],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["repositories"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repository organization secrets\n\nPath: /repos/{owner}/{repo}/actions/organization-secrets\n\nMethod: get"
-  @spec list_repo_organization_secrets(GitHubEx.Client.t()) :: result
-  @spec list_repo_organization_secrets(GitHubEx.Client.t(), map()) :: result
-  def list_repo_organization_secrets(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_repo_organization_secrets},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_repo_organization_secrets_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repository organization secrets\n\nLists all organization secrets shared with a repository without revealing their encrypted\nvalues.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_repo_organization_secrets(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_repo_organization_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_repo_organization_secrets_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_repo_organization_secrets(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_repo_organization_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_repo_organization_secrets_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_repo_organization_secrets_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_repo_organization_secrets_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-repo-organization-secrets",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/organization-secrets",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_repo_organization_secrets],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["secrets"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repository organization variables\n\nPath: /repos/{owner}/{repo}/actions/organization-variables\n\nMethod: get"
-  @spec list_repo_organization_variables(GitHubEx.Client.t()) :: result
-  @spec list_repo_organization_variables(GitHubEx.Client.t(), map()) :: result
-  def list_repo_organization_variables(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_repo_organization_variables},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_repo_organization_variables_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repository organization variables\n\nLists all organization variables shared with a repository.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_repo_organization_variables(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_repo_organization_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_repo_organization_variables_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_repo_organization_variables(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_repo_organization_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_repo_organization_variables_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_repo_organization_variables_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_repo_organization_variables_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-repo-organization-variables",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/organization-variables",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_repo_organization_variables],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["variables"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repository secrets\n\nPath: /repos/{owner}/{repo}/actions/secrets\n\nMethod: get"
-  @spec list_repo_secrets(GitHubEx.Client.t()) :: result
-  @spec list_repo_secrets(GitHubEx.Client.t(), map()) :: result
-  def list_repo_secrets(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_repo_secrets},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_repo_secrets_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repository secrets\n\nLists all secrets available in a repository without revealing their encrypted\nvalues.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_repo_secrets(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_repo_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_repo_secrets_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_repo_secrets(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_repo_secrets(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_repo_secrets_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_repo_secrets_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_repo_secrets_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-repo-secrets",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/secrets",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_repo_secrets],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["secrets"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repository variables\n\nPath: /repos/{owner}/{repo}/actions/variables\n\nMethod: get"
-  @spec list_repo_variables(GitHubEx.Client.t()) :: result
-  @spec list_repo_variables(GitHubEx.Client.t(), map()) :: result
-  def list_repo_variables(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_repo_variables},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_repo_variables_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repository variables\n\nLists all repository variables.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_repo_variables(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_repo_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_repo_variables_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_repo_variables(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_repo_variables(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_repo_variables_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_repo_variables_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_repo_variables_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-repo-variables",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/variables",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_repo_variables],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["variables"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repository workflows\n\nPath: /repos/{owner}/{repo}/actions/workflows\n\nMethod: get"
-  @spec list_repo_workflows(GitHubEx.Client.t()) :: result
-  @spec list_repo_workflows(GitHubEx.Client.t(), map()) :: result
-  def list_repo_workflows(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_repo_workflows},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_repo_workflows_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repository workflows\n\nLists the workflows in a repository.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec list_repo_workflows(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_repo_workflows(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_repo_workflows_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_repo_workflows(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_repo_workflows(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_repo_workflows_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_repo_workflows_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_repo_workflows_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-repo-workflows",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/workflows",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_repo_workflows],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["workflows"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List runner applications for an organization\n\nPath: /orgs/{org}/actions/runners/downloads\n\nMethod: get"
-  @spec list_runner_applications_for_org(GitHubEx.Client.t()) :: result
-  @spec list_runner_applications_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_runner_applications_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_runner_applications_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_runner_applications_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List runner applications for an organization\n\nLists binaries for the runner application that you can download and run.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint.  If the repository is private, the `repo` scope is also required."
+  @spec list_runner_applications_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_runner_applications_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_runner_applications_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_runner_applications_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_runner_applications_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_runner_applications_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_runner_applications_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_runner_applications_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-runner-applications-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/runners/downloads",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_runner_applications_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List runner applications for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/downloads\n\nMethod: get"
-  @spec list_runner_applications_for_repo(GitHubEx.Client.t()) :: result
-  @spec list_runner_applications_for_repo(GitHubEx.Client.t(), map()) :: result
-  def list_runner_applications_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_runner_applications_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_runner_applications_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List runner applications for a repository\n\nLists binaries for the runner application that you can download and run.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_runner_applications_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_runner_applications_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_runner_applications_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_runner_applications_for_repo(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_runner_applications_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_runner_applications_for_repo_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_runner_applications_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_runner_applications_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-runner-applications-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/runners/downloads",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_runner_applications_for_repo],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: nil,
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List selected repositories for an organization secret\n\nPath: /orgs/{org}/actions/secrets/{secret_name}/repositories\n\nMethod: get"
-  @spec list_selected_repos_for_org_secret(GitHubEx.Client.t()) :: result
-  @spec list_selected_repos_for_org_secret(GitHubEx.Client.t(), map()) :: result
-  def list_selected_repos_for_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_selected_repos_for_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_selected_repos_for_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"page", :page}, {"per_page", :per_page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List selected repositories for an organization secret\n\nLists all repositories that have been selected when the `visibility`\nfor repository access to a secret is set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec list_selected_repos_for_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_selected_repos_for_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_selected_repos_for_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_selected_repos_for_org_secret(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_selected_repos_for_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_selected_repos_for_org_secret_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_selected_repos_for_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_selected_repos_for_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-selected-repos-for-org-secret",
       method: :get,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/actions/secrets/{secret_name}/repositories",
-      query: [{"page", :page}, {"per_page", :per_page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_selected_repos_for_org_secret],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["repositories"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List selected repositories for an organization variable\n\nPath: /orgs/{org}/actions/variables/{name}/repositories\n\nMethod: get"
-  @spec list_selected_repos_for_org_variable(GitHubEx.Client.t()) :: result
-  @spec list_selected_repos_for_org_variable(GitHubEx.Client.t(), map()) :: result
-  def list_selected_repos_for_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_selected_repos_for_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_selected_repos_for_org_variable_partition_spec %{
+    path: [{"org", :org}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"page", :page}, {"per_page", :per_page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List selected repositories for an organization variable\n\nLists all repositories that can access an organization variable\nthat is available to selected repositories.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec list_selected_repos_for_org_variable(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_selected_repos_for_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_selected_repos_for_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_selected_repos_for_org_variable(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_selected_repos_for_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_selected_repos_for_org_variable_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_selected_repos_for_org_variable_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_selected_repos_for_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-selected-repos-for-org-variable",
       method: :get,
-      path: [{"org", :org}, {"name", :name}],
       path_template: "/orgs/{org}/actions/variables/{name}/repositories",
-      query: [{"page", :page}, {"per_page", :per_page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_selected_repos_for_org_variable],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["repositories"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List selected repositories enabled for GitHub Actions in an organization\n\nPath: /orgs/{org}/actions/permissions/repositories\n\nMethod: get"
-  @spec list_selected_repositories_enabled_github_actions_organization(GitHubEx.Client.t()) ::
-          result
-  @spec list_selected_repositories_enabled_github_actions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def list_selected_repositories_enabled_github_actions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_selected_repositories_enabled_github_actions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_selected_repositories_enabled_github_actions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List selected repositories enabled for GitHub Actions in an organization\n\nLists the selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_selected_repositories_enabled_github_actions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_selected_repositories_enabled_github_actions_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    operation =
+      build_list_selected_repositories_enabled_github_actions_organization_operation(params)
+
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_selected_repositories_enabled_github_actions_organization(
+          term(),
+          map(),
+          keyword()
+        ) :: Enumerable.t()
+  def stream_list_selected_repositories_enabled_github_actions_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn ->
+        build_list_selected_repositories_enabled_github_actions_organization_operation(params)
+      end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_selected_repositories_enabled_github_actions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_selected_repositories_enabled_github_actions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/list-selected-repositories-enabled-github-actions-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/repositories",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :list_selected_repositories_enabled_github_actions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["repositories"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List repositories allowed to use self-hosted runners in an organization\n\nPath: /orgs/{org}/actions/permissions/self-hosted-runners/repositories\n\nMethod: get"
-  @spec list_selected_repositories_self_hosted_runners_organization(GitHubEx.Client.t()) :: result
-  @spec list_selected_repositories_self_hosted_runners_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def list_selected_repositories_self_hosted_runners_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_selected_repositories_self_hosted_runners_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_selected_repositories_self_hosted_runners_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List repositories allowed to use self-hosted runners in an organization\n\nLists repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec list_selected_repositories_self_hosted_runners_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_selected_repositories_self_hosted_runners_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    operation =
+      build_list_selected_repositories_self_hosted_runners_organization_operation(params)
+
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_selected_repositories_self_hosted_runners_organization(
+          term(),
+          map(),
+          keyword()
+        ) :: Enumerable.t()
+  def stream_list_selected_repositories_self_hosted_runners_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn ->
+        build_list_selected_repositories_self_hosted_runners_organization_operation(params)
+      end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_selected_repositories_self_hosted_runners_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_selected_repositories_self_hosted_runners_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/list-selected-repositories-self-hosted-runners-organization",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/self-hosted-runners/repositories",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :list_selected_repositories_self_hosted_runners_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["repositories"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List self-hosted runner groups for an organization\n\nPath: /orgs/{org}/actions/runner-groups\n\nMethod: get"
-  @spec list_self_hosted_runner_groups_for_org(GitHubEx.Client.t()) :: result
-  @spec list_self_hosted_runner_groups_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_self_hosted_runner_groups_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_self_hosted_runner_groups_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_self_hosted_runner_groups_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"per_page", :per_page},
+      {"page", :page},
+      {"visible_to_repository", :visible_to_repository}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List self-hosted runner groups for an organization\n\nLists all self-hosted runner groups configured in an organization and inherited from an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_self_hosted_runner_groups_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_self_hosted_runner_groups_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_self_hosted_runner_groups_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_self_hosted_runner_groups_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_self_hosted_runner_groups_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_self_hosted_runner_groups_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_self_hosted_runner_groups_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_self_hosted_runner_groups_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-self-hosted-runner-groups-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/runner-groups",
-      query: [
-        {"per_page", :per_page},
-        {"page", :page},
-        {"visible_to_repository", :visible_to_repository}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_self_hosted_runner_groups_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["runner_groups"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List self-hosted runners for an organization\n\nPath: /orgs/{org}/actions/runners\n\nMethod: get"
-  @spec list_self_hosted_runners_for_org(GitHubEx.Client.t()) :: result
-  @spec list_self_hosted_runners_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_self_hosted_runners_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_self_hosted_runners_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_self_hosted_runners_for_org_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"name", :name}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List self-hosted runners for an organization\n\nLists all self-hosted runners configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec list_self_hosted_runners_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_self_hosted_runners_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_self_hosted_runners_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_self_hosted_runners_for_org(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_self_hosted_runners_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_self_hosted_runners_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_self_hosted_runners_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_self_hosted_runners_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-self-hosted-runners-for-org",
       method: :get,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/runners",
-      query: [{"name", :name}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_self_hosted_runners_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["runners"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List self-hosted runners for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners\n\nMethod: get"
-  @spec list_self_hosted_runners_for_repo(GitHubEx.Client.t()) :: result
-  @spec list_self_hosted_runners_for_repo(GitHubEx.Client.t(), map()) :: result
-  def list_self_hosted_runners_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_self_hosted_runners_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_self_hosted_runners_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"name", :name}, {"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List self-hosted runners for a repository\n\nLists all self-hosted runners configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec list_self_hosted_runners_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_self_hosted_runners_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_self_hosted_runners_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_self_hosted_runners_for_repo(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_self_hosted_runners_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_self_hosted_runners_for_repo_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_self_hosted_runners_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @list_self_hosted_runners_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-self-hosted-runners-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/runners",
-      query: [{"name", :name}, {"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_self_hosted_runners_for_repo],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["runners"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List self-hosted runners in a group for an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/runners\n\nMethod: get"
-  @spec list_self_hosted_runners_in_group_for_org(GitHubEx.Client.t()) :: result
-  @spec list_self_hosted_runners_in_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def list_self_hosted_runners_in_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_self_hosted_runners_in_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_self_hosted_runners_in_group_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [{"per_page", :per_page}, {"page", :page}],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List self-hosted runners in a group for an organization\n\nLists self-hosted runners that are in a specific organization group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec list_self_hosted_runners_in_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def list_self_hosted_runners_in_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_self_hosted_runners_in_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_self_hosted_runners_in_group_for_org(term(), map(), keyword()) ::
+          Enumerable.t()
+  def stream_list_self_hosted_runners_in_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_self_hosted_runners_in_group_for_org_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_self_hosted_runners_in_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @list_self_hosted_runners_in_group_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/list-self-hosted-runners-in-group-for-org",
       method: :get,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}/runners",
-      query: [{"per_page", :per_page}, {"page", :page}],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_self_hosted_runners_in_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["runners"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List workflow run artifacts\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts\n\nMethod: get"
-  @spec list_workflow_run_artifacts(GitHubEx.Client.t()) :: result
-  @spec list_workflow_run_artifacts(GitHubEx.Client.t(), map()) :: result
-  def list_workflow_run_artifacts(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_workflow_run_artifacts},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_workflow_run_artifacts_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"per_page", :per_page},
+      {"page", :page},
+      {"name", :name},
+      {"direction", :direction}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List workflow run artifacts\n\nLists artifacts for a workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec list_workflow_run_artifacts(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_workflow_run_artifacts(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_workflow_run_artifacts_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_workflow_run_artifacts(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_workflow_run_artifacts(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_workflow_run_artifacts_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_workflow_run_artifacts_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_workflow_run_artifacts_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-workflow-run-artifacts",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/artifacts",
-      query: [
-        {"per_page", :per_page},
-        {"page", :page},
-        {"name", :name},
-        {"direction", :direction}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_workflow_run_artifacts],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["artifacts"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List workflow runs for a workflow\n\nPath: /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs\n\nMethod: get"
-  @spec list_workflow_runs(GitHubEx.Client.t()) :: result
-  @spec list_workflow_runs(GitHubEx.Client.t(), map()) :: result
-  def list_workflow_runs(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_workflow_runs},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_workflow_runs_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"actor", :actor},
+      {"branch", :branch},
+      {"event", :event},
+      {"status", :status},
+      {"per_page", :per_page},
+      {"page", :page},
+      {"created", :created},
+      {"exclude_pull_requests", :exclude_pull_requests},
+      {"check_suite_id", :check_suite_id},
+      {"head_sha", :head_sha}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List workflow runs for a workflow\n\nList all workflow runs for a workflow. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository.\n\nThis endpoint will return up to 1,000 results for each search when using the following parameters: `actor`, `branch`, `check_suite_id`, `created`, `event`, `head_sha`, `status`."
+  @spec list_workflow_runs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_workflow_runs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_workflow_runs_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_workflow_runs(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_workflow_runs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_workflow_runs_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_workflow_runs_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_workflow_runs_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-workflow-runs",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
       path_template: "/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs",
-      query: [
-        {"actor", :actor},
-        {"branch", :branch},
-        {"event", :event},
-        {"status", :status},
-        {"per_page", :per_page},
-        {"page", :page},
-        {"created", :created},
-        {"exclude_pull_requests", :exclude_pull_requests},
-        {"check_suite_id", :check_suite_id},
-        {"head_sha", :head_sha}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_workflow_runs],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["workflow_runs"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "List workflow runs for a repository\n\nPath: /repos/{owner}/{repo}/actions/runs\n\nMethod: get"
-  @spec list_workflow_runs_for_repo(GitHubEx.Client.t()) :: result
-  @spec list_workflow_runs_for_repo(GitHubEx.Client.t(), map()) :: result
-  def list_workflow_runs_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :list_workflow_runs_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @list_workflow_runs_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [
+      {"actor", :actor},
+      {"branch", :branch},
+      {"event", :event},
+      {"status", :status},
+      {"per_page", :per_page},
+      {"page", :page},
+      {"created", :created},
+      {"exclude_pull_requests", :exclude_pull_requests},
+      {"check_suite_id", :check_suite_id},
+      {"head_sha", :head_sha}
+    ],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "List workflow runs for a repository\n\nLists all workflow runs for a repository. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository.\n\nThis endpoint will return up to 1,000 results for each search when using the following parameters: `actor`, `branch`, `check_suite_id`, `created`, `event`, `head_sha`, `status`."
+  @spec list_workflow_runs_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def list_workflow_runs_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_list_workflow_runs_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  @spec stream_list_workflow_runs_for_repo(term(), map(), keyword()) :: Enumerable.t()
+  def stream_list_workflow_runs_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    Stream.resource(
+      fn -> build_list_workflow_runs_for_repo_operation(params) end,
+      fn
+        nil ->
+          {:halt, nil}
+
+        %Pristine.Operation{} = operation ->
+          case Pristine.execute(runtime_client, operation, opts) do
+            {:ok, response} ->
+              items = List.wrap(Pristine.Operation.items(operation, response))
+              {items, Pristine.Operation.next_page(operation, response)}
+
+            {:error, reason} ->
+              raise "pagination failed: " <> inspect(reason)
+          end
+      end,
+      fn _state -> :ok end
+    )
+  end
+
+  defp build_list_workflow_runs_for_repo_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @list_workflow_runs_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/list-workflow-runs-for-repo",
       method: :get,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/runs",
-      query: [
-        {"actor", :actor},
-        {"branch", :branch},
-        {"event", :event},
-        {"status", :status},
-        {"per_page", :per_page},
-        {"page", :page},
-        {"created", :created},
-        {"exclude_pull_requests", :exclude_pull_requests},
-        {"check_suite_id", :check_suite_id},
-        {"head_sha", :head_sha}
-      ],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.read",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.read",
+        telemetry_event: [:github_ex, :actions, :list_workflow_runs_for_repo],
+        timeout_ms: nil
+      },
+      pagination: %{
+        default_limit: nil,
+        items_path: ["workflow_runs"],
+        request_mapping: %{limit_param: "per_page"},
+        response_mapping: %{link_header: "link"},
+        strategy: :link_header
+      }
     })
   end
 
-  @doc "Re-run a job from a workflow run\n\nPath: /repos/{owner}/{repo}/actions/jobs/{job_id}/rerun\n\nMethod: post"
-  @spec re_run_job_for_workflow_run(GitHubEx.Client.t()) :: result
-  @spec re_run_job_for_workflow_run(GitHubEx.Client.t(), map()) :: result
-  def re_run_job_for_workflow_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :re_run_job_for_workflow_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @re_run_job_for_workflow_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Re-run a job from a workflow run\n\nRe-run a job and its dependent jobs in a workflow run.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec re_run_job_for_workflow_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def re_run_job_for_workflow_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_re_run_job_for_workflow_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_re_run_job_for_workflow_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @re_run_job_for_workflow_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/re-run-job-for-workflow-run",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
       path_template: "/repos/{owner}/{repo}/actions/jobs/{job_id}/rerun",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :re_run_job_for_workflow_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Re-run a workflow\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/rerun\n\nMethod: post"
-  @spec re_run_workflow(GitHubEx.Client.t()) :: result
-  @spec re_run_workflow(GitHubEx.Client.t(), map()) :: result
-  def re_run_workflow(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :re_run_workflow},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @re_run_workflow_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Re-run a workflow\n\nRe-runs your workflow run using its `id`.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec re_run_workflow(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def re_run_workflow(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_re_run_workflow_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_re_run_workflow_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @re_run_workflow_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/re-run-workflow",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/rerun",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :re_run_workflow],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Re-run failed jobs from a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs\n\nMethod: post"
-  @spec re_run_workflow_failed_jobs(GitHubEx.Client.t()) :: result
-  @spec re_run_workflow_failed_jobs(GitHubEx.Client.t(), map()) :: result
-  def re_run_workflow_failed_jobs(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :re_run_workflow_failed_jobs},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @re_run_workflow_failed_jobs_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Re-run failed jobs from a workflow run\n\nRe-run all of the failed jobs and their dependent jobs in a workflow run using the `id` of the workflow run.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec re_run_workflow_failed_jobs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def re_run_workflow_failed_jobs(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_re_run_workflow_failed_jobs_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_re_run_workflow_failed_jobs_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @re_run_workflow_failed_jobs_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/re-run-workflow-failed-jobs",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :re_run_workflow_failed_jobs],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove all custom labels from a self-hosted runner for an organization\n\nPath: /orgs/{org}/actions/runners/{runner_id}/labels\n\nMethod: delete"
-  @spec remove_all_custom_labels_from_self_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec remove_all_custom_labels_from_self_hosted_runner_for_org(GitHubEx.Client.t(), map()) ::
-          result
-  def remove_all_custom_labels_from_self_hosted_runner_for_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_all_custom_labels_from_self_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_all_custom_labels_from_self_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove all custom labels from a self-hosted runner for an organization\n\nRemove all custom labels from a self-hosted runner configured in an\norganization. Returns the remaining read-only labels from the runner.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec remove_all_custom_labels_from_self_hosted_runner_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_all_custom_labels_from_self_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_all_custom_labels_from_self_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_all_custom_labels_from_self_hosted_runner_for_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @remove_all_custom_labels_from_self_hosted_runner_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-all-custom-labels-from-self-hosted-runner-for-org",
       method: :delete,
-      path: [{"org", :org}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :remove_all_custom_labels_from_self_hosted_runner_for_org
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove all custom labels from a self-hosted runner for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/{runner_id}/labels\n\nMethod: delete"
-  @spec remove_all_custom_labels_from_self_hosted_runner_for_repo(GitHubEx.Client.t()) :: result
-  @spec remove_all_custom_labels_from_self_hosted_runner_for_repo(GitHubEx.Client.t(), map()) ::
-          result
-  def remove_all_custom_labels_from_self_hosted_runner_for_repo(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_all_custom_labels_from_self_hosted_runner_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_all_custom_labels_from_self_hosted_runner_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove all custom labels from a self-hosted runner for a repository\n\nRemove all custom labels from a self-hosted runner configured in a\nrepository. Returns the remaining read-only labels from the runner.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec remove_all_custom_labels_from_self_hosted_runner_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_all_custom_labels_from_self_hosted_runner_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_all_custom_labels_from_self_hosted_runner_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_all_custom_labels_from_self_hosted_runner_for_repo_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @remove_all_custom_labels_from_self_hosted_runner_for_repo_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-all-custom-labels-from-self-hosted-runner-for-repo",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
       path_template: "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :remove_all_custom_labels_from_self_hosted_runner_for_repo
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove a custom label from a self-hosted runner for an organization\n\nPath: /orgs/{org}/actions/runners/{runner_id}/labels/{name}\n\nMethod: delete"
-  @spec remove_custom_label_from_self_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec remove_custom_label_from_self_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def remove_custom_label_from_self_hosted_runner_for_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_custom_label_from_self_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_custom_label_from_self_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_id", :runner_id}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove a custom label from a self-hosted runner for an organization\n\nRemove a custom label from a self-hosted runner configured\nin an organization. Returns the remaining labels from the runner.\n\nThis endpoint returns a `404 Not Found` status if the custom label is not\npresent on the runner.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec remove_custom_label_from_self_hosted_runner_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_custom_label_from_self_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_custom_label_from_self_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_custom_label_from_self_hosted_runner_for_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @remove_custom_label_from_self_hosted_runner_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-custom-label-from-self-hosted-runner-for-org",
       method: :delete,
-      path: [{"org", :org}, {"runner_id", :runner_id}, {"name", :name}],
       path_template: "/orgs/{org}/actions/runners/{runner_id}/labels/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :remove_custom_label_from_self_hosted_runner_for_org
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove a custom label from a self-hosted runner for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}\n\nMethod: delete"
-  @spec remove_custom_label_from_self_hosted_runner_for_repo(GitHubEx.Client.t()) :: result
-  @spec remove_custom_label_from_self_hosted_runner_for_repo(GitHubEx.Client.t(), map()) :: result
-  def remove_custom_label_from_self_hosted_runner_for_repo(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_custom_label_from_self_hosted_runner_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_custom_label_from_self_hosted_runner_for_repo_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"runner_id", :runner_id},
+      {"name", :name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove a custom label from a self-hosted runner for a repository\n\nRemove a custom label from a self-hosted runner configured\nin a repository. Returns the remaining labels from the runner.\n\nThis endpoint returns a `404 Not Found` status if the custom label is not\npresent on the runner.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec remove_custom_label_from_self_hosted_runner_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_custom_label_from_self_hosted_runner_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_custom_label_from_self_hosted_runner_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_custom_label_from_self_hosted_runner_for_repo_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @remove_custom_label_from_self_hosted_runner_for_repo_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-custom-label-from-self-hosted-runner-for-repo",
       method: :delete,
-      path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}, {"name", :name}],
       path_template: "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :remove_custom_label_from_self_hosted_runner_for_repo
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove repository access to a self-hosted runner group in an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}\n\nMethod: delete"
-  @spec remove_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t()) :: result
-  @spec remove_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t(), map()) ::
-          result
-  def remove_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_repo_access_to_self_hosted_runner_group_in_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_repo_access_to_self_hosted_runner_group_in_org_partition_spec %{
+    path: [
+      {"org", :org},
+      {"runner_group_id", :runner_group_id},
+      {"repository_id", :repository_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove repository access to a self-hosted runner group in an organization\n\nRemoves a repository from the list of selected repositories that can access a self-hosted runner group. The runner group must have `visibility` set to `selected`. For more information, see \"[Create a self-hosted runner group for an organization](#create-a-self-hosted-runner-group-for-an-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec remove_repo_access_to_self_hosted_runner_group_in_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @remove_repo_access_to_self_hosted_runner_group_in_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-repo-access-to-self-hosted-runner-group-in-org",
       method: :delete,
-      path: [
-        {"org", :org},
-        {"runner_group_id", :runner_group_id},
-        {"repository_id", :repository_id}
-      ],
       path_template:
         "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :remove_repo_access_to_self_hosted_runner_group_in_org
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove selected repository from an organization secret\n\nPath: /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}\n\nMethod: delete"
-  @spec remove_selected_repo_from_org_secret(GitHubEx.Client.t()) :: result
-  @spec remove_selected_repo_from_org_secret(GitHubEx.Client.t(), map()) :: result
-  def remove_selected_repo_from_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_selected_repo_from_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_selected_repo_from_org_secret_partition_spec %{
+    path: [
+      {"org", :org},
+      {"secret_name", :secret_name},
+      {"repository_id", :repository_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove selected repository from an organization secret\n\nRemoves a repository from an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/actions/secrets#create-or-update-an-organization-secret).\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec remove_selected_repo_from_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_selected_repo_from_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_selected_repo_from_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_selected_repo_from_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @remove_selected_repo_from_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-selected-repo-from-org-secret",
       method: :delete,
-      path: [{"org", :org}, {"secret_name", :secret_name}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :remove_selected_repo_from_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove selected repository from an organization variable\n\nPath: /orgs/{org}/actions/variables/{name}/repositories/{repository_id}\n\nMethod: delete"
-  @spec remove_selected_repo_from_org_variable(GitHubEx.Client.t()) :: result
-  @spec remove_selected_repo_from_org_variable(GitHubEx.Client.t(), map()) :: result
-  def remove_selected_repo_from_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_selected_repo_from_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_selected_repo_from_org_variable_partition_spec %{
+    path: [{"org", :org}, {"name", :name}, {"repository_id", :repository_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove selected repository from an organization variable\n\nRemoves a repository from an organization variable that is\navailable to selected repositories. Organization variables that are available to\nselected repositories have their `visibility` field set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec remove_selected_repo_from_org_variable(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_selected_repo_from_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_selected_repo_from_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_selected_repo_from_org_variable_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @remove_selected_repo_from_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-selected-repo-from-org-variable",
       method: :delete,
-      path: [{"org", :org}, {"name", :name}, {"repository_id", :repository_id}],
       path_template: "/orgs/{org}/actions/variables/{name}/repositories/{repository_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :remove_selected_repo_from_org_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Remove a self-hosted runner from a group for an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}\n\nMethod: delete"
-  @spec remove_self_hosted_runner_from_group_for_org(GitHubEx.Client.t()) :: result
-  @spec remove_self_hosted_runner_from_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def remove_self_hosted_runner_from_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :none,
-      call: {GitHubEx.Actions, :remove_self_hosted_runner_from_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @remove_self_hosted_runner_from_group_for_org_partition_spec %{
+    path: [
+      {"org", :org},
+      {"runner_group_id", :runner_group_id},
+      {"runner_id", :runner_id}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :none},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Remove a self-hosted runner from a group for an organization\n\nRemoves a self-hosted runner from a group configured in an organization. The runner is then returned to the default group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec remove_self_hosted_runner_from_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def remove_self_hosted_runner_from_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_remove_self_hosted_runner_from_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_remove_self_hosted_runner_from_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @remove_self_hosted_runner_from_group_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/remove-self-hosted-runner-from-group-for-org",
       method: :delete,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.delete",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.delete",
+        telemetry_event: [:github_ex, :actions, :remove_self_hosted_runner_from_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Review custom deployment protection rules for a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule\n\nMethod: post"
-  @spec review_custom_gates_for_run(GitHubEx.Client.t()) :: result
-  @spec review_custom_gates_for_run(GitHubEx.Client.t(), map()) :: result
-  def review_custom_gates_for_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :review_custom_gates_for_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @review_custom_gates_for_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Review custom deployment protection rules for a workflow run\n\nApprove or reject custom deployment protection rules provided by a GitHub App for a workflow run. For more information, see \"[Using environments for deployment](https://docs.github.com/actions/deployment/targeting-different-environments/using-environments-for-deployment).\"\n\n> [!NOTE]\n> GitHub Apps can only review their own custom deployment protection rules. To approve or reject pending deployments that are waiting for review from a specific person or team, see [`POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments`](/rest/actions/workflow-runs#review-pending-deployments-for-a-workflow-run).\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
+  @spec review_custom_gates_for_run(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def review_custom_gates_for_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_review_custom_gates_for_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_review_custom_gates_for_run_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @review_custom_gates_for_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/review-custom-gates-for-run",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :review_custom_gates_for_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Review pending deployments for a workflow run\n\nPath: /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments\n\nMethod: post"
-  @spec review_pending_deployments_for_run(GitHubEx.Client.t()) :: result
-  @spec review_pending_deployments_for_run(GitHubEx.Client.t(), map()) :: result
-  def review_pending_deployments_for_run(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :review_pending_deployments_for_run},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @review_pending_deployments_for_run_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Review pending deployments for a workflow run\n\nApprove or reject pending deployments that are waiting on approval by a required reviewer.\n\nRequired reviewers with read access to the repository contents and deployments can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec review_pending_deployments_for_run(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def review_pending_deployments_for_run(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_review_pending_deployments_for_run_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_review_pending_deployments_for_run_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @review_pending_deployments_for_run_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/review-pending-deployments-for-run",
       method: :post,
-      path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
       path_template: "/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :review_pending_deployments_for_run],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions cache retention limit for an enterprise\n\nPath: /enterprises/{enterprise}/actions/cache/retention-limit\n\nMethod: put"
-  @spec set_actions_cache_retention_limit_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec set_actions_cache_retention_limit_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def set_actions_cache_retention_limit_for_enterprise(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_actions_cache_retention_limit_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_actions_cache_retention_limit_for_enterprise_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions cache retention limit for an enterprise\n\nSets GitHub Actions cache retention limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
+  @spec set_actions_cache_retention_limit_for_enterprise(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_actions_cache_retention_limit_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_actions_cache_retention_limit_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_actions_cache_retention_limit_for_enterprise_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_actions_cache_retention_limit_for_enterprise_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-actions-cache-retention-limit-for-enterprise",
       method: :put,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/actions/cache/retention-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_actions_cache_retention_limit_for_enterprise],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions cache retention limit for an organization\n\nPath: /organizations/{org}/actions/cache/retention-limit\n\nMethod: put"
-  @spec set_actions_cache_retention_limit_for_organization(GitHubEx.Client.t()) :: result
-  @spec set_actions_cache_retention_limit_for_organization(GitHubEx.Client.t(), map()) :: result
-  def set_actions_cache_retention_limit_for_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_actions_cache_retention_limit_for_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_actions_cache_retention_limit_for_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions cache retention limit for an organization\n\nSets GitHub Actions cache retention limit for an organization. All repositories under this\norganization may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
+  @spec set_actions_cache_retention_limit_for_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_actions_cache_retention_limit_for_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_actions_cache_retention_limit_for_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_actions_cache_retention_limit_for_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_actions_cache_retention_limit_for_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-actions-cache-retention-limit-for-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/organizations/{org}/actions/cache/retention-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_actions_cache_retention_limit_for_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions cache retention limit for a repository\n\nPath: /repos/{owner}/{repo}/actions/cache/retention-limit\n\nMethod: put"
-  @spec set_actions_cache_retention_limit_for_repository(GitHubEx.Client.t()) :: result
-  @spec set_actions_cache_retention_limit_for_repository(GitHubEx.Client.t(), map()) :: result
-  def set_actions_cache_retention_limit_for_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_actions_cache_retention_limit_for_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_actions_cache_retention_limit_for_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions cache retention limit for a repository\n\nSets GitHub Actions cache retention limit for a repository. This determines how long caches will be retained for, if\nnot manually removed or evicted due to size constraints.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
+  @spec set_actions_cache_retention_limit_for_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_actions_cache_retention_limit_for_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_actions_cache_retention_limit_for_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_actions_cache_retention_limit_for_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_actions_cache_retention_limit_for_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-actions-cache-retention-limit-for-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/cache/retention-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_actions_cache_retention_limit_for_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions cache storage limit for an enterprise\n\nPath: /enterprises/{enterprise}/actions/cache/storage-limit\n\nMethod: put"
-  @spec set_actions_cache_storage_limit_for_enterprise(GitHubEx.Client.t()) :: result
-  @spec set_actions_cache_storage_limit_for_enterprise(GitHubEx.Client.t(), map()) :: result
-  def set_actions_cache_storage_limit_for_enterprise(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_actions_cache_storage_limit_for_enterprise},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_actions_cache_storage_limit_for_enterprise_partition_spec %{
+    path: [{"enterprise", :enterprise}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions cache storage limit for an enterprise\n\nSets GitHub Actions cache storage limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
+  @spec set_actions_cache_storage_limit_for_enterprise(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_actions_cache_storage_limit_for_enterprise(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_actions_cache_storage_limit_for_enterprise_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_actions_cache_storage_limit_for_enterprise_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_actions_cache_storage_limit_for_enterprise_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-actions-cache-storage-limit-for-enterprise",
       method: :put,
-      path: [{"enterprise", :enterprise}],
       path_template: "/enterprises/{enterprise}/actions/cache/storage-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_actions_cache_storage_limit_for_enterprise],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions cache storage limit for an organization\n\nPath: /organizations/{org}/actions/cache/storage-limit\n\nMethod: put"
-  @spec set_actions_cache_storage_limit_for_organization(GitHubEx.Client.t()) :: result
-  @spec set_actions_cache_storage_limit_for_organization(GitHubEx.Client.t(), map()) :: result
-  def set_actions_cache_storage_limit_for_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_actions_cache_storage_limit_for_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_actions_cache_storage_limit_for_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions cache storage limit for an organization\n\nSets GitHub Actions cache storage limit for an organization. All organizations and repositories under this\norganization may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
+  @spec set_actions_cache_storage_limit_for_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_actions_cache_storage_limit_for_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_actions_cache_storage_limit_for_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_actions_cache_storage_limit_for_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_actions_cache_storage_limit_for_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-actions-cache-storage-limit-for-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/organizations/{org}/actions/cache/storage-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_actions_cache_storage_limit_for_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions cache storage limit for a repository\n\nPath: /repos/{owner}/{repo}/actions/cache/storage-limit\n\nMethod: put"
-  @spec set_actions_cache_storage_limit_for_repository(GitHubEx.Client.t()) :: result
-  @spec set_actions_cache_storage_limit_for_repository(GitHubEx.Client.t(), map()) :: result
-  def set_actions_cache_storage_limit_for_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_actions_cache_storage_limit_for_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_actions_cache_storage_limit_for_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions cache storage limit for a repository\n\nSets GitHub Actions cache storage limit for a repository. This determines the maximum size of caches that can be\nstored before eviction occurs.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
+  @spec set_actions_cache_storage_limit_for_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_actions_cache_storage_limit_for_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_actions_cache_storage_limit_for_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_actions_cache_storage_limit_for_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_actions_cache_storage_limit_for_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-actions-cache-storage-limit-for-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/cache/storage-limit",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_actions_cache_storage_limit_for_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set allowed actions and reusable workflows for an organization\n\nPath: /orgs/{org}/actions/permissions/selected-actions\n\nMethod: put"
-  @spec set_allowed_actions_organization(GitHubEx.Client.t()) :: result
-  @spec set_allowed_actions_organization(GitHubEx.Client.t(), map()) :: result
-  def set_allowed_actions_organization(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_allowed_actions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_allowed_actions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set allowed actions and reusable workflows for an organization\n\nSets the actions and reusable workflows that are allowed in an organization. To use this endpoint, the organization permission policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_allowed_actions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_allowed_actions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_allowed_actions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_allowed_actions_organization_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_allowed_actions_organization_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/set-allowed-actions-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/selected-actions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_allowed_actions_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set allowed actions and reusable workflows for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/selected-actions\n\nMethod: put"
-  @spec set_allowed_actions_repository(GitHubEx.Client.t()) :: result
-  @spec set_allowed_actions_repository(GitHubEx.Client.t(), map()) :: result
-  def set_allowed_actions_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_allowed_actions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_allowed_actions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set allowed actions and reusable workflows for a repository\n\nSets the actions and reusable workflows that are allowed in a repository. To use this endpoint, the repository permission policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for a repository](#set-github-actions-permissions-for-a-repository).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_allowed_actions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_allowed_actions_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_allowed_actions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_allowed_actions_repository_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_allowed_actions_repository_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/set-allowed-actions-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/selected-actions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_allowed_actions_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set artifact and log retention settings for an organization\n\nPath: /orgs/{org}/actions/permissions/artifact-and-log-retention\n\nMethod: put"
-  @spec set_artifact_and_log_retention_settings_organization(GitHubEx.Client.t()) :: result
-  @spec set_artifact_and_log_retention_settings_organization(GitHubEx.Client.t(), map()) :: result
-  def set_artifact_and_log_retention_settings_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_artifact_and_log_retention_settings_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_artifact_and_log_retention_settings_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set artifact and log retention settings for an organization\n\nSets artifact and log retention settings for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec set_artifact_and_log_retention_settings_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_artifact_and_log_retention_settings_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_artifact_and_log_retention_settings_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_artifact_and_log_retention_settings_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_artifact_and_log_retention_settings_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-artifact-and-log-retention-settings-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/artifact-and-log-retention",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_artifact_and_log_retention_settings_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set artifact and log retention settings for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/artifact-and-log-retention\n\nMethod: put"
-  @spec set_artifact_and_log_retention_settings_repository(GitHubEx.Client.t()) :: result
-  @spec set_artifact_and_log_retention_settings_repository(GitHubEx.Client.t(), map()) :: result
-  def set_artifact_and_log_retention_settings_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_artifact_and_log_retention_settings_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_artifact_and_log_retention_settings_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set artifact and log retention settings for a repository\n\nSets artifact and log retention settings for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_artifact_and_log_retention_settings_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_artifact_and_log_retention_settings_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_artifact_and_log_retention_settings_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_artifact_and_log_retention_settings_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_artifact_and_log_retention_settings_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-artifact-and-log-retention-settings-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/artifact-and-log-retention",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_artifact_and_log_retention_settings_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set custom labels for a self-hosted runner for an organization\n\nPath: /orgs/{org}/actions/runners/{runner_id}/labels\n\nMethod: put"
-  @spec set_custom_labels_for_self_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec set_custom_labels_for_self_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def set_custom_labels_for_self_hosted_runner_for_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_custom_labels_for_self_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_custom_labels_for_self_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set custom labels for a self-hosted runner for an organization\n\nRemove all previous custom labels and set the new custom labels for a specific\nself-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec set_custom_labels_for_self_hosted_runner_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_custom_labels_for_self_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_custom_labels_for_self_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_custom_labels_for_self_hosted_runner_for_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_custom_labels_for_self_hosted_runner_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-custom-labels-for-self-hosted-runner-for-org",
       method: :put,
-      path: [{"org", :org}, {"runner_id", :runner_id}],
       path_template: "/orgs/{org}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_custom_labels_for_self_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set custom labels for a self-hosted runner for a repository\n\nPath: /repos/{owner}/{repo}/actions/runners/{runner_id}/labels\n\nMethod: put"
-  @spec set_custom_labels_for_self_hosted_runner_for_repo(GitHubEx.Client.t()) :: result
-  @spec set_custom_labels_for_self_hosted_runner_for_repo(GitHubEx.Client.t(), map()) :: result
-  def set_custom_labels_for_self_hosted_runner_for_repo(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_custom_labels_for_self_hosted_runner_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_custom_labels_for_self_hosted_runner_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set custom labels for a self-hosted runner for a repository\n\nRemove all previous custom labels and set the new custom labels for a specific\nself-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_custom_labels_for_self_hosted_runner_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_custom_labels_for_self_hosted_runner_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_custom_labels_for_self_hosted_runner_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_custom_labels_for_self_hosted_runner_for_repo_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_custom_labels_for_self_hosted_runner_for_repo_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-custom-labels-for-self-hosted-runner-for-repo",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
       path_template: "/repos/{owner}/{repo}/actions/runners/{runner_id}/labels",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_custom_labels_for_self_hosted_runner_for_repo
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set the customization template for an OIDC subject claim for a repository\n\nPath: /repos/{owner}/{repo}/actions/oidc/customization/sub\n\nMethod: put"
-  @spec set_custom_oidc_sub_claim_for_repo(GitHubEx.Client.t()) :: result
-  @spec set_custom_oidc_sub_claim_for_repo(GitHubEx.Client.t(), map()) :: result
-  def set_custom_oidc_sub_claim_for_repo(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_custom_oidc_sub_claim_for_repo},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_custom_oidc_sub_claim_for_repo_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set the customization template for an OIDC subject claim for a repository\n\nSets the customization template and `opt-in` or `opt-out` flag for an OpenID Connect (OIDC) subject claim for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_custom_oidc_sub_claim_for_repo(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_custom_oidc_sub_claim_for_repo(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_custom_oidc_sub_claim_for_repo_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_custom_oidc_sub_claim_for_repo_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_custom_oidc_sub_claim_for_repo_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/set-custom-oidc-sub-claim-for-repo",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/oidc/customization/sub",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_custom_oidc_sub_claim_for_repo],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set fork PR contributor approval permissions for an organization\n\nPath: /orgs/{org}/actions/permissions/fork-pr-contributor-approval\n\nMethod: put"
-  @spec set_fork_pr_contributor_approval_permissions_organization(GitHubEx.Client.t()) :: result
-  @spec set_fork_pr_contributor_approval_permissions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def set_fork_pr_contributor_approval_permissions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_fork_pr_contributor_approval_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_fork_pr_contributor_approval_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set fork PR contributor approval permissions for an organization\n\nSets the fork PR contributor approval policy for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_fork_pr_contributor_approval_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_fork_pr_contributor_approval_permissions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_fork_pr_contributor_approval_permissions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_fork_pr_contributor_approval_permissions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_fork_pr_contributor_approval_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-fork-pr-contributor-approval-permissions-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/fork-pr-contributor-approval",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_fork_pr_contributor_approval_permissions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set fork PR contributor approval permissions for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/fork-pr-contributor-approval\n\nMethod: put"
-  @spec set_fork_pr_contributor_approval_permissions_repository(GitHubEx.Client.t()) :: result
-  @spec set_fork_pr_contributor_approval_permissions_repository(GitHubEx.Client.t(), map()) ::
-          result
-  def set_fork_pr_contributor_approval_permissions_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_fork_pr_contributor_approval_permissions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_fork_pr_contributor_approval_permissions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set fork PR contributor approval permissions for a repository\n\nSets the fork PR contributor approval policy for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_fork_pr_contributor_approval_permissions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_fork_pr_contributor_approval_permissions_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_fork_pr_contributor_approval_permissions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_fork_pr_contributor_approval_permissions_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_fork_pr_contributor_approval_permissions_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-fork-pr-contributor-approval-permissions-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/fork-pr-contributor-approval",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_fork_pr_contributor_approval_permissions_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set default workflow permissions for an organization\n\nPath: /orgs/{org}/actions/permissions/workflow\n\nMethod: put"
-  @spec set_github_actions_default_workflow_permissions_organization(GitHubEx.Client.t()) ::
-          result
-  @spec set_github_actions_default_workflow_permissions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def set_github_actions_default_workflow_permissions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_github_actions_default_workflow_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_github_actions_default_workflow_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set default workflow permissions for an organization\n\nSets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in an organization, and sets if GitHub Actions\ncan submit approving pull request reviews. For more information, see\n\"[Setting the permissions of the GITHUB_TOKEN for your organization](https://docs.github.com/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization#setting-the-permissions-of-the-github_token-for-your-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_github_actions_default_workflow_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_github_actions_default_workflow_permissions_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    operation =
+      build_set_github_actions_default_workflow_permissions_organization_operation(params)
+
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_github_actions_default_workflow_permissions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_github_actions_default_workflow_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-github-actions-default-workflow-permissions-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/workflow",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_github_actions_default_workflow_permissions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set default workflow permissions for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/workflow\n\nMethod: put"
-  @spec set_github_actions_default_workflow_permissions_repository(GitHubEx.Client.t()) :: result
-  @spec set_github_actions_default_workflow_permissions_repository(GitHubEx.Client.t(), map()) ::
-          result
-  def set_github_actions_default_workflow_permissions_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_github_actions_default_workflow_permissions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_github_actions_default_workflow_permissions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set default workflow permissions for a repository\n\nSets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in a repository, and sets if GitHub Actions\ncan submit approving pull request reviews.\nFor more information, see \"[Setting the permissions of the GITHUB_TOKEN for your repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#setting-the-permissions-of-the-github_token-for-your-repository).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_github_actions_default_workflow_permissions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_github_actions_default_workflow_permissions_repository(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_github_actions_default_workflow_permissions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_github_actions_default_workflow_permissions_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_github_actions_default_workflow_permissions_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-github-actions-default-workflow-permissions-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/workflow",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_github_actions_default_workflow_permissions_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions permissions for an organization\n\nPath: /orgs/{org}/actions/permissions\n\nMethod: put"
-  @spec set_github_actions_permissions_organization(GitHubEx.Client.t()) :: result
-  @spec set_github_actions_permissions_organization(GitHubEx.Client.t(), map()) :: result
-  def set_github_actions_permissions_organization(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_github_actions_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_github_actions_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions permissions for an organization\n\nSets the GitHub Actions permissions policy for repositories and allowed actions and reusable workflows in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_github_actions_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_github_actions_permissions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_github_actions_permissions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_github_actions_permissions_organization_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_github_actions_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-github-actions-permissions-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_github_actions_permissions_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set GitHub Actions permissions for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions\n\nMethod: put"
-  @spec set_github_actions_permissions_repository(GitHubEx.Client.t()) :: result
-  @spec set_github_actions_permissions_repository(GitHubEx.Client.t(), map()) :: result
-  def set_github_actions_permissions_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_github_actions_permissions_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_github_actions_permissions_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set GitHub Actions permissions for a repository\n\nSets the GitHub Actions permissions policy for enabling GitHub Actions and allowed actions and reusable workflows in the repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_github_actions_permissions_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_github_actions_permissions_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_github_actions_permissions_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_github_actions_permissions_repository_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_github_actions_permissions_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-github-actions-permissions-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_github_actions_permissions_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set private repo fork PR workflow settings for an organization\n\nPath: /orgs/{org}/actions/permissions/fork-pr-workflows-private-repos\n\nMethod: put"
-  @spec set_private_repo_fork_pr_workflows_settings_organization(GitHubEx.Client.t()) :: result
-  @spec set_private_repo_fork_pr_workflows_settings_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def set_private_repo_fork_pr_workflows_settings_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_private_repo_fork_pr_workflows_settings_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_private_repo_fork_pr_workflows_settings_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set private repo fork PR workflow settings for an organization\n\nSets the settings for whether workflows from fork pull requests can run on private repositories in an organization."
+  @spec set_private_repo_fork_pr_workflows_settings_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_private_repo_fork_pr_workflows_settings_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_private_repo_fork_pr_workflows_settings_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_private_repo_fork_pr_workflows_settings_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_private_repo_fork_pr_workflows_settings_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-private-repo-fork-pr-workflows-settings-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/fork-pr-workflows-private-repos",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_private_repo_fork_pr_workflows_settings_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set private repo fork PR workflow settings for a repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/fork-pr-workflows-private-repos\n\nMethod: put"
-  @spec set_private_repo_fork_pr_workflows_settings_repository(GitHubEx.Client.t()) :: result
-  @spec set_private_repo_fork_pr_workflows_settings_repository(GitHubEx.Client.t(), map()) ::
-          result
-  def set_private_repo_fork_pr_workflows_settings_repository(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_private_repo_fork_pr_workflows_settings_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_private_repo_fork_pr_workflows_settings_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set private repo fork PR workflow settings for a repository\n\nSets the settings for whether workflows from fork pull requests can run on a private repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_private_repo_fork_pr_workflows_settings_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_private_repo_fork_pr_workflows_settings_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_private_repo_fork_pr_workflows_settings_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_private_repo_fork_pr_workflows_settings_repository_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_private_repo_fork_pr_workflows_settings_repository_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-private-repo-fork-pr-workflows-settings-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/fork-pr-workflows-private-repos",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_private_repo_fork_pr_workflows_settings_repository
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set repository access for a self-hosted runner group in an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/repositories\n\nMethod: put"
-  @spec set_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t()) :: result
-  @spec set_repo_access_to_self_hosted_runner_group_in_org(GitHubEx.Client.t(), map()) :: result
-  def set_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_repo_access_to_self_hosted_runner_group_in_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_repo_access_to_self_hosted_runner_group_in_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set repository access for a self-hosted runner group in an organization\n\nReplaces the list of repositories that have access to a self-hosted runner group configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_repo_access_to_self_hosted_runner_group_in_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_repo_access_to_self_hosted_runner_group_in_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_repo_access_to_self_hosted_runner_group_in_org_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_repo_access_to_self_hosted_runner_group_in_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-repo-access-to-self-hosted-runner-group-in-org",
       method: :put,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_repo_access_to_self_hosted_runner_group_in_org
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set selected repositories for an organization secret\n\nPath: /orgs/{org}/actions/secrets/{secret_name}/repositories\n\nMethod: put"
-  @spec set_selected_repos_for_org_secret(GitHubEx.Client.t()) :: result
-  @spec set_selected_repos_for_org_secret(GitHubEx.Client.t(), map()) :: result
-  def set_selected_repos_for_org_secret(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_selected_repos_for_org_secret},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_selected_repos_for_org_secret_partition_spec %{
+    path: [{"org", :org}, {"secret_name", :secret_name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set selected repositories for an organization secret\n\nReplaces all repositories for an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/actions/secrets#create-or-update-an-organization-secret).\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec set_selected_repos_for_org_secret(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_selected_repos_for_org_secret(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_selected_repos_for_org_secret_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_selected_repos_for_org_secret_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_selected_repos_for_org_secret_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/set-selected-repos-for-org-secret",
       method: :put,
-      path: [{"org", :org}, {"secret_name", :secret_name}],
       path_template: "/orgs/{org}/actions/secrets/{secret_name}/repositories",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_selected_repos_for_org_secret],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set selected repositories for an organization variable\n\nPath: /orgs/{org}/actions/variables/{name}/repositories\n\nMethod: put"
-  @spec set_selected_repos_for_org_variable(GitHubEx.Client.t()) :: result
-  @spec set_selected_repos_for_org_variable(GitHubEx.Client.t(), map()) :: result
-  def set_selected_repos_for_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_selected_repos_for_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_selected_repos_for_org_variable_partition_spec %{
+    path: [{"org", :org}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set selected repositories for an organization variable\n\nReplaces all repositories for an organization variable that is available\nto selected repositories. Organization variables that are available to selected\nrepositories have their `visibility` field set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec set_selected_repos_for_org_variable(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_selected_repos_for_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_selected_repos_for_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_selected_repos_for_org_variable_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_selected_repos_for_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/set-selected-repos-for-org-variable",
       method: :put,
-      path: [{"org", :org}, {"name", :name}],
       path_template: "/orgs/{org}/actions/variables/{name}/repositories",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_selected_repos_for_org_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set selected repositories enabled for GitHub Actions in an organization\n\nPath: /orgs/{org}/actions/permissions/repositories\n\nMethod: put"
-  @spec set_selected_repositories_enabled_github_actions_organization(GitHubEx.Client.t()) ::
-          result
-  @spec set_selected_repositories_enabled_github_actions_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def set_selected_repositories_enabled_github_actions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_selected_repositories_enabled_github_actions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_selected_repositories_enabled_github_actions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set selected repositories enabled for GitHub Actions in an organization\n\nReplaces the list of selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_selected_repositories_enabled_github_actions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_selected_repositories_enabled_github_actions_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+
+    operation =
+      build_set_selected_repositories_enabled_github_actions_organization_operation(params)
+
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_selected_repositories_enabled_github_actions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_selected_repositories_enabled_github_actions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-selected-repositories-enabled-github-actions-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/repositories",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_selected_repositories_enabled_github_actions_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set repositories allowed to use self-hosted runners in an organization\n\nPath: /orgs/{org}/actions/permissions/self-hosted-runners/repositories\n\nMethod: put"
-  @spec set_selected_repositories_self_hosted_runners_organization(GitHubEx.Client.t()) :: result
-  @spec set_selected_repositories_self_hosted_runners_organization(GitHubEx.Client.t(), map()) ::
-          result
-  def set_selected_repositories_self_hosted_runners_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_selected_repositories_self_hosted_runners_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_selected_repositories_self_hosted_runners_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set repositories allowed to use self-hosted runners in an organization\n\nSets repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec set_selected_repositories_self_hosted_runners_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_selected_repositories_self_hosted_runners_organization(
+        client,
+        params \\ %{},
+        opts \\ []
+      )
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_selected_repositories_self_hosted_runners_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_selected_repositories_self_hosted_runners_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_selected_repositories_self_hosted_runners_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-selected-repositories-self-hosted-runners-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/self-hosted-runners/repositories",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [
+          :github_ex,
+          :actions,
+          :set_selected_repositories_self_hosted_runners_organization
+        ],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set self-hosted runners in a group for an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}/runners\n\nMethod: put"
-  @spec set_self_hosted_runners_in_group_for_org(GitHubEx.Client.t()) :: result
-  @spec set_self_hosted_runners_in_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def set_self_hosted_runners_in_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_self_hosted_runners_in_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_self_hosted_runners_in_group_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set self-hosted runners in a group for an organization\n\nReplaces the list of self-hosted runners that are part of an organization runner group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec set_self_hosted_runners_in_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_self_hosted_runners_in_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_self_hosted_runners_in_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_self_hosted_runners_in_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_self_hosted_runners_in_group_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-self-hosted-runners-in-group-for-org",
       method: :put,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}/runners",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_self_hosted_runners_in_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set self-hosted runners settings for an organization\n\nPath: /orgs/{org}/actions/permissions/self-hosted-runners\n\nMethod: put"
-  @spec set_self_hosted_runners_permissions_organization(GitHubEx.Client.t()) :: result
-  @spec set_self_hosted_runners_permissions_organization(GitHubEx.Client.t(), map()) :: result
-  def set_self_hosted_runners_permissions_organization(client, params \\ %{})
-      when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_self_hosted_runners_permissions_organization},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_self_hosted_runners_permissions_organization_partition_spec %{
+    path: [{"org", :org}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set self-hosted runners settings for an organization\n\nSets the settings for self-hosted runners for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
+  @spec set_self_hosted_runners_permissions_organization(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_self_hosted_runners_permissions_organization(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_self_hosted_runners_permissions_organization_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_self_hosted_runners_permissions_organization_operation(params)
+       when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @set_self_hosted_runners_permissions_organization_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/set-self-hosted-runners-permissions-organization",
       method: :put,
-      path: [{"org", :org}],
       path_template: "/orgs/{org}/actions/permissions/self-hosted-runners",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_self_hosted_runners_permissions_organization],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Set the level of access for workflows outside of the repository\n\nPath: /repos/{owner}/{repo}/actions/permissions/access\n\nMethod: put"
-  @spec set_workflow_access_to_repository(GitHubEx.Client.t()) :: result
-  @spec set_workflow_access_to_repository(GitHubEx.Client.t(), map()) :: result
-  def set_workflow_access_to_repository(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :set_workflow_access_to_repository},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @set_workflow_access_to_repository_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Set the level of access for workflows outside of the repository\n\nSets the level of access that workflows outside of the repository have to actions and reusable workflows in the repository.\nThis endpoint only applies to private repositories.\nFor more information, see \"[Allowing access to components in a private repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#allowing-access-to-components-in-a-private-repository)\".\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec set_workflow_access_to_repository(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def set_workflow_access_to_repository(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_set_workflow_access_to_repository_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_set_workflow_access_to_repository_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(params, @set_workflow_access_to_repository_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/set-workflow-access-to-repository",
       method: :put,
-      path: [{"owner", :owner}, {"repo", :repo}],
       path_template: "/repos/{owner}/{repo}/actions/permissions/access",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :set_workflow_access_to_repository],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update an environment variable\n\nPath: /repos/{owner}/{repo}/environments/{environment_name}/variables/{name}\n\nMethod: patch"
-  @spec update_environment_variable(GitHubEx.Client.t()) :: result
-  @spec update_environment_variable(GitHubEx.Client.t(), map()) :: result
-  def update_environment_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :update_environment_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_environment_variable_partition_spec %{
+    path: [
+      {"owner", :owner},
+      {"repo", :repo},
+      {"name", :name},
+      {"environment_name", :environment_name}
+    ],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update an environment variable\n\nUpdates an environment variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec update_environment_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_environment_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_environment_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_environment_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_environment_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/update-environment-variable",
       method: :patch,
-      path: [
-        {"owner", :owner},
-        {"repo", :repo},
-        {"name", :name},
-        {"environment_name", :environment_name}
-      ],
       path_template: "/repos/{owner}/{repo}/environments/{environment_name}/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :update_environment_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update a GitHub-hosted runner for an organization\n\nPath: /orgs/{org}/actions/hosted-runners/{hosted_runner_id}\n\nMethod: patch"
-  @spec update_hosted_runner_for_org(GitHubEx.Client.t()) :: result
-  @spec update_hosted_runner_for_org(GitHubEx.Client.t(), map()) :: result
-  def update_hosted_runner_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :update_hosted_runner_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_hosted_runner_for_org_partition_spec %{
+    path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a GitHub-hosted runner for an organization\n\nUpdates a GitHub-hosted runner for an organization.\nOAuth app tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
+  @spec update_hosted_runner_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_hosted_runner_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_hosted_runner_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_hosted_runner_for_org_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_hosted_runner_for_org_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/update-hosted-runner-for-org",
       method: :patch,
-      path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
       path_template: "/orgs/{org}/actions/hosted-runners/{hosted_runner_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :update_hosted_runner_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update an organization variable\n\nPath: /orgs/{org}/actions/variables/{name}\n\nMethod: patch"
-  @spec update_org_variable(GitHubEx.Client.t()) :: result
-  @spec update_org_variable(GitHubEx.Client.t(), map()) :: result
-  def update_org_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :update_org_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_org_variable_partition_spec %{
+    path: [{"org", :org}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update an organization variable\n\nUpdates an organization variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
+  @spec update_org_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_org_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_org_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_org_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_org_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/update-org-variable",
       method: :patch,
-      path: [{"org", :org}, {"name", :name}],
       path_template: "/orgs/{org}/actions/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :update_org_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update a repository variable\n\nPath: /repos/{owner}/{repo}/actions/variables/{name}\n\nMethod: patch"
-  @spec update_repo_variable(GitHubEx.Client.t()) :: result
-  @spec update_repo_variable(GitHubEx.Client.t(), map()) :: result
-  def update_repo_variable(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :update_repo_variable},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_repo_variable_partition_spec %{
+    path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a repository variable\n\nUpdates a repository variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
+  @spec update_repo_variable(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
+  def update_repo_variable(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_repo_variable_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_repo_variable_operation(params) when is_map(params) do
+    partition = Pristine.Operation.partition(params, @update_repo_variable_partition_spec)
+
+    Pristine.Operation.new(%{
+      id: "actions/update-repo-variable",
       method: :patch,
-      path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
       path_template: "/repos/{owner}/{repo}/actions/variables/{name}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :update_repo_variable],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 
-  @doc "Update a self-hosted runner group for an organization\n\nPath: /orgs/{org}/actions/runner-groups/{runner_group_id}\n\nMethod: patch"
-  @spec update_self_hosted_runner_group_for_org(GitHubEx.Client.t()) :: result
-  @spec update_self_hosted_runner_group_for_org(GitHubEx.Client.t(), map()) :: result
-  def update_self_hosted_runner_group_for_org(client, params \\ %{}) when is_map(params) do
-    GitHubEx.GeneratedSupport.execute(client, params, %{
-      auth_strategy: :default,
-      body_mode: :remaining,
-      call: {GitHubEx.Actions, :update_self_hosted_runner_group_for_org},
-      circuit_breaker: "core_api",
-      form_data_mode: :none,
-      headers: [],
+  @update_self_hosted_runner_group_for_org_partition_spec %{
+    path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
+    auth: {"auth", :auth},
+    body: %{mode: :remaining},
+    query: [],
+    headers: [],
+    form_data: %{mode: :none}
+  }
+
+  @doc "Update a self-hosted runner group for an organization\n\nUpdates the `name` and `visibility` of a self-hosted runner group in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
+  @spec update_self_hosted_runner_group_for_org(term(), map(), keyword()) ::
+          {:ok, term()} | {:error, term()}
+  def update_self_hosted_runner_group_for_org(client, params \\ %{}, opts \\ [])
+      when is_map(params) and is_list(opts) do
+    runtime_client = GitHubEx.Client.pristine_client(client)
+    operation = build_update_self_hosted_runner_group_for_org_operation(params)
+    Pristine.execute(runtime_client, operation, opts)
+  end
+
+  defp build_update_self_hosted_runner_group_for_org_operation(params) when is_map(params) do
+    partition =
+      Pristine.Operation.partition(
+        params,
+        @update_self_hosted_runner_group_for_org_partition_spec
+      )
+
+    Pristine.Operation.new(%{
+      id: "actions/update-self-hosted-runner-group-for-org",
       method: :patch,
-      path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
       path_template: "/orgs/{org}/actions/runner-groups/{runner_group_id}",
-      query: [],
-      rate_limit: "github.integration",
-      resource: "core_api",
-      retry: "github.write",
-      use_default_auth: true
+      path_params: partition.path_params,
+      query: partition.query,
+      headers: partition.headers,
+      body: partition.body,
+      form_data: partition.form_data,
+      request_schema: nil,
+      response_schemas: %{},
+      auth: %{
+        use_client_default?: true,
+        override: partition.auth,
+        security_schemes: ["githubToken"]
+      },
+      runtime: %{
+        circuit_breaker: "core_api",
+        rate_limit_group: "github.integration",
+        resource: "core_api",
+        retry_group: "github.write",
+        telemetry_event: [:github_ex, :actions, :update_self_hosted_runner_group_for_org],
+        timeout_ms: nil
+      },
+      pagination: nil
     })
   end
 end
