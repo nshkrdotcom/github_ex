@@ -39,7 +39,7 @@ defmodule GitHubEx.RateLimitInfo do
   @spec rate_limited?(integer() | nil, map() | list()) :: boolean()
   def rate_limited?(status, headers) when status in [403, 429] do
     status == 429 or integer_header(headers, "x-ratelimit-remaining") == 0 or
-      not is_nil(retry_after_ms(headers))
+      has_retry_after_header?(headers)
   end
 
   def rate_limited?(_status, _headers), do: false
@@ -113,6 +113,11 @@ defmodule GitHubEx.RateLimitInfo do
           _ -> nil
         end
     end
+  end
+
+  defp has_retry_after_header?(headers) do
+    not is_nil(header_value(headers, "retry-after")) or
+      not is_nil(header_value(headers, "retry-after-ms"))
   end
 
   defp reset_delta_ms(headers) do

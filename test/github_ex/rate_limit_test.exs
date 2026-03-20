@@ -38,9 +38,16 @@ defmodule GitHubEx.RateLimitInfoTest do
   end
 
   test "detects rate limiting on retry-after and remaining zero" do
+    reset_epoch = DateTime.utc_now() |> DateTime.to_unix() |> Kernel.+(120)
+
     assert RateLimitInfo.rate_limited?(429, %{})
     assert RateLimitInfo.rate_limited?(403, %{"retry-after" => "5"})
     assert RateLimitInfo.rate_limited?(403, %{"x-ratelimit-remaining" => "0"})
     refute RateLimitInfo.rate_limited?(403, %{"x-ratelimit-remaining" => "5"})
+
+    refute RateLimitInfo.rate_limited?(403, %{
+             "x-ratelimit-remaining" => "5",
+             "x-ratelimit-reset" => Integer.to_string(reset_epoch)
+           })
   end
 end

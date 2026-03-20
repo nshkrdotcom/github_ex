@@ -92,7 +92,12 @@ defmodule GitHubEx.Error do
   def from_response(%{status: _status} = response, body, retry_after_ms) do
     headers = Map.get(response, :headers, %{})
     body = normalize_body(body)
-    retry_after_ms = retry_after_ms || RateLimitInfo.retry_after_ms(headers)
+
+    retry_after_ms =
+      retry_after_ms ||
+        if RateLimitInfo.rate_limited?(Map.get(response, :status), headers) do
+          RateLimitInfo.retry_after_ms(headers)
+        end
 
     %__MODULE__{
       additional_data: additional_data(body),

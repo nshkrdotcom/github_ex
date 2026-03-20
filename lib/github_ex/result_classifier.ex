@@ -13,7 +13,7 @@ defmodule GitHubEx.ResultClassifier do
   def classify({:ok, %{status: status, headers: headers}}, endpoint, _context, _opts)
       when status in [403, 429] do
     retryable = RateLimitInfo.rate_limited?(status, headers)
-    retry_after_ms = RateLimitInfo.retry_after_ms(headers)
+    retry_after_ms = if retryable, do: RateLimitInfo.retry_after_ms(headers), else: nil
 
     ResultClassification.normalize(%{
       retry?: retryable and retry_group(endpoint) in @retryable_groups,

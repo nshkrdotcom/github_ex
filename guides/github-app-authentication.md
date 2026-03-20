@@ -82,6 +82,34 @@ Keep the distinction explicit in your code:
 token. That flow does not need repository read permissions just to mint the
 token, but the installation must already exist on the target owner.
 
+## Minimal GitHub App Form Setup
+
+If you are creating a GitHub App only to run `examples/08_github_app_auth.exs`,
+most of the GitHub form can stay empty.
+
+Use this minimum setup:
+
+- GitHub App name: any unique local-test name
+- Homepage URL: any valid URL you control
+- Callback URL: leave blank for this example
+- Expire user authorization tokens: leave off
+- Request user authorization during installation: leave off
+- Enable Device Flow: leave off
+- Setup URL: leave blank
+- Installation target: `Only on this account` is fine for local testing
+
+For permissions, start with:
+
+- `Repository metadata: Read-only`
+
+After creation:
+
+1. Generate and download a private key `.pem` file.
+2. Click `Install App` in the GitHub App UI and install it on the target account or org.
+3. Copy the App ID from the app settings page.
+4. Copy the installation ID from the installation page URL. It is the number in `/settings/installations/<id>`.
+5. Export `GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY_PATH`, and `GITHUB_APP_INSTALLATION_ID`.
+
 If you then use that installation token for the same read-focused repo examples
 this repo ships, start with:
 

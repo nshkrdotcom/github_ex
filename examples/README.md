@@ -69,6 +69,22 @@ export GITHUB_OAUTH_REDIRECT_URI="http://127.0.0.1:40071/callback"
 export GITHUB_OAUTH_AUTH_CODE="..."
 ```
 
+OAuth app minimum:
+
+1. Go to GitHub Settings -> Developer settings -> OAuth Apps.
+2. Create a new OAuth app.
+3. Fill the minimum fields:
+   - Application name: any clear local-test name
+   - Homepage URL: any valid URL you control
+   - Authorization callback URL: `http://127.0.0.1:40071/callback`
+   - Enable Device Flow: leave unchecked
+4. Copy the client ID and client secret.
+5. Export `GITHUB_OAUTH_CLIENT_ID`, `GITHUB_OAUTH_CLIENT_SECRET`, and `GITHUB_OAUTH_REDIRECT_URI`.
+6. Run `mix github.oauth --save --manual --no-browser`.
+7. Open the printed authorize URL, approve access, and paste back the returned code.
+
+This repo uses the normal authorization-code flow, not Device Flow.
+
 GitHub App example:
 
 ```bash
@@ -77,7 +93,41 @@ export GITHUB_APP_PRIVATE_KEY_PATH="/path/to/private-key.pem"
 export GITHUB_APP_INSTALLATION_ID="..."
 ```
 
+GitHub App minimum:
+
+1. Go to GitHub Settings -> Developer settings -> GitHub Apps.
+2. Create a new GitHub App.
+3. Fill only the minimum fields:
+   - GitHub App name: any unique local-test name
+   - Homepage URL: any valid URL you control
+   - Callback URL: leave blank for this example
+   - Expire user authorization tokens: leave off
+   - Request user authorization during installation: leave off
+   - Enable Device Flow: leave off
+   - Setup URL: leave blank
+   - Installation target: `Only on this account` is fine for local testing
+4. For permissions, start with `Repository metadata: Read-only`.
+5. Generate and download a private key `.pem` file.
+6. Click `Install App` in the GitHub App UI and install it on the target account or org.
+7. Copy the App ID from the app settings page.
+8. Copy the installation ID from the installation page URL. It is the number in `/settings/installations/<id>`.
+9. Export `GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY_PATH`, and `GITHUB_APP_INSTALLATION_ID`.
+
 ## Running
+
+Fastest first run:
+
+```bash
+mix run examples/00_smoke.exs
+```
+
+That public smoke example does not require `GITHUB_TOKEN`.
+
+The suite runner is stricter:
+
+- `./examples/run_all.sh smoke` requires `GITHUB_TOKEN` because it also runs `01_get_authenticated_user.exs`
+- `./examples/run_all.sh all` requires `GITHUB_TOKEN` before it reaches the repo, OAuth, and app examples
+- `./examples/run_all.sh repos` also needs `GITHUB_EXAMPLE_OWNER` and `GITHUB_EXAMPLE_REPO`
 
 Single example:
 
