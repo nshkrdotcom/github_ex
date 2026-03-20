@@ -11,9 +11,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add team member\n\nAdd a team member to an enterprise team."
@@ -60,9 +60,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Bulk add team members\n\nAdd multiple team members to an enterprise team."
@@ -109,9 +109,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Bulk remove team members\n\nRemove multiple team members from an enterprise team."
@@ -162,9 +162,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get enterprise team membership\n\nReturns whether the user is a member of the enterprise team."
@@ -211,9 +211,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List members in an enterprise team\n\nLists all team members in an enterprise team."
@@ -295,9 +295,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove team membership\n\nRemove membership of a specific user from a particular team in an enterprise."

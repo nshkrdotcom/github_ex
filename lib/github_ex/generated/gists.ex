@@ -7,9 +7,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Check if a gist is starred"
@@ -56,9 +56,9 @@ defmodule GitHubEx.Gists do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a gist\n\nAllows you to add a new gist with one or more files.\n\n> [!NOTE]\n> Don't name your files \"gistfile\" with a numerical suffix. This is the format of the automatic naming scheme that Gist uses internally."
@@ -105,9 +105,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a gist comment\n\nCreates a comment on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
@@ -154,9 +154,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a gist"
@@ -203,9 +203,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a gist comment"
@@ -252,9 +252,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Fork a gist"
@@ -301,9 +301,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a gist\n\nGets a specified gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
@@ -350,9 +350,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a gist comment\n\nGets a comment on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
@@ -399,9 +399,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}, {"sha", :sha}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a gist revision\n\nGets a specified gist revision.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
@@ -448,9 +448,9 @@ defmodule GitHubEx.Gists do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List gists for the authenticated user\n\nLists the authenticated user's gists or if called anonymously, this endpoint returns all public gists:"
@@ -528,9 +528,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List gist comments\n\nLists the comments on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
@@ -608,9 +608,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List gist commits"
@@ -688,9 +688,9 @@ defmodule GitHubEx.Gists do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List gists for a user\n\nLists public gists for the specified user:"
@@ -768,9 +768,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List gist forks"
@@ -848,9 +848,9 @@ defmodule GitHubEx.Gists do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List public gists\n\nList public gists sorted by most recently updated to least recently updated.\n\nNote: With [pagination](https://docs.github.com/rest/guides/using-pagination-in-the-rest-api), you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page."
@@ -928,9 +928,9 @@ defmodule GitHubEx.Gists do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"since", :since}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List starred gists\n\nList the authenticated user's starred gists:"
@@ -1008,9 +1008,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Star a gist\n\nNote that you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see \"[HTTP method](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#http-method).\""
@@ -1057,9 +1057,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Unstar a gist"
@@ -1106,9 +1106,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a gist\n\nAllows you to update a gist's description and to update, delete, or rename gist files. Files\nfrom the previous version of the gist that aren't explicitly changed during an edit\nare unchanged.\n\nAt least one of `description` or `files` is required.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."
@@ -1155,9 +1155,9 @@ defmodule GitHubEx.Gists do
     path: [{"gist_id", :gist_id}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a gist comment\n\nUpdates a comment on a gist.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw markdown. This is the default if you do not pass any specific media type.\n- **`application/vnd.github.base64+json`**: Returns the base64-encoded contents. This can be useful if your gist contains any invalid UTF-8 sequences."

@@ -7,9 +7,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}, {"budget_id", :budget_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a budget for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nDeletes a budget by ID for an organization. The authenticated user must be an organization admin or billing manager."
@@ -56,9 +56,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}, {"scope", :scope}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get all budgets for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets all budgets for an organization. The authenticated user must be an organization admin or billing manager.\nEach page returns up to 10 budgets."
@@ -136,9 +136,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}, {"budget_id", :budget_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a budget by ID for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets a budget by ID. The authenticated user must be an organization admin or billing manager."
@@ -185,6 +185,7 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -193,8 +194,7 @@ defmodule GitHubEx.Billing do
       {"model", :model},
       {"product", :product}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get billing premium request usage report for an organization\n\nGets a report of premium request usage for an organization. To use this endpoint, you must be an administrator of an organization within an enterprise or an organization account.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -251,6 +251,7 @@ defmodule GitHubEx.Billing do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -258,8 +259,7 @@ defmodule GitHubEx.Billing do
       {"model", :model},
       {"product", :product}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get billing premium request usage report for a user\n\nGets a report of premium request usage for a user.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -316,9 +316,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"year", :year}, {"month", :month}, {"day", :day}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get billing usage report for an organization\n\nGets a report of the total usage for an organization. To use this endpoint, you must be an administrator of an organization within an enterprise or an organization account.\n\n**Note:** This endpoint is only available to organizations with access to the enhanced billing platform. For more information, see \"[About the enhanced billing platform](https://docs.github.com/billing/using-the-new-billing-platform).\""
@@ -367,9 +367,9 @@ defmodule GitHubEx.Billing do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"year", :year}, {"month", :month}, {"day", :day}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get billing usage report for a user\n\nGets a report of the total usage for a user.\n\n**Note:** This endpoint is only available to users with access to the enhanced billing platform."
@@ -418,6 +418,7 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -426,8 +427,7 @@ defmodule GitHubEx.Billing do
       {"product", :product},
       {"sku", :sku}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get billing usage summary for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets a summary report of usage for an organization. To use this endpoint, you must be an administrator of an organization within an enterprise or an organization account.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -479,6 +479,7 @@ defmodule GitHubEx.Billing do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -487,8 +488,7 @@ defmodule GitHubEx.Billing do
       {"product", :product},
       {"sku", :sku}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get billing usage summary for a user\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets a summary report of usage for a user.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -540,9 +540,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}, {"budget_id", :budget_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a budget for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nUpdates an existing budget for an organization. The authenticated user must be an organization admin or billing manager."

@@ -33,6 +33,10 @@ jwt =
   )
 ```
 
+`GitHubEx.AppAuth.app_client/3` returns a `Pristine.Client` configured with that
+JWT as the default runtime credential, so you can pass it straight to generated
+GitHubEx operations.
+
 ### Installation Access Token
 
 Use this for most real API work.
@@ -117,6 +121,9 @@ app_client =
 
 If you omit narrowing, GitHub issues a token with the full repository set and
 permission set already granted to the installation.
+
+`GitHubEx.AppAuth.installation_client/4` likewise returns a `Pristine.Client`
+ready to hand to generated modules such as `GitHubEx.Repos` or `GitHubEx.Issues`.
 
 ## How To Debug 403s
 

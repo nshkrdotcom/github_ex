@@ -7,9 +7,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a hosted compute network configuration for an organization\n\nCreates a hosted compute network configuration for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `write:network_configurations` scope to use this endpoint."
@@ -58,9 +58,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_configuration_id", :network_configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a hosted compute network configuration from an organization\n\nDeletes a hosted compute network configuration from an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `write:network_configurations` scope to use this endpoint."
@@ -109,9 +109,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_configuration_id", :network_configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a hosted compute network configuration for an organization\n\nGets a hosted compute network configuration configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:network_configurations` scope to use this endpoint."
@@ -160,9 +160,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_settings_id", :network_settings_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a hosted compute network settings resource for an organization\n\nGets a hosted compute network settings resource configured for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:network_configurations` scope to use this endpoint."
@@ -209,9 +209,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List hosted compute network configurations for an organization\n\nLists all hosted compute network configurations configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:network_configurations` scope to use this endpoint."
@@ -291,9 +291,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_configuration_id", :network_configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a hosted compute network configuration for an organization\n\nUpdates a hosted compute network configuration for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `write:network_configurations` scope to use this endpoint."

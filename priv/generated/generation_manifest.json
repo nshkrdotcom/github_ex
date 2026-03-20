@@ -12,7 +12,7 @@
       "compiler": "pristine_codegen",
       "provider": "github_ex",
       "source_strategy": "openapi_only",
-      "version": "0.1.0"
+      "version": "dev"
     },
     "sources": [
       {

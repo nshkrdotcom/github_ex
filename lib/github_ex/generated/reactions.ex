@@ -7,9 +7,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create reaction for a commit comment\n\nCreate a reaction to a [commit comment](https://docs.github.com/rest/commits/comments#get-a-commit-comment). A response with an HTTP `200` status means that you already added the reaction type to this commit comment."
@@ -56,9 +56,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"issue_number", :issue_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create reaction for an issue\n\nCreate a reaction to an [issue](https://docs.github.com/rest/issues/issues#get-an-issue). A response with an HTTP `200` status means that you already added the reaction type to this issue."
@@ -105,9 +105,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create reaction for an issue comment\n\nCreate a reaction to an [issue comment](https://docs.github.com/rest/issues/comments#get-an-issue-comment). A response with an HTTP `200` status means that you already added the reaction type to this issue comment."
@@ -154,9 +154,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create reaction for a pull request review comment\n\nCreate a reaction to a [pull request review comment](https://docs.github.com/rest/pulls/comments#get-a-review-comment-for-a-pull-request). A response with an HTTP `200` status means that you already added the reaction type to this pull request review comment."
@@ -205,9 +205,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"release_id", :release_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create reaction for a release\n\nCreate a reaction to a [release](https://docs.github.com/rest/releases/releases#get-a-release). A response with a `Status: 200 OK` means that you already added the reaction type to this release."
@@ -259,9 +259,9 @@ defmodule GitHubEx.Reactions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a commit comment reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE /repositories/:repository_id/comments/:comment_id/reactions/:reaction_id`.\n\nDelete a reaction to a [commit comment](https://docs.github.com/rest/commits/comments#get-a-commit-comment)."
@@ -313,9 +313,9 @@ defmodule GitHubEx.Reactions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an issue reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE /repositories/:repository_id/issues/:issue_number/reactions/:reaction_id`.\n\nDelete a reaction to an [issue](https://docs.github.com/rest/issues/issues#get-an-issue)."
@@ -367,9 +367,9 @@ defmodule GitHubEx.Reactions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an issue comment reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE delete /repositories/:repository_id/issues/comments/:comment_id/reactions/:reaction_id`.\n\nDelete a reaction to an [issue comment](https://docs.github.com/rest/issues/comments#get-an-issue-comment)."
@@ -421,9 +421,9 @@ defmodule GitHubEx.Reactions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a pull request comment reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE /repositories/:repository_id/pulls/comments/:comment_id/reactions/:reaction_id.`\n\nDelete a reaction to a [pull request review comment](https://docs.github.com/rest/pulls/comments#get-a-review-comment-for-a-pull-request)."
@@ -477,9 +477,9 @@ defmodule GitHubEx.Reactions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a release reaction\n\n> [!NOTE]\n> You can also specify a repository by `repository_id` using the route `DELETE delete /repositories/:repository_id/releases/:release_id/reactions/:reaction_id`.\n\nDelete a reaction to a [release](https://docs.github.com/rest/releases/releases#get-a-release)."
@@ -526,9 +526,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List reactions for a commit comment\n\nList the reactions to a [commit comment](https://docs.github.com/rest/commits/comments#get-a-commit-comment)."
@@ -606,9 +606,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"issue_number", :issue_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List reactions for an issue\n\nList the reactions to an [issue](https://docs.github.com/rest/issues/issues#get-an-issue)."
@@ -686,9 +686,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List reactions for an issue comment\n\nList the reactions to an [issue comment](https://docs.github.com/rest/issues/comments#get-an-issue-comment)."
@@ -766,9 +766,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List reactions for a pull request review comment\n\nList the reactions to a [pull request review comment](https://docs.github.com/rest/pulls/comments#get-a-review-comment-for-a-pull-request)."
@@ -848,9 +848,9 @@ defmodule GitHubEx.Reactions do
     path: [{"owner", :owner}, {"repo", :repo}, {"release_id", :release_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"content", :content}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List reactions for a release\n\nList the reactions to a [release](https://docs.github.com/rest/releases/releases#get-a-release)."

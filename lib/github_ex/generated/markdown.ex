@@ -7,9 +7,9 @@ defmodule GitHubEx.Markdown do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Render a Markdown document\n\nDepending on what is rendered in the Markdown, you may need to provide additional token scopes for labels, such as `issues:read` or `pull_requests:read`."
@@ -56,9 +56,9 @@ defmodule GitHubEx.Markdown do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :key, key: {"body", :body}},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Render a Markdown document in raw mode\n\nYou must send Markdown as plain text (using a `Content-Type` header of `text/plain` or `text/x-markdown`) to this endpoint, rather than using JSON format. In raw mode, [GitHub Flavored Markdown](https://github.github.com/gfm/) is not supported and Markdown will be rendered in plain format like a README.md file. Markdown content must be 400 KB or less."

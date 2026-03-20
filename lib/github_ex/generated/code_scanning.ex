@@ -7,9 +7,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Commit an autofix for a code scanning alert\n\nCommits an autofix for a code scanning alert.\n\nIf an autofix is committed as a result of this request, then this endpoint will return a 201 Created response.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -56,9 +56,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create an autofix for a code scanning alert\n\nCreates an autofix for a code scanning alert.\n\nIf a new autofix is to be created as a result of this request or is currently being generated, then this endpoint will return a 202 Accepted response.\n\nIf an autofix already exists for a given alert, then this endpoint will return a 200 OK response.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -105,9 +105,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a CodeQL variant analysis\n\nCreates a new CodeQL variant analysis, which will run a CodeQL query against one or more repositories.\n\nGet started by learning more about [running CodeQL queries at scale with Multi-Repository Variant Analysis](https://docs.github.com/code-security/codeql-for-vs-code/getting-started-with-codeql-for-vs-code/running-codeql-queries-at-scale-with-multi-repository-variant-analysis).\n\nUse the `owner` and `repo` parameters in the URL to specify the controller repository that\nwill be used for running GitHub Actions workflows and storing the results of the CodeQL variant analysis.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -154,9 +154,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"analysis_id", :analysis_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"confirm_delete", :confirm_delete}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a code scanning analysis from a repository\n\nDeletes a specified code scanning analysis from a repository.\n\nYou can delete one analysis at a time.\nTo delete a series of analyses, start with the most recent analysis and work backwards.\nConceptually, the process is similar to the undo function in a text editor.\n\nWhen you list the analyses for a repository,\none or more will be identified as deletable in the response:\n\n```\n\"deletable\": true\n```\n\nAn analysis is deletable when it's the most recent in a set of analyses.\nTypically, a repository will have multiple sets of analyses\nfor each enabled code scanning tool,\nwhere a set is determined by a unique combination of analysis values:\n\n* `ref`\n* `tool`\n* `category`\n\nIf you attempt to delete an analysis that is not the most recent in a set,\nyou'll get a 400 response with the message:\n\n```\nAnalysis specified is not deletable.\n```\n\nThe response from a successful `DELETE` operation provides you with\ntwo alternative URLs for deleting the next analysis in the set:\n`next_analysis_url` and `confirm_delete_url`.\nUse the `next_analysis_url` URL if you want to avoid accidentally deleting the final analysis\nin a set. This is a useful option if you want to preserve at least one analysis\nfor the specified tool in your repository.\nUse the `confirm_delete_url` URL if you are content to remove all analyses for a tool.\nWhen you delete the last analysis in a set, the value of `next_analysis_url` and `confirm_delete_url`\nin the 200 response is `null`.\n\nAs an example of the deletion process,\nlet's imagine that you added a workflow that configured a particular code scanning tool\nto analyze the code in a repository. This tool has added 15 analyses:\n10 on the default branch, and another 5 on a topic branch.\nYou therefore have two separate sets of analyses for this tool.\nYou've now decided that you want to remove all of the analyses for the tool.\nTo do this you must make 15 separate deletion requests.\nTo start, you must find an analysis that's identified as deletable.\nEach set of analyses always has one that's identified as deletable.\nHaving found the deletable analysis for one of the two sets,\ndelete this analysis and then continue deleting the next analysis in the set until they're all deleted.\nThen repeat the process for the second set.\nThe procedure therefore consists of a nested loop:\n\n**Outer loop**:\n* List the analyses for the repository, filtered by tool.\n* Parse this list to find a deletable analysis. If found:\n\n  **Inner loop**:\n  * Delete the identified analysis.\n  * Parse the response for the value of `confirm_delete_url` and, if found, use this in the next iteration.\n\nThe above process assumes that you want to remove all trace of the tool's analyses from the GitHub user interface, for the specified repository, and it therefore uses the `confirm_delete_url` value. Alternatively, you could use the `next_analysis_url` value, which would leave the last analysis in each set undeleted to avoid removing a tool's analysis entirely.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -203,9 +203,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"language", :language}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a CodeQL database\n\nDeletes a CodeQL database for a language in a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -252,9 +252,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a code scanning alert\n\nGets a single code scanning alert.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -301,9 +301,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"analysis_id", :analysis_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a code scanning analysis for a repository\n\nGets a specified code scanning analysis for a repository.\n\nThe default JSON response contains fields that describe the analysis.\nThis includes the Git reference and commit SHA to which the analysis relates,\nthe datetime of the analysis, the name of the code scanning tool,\nand the number of alerts.\n\nThe `rules_count` field in the default response give the number of rules\nthat were run in the analysis.\nFor very old analyses this data is not available,\nand `0` is returned in this field.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/sarif+json`**: Instead of returning a summary of the analysis, this endpoint returns a subset of the analysis data that was uploaded. The data is formatted as [SARIF version 2.1.0](https://docs.oasis-open.org/sarif/sarif/v2.1.0/cs01/sarif-v2.1.0-cs01.html). It also returns additional data such as the `github/alertNumber` and `github/alertUrl` properties.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -350,9 +350,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the status of an autofix for a code scanning alert\n\nGets the status and description of an autofix for a code scanning alert.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -399,9 +399,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"language", :language}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a CodeQL database for a repository\n\nGets a CodeQL database for a language in a repository.\n\nBy default this endpoint returns JSON metadata about the CodeQL database. To\ndownload the CodeQL database binary content, set the `Accept` header of the request\nto [`application/zip`](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types), and make sure\nyour HTTP client is configured to follow redirects or use the `Location` header\nto make a second request to get the redirect URL.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -448,9 +448,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a code scanning default setup configuration\n\nGets a code scanning default setup configuration.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -497,9 +497,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"sarif_id", :sarif_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get information about a SARIF upload\n\nGets information about a SARIF upload, including the status and the URL of the analysis that was uploaded so that you can retrieve details of the analysis. For more information, see \"[Get a code scanning analysis for a repository](/rest/code-scanning/code-scanning#get-a-code-scanning-analysis-for-a-repository).\"\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -550,9 +550,9 @@ defmodule GitHubEx.CodeScanning do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the summary of a CodeQL variant analysis\n\nGets the summary of a CodeQL variant analysis.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -606,9 +606,9 @@ defmodule GitHubEx.CodeScanning do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the analysis status of a repository in a CodeQL variant analysis\n\nGets the analysis status of a repository in a CodeQL variant analysis.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -658,9 +658,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}, {"ref", :ref}, {"pr", :pr}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List instances of a code scanning alert\n\nLists all instances of the specified code scanning alert.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -738,6 +738,7 @@ defmodule GitHubEx.CodeScanning do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"tool_name", :tool_name},
       {"tool_guid", :tool_guid},
@@ -751,8 +752,7 @@ defmodule GitHubEx.CodeScanning do
       {"severity", :severity},
       {"assignees", :assignees}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List code scanning alerts for an organization\n\nLists code scanning alerts for the default branch for all eligible repositories in an organization. Eligible repositories are repositories that are owned by organizations that you own or for which you are a security manager. For more information, see \"[Managing security managers in your organization](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/managing-security-managers-in-your-organization).\"\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` or `repo`s cope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -830,6 +830,7 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"tool_name", :tool_name},
       {"tool_guid", :tool_guid},
@@ -845,8 +846,7 @@ defmodule GitHubEx.CodeScanning do
       {"severity", :severity},
       {"assignees", :assignees}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List code scanning alerts for a repository\n\nLists code scanning alerts.\n\nThe response includes a `most_recent_instance` object.\nThis provides details of the most recent instance of this alert\nfor the default branch (or for the specified Git reference if you used `ref` in the request).\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -924,9 +924,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List CodeQL databases for a repository\n\nLists the CodeQL databases that are available in a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -1004,6 +1004,7 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"tool_name", :tool_name},
       {"tool_guid", :tool_guid},
@@ -1015,8 +1016,7 @@ defmodule GitHubEx.CodeScanning do
       {"direction", :direction},
       {"sort", :sort}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List code scanning analyses for a repository\n\nLists the details of all code scanning analyses for a repository,\nstarting with the most recent.\nThe response is paginated and you can use the `page` and `per_page` parameters\nto list the analyses you're interested in.\nBy default 30 analyses are listed per page.\n\nThe `rules_count` field in the response give the number of rules\nthat were run in the analysis.\nFor very old analyses this data is not available,\nand `0` is returned in this field.\n\n> [!WARNING]\n> **Closing down notice:** The `tool_name` field is closing down and will, in future, not be included in the response for this endpoint. The example response reflects this change. The tool name can now be found inside the `tool` field.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -1094,9 +1094,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a code scanning alert\n\nUpdates the status of a single code scanning alert.\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -1143,9 +1143,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a code scanning default setup configuration\n\nUpdates a code scanning default setup configuration.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
@@ -1192,9 +1192,9 @@ defmodule GitHubEx.CodeScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Upload an analysis as SARIF data\n\nUploads SARIF data containing the results of a code scanning analysis to make the results available in a repository. For troubleshooting information, see \"[Troubleshooting SARIF uploads](https://docs.github.com/code-security/code-scanning/troubleshooting-sarif).\"\n\nThere are two places where you can upload code scanning results.\n - If you upload to a pull request, for example `--ref refs/pull/42/merge` or `--ref refs/pull/42/head`, then the results appear as alerts in a pull request check. For more information, see \"[Triaging code scanning alerts in pull requests](/code-security/secure-coding/triaging-code-scanning-alerts-in-pull-requests).\"\n - If you upload to a branch, for example `--ref refs/heads/my-branch`, then the results appear in the **Security** tab for your repository. For more information, see \"[Managing code scanning alerts for your repository](/code-security/secure-coding/managing-code-scanning-alerts-for-your-repository#viewing-the-alerts-for-a-repository).\"\n\nYou must compress the SARIF-formatted analysis data that you want to upload, using `gzip`, and then encode it as a Base64 format string. For example:\n\n```\ngzip -c analysis-data.sarif | base64 -w0\n```\n\nSARIF upload supports a maximum number of entries per the following data objects, and an analysis will be rejected if any of these objects is above its maximum value. For some objects, there are additional values over which the entries will be ignored while keeping the most important entries whenever applicable.\nTo get the most out of your analysis when it includes data above the supported limits, try to optimize the analysis configuration. For example, for the CodeQL tool, identify and remove the most noisy queries. For more information, see \"[SARIF results exceed one or more limits](https://docs.github.com/code-security/code-scanning/troubleshooting-sarif/results-exceed-limit).\"\n\n\n| **SARIF data**                   | **Maximum values** | **Additional limits**                                                            |\n|----------------------------------|:------------------:|----------------------------------------------------------------------------------|\n| Runs per file                    |         20         |                                                                                  |\n| Results per run                  |       25,000       | Only the top 5,000 results will be included, prioritized by severity.            |\n| Rules per run                    |       25,000       |                                                                                  |\n| Tool extensions per run          |        100         |                                                                                  |\n| Thread Flow Locations per result |       10,000       | Only the top 1,000 Thread Flow Locations will be included, using prioritization. |\n| Location per result\t             |       1,000        | Only 100 locations will be included.                                             |\n| Tags per rule\t                   |         20         | Only 10 tags will be included.                                                   |\n\n\nThe `202 Accepted` response includes an `id` value.\nYou can use this ID to check the status of the upload by using it in the `/sarifs/{sarif_id}` endpoint.\nFor more information, see \"[Get information about a SARIF upload](/rest/code-scanning/code-scanning#get-information-about-a-sarif-upload).\"\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories.\n\nThis endpoint is limited to 1,000 requests per hour for each user or app installation calling it."

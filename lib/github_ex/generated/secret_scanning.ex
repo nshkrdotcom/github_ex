@@ -7,9 +7,9 @@ defmodule GitHubEx.SecretScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a push protection bypass\n\nCreates a bypass for a previously push protected secret.\n\nThe authenticated user must be the original author of the committed secret.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -58,9 +58,9 @@ defmodule GitHubEx.SecretScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"hide_secret", :hide_secret}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a secret scanning alert\n\nGets a single secret scanning alert detected in an eligible repository.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -107,9 +107,9 @@ defmodule GitHubEx.SecretScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get secret scanning scan history for a repository\n\nLists the latest default incremental and backfill scans by type for a repository. Scans from Copilot Secret Scanning are not included.\n\n> [!NOTE]\n> This endpoint requires [GitHub Advanced Security](https://docs.github.com/get-started/learning-about-github/about-github-advanced-security).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -156,6 +156,7 @@ defmodule GitHubEx.SecretScanning do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"state", :state},
       {"secret_type", :secret_type},
@@ -172,8 +173,7 @@ defmodule GitHubEx.SecretScanning do
       {"is_multi_repo", :is_multi_repo},
       {"hide_secret", :hide_secret}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List secret scanning alerts for an organization\n\nLists secret scanning alerts for eligible repositories in an organization, from newest to oldest.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -251,6 +251,7 @@ defmodule GitHubEx.SecretScanning do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"state", :state},
       {"secret_type", :secret_type},
@@ -267,8 +268,7 @@ defmodule GitHubEx.SecretScanning do
       {"is_multi_repo", :is_multi_repo},
       {"hide_secret", :hide_secret}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List secret scanning alerts for a repository\n\nLists secret scanning alerts for an eligible repository, from newest to oldest.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -346,9 +346,9 @@ defmodule GitHubEx.SecretScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List locations for a secret scanning alert\n\nLists all locations for a given secret scanning alert for an eligible repository.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -426,9 +426,9 @@ defmodule GitHubEx.SecretScanning do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List organization pattern configurations\n\nLists the secret scanning pattern configurations for an organization.\n\nPersonal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -475,9 +475,9 @@ defmodule GitHubEx.SecretScanning do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a secret scanning alert\n\nUpdates the status of a secret scanning alert in an eligible repository.\n\nYou can also use this endpoint to assign or unassign an alert to a user who has write access to the repository.\n\nThe authenticated user must be an administrator for the repository or for the organization that owns the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -524,9 +524,9 @@ defmodule GitHubEx.SecretScanning do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update organization pattern configurations\n\nUpdates the secret scanning pattern configurations for an organization.\n\nPersonal access tokens (classic) need the `write:org` scope to use this endpoint."

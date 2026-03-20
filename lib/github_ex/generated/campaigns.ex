@@ -7,9 +7,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a campaign for an organization\n\nCreate a campaign for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint.\n\nFine-grained tokens must have the \"Code scanning alerts\" repository permissions (read) on all repositories included\nin the campaign."
@@ -56,9 +56,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}, {"campaign_number", :campaign_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a campaign for an organization\n\nDeletes a campaign in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
@@ -105,9 +105,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}, {"campaign_number", :campaign_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a campaign for an organization\n\nGets a campaign for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
@@ -154,6 +154,7 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"page", :page},
       {"per_page", :per_page},
@@ -161,8 +162,7 @@ defmodule GitHubEx.Campaigns do
       {"state", :state},
       {"sort", :sort}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List campaigns for an organization\n\nLists campaigns in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
@@ -240,9 +240,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}, {"campaign_number", :campaign_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a campaign\n\nUpdates a campaign in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."

@@ -7,9 +7,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a private registry for an organization\n\nCreates a private registry configuration with an encrypted value for an organization. Encrypt your secret using [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -56,9 +56,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a private registry for an organization\n\nDelete a private registry configuration at the organization-level.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -105,9 +105,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a private registry for an organization\n\nGet the configuration of a single private registry defined for an organization, omitting its encrypted value.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -154,9 +154,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get private registries public key for an organization\n\nGets the org public key, which is needed to encrypt private registry secrets. You need to encrypt a secret before you can create or update secrets.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -203,9 +203,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List private registries for an organization\n\nLists all private registry configurations available at the organization-level without revealing their encrypted\nvalues.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -283,9 +283,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a private registry for an organization\n\nUpdates a private registry configuration with an encrypted value for an organization. Encrypt your secret using [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."

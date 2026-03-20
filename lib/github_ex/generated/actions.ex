@@ -7,9 +7,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add custom labels to a self-hosted runner for an organization\n\nAdds custom labels to a self-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -62,9 +62,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add custom labels to a self-hosted runner for a repository\n\nAdds custom labels to a self-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -121,9 +121,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add repository access to a self-hosted runner group in an organization\n\nAdds a repository to the list of repositories that can access a self-hosted runner group. The runner group must have `visibility` set to `selected`. For more information, see \"[Create a self-hosted runner group for an organization](#create-a-self-hosted-runner-group-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -185,9 +185,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add selected repository to an organization secret\n\nAdds a repository to an organization secret when the `visibility` for\nrepository access is set to `selected`. For more information about setting the visibility, see [Create or\nupdate an organization secret](https://docs.github.com/rest/actions/secrets#create-or-update-an-organization-secret).\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -236,9 +236,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"name", :name}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add selected repository to an organization variable\n\nAdds a repository to an organization variable that is available to selected repositories.\nOrganization variables that are available to selected repositories have their `visibility` field set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -291,9 +291,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add a self-hosted runner to a group for an organization\n\nAdds a self-hosted runner to a runner group configured in an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -345,9 +345,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Approve a workflow run for a fork pull request\n\nApproves a workflow run for a pull request from a public fork of a first time contributor. For more information, see [\"Approving workflow runs from public forks](https://docs.github.com/actions/managing-workflow-runs/approving-workflow-runs-from-public-forks).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -394,9 +394,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Cancel a workflow run\n\nCancels a workflow run using its `id`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -447,9 +447,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create an environment variable\n\nCreate an environment variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -496,9 +496,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a GitHub-hosted runner for an organization\n\nCreates a GitHub-hosted runner for an organization.\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -550,9 +550,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create or update an environment secret\n\nCreates or updates an environment secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -602,9 +602,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create or update an organization secret\n\nCreates or updates an organization secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -651,9 +651,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create or update a repository secret\n\nCreates or updates a repository secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -700,9 +700,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create an organization variable\n\nCreates an organization variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -749,9 +749,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a registration token for an organization\n\nReturns a token that you can pass to the `config` script. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to configure your self-hosted runner:\n\n```\n./config.sh --url https://github.com/octo-org --token TOKEN\n```\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -800,9 +800,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a registration token for a repository\n\nReturns a token that you can pass to the `config` script. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to configure your self-hosted runner:\n\n```\n./config.sh --url https://github.com/octo-org --token TOKEN\n```\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -851,9 +851,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a remove token for an organization\n\nReturns a token that you can pass to the `config` script to remove a self-hosted runner from an organization. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to remove your self-hosted runner from an organization:\n\n```\n./config.sh remove --token TOKEN\n```\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -900,9 +900,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a remove token for a repository\n\nReturns a token that you can pass to the `config` script to remove a self-hosted runner from an repository. The token expires after one hour.\n\nFor example, you can replace `TOKEN` in the following example with the registration token provided by this endpoint to remove your self-hosted runner from an organization:\n\n```\n./config.sh remove --token TOKEN\n```\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -949,9 +949,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a repository variable\n\nCreates a repository variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -998,9 +998,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a self-hosted runner group for an organization\n\nCreates a new self-hosted runner group for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -1052,9 +1052,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a workflow dispatch event\n\nYou can use this endpoint to manually trigger a GitHub Actions workflow run. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nYou must configure your GitHub Actions workflow to run when the [`workflow_dispatch` webhook](/developers/webhooks-and-events/webhook-events-and-payloads#workflow_dispatch) event occurs. The `inputs` are configured in the workflow file. For more information about how to configure the `workflow_dispatch` event in the workflow file, see \"[Events that trigger workflows](/actions/reference/events-that-trigger-workflows#workflow_dispatch).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1101,9 +1101,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"cache_id", :cache_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a GitHub Actions cache for a repository (using a cache ID)\n\nDeletes a GitHub Actions cache for a repository, using a cache ID.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1150,9 +1150,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"key", :key}, {"ref", :ref}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete GitHub Actions caches for a repository (using a cache key)\n\nDeletes one or more GitHub Actions caches for a repository, using a complete cache key. By default, all caches that match the provided key are deleted, but you can optionally provide a Git ref to restrict deletions to caches that match both the provided key and the Git ref.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1199,9 +1199,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"artifact_id", :artifact_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an artifact\n\nDeletes an artifact for a workflow run.\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1248,9 +1248,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"image_definition_id", :image_definition_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a custom image from the organization\n\nDelete a custom image from the organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -1301,9 +1301,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an image version of custom image from the organization\n\nDelete an image version of custom image from the organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -1358,9 +1358,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an environment secret\n\nDeletes a secret in an environment using the secret name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1413,9 +1413,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an environment variable\n\nDeletes an environment variable using the variable name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1462,9 +1462,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a GitHub-hosted runner for an organization\n\nDeletes a GitHub-hosted runner for an organization."
@@ -1511,9 +1511,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an organization secret\n\nDeletes a secret in an organization using the secret name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1560,9 +1560,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an organization variable\n\nDeletes an organization variable using the variable name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1609,9 +1609,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a repository secret\n\nDeletes a secret in a repository using the secret name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1658,9 +1658,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a repository variable\n\nDeletes a repository variable using the variable name.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1707,9 +1707,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a self-hosted runner from an organization\n\nForces the removal of a self-hosted runner from an organization. You can use this endpoint to completely remove the runner when the machine you were using no longer exists.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1758,9 +1758,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a self-hosted runner from a repository\n\nForces the removal of a self-hosted runner from a repository. You can use this endpoint to completely remove the runner when the machine you were using no longer exists.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1809,9 +1809,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a self-hosted runner group from an organization\n\nDeletes a self-hosted runner group for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -1863,9 +1863,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a workflow run\n\nDeletes a specific workflow run.\n\nAnyone with write access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1912,9 +1912,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete workflow run logs\n\nDeletes all logs for a workflow run.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -1961,9 +1961,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Disable a selected repository for GitHub Actions in an organization\n\nRemoves a repository from the list of selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2020,9 +2020,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove a repository from the list of repositories allowed to use self-hosted runners in an organization\n\nRemoves a repository from the list of repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -2087,9 +2087,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Disable a workflow\n\nDisables a workflow and sets the `state` of the workflow to `disabled_manually`. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2141,9 +2141,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Download an artifact\n\nGets a redirect URL to download an archive for a repository. This URL expires after 1 minute. Look for `Location:` in\nthe response header to find the URL for the download. The `:archive_format` must be `zip`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2190,9 +2190,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Download job logs for a workflow run\n\nGets a redirect URL to download a plain text file of logs for a workflow job. This link expires after 1 minute. Look\nfor `Location:` in the response header to find the URL for the download.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2246,9 +2246,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Download workflow run attempt logs\n\nGets a redirect URL to download an archive of log files for a specific workflow run attempt. This link expires after\n1 minute. Look for `Location:` in the response header to find the URL for the download.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2297,9 +2297,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Download workflow run logs\n\nGets a redirect URL to download an archive of log files for a workflow run. This link expires after 1 minute. Look for\n`Location:` in the response header to find the URL for the download.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2346,9 +2346,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Enable a selected repository for GitHub Actions in an organization\n\nAdds a repository to the list of selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2405,9 +2405,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add a repository to the list of repositories allowed to use self-hosted runners in an organization\n\nAdds a repository to the list of repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -2472,9 +2472,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Enable a workflow\n\nEnables a workflow and sets the `state` of the workflow to `active`. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2521,9 +2521,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Force cancel a workflow run\n\nCancels a workflow run and bypasses conditions that would otherwise cause a workflow execution to continue, such as an `always()` condition on a job.\nYou should only use this endpoint to cancel a workflow run when the workflow run is not responding to [`POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel`](/rest/actions/workflow-runs#cancel-a-workflow-run).\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2570,9 +2570,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create configuration for a just-in-time runner for an organization\n\nGenerates a configuration that can be passed to the runner application at startup.\n\nThe authenticated user must have admin access to the organization.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2621,9 +2621,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create configuration for a just-in-time runner for a repository\n\nGenerates a configuration that can be passed to the runner application at startup.\n\nThe authenticated user must have admin access to the repository.\n\nOAuth tokens and personal access tokens (classic) need the`repo` scope to use this endpoint."
@@ -2672,6 +2672,7 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"page", :page},
@@ -2680,8 +2681,7 @@ defmodule GitHubEx.Actions do
       {"sort", :sort},
       {"direction", :direction}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List GitHub Actions caches for a repository\n\nLists the GitHub Actions caches for a repository.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -2759,9 +2759,9 @@ defmodule GitHubEx.Actions do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache retention limit for an enterprise\n\nGets GitHub Actions cache retention limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -2814,9 +2814,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache retention limit for an organization\n\nGets GitHub Actions cache retention limit for an organization. All repositories under this\norganization may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
@@ -2873,9 +2873,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache retention limit for a repository\n\nGets GitHub Actions cache retention limit for a repository. This determines how long caches will be retained for, if\nnot manually removed or evicted due to size constraints.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
@@ -2928,9 +2928,9 @@ defmodule GitHubEx.Actions do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache storage limit for an enterprise\n\nGets GitHub Actions cache storage limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -2983,9 +2983,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache storage limit for an organization\n\nGets GitHub Actions cache storage limit for an organization. All repositories under this\norganization may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
@@ -3038,9 +3038,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache storage limit for a repository\n\nGets GitHub Actions cache storage limit for a repository. This determines the maximum size of caches that can be\nstored before eviction occurs.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
@@ -3093,9 +3093,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache usage for a repository\n\nGets GitHub Actions cache usage for a repository.\nThe data fetched using this API is refreshed approximately every 5 minutes, so values returned from this endpoint may take at least 5 minutes to get updated.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3142,9 +3142,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repositories with GitHub Actions cache usage for an organization\n\nLists repositories and their GitHub Actions cache usage for an organization.\nThe data fetched using this API is refreshed approximately every 5 minutes, so values returned from this endpoint may take at least 5 minutes to get updated.\n\nOAuth tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -3227,9 +3227,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions cache usage for an organization\n\nGets the total GitHub Actions cache usage for an organization.\nThe data fetched using this API is refreshed approximately every 5 minutes, so values returned from this endpoint may take at least 5 minutes to get updated.\n\nOAuth tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -3278,9 +3278,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get allowed actions and reusable workflows for an organization\n\nGets the selected actions and reusable workflows that are allowed in an organization. To use this endpoint, the organization permission policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -3329,9 +3329,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get allowed actions and reusable workflows for a repository\n\nGets the settings for selected actions and reusable workflows that are allowed in a repository. To use this endpoint, the repository policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for a repository](#set-github-actions-permissions-for-a-repository).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3380,9 +3380,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"artifact_id", :artifact_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an artifact\n\nGets a specific artifact for a workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3429,9 +3429,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get artifact and log retention settings for an organization\n\nGets artifact and log retention settings for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -3488,9 +3488,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get artifact and log retention settings for a repository\n\nGets artifact and log retention settings for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3547,9 +3547,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"image_definition_id", :image_definition_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a custom image definition for GitHub Actions Hosted Runners\n\nGet a custom image definition for GitHub Actions Hosted Runners.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -3600,9 +3600,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an image version of a custom image for GitHub Actions Hosted Runners\n\nGet an image version of a custom image for GitHub Actions Hosted Runners.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -3652,9 +3652,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the customization template for an OIDC subject claim for a repository\n\nGets the customization template for an OpenID Connect (OIDC) subject claim.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3707,9 +3707,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an environment public key\n\nGet the public key for an environment, which you need to encrypt environment\nsecrets. You need to encrypt a secret before you can create or update secrets.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3761,9 +3761,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an environment secret\n\nGets a single environment secret without revealing its encrypted value.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3816,9 +3816,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an environment variable\n\nGets a specific variable in an environment.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3865,9 +3865,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get fork PR contributor approval permissions for an organization\n\nGets the fork PR contributor approval policy for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -3924,9 +3924,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get fork PR contributor approval permissions for a repository\n\nGets the fork PR contributor approval policy for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -3983,9 +3983,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get default workflow permissions for an organization\n\nGets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in an organization,\nas well as whether GitHub Actions can submit approving pull request reviews. For more information, see\n\"[Setting the permissions of the GITHUB_TOKEN for your organization](https://docs.github.com/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization#setting-the-permissions-of-the-github_token-for-your-organization).\"\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -4049,9 +4049,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get default workflow permissions for a repository\n\nGets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in a repository,\nas well as if GitHub Actions can submit approving pull request reviews.\nFor more information, see \"[Setting the permissions of the GITHUB_TOKEN for your repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#setting-the-permissions-of-the-github_token-for-your-repository).\"\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4112,9 +4112,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions permissions for an organization\n\nGets the GitHub Actions permissions policy for repositories and allowed actions and reusable workflows in an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -4166,9 +4166,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub Actions permissions for a repository\n\nGets the GitHub Actions permissions policy for a repository, including whether GitHub Actions is enabled and the actions and reusable workflows allowed to run in the repository.\n\nOAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4220,9 +4220,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a GitHub-hosted runner for an organization\n\nGets a GitHub-hosted runner configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -4269,9 +4269,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub-owned images for GitHub-hosted runners in an organization\n\nGet the list of GitHub-owned images available for GitHub-hosted runners for an organization."
@@ -4324,9 +4324,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get limits on GitHub-hosted runners for an organization\n\nGet the GitHub-hosted runners limits for an organization."
@@ -4375,9 +4375,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get GitHub-hosted runners machine specs for an organization\n\nGet the list of machine specs available for GitHub-hosted runners for an organization."
@@ -4429,9 +4429,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get partner images for GitHub-hosted runners in an organization\n\nGet the list of partner images available for GitHub-hosted runners for an organization."
@@ -4483,9 +4483,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get platforms for GitHub-hosted runners in an organization\n\nGet the list of platforms available for GitHub-hosted runners for an organization."
@@ -4534,9 +4534,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a job for a workflow run\n\nGets a specific job in a workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4583,9 +4583,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an organization public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets.\n\nThe authenticated user must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4632,9 +4632,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an organization secret\n\nGets a single organization secret without revealing its encrypted value.\n\nThe authenticated user must have collaborator access to a repository to create, update, or read secrets\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4681,9 +4681,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an organization variable\n\nGets a specific variable in an organization.\n\nThe authenticated user must have collaborator access to a repository to create, update, or read variables.\n\nOAuth tokens and personal access tokens (classic) need the`admin:org` scope to use this endpoint. If the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4730,9 +4730,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get pending deployments for a workflow run\n\nGet all deployment environments for a workflow run that are waiting for protection rules to pass.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4781,9 +4781,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get private repo fork PR workflow settings for an organization\n\nGets the settings for whether workflows from fork pull requests can run on private repositories in an organization."
@@ -4840,9 +4840,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get private repo fork PR workflow settings for a repository\n\nGets the settings for whether workflows from fork pull requests can run on a private repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4899,9 +4899,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a repository public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets.\n\nAnyone with read access to the repository can use this endpoint.\n\nIf the repository is private, OAuth tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4948,9 +4948,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a repository secret\n\nGets a single repository secret without revealing its encrypted value.\n\nThe authenticated user must have collaborator access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -4997,9 +4997,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a repository variable\n\nGets a specific variable in a repository.\n\nThe authenticated user must have collaborator access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -5046,9 +5046,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the review history for a workflow run\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -5095,9 +5095,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a self-hosted runner for an organization\n\nGets a specific self-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -5146,9 +5146,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a self-hosted runner for a repository\n\nGets a specific self-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -5197,9 +5197,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a self-hosted runner group for an organization\n\nGets a specific self-hosted runner group for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -5248,9 +5248,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get self-hosted runners settings for an organization\n\nGets the settings for self-hosted runners for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -5303,9 +5303,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a workflow\n\nGets a specific workflow. You can replace `workflow_id` with the workflow\nfile name. For example, you could use `main.yaml`.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -5352,9 +5352,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the level of access for workflows outside of the repository\n\nGets the level of access that workflows outside of the repository have to actions and reusable workflows in the repository.\nThis endpoint only applies to private repositories.\nFor more information, see \"[Allowing access to components in a private repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#allowing-access-to-components-in-a-private-repository).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -5403,9 +5403,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"exclude_pull_requests", :exclude_pull_requests}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a workflow run\n\nGets a specific workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -5457,9 +5457,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"exclude_pull_requests", :exclude_pull_requests}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a workflow run attempt\n\nGets a specific workflow run attempt.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -5506,9 +5506,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get workflow run usage\n\n> [!WARNING]  \n> This endpoint is in the process of closing down. Refer to \"[Actions Get workflow usage and Get workflow run usage endpoints closing down](https://github.blog/changelog/2025-02-02-actions-get-workflow-usage-and-get-workflow-run-usage-endpoints-closing-down/)\" for more information.\n\nGets the number of billable minutes and total run time for a specific workflow run. Billable minutes only apply to workflows in private repositories that use GitHub-hosted runners. Usage is listed for each GitHub-hosted runner operating system in milliseconds. Any job re-runs are also included in the usage. The usage does not include the multiplier for macOS and Windows runners and is not rounded up to the nearest whole minute. For more information, see \"[Managing billing for GitHub Actions](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-actions)\".\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -5555,9 +5555,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get workflow usage\n\n> [!WARNING]  \n> This endpoint is in the process of closing down. Refer to \"[Actions Get workflow usage and Get workflow run usage endpoints closing down](https://github.blog/changelog/2025-02-02-actions-get-workflow-usage-and-get-workflow-run-usage-endpoints-closing-down/)\" for more information.\n\nGets the number of billable minutes used by a specific workflow during the current billing cycle. Billable minutes only apply to workflows in private repositories that use GitHub-hosted runners. Usage is listed for each GitHub-hosted runner operating system in milliseconds. Any job re-runs are also included in the usage. The usage does not include the multiplier for macOS and Windows runners and is not rounded up to the nearest whole minute. For more information, see \"[Managing billing for GitHub Actions](https://docs.github.com/github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-github-actions)\".\n\nYou can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -5604,9 +5604,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}, {"name", :name}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List artifacts for a repository\n\nLists all artifacts for a repository.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -5684,9 +5684,9 @@ defmodule GitHubEx.Actions do
     path: [{"image_definition_id", :image_definition_id}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List image versions of a custom image for an organization\n\nList image versions of a custom image for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -5767,9 +5767,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List custom images for an organization\n\nList custom images for an organization.\n\nOAuth tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -5851,9 +5851,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List environment secrets\n\nLists all secrets available in an environment without revealing their\nencrypted values.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -5935,9 +5935,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List environment variables\n\nLists all environment variables.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -6015,9 +6015,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List GitHub-hosted runners in a group for an organization\n\nLists the GitHub-hosted runners in an organization group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -6101,9 +6101,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List GitHub-hosted runners for an organization\n\nLists all GitHub-hosted runners configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `manage_runner:org` scope to use this endpoint."
@@ -6181,9 +6181,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"filter", :filter}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List jobs for a workflow run\n\nLists jobs for a workflow run. You can use parameters to narrow the list of results. For more information\nabout using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -6266,9 +6266,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List jobs for a workflow run attempt\n\nLists jobs for a specific workflow run attempt. You can use parameters to narrow the list of results. For more information\nabout using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint  with a private repository."
@@ -6348,9 +6348,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List labels for a self-hosted runner for an organization\n\nLists all labels for a self-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -6434,9 +6434,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List labels for a self-hosted runner for a repository\n\nLists all labels for a self-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -6520,9 +6520,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List organization secrets\n\nLists all secrets available in an organization without revealing their\nencrypted values.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -6600,9 +6600,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List organization variables\n\nLists all organization variables.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -6680,9 +6680,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository access to a self-hosted runner group in an organization\n\nLists the repositories with access to a self-hosted runner group configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -6775,9 +6775,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository organization secrets\n\nLists all organization secrets shared with a repository without revealing their encrypted\nvalues.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -6857,9 +6857,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository organization variables\n\nLists all organization variables shared with a repository.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -6939,9 +6939,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository secrets\n\nLists all secrets available in a repository without revealing their encrypted\nvalues.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -7019,9 +7019,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository variables\n\nLists all repository variables.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -7099,9 +7099,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository workflows\n\nLists the workflows in a repository.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -7179,9 +7179,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List runner applications for an organization\n\nLists binaries for the runner application that you can download and run.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint.  If the repository is private, the `repo` scope is also required."
@@ -7261,9 +7261,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List runner applications for a repository\n\nLists binaries for the runner application that you can download and run.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -7343,9 +7343,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List selected repositories for an organization secret\n\nLists all repositories that have been selected when the `visibility`\nfor repository access to a secret is set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -7425,9 +7425,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List selected repositories for an organization variable\n\nLists all repositories that can access an organization variable\nthat is available to selected repositories.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -7507,9 +7507,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List selected repositories enabled for GitHub Actions in an organization\n\nLists the selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -7614,9 +7614,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repositories allowed to use self-hosted runners in an organization\n\nLists repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -7721,13 +7721,13 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"page", :page},
       {"visible_to_repository", :visible_to_repository}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List self-hosted runner groups for an organization\n\nLists all self-hosted runner groups configured in an organization and inherited from an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -7807,9 +7807,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"name", :name}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List self-hosted runners for an organization\n\nLists all self-hosted runners configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -7889,9 +7889,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"name", :name}, {"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List self-hosted runners for a repository\n\nLists all self-hosted runners configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -7971,9 +7971,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List self-hosted runners in a group for an organization\n\nLists self-hosted runners that are in a specific organization group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -8057,14 +8057,14 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"page", :page},
       {"name", :name},
       {"direction", :direction}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List workflow run artifacts\n\nLists artifacts for a workflow run.\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -8142,6 +8142,7 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"workflow_id", :workflow_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"actor", :actor},
       {"branch", :branch},
@@ -8154,8 +8155,7 @@ defmodule GitHubEx.Actions do
       {"check_suite_id", :check_suite_id},
       {"head_sha", :head_sha}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List workflow runs for a workflow\n\nList all workflow runs for a workflow. You can replace `workflow_id` with the workflow file name. For example, you could use `main.yaml`. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository.\n\nThis endpoint will return up to 1,000 results for each search when using the following parameters: `actor`, `branch`, `check_suite_id`, `created`, `event`, `head_sha`, `status`."
@@ -8233,6 +8233,7 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"actor", :actor},
       {"branch", :branch},
@@ -8245,8 +8246,7 @@ defmodule GitHubEx.Actions do
       {"check_suite_id", :check_suite_id},
       {"head_sha", :head_sha}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List workflow runs for a repository\n\nLists all workflow runs for a repository. You can use parameters to narrow the list of results. For more information about using parameters, see [Parameters](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#parameters).\n\nAnyone with read access to the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository.\n\nThis endpoint will return up to 1,000 results for each search when using the following parameters: `actor`, `branch`, `check_suite_id`, `created`, `event`, `head_sha`, `status`."
@@ -8324,9 +8324,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"job_id", :job_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Re-run a job from a workflow run\n\nRe-run a job and its dependent jobs in a workflow run.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -8373,9 +8373,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Re-run a workflow\n\nRe-runs your workflow run using its `id`.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -8422,9 +8422,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Re-run failed jobs from a workflow run\n\nRe-run all of the failed jobs and their dependent jobs in a workflow run using the `id` of the workflow run.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -8471,9 +8471,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove all custom labels from a self-hosted runner for an organization\n\nRemove all custom labels from a self-hosted runner configured in an\norganization. Returns the remaining read-only labels from the runner.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -8530,9 +8530,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove all custom labels from a self-hosted runner for a repository\n\nRemove all custom labels from a self-hosted runner configured in a\nrepository. Returns the remaining read-only labels from the runner.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -8589,9 +8589,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_id", :runner_id}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove a custom label from a self-hosted runner for an organization\n\nRemove a custom label from a self-hosted runner configured\nin an organization. Returns the remaining labels from the runner.\n\nThis endpoint returns a `404 Not Found` status if the custom label is not\npresent on the runner.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -8653,9 +8653,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove a custom label from a self-hosted runner for a repository\n\nRemove a custom label from a self-hosted runner configured\nin a repository. Returns the remaining labels from the runner.\n\nThis endpoint returns a `404 Not Found` status if the custom label is not\npresent on the runner.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -8716,9 +8716,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove repository access to a self-hosted runner group in an organization\n\nRemoves a repository from the list of selected repositories that can access a self-hosted runner group. The runner group must have `visibility` set to `selected`. For more information, see \"[Create a self-hosted runner group for an organization](#create-a-self-hosted-runner-group-for-an-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -8780,9 +8780,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove selected repository from an organization secret\n\nRemoves a repository from an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/actions/secrets#create-or-update-an-organization-secret).\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -8831,9 +8831,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"name", :name}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove selected repository from an organization variable\n\nRemoves a repository from an organization variable that is\navailable to selected repositories. Organization variables that are available to\nselected repositories have their `visibility` field set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -8886,9 +8886,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove a self-hosted runner from a group for an organization\n\nRemoves a self-hosted runner from a group configured in an organization. The runner is then returned to the default group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -8940,9 +8940,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Review custom deployment protection rules for a workflow run\n\nApprove or reject custom deployment protection rules provided by a GitHub App for a workflow run. For more information, see \"[Using environments for deployment](https://docs.github.com/actions/deployment/targeting-different-environments/using-environments-for-deployment).\"\n\n> [!NOTE]\n> GitHub Apps can only review their own custom deployment protection rules. To approve or reject pending deployments that are waiting for review from a specific person or team, see [`POST /repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments`](/rest/actions/workflow-runs#review-pending-deployments-for-a-workflow-run).\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint with a private repository."
@@ -8989,9 +8989,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"run_id", :run_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Review pending deployments for a workflow run\n\nApprove or reject pending deployments that are waiting on approval by a required reviewer.\n\nRequired reviewers with read access to the repository contents and deployments can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -9040,9 +9040,9 @@ defmodule GitHubEx.Actions do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions cache retention limit for an enterprise\n\nSets GitHub Actions cache retention limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -9095,9 +9095,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions cache retention limit for an organization\n\nSets GitHub Actions cache retention limit for an organization. All repositories under this\norganization may not set a higher cache retention limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
@@ -9154,9 +9154,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions cache retention limit for a repository\n\nSets GitHub Actions cache retention limit for a repository. This determines how long caches will be retained for, if\nnot manually removed or evicted due to size constraints.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
@@ -9209,9 +9209,9 @@ defmodule GitHubEx.Actions do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions cache storage limit for an enterprise\n\nSets GitHub Actions cache storage limit for an enterprise. All organizations and repositories under this\nenterprise may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -9264,9 +9264,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions cache storage limit for an organization\n\nSets GitHub Actions cache storage limit for an organization. All organizations and repositories under this\norganization may not set a higher cache storage limit.\n\nOAuth tokens and personal access tokens (classic) need the `admin:organization` scope to use this endpoint."
@@ -9319,9 +9319,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions cache storage limit for a repository\n\nSets GitHub Actions cache storage limit for a repository. This determines the maximum size of caches that can be\nstored before eviction occurs.\n\nOAuth tokens and personal access tokens (classic) need the `admin:repository` scope to use this endpoint."
@@ -9374,9 +9374,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set allowed actions and reusable workflows for an organization\n\nSets the actions and reusable workflows that are allowed in an organization. To use this endpoint, the organization permission policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -9425,9 +9425,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set allowed actions and reusable workflows for a repository\n\nSets the actions and reusable workflows that are allowed in a repository. To use this endpoint, the repository permission policy for `allowed_actions` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for a repository](#set-github-actions-permissions-for-a-repository).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -9476,9 +9476,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set artifact and log retention settings for an organization\n\nSets artifact and log retention settings for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -9535,9 +9535,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set artifact and log retention settings for a repository\n\nSets artifact and log retention settings for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -9594,9 +9594,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set custom labels for a self-hosted runner for an organization\n\nRemove all previous custom labels and set the new custom labels for a specific\nself-hosted runner configured in an organization.\n\nAuthenticated users must have admin access to the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -9649,9 +9649,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"runner_id", :runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set custom labels for a self-hosted runner for a repository\n\nRemove all previous custom labels and set the new custom labels for a specific\nself-hosted runner configured in a repository.\n\nAuthenticated users must have admin access to the repository to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -9708,9 +9708,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set the customization template for an OIDC subject claim for a repository\n\nSets the customization template and `opt-in` or `opt-out` flag for an OpenID Connect (OIDC) subject claim for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -9759,9 +9759,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set fork PR contributor approval permissions for an organization\n\nSets the fork PR contributor approval policy for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -9818,9 +9818,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set fork PR contributor approval permissions for a repository\n\nSets the fork PR contributor approval policy for a repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -9877,9 +9877,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set default workflow permissions for an organization\n\nSets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in an organization, and sets if GitHub Actions\ncan submit approving pull request reviews. For more information, see\n\"[Setting the permissions of the GITHUB_TOKEN for your organization](https://docs.github.com/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization#setting-the-permissions-of-the-github_token-for-your-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -9943,9 +9943,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set default workflow permissions for a repository\n\nSets the default workflow permissions granted to the `GITHUB_TOKEN` when running workflows in a repository, and sets if GitHub Actions\ncan submit approving pull request reviews.\nFor more information, see \"[Setting the permissions of the GITHUB_TOKEN for your repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#setting-the-permissions-of-the-github_token-for-your-repository).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -10006,9 +10006,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions permissions for an organization\n\nSets the GitHub Actions permissions policy for repositories and allowed actions and reusable workflows in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -10060,9 +10060,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set GitHub Actions permissions for a repository\n\nSets the GitHub Actions permissions policy for enabling GitHub Actions and allowed actions and reusable workflows in the repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -10114,9 +10114,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set private repo fork PR workflow settings for an organization\n\nSets the settings for whether workflows from fork pull requests can run on private repositories in an organization."
@@ -10173,9 +10173,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set private repo fork PR workflow settings for a repository\n\nSets the settings for whether workflows from fork pull requests can run on a private repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -10232,9 +10232,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set repository access for a self-hosted runner group in an organization\n\nReplaces the list of repositories that have access to a self-hosted runner group configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -10291,9 +10291,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set selected repositories for an organization secret\n\nReplaces all repositories for an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/actions/secrets#create-or-update-an-organization-secret).\n\nAuthenticated users must have collaborator access to a repository to create, update, or read secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -10342,9 +10342,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set selected repositories for an organization variable\n\nReplaces all repositories for an organization variable that is available\nto selected repositories. Organization variables that are available to selected\nrepositories have their `visibility` field set to `selected`.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -10393,9 +10393,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set selected repositories enabled for GitHub Actions in an organization\n\nReplaces the list of selected repositories that are enabled for GitHub Actions in an organization. To use this endpoint, the organization permission policy for `enabled_repositories` must be configured to `selected`. For more information, see \"[Set GitHub Actions permissions for an organization](#set-github-actions-permissions-for-an-organization).\"\n\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -10459,9 +10459,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set repositories allowed to use self-hosted runners in an organization\n\nSets repositories that are allowed to use self-hosted runners in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -10522,9 +10522,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set self-hosted runners in a group for an organization\n\nReplaces the list of self-hosted runners that are part of an organization runner group.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -10576,9 +10576,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set self-hosted runners settings for an organization\n\nSets the settings for self-hosted runners for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope or the \"Actions policies\" fine-grained permission to use this endpoint."
@@ -10631,9 +10631,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set the level of access for workflows outside of the repository\n\nSets the level of access that workflows outside of the repository have to actions and reusable workflows in the repository.\nThis endpoint only applies to private repositories.\nFor more information, see \"[Allowing access to components in a private repository](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#allowing-access-to-components-in-a-private-repository)\".\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -10687,9 +10687,9 @@ defmodule GitHubEx.Actions do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update an environment variable\n\nUpdates an environment variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -10736,9 +10736,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"hosted_runner_id", :hosted_runner_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a GitHub-hosted runner for an organization\n\nUpdates a GitHub-hosted runner for an organization.\nOAuth app tokens and personal access tokens (classic) need the `manage_runners:org` scope to use this endpoint."
@@ -10785,9 +10785,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update an organization variable\n\nUpdates an organization variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint. If the repository is private, the `repo` scope is also required."
@@ -10834,9 +10834,9 @@ defmodule GitHubEx.Actions do
     path: [{"owner", :owner}, {"repo", :repo}, {"name", :name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a repository variable\n\nUpdates a repository variable that you can reference in a GitHub Actions workflow.\n\nAuthenticated users must have collaborator access to a repository to create, update, or read variables.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -10883,9 +10883,9 @@ defmodule GitHubEx.Actions do
     path: [{"org", :org}, {"runner_group_id", :runner_group_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a self-hosted runner group for an organization\n\nUpdates the `name` and `visibility` of a self-hosted runner group in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."

@@ -7,9 +7,9 @@ defmodule GitHubEx.Emojis do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get emojis\n\nLists all the emojis available to use on GitHub."

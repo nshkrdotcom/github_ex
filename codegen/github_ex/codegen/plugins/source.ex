@@ -1,13 +1,10 @@
 defmodule GitHubEx.Codegen.Plugins.Source do
   @moduledoc false
 
-  alias GitHubEx.AuthSources
   alias GitHubEx.Codegen
   alias PristineCodegen.Source.Dataset
 
   @http_methods ~w(get post put patch delete head options)
-  @oauth_application_policy_id "github.oauth_application_client_credentials"
-  @default_auth_policy_id "github.default_bearer_optional"
   @default_pagination_limit_param "per_page"
 
   @spec load(module(), keyword()) :: Dataset.t()
@@ -20,10 +17,10 @@ defmodule GitHubEx.Codegen.Plugins.Source do
     %Dataset{
       operations: operations,
       schemas: [],
-      auth_policies: auth_policies(),
+      auth_policies: [],
       pagination_policies: pagination_policies,
       docs_inventory: docs_inventory(paths.project_root, operations),
-      fingerprints: fingerprints(paths, opts)
+      fingerprints: fingerprints(paths)
     }
   end
 
@@ -79,7 +76,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
       header_params: normalize_params(parameters, "header", components),
       body: body_partition(method, request_content_types(operation, components)),
       form_data: form_data_partition(request_content_types(operation, components)),
-      auth_policy_id: auth_policy_id(path),
+      auth_policy_id: nil,
       runtime_metadata: runtime_metadata(module, function, String.to_atom(method), path)
     }
   end
@@ -109,28 +106,6 @@ defmodule GitHubEx.Codegen.Plugins.Source do
         examples: []
       }
     }
-  end
-
-  defp auth_policies do
-    [
-      %{
-        id: @default_auth_policy_id,
-        mode: :request_override_optional,
-        security_schemes: ["githubToken"],
-        override_source: %{key: "auth"},
-        strategy_label: "Default bearer token with optional request override"
-      },
-      %{
-        id: @oauth_application_policy_id,
-        mode: :request_override,
-        security_schemes: ["basicAuth"],
-        override_source: %{
-          mode: :keys,
-          keys: [{"client_id", :client_id}, {"client_secret", :client_secret}]
-        },
-        strategy_label: "OAuth application client credentials"
-      }
-    ]
   end
 
   defp pagination_policy(entry, components) do
@@ -342,9 +317,6 @@ defmodule GitHubEx.Codegen.Plugins.Source do
     end
   end
 
-  defp auth_policy_id("/applications/" <> _rest), do: @oauth_application_policy_id
-  defp auth_policy_id(_path), do: @default_auth_policy_id
-
   defp runtime_metadata(module, function, method, path) do
     resource = runtime_resource(path)
 
@@ -438,19 +410,10 @@ defmodule GitHubEx.Codegen.Plugins.Source do
     end
   end
 
-  defp fingerprints(paths, opts) do
-    auth_paths = AuthSources.paths(opts)
-
-    source_paths =
-      [
-        paths.full_spec_path,
-        auth_paths.metadata_path,
-        auth_paths.endpoint_prog_access_path
-      ] ++ Map.values(auth_paths.snapshot_paths)
-
+  defp fingerprints(paths) do
     %{
       sources:
-        source_paths
+        [paths.full_spec_path]
         |> Enum.filter(&File.exists?/1)
         |> Enum.sort()
         |> Enum.map(&fingerprint_source(&1, paths.project_root)),
@@ -473,7 +436,6 @@ defmodule GitHubEx.Codegen.Plugins.Source do
 
   defp fingerprint_kind(path) do
     cond do
-      String.contains?(path, "/github_docs_auth/") -> :github_docs_auth
       String.contains?(path, "/openapi/") -> :openapi
       true -> :source
     end

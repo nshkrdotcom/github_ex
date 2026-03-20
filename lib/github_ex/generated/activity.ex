@@ -7,9 +7,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Check if a repository is starred by the authenticated user\n\nWhether the authenticated user has starred the repository."
@@ -61,9 +61,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a repository subscription\n\nThis endpoint should only be used to stop watching a repository. To control whether or not you wish to receive notifications from a repository, [set the repository's subscription manually](https://docs.github.com/rest/activity/watching#set-a-repository-subscription)."
@@ -110,9 +110,9 @@ defmodule GitHubEx.Activity do
     path: [{"thread_id", :thread_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a thread subscription\n\nMutes all future notifications for a conversation until you comment on the thread or get an **@mention**. If you are watching the repository of the thread, you will still receive notifications. To ignore future notifications for a repository you are watching, use the [Set a thread subscription](https://docs.github.com/rest/activity/notifications#set-a-thread-subscription) endpoint and set `ignore` to `true`."
@@ -159,9 +159,9 @@ defmodule GitHubEx.Activity do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get feeds\n\nLists the feeds available to the authenticated user. The response provides a URL for each feed. You can then get a specific feed by sending a request to one of the feed URLs.\n\n*   **Timeline**: The GitHub global public timeline\n*   **User**: The public timeline for any user, using `uri_template`. For more information, see \"[Hypermedia](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#hypermedia).\"\n*   **Current user public**: The public timeline for the authenticated user\n*   **Current user**: The private timeline for the authenticated user\n*   **Current user actor**: The private timeline for activity created by the authenticated user\n*   **Current user organizations**: The private timeline for the organizations the authenticated user is a member of.\n*   **Security advisories**: A collection of public announcements that provide information about security-related vulnerabilities in software on GitHub.\n\nBy default, timeline resources are returned in JSON. You can specify the `application/atom+xml` type in the `Accept` header to return timeline resources in Atom format. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n> [!NOTE]\n> Private feeds are only returned when [authenticating via Basic Auth](https://docs.github.com/rest/authentication/authenticating-to-the-rest-api#using-basic-authentication) since current feed URIs use the older, non revocable auth tokens."
@@ -208,9 +208,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a repository subscription\n\nGets information about whether the authenticated user is subscribed to the repository."
@@ -257,9 +257,9 @@ defmodule GitHubEx.Activity do
     path: [{"thread_id", :thread_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a thread\n\nGets information about a notification thread."
@@ -306,9 +306,9 @@ defmodule GitHubEx.Activity do
     path: [{"thread_id", :thread_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a thread subscription for the authenticated user\n\nThis checks to see if the current user is subscribed to a thread. You can also [get a repository subscription](https://docs.github.com/rest/activity/watching#get-a-repository-subscription).\n\nNote that subscriptions are only generated if a user is participating in a conversation--for example, they've replied to the thread, were **@mentioned**, or manually subscribe to a thread."
@@ -361,9 +361,9 @@ defmodule GitHubEx.Activity do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List events for the authenticated user\n\nIf you are authenticated as the given user, you will see your private events. Otherwise, you'll only see public events. _Optional_: use the fine-grained token with following permission set to view private events: \"Events\" user permissions (read).\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -443,6 +443,7 @@ defmodule GitHubEx.Activity do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"all", :all},
       {"participating", :participating},
@@ -451,8 +452,7 @@ defmodule GitHubEx.Activity do
       {"page", :page},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List notifications for the authenticated user\n\nList all notifications for the current user, sorted by most recently updated."
@@ -536,9 +536,9 @@ defmodule GitHubEx.Activity do
     path: [{"username", :username}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List organization events for the authenticated user\n\nThis is the user's organization dashboard. You must be authenticated as the user to view this.\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -618,9 +618,9 @@ defmodule GitHubEx.Activity do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List public events\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -698,9 +698,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List public events for a network of repositories\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -780,9 +780,9 @@ defmodule GitHubEx.Activity do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List public events for a user\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -860,9 +860,9 @@ defmodule GitHubEx.Activity do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List public organization events\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -940,9 +940,9 @@ defmodule GitHubEx.Activity do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List events received by the authenticated user\n\nThese are events that you've received by watching repositories and following users. If you are authenticated as the\ngiven user, you will see private events. Otherwise, you'll only see public events.\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -1022,9 +1022,9 @@ defmodule GitHubEx.Activity do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List public events received by a user\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -1104,9 +1104,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository events\n\n> [!NOTE]\n> This API is not built to serve real-time use cases. Depending on the time of day, event latency can be anywhere from 30s to 6h."
@@ -1184,6 +1184,7 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"all", :all},
       {"participating", :participating},
@@ -1192,8 +1193,7 @@ defmodule GitHubEx.Activity do
       {"per_page", :per_page},
       {"page", :page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository notifications for the authenticated user\n\nLists all notifications for the current user in the specified repository."
@@ -1278,14 +1278,14 @@ defmodule GitHubEx.Activity do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"sort", :sort},
       {"direction", :direction},
       {"per_page", :per_page},
       {"page", :page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repositories starred by the authenticated user\n\nLists repositories the authenticated user has starred.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.star+json`**: Includes a timestamp of when the star was created."
@@ -1369,14 +1369,14 @@ defmodule GitHubEx.Activity do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"sort", :sort},
       {"direction", :direction},
       {"per_page", :per_page},
       {"page", :page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repositories starred by a user\n\nLists repositories a user has starred.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.star+json`**: Includes a timestamp of when the star was created."
@@ -1454,9 +1454,9 @@ defmodule GitHubEx.Activity do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repositories watched by a user\n\nLists repositories a user is watching."
@@ -1534,9 +1534,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List stargazers\n\nLists the people that have starred the repository.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.star+json`**: Includes a timestamp of when the star was created."
@@ -1614,9 +1614,9 @@ defmodule GitHubEx.Activity do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repositories watched by the authenticated user\n\nLists repositories the authenticated user is watching."
@@ -1700,9 +1700,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List watchers\n\nLists the people watching the specified repository."
@@ -1780,9 +1780,9 @@ defmodule GitHubEx.Activity do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Mark notifications as read\n\nMarks all notifications as \"read\" for the current user. If the number of notifications is too large to complete in one request, you will receive a `202 Accepted` status and GitHub will run an asynchronous process to mark notifications as \"read.\" To check whether any \"unread\" notifications remain, you can use the [List notifications for the authenticated user](https://docs.github.com/rest/activity/notifications#list-notifications-for-the-authenticated-user) endpoint and pass the query parameter `all=false`."
@@ -1829,9 +1829,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Mark repository notifications as read\n\nMarks all notifications in a repository as \"read\" for the current user. If the number of notifications is too large to complete in one request, you will receive a `202 Accepted` status and GitHub will run an asynchronous process to mark notifications as \"read.\" To check whether any \"unread\" notifications remain, you can use the [List repository notifications for the authenticated user](https://docs.github.com/rest/activity/notifications#list-repository-notifications-for-the-authenticated-user) endpoint and pass the query parameter `all=false`."
@@ -1880,9 +1880,9 @@ defmodule GitHubEx.Activity do
     path: [{"thread_id", :thread_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Mark a thread as done\n\nMarks a thread as \"done.\" Marking a thread as \"done\" is equivalent to marking a notification in your notification inbox on GitHub as done: https://github.com/notifications."
@@ -1929,9 +1929,9 @@ defmodule GitHubEx.Activity do
     path: [{"thread_id", :thread_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Mark a thread as read\n\nMarks a thread as \"read.\" Marking a thread as \"read\" is equivalent to clicking a notification in your notification inbox on GitHub: https://github.com/notifications."
@@ -1978,9 +1978,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set a repository subscription\n\nIf you would like to watch a repository, set `subscribed` to `true`. If you would like to ignore notifications made within a repository, set `ignored` to `true`. If you would like to stop watching a repository, [delete the repository's subscription](https://docs.github.com/rest/activity/watching#delete-a-repository-subscription) completely."
@@ -2027,9 +2027,9 @@ defmodule GitHubEx.Activity do
     path: [{"thread_id", :thread_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set a thread subscription\n\nIf you are watching a repository, you receive notifications for all threads by default. Use this endpoint to ignore future notifications for threads until you comment on the thread or get an **@mention**.\n\nYou can also use this endpoint to subscribe to threads that you are currently not receiving notifications for or to subscribed to threads that you have previously ignored.\n\nUnsubscribing from a conversation in a repository that you are not watching is functionally equivalent to the [Delete a thread subscription](https://docs.github.com/rest/activity/notifications#delete-a-thread-subscription) endpoint."
@@ -2076,9 +2076,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Star a repository for the authenticated user\n\nNote that you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see \"[HTTP method](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#http-method).\""
@@ -2127,9 +2127,9 @@ defmodule GitHubEx.Activity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Unstar a repository for the authenticated user\n\nUnstar a repository that the authenticated user has previously starred."

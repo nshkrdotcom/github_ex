@@ -11,9 +11,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add an organization assignment\n\nAssign an enterprise team to an organization."
@@ -60,9 +60,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add organization assignments\n\nAssign an enterprise team to multiple organizations."
@@ -109,9 +109,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove organization assignments\n\nUnassign an enterprise team from multiple organizations."
@@ -162,9 +162,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an organization assignment\n\nUnassign an enterprise team from an organization."
@@ -215,9 +215,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get organization assignment\n\nCheck if an enterprise team is assigned to an organization"
@@ -264,9 +264,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get organization assignments\n\nGet all organizations assigned to an enterprise team"

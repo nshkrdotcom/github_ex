@@ -7,9 +7,9 @@ defmodule GitHubEx.Oidc do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create an OIDC custom property inclusion for an enterprise\n\nAdds a repository custom property to be included in the OIDC token for repository actions in an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -66,9 +66,9 @@ defmodule GitHubEx.Oidc do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create an OIDC custom property inclusion for an organization\n\nAdds a repository custom property to be included in the OIDC token for repository actions in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -124,9 +124,9 @@ defmodule GitHubEx.Oidc do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an OIDC custom property inclusion for an enterprise\n\nRemoves a repository custom property from being included in the OIDC token for repository actions in an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -184,9 +184,9 @@ defmodule GitHubEx.Oidc do
     path: [{"org", :org}, {"custom_property_name", :custom_property_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an OIDC custom property inclusion for an organization\n\nRemoves a repository custom property from being included in the OIDC token for repository actions in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -240,9 +240,9 @@ defmodule GitHubEx.Oidc do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the customization template for an OIDC subject claim for an organization\n\nGets the customization template for an OpenID Connect (OIDC) subject claim.\n\nOAuth app tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -291,9 +291,9 @@ defmodule GitHubEx.Oidc do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List OIDC custom property inclusions for an enterprise\n\nLists the repository custom properties that are included in the OIDC token for repository actions in an enterprise.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -382,9 +382,9 @@ defmodule GitHubEx.Oidc do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List OIDC custom property inclusions for an organization\n\nLists the repository custom properties that are included in the OIDC token for repository actions in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -468,9 +468,9 @@ defmodule GitHubEx.Oidc do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set the customization template for an OIDC subject claim for an organization\n\nCreates or updates the customization template for an OpenID Connect (OIDC) subject claim.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."

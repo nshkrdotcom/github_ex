@@ -7,9 +7,9 @@ defmodule GitHubEx.Interactions do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get interaction restrictions for your public repositories\n\nShows which type of GitHub user can interact with your public repositories and when the restriction expires."
@@ -61,9 +61,9 @@ defmodule GitHubEx.Interactions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get interaction restrictions for an organization\n\nShows which type of GitHub user can interact with this organization and when the restriction expires. If there is no restrictions, you will see an empty response."
@@ -110,9 +110,9 @@ defmodule GitHubEx.Interactions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get interaction restrictions for a repository\n\nShows which type of GitHub user can interact with this repository and when the restriction expires. If there are no restrictions, you will see an empty response."
@@ -159,9 +159,9 @@ defmodule GitHubEx.Interactions do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove interaction restrictions from your public repositories\n\nRemoves any interaction restrictions from your public repositories."
@@ -213,9 +213,9 @@ defmodule GitHubEx.Interactions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove interaction restrictions for an organization\n\nRemoves all interaction restrictions from public repositories in the given organization. You must be an organization owner to remove restrictions."
@@ -262,9 +262,9 @@ defmodule GitHubEx.Interactions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove interaction restrictions for a repository\n\nRemoves all interaction restrictions from the given repository. You must have owner or admin access to remove restrictions. If the interaction limit is set for the user or organization that owns this repository, you will receive a `409 Conflict` response and will not be able to use this endpoint to change the interaction limit for a single repository."
@@ -311,9 +311,9 @@ defmodule GitHubEx.Interactions do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set interaction restrictions for your public repositories\n\nTemporarily restricts which type of GitHub user can interact with your public repositories. Setting the interaction limit at the user level will overwrite any interaction limits that are set for individual repositories owned by the user."
@@ -365,9 +365,9 @@ defmodule GitHubEx.Interactions do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set interaction restrictions for an organization\n\nTemporarily restricts interactions to a certain type of GitHub user in any public repository in the given organization. You must be an organization owner to set these restrictions. Setting the interaction limit at the organization level will overwrite any interaction limits that are set for individual repositories owned by the organization."
@@ -414,9 +414,9 @@ defmodule GitHubEx.Interactions do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set interaction restrictions for a repository\n\nTemporarily restricts interactions to a certain type of GitHub user within the given repository. You must have owner or admin access to set these restrictions. If an interaction limit is set for the user or organization that owns this repository, you will receive a `409 Conflict` response and will not be able to use this endpoint to change the interaction limit for a single repository."

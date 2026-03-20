@@ -109,4 +109,4 @@ Run examples from the repo root with `mix run`, or use [`run_all.sh`](./run_all.
 - `05_list_workflow_runs.exs`: `actions/list-workflow-runs-for-repo`
 - `06_oauth_authorize_url.exs`: build a real GitHub OAuth URL
 - `07_oauth_exchange_code.exs`: exchange a real OAuth authorization code
-- `08_github_app_auth.exs`: sign a GitHub App JWT and exchange an installation token
+- `08_github_app_auth.exs`: sign a GitHub App JWT into a runtime client and exchange an installation token

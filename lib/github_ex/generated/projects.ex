@@ -7,9 +7,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add a field to an organization-owned project.\n\nAdd a field to an organization-owned project."
@@ -56,9 +56,9 @@ defmodule GitHubEx.Projects do
     path: [{"username", :username}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add field to user owned project\n\nAdd a field to a specified user owned project."
@@ -105,9 +105,9 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add item to organization owned project\n\nAdd an issue or pull request item to the specified organization owned project."
@@ -154,9 +154,9 @@ defmodule GitHubEx.Projects do
     path: [{"username", :username}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add item to user owned project\n\nAdd an issue or pull request item to the specified user owned project."
@@ -203,9 +203,9 @@ defmodule GitHubEx.Projects do
     path: [{"user_id", :user_id}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create draft item for user owned project\n\nCreate draft issue item for the specified user owned project."
@@ -257,9 +257,9 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create draft item for organization owned project\n\nCreate draft issue item for the specified organization owned project."
@@ -306,9 +306,9 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a view for an organization-owned project\n\nCreate a new view in an organization-owned project. Views allow you to customize how items in a project are displayed and filtered."
@@ -355,9 +355,9 @@ defmodule GitHubEx.Projects do
     path: [{"user_id", :user_id}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a view for a user-owned project\n\nCreate a new view in a user-owned project. Views allow you to customize how items in a project are displayed and filtered."
@@ -408,9 +408,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete project item for organization\n\nDelete a specific item from an organization-owned project."
@@ -461,9 +461,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete project item for user\n\nDelete a specific item from a user-owned project."
@@ -514,9 +514,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get project field for organization\n\nGet a specific field for an organization-owned project."
@@ -567,9 +567,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get project field for user\n\nGet a specific field for a user-owned project."
@@ -616,9 +616,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get project for organization\n\nGet a specific organization-owned project."
@@ -665,9 +665,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get project for user\n\nGet a specific user-owned project."
@@ -718,9 +718,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"fields", :fields}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an item for an organization owned project\n\nGet a specific item from an organization-owned project."
@@ -771,9 +771,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"fields", :fields}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an item for a user owned project\n\nGet a specific item from a user-owned project."
@@ -820,9 +820,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"before", :before}, {"after", :after}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List project fields for organization\n\nList all fields for a specific organization-owned project."
@@ -900,9 +900,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"before", :before}, {"after", :after}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List project fields for user\n\nList all fields for a specific user-owned project."
@@ -980,14 +980,14 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"q", :q},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List projects for organization\n\nList all projects owned by a specific organization accessible by the authenticated user."
@@ -1065,14 +1065,14 @@ defmodule GitHubEx.Projects do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"q", :q},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List projects for user\n\nList all projects owned by a specific user accessible by the authenticated user."
@@ -1150,6 +1150,7 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"q", :q},
       {"fields", :fields},
@@ -1157,8 +1158,7 @@ defmodule GitHubEx.Projects do
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List items for an organization owned project\n\nList all items for a specific organization-owned project accessible by the authenticated user."
@@ -1236,6 +1236,7 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"before", :before},
       {"after", :after},
@@ -1243,8 +1244,7 @@ defmodule GitHubEx.Projects do
       {"q", :q},
       {"fields", :fields}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List items for a user owned project\n\nList all items for a specific user-owned project accessible by the authenticated user."
@@ -1326,14 +1326,14 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"fields", :fields},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List items for an organization project view\n\nList items in an organization project with the saved view's filter applied."
@@ -1415,14 +1415,14 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"fields", :fields},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List items for a user project view\n\nList items in a user project with the saved view's filter applied."
@@ -1504,9 +1504,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update project item for organization\n\nUpdate a specific item in an organization-owned project."
@@ -1557,9 +1557,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update project item for user\n\nUpdate a specific item in a user-owned project."

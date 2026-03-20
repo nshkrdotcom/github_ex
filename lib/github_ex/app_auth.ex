@@ -6,6 +6,7 @@ defmodule GitHubEx.AppAuth do
   @default_expires_in 540
   @default_iat_skew_seconds 60
   @type pem_input :: String.t() | {term(), String.t()}
+  @type runtime_client :: GitHubEx.Client.t() | Pristine.Client.t()
 
   @spec jwt(String.t() | pos_integer(), pem_input(), keyword()) ::
           {:ok, String.t()} | {:error, term()}
@@ -36,15 +37,19 @@ defmodule GitHubEx.AppAuth do
     end
   end
 
-  @spec app_client(String.t() | pos_integer(), pem_input(), keyword()) :: GitHubEx.Client.t()
+  @spec app_client(String.t() | pos_integer(), pem_input(), keyword()) :: Pristine.Client.t()
   def app_client(app_id, pem, opts \\ []) when is_list(opts) do
-    GitHubEx.Client.new(Keyword.put(opts, :auth, jwt!(app_id, pem, opts)))
+    {jwt_opts, client_opts} = Keyword.split(opts, [:claims, :expires_in, :iat_skew_seconds])
+
+    client_opts
+    |> Keyword.put(:auth, jwt!(app_id, pem, jwt_opts))
+    |> GitHubEx.Client.new()
+    |> GitHubEx.Client.pristine_client()
   end
 
-  @spec installation_token(GitHubEx.Client.t(), String.t() | pos_integer(), map()) ::
+  @spec installation_token(runtime_client(), String.t() | pos_integer(), map()) ::
           {:ok, term()} | {:error, GitHubEx.Error.t()}
-  def installation_token(%GitHubEx.Client{} = client, installation_id, params \\ %{})
-      when is_map(params) do
+  def installation_token(client, installation_id, params \\ %{}) when is_map(params) do
     GitHubEx.Apps.create_installation_access_token(
       client,
       %{"installation_id" => to_string(installation_id)}
@@ -58,7 +63,7 @@ defmodule GitHubEx.AppAuth do
           String.t() | pos_integer(),
           keyword()
         ) ::
-          GitHubEx.Client.t()
+          Pristine.Client.t()
   def installation_client(app_id, pem, installation_id, opts \\ []) when is_list(opts) do
     {jwt_opts, remaining_opts} = Keyword.split(opts, [:claims, :expires_in, :iat_skew_seconds])
 
@@ -79,7 +84,10 @@ defmodule GitHubEx.AppAuth do
         Map.get(token_response, :token) ||
         raise "installation token response did not include a token"
 
-    GitHubEx.Client.new(Keyword.put(client_opts, :auth, token))
+    client_opts
+    |> Keyword.put(:auth, token)
+    |> GitHubEx.Client.new()
+    |> GitHubEx.Client.pristine_client()
   end
 
   defp build_claims(app_id, opts) do

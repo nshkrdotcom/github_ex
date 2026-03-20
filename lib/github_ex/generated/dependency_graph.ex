@@ -7,9 +7,9 @@ defmodule GitHubEx.DependencyGraph do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a snapshot of dependencies for a repository\n\nCreate a new snapshot of a repository's dependencies.\n\nThe authenticated user must have access to the repository.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -56,9 +56,9 @@ defmodule GitHubEx.DependencyGraph do
     path: [{"owner", :owner}, {"repo", :repo}, {"basehead", :basehead}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"name", :name}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a diff of the dependencies between commits\n\nGets the diff of the dependency changes between two commits of a repository, based on the changes to the dependency manifests made in those commits."
@@ -105,9 +105,9 @@ defmodule GitHubEx.DependencyGraph do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Export a software bill of materials (SBOM) for a repository.\n\nExports the software bill of materials (SBOM) for a repository in SPDX JSON format."

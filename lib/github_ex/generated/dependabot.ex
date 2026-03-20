@@ -11,9 +11,9 @@ defmodule GitHubEx.Dependabot do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Add selected repository to an organization secret\n\nAdds a repository to an organization secret when the `visibility` for\nrepository access is set to `selected`. The visibility is set when you [Create or\nupdate an organization secret](https://docs.github.com/rest/dependabot/secrets#create-or-update-an-organization-secret).\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -62,9 +62,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create or update an organization secret\n\nCreates or updates an organization secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -111,9 +111,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create or update a repository secret\n\nCreates or updates a repository secret with an encrypted value. Encrypt your secret using\n[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -160,9 +160,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an organization secret\n\nDeletes a secret in an organization using the secret name.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -209,9 +209,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a repository secret\n\nDeletes a secret in a repository using the secret name.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -258,9 +258,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a Dependabot alert\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -307,9 +307,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an organization public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -356,9 +356,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an organization secret\n\nGets a single organization secret without revealing its encrypted value.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -405,9 +405,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a repository public key\n\nGets your public key, which you need to encrypt secrets. You need to\nencrypt a secret before you can create or update secrets. Anyone with read access\nto the repository can use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint if the repository is private."
@@ -454,9 +454,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a repository secret\n\nGets a single repository secret without revealing its encrypted value.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -503,6 +503,7 @@ defmodule GitHubEx.Dependabot do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"state", :state},
       {"severity", :severity},
@@ -518,8 +519,7 @@ defmodule GitHubEx.Dependabot do
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List Dependabot alerts for an enterprise\n\nLists Dependabot alerts for repositories that are owned by the specified enterprise.\n\nThe authenticated user must be a member of the enterprise to use this endpoint.\n\nAlerts are only returned for organizations in the enterprise for which you are an organization owner or a security manager. For more information about security managers, see \"[Managing security managers in your organization](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/managing-security-managers-in-your-organization).\"\n\nOAuth app tokens and personal access tokens (classic) need the `repo` or `security_events` scope to use this endpoint."
@@ -597,6 +597,7 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"state", :state},
       {"severity", :severity},
@@ -615,8 +616,7 @@ defmodule GitHubEx.Dependabot do
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List Dependabot alerts for an organization\n\nLists Dependabot alerts for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -694,6 +694,7 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"state", :state},
       {"severity", :severity},
@@ -710,8 +711,7 @@ defmodule GitHubEx.Dependabot do
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List Dependabot alerts for a repository\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -789,9 +789,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List organization secrets\n\nLists all secrets available in an organization without revealing their\nencrypted values.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -869,9 +869,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List repository secrets\n\nLists all secrets available in a repository without revealing their encrypted\nvalues.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -949,9 +949,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List selected repositories for an organization secret\n\nLists all repositories that have been selected when the `visibility`\nfor repository access to a secret is set to `selected`.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -1035,9 +1035,9 @@ defmodule GitHubEx.Dependabot do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Remove selected repository from an organization secret\n\nRemoves a repository from an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/dependabot/secrets#create-or-update-an-organization-secret).\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -1086,9 +1086,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Lists the repositories Dependabot can access in an organization\n\nLists repositories that organization admins have allowed Dependabot to access when updating dependencies.\n> [!NOTE]\n>    This operation supports both server-to-server and user-to-server access.\nUnauthorized users will not see the existence of this endpoint."
@@ -1166,9 +1166,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set the default repository access level for Dependabot\n\nSets the default level of repository access Dependabot will have while performing an update.  Available values are:\n- 'public' - Dependabot will only have access to public repositories, unless access is explicitly granted to non-public repositories.\n- 'internal' - Dependabot will only have access to public and internal repositories, unless access is explicitly granted to private repositories.\n\nUnauthorized users will not see the existence of this endpoint.\n\nThis operation supports both server-to-server and user-to-server access."
@@ -1217,9 +1217,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set selected repositories for an organization secret\n\nReplaces all repositories for an organization secret when the `visibility`\nfor repository access is set to `selected`. The visibility is set when you [Create\nor update an organization secret](https://docs.github.com/rest/dependabot/secrets#create-or-update-an-organization-secret).\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -1268,9 +1268,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a Dependabot alert\n\nThe authenticated user must have access to security alerts for the repository to use this endpoint. For more information, see \"[Granting access to security alerts](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-security-and-analysis-settings-for-your-repository#granting-access-to-security-alerts).\"\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint. If this endpoint is only used with public repositories, the token can use the `public_repo` scope instead."
@@ -1317,9 +1317,9 @@ defmodule GitHubEx.Dependabot do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Updates Dependabot's repository access list for an organization\n\nUpdates repositories according to the list of repositories that organization admins have given Dependabot access to when they've updated dependencies.\n\n> [!NOTE]\n>    This operation supports both server-to-server and user-to-server access.\nUnauthorized users will not see the existence of this endpoint.\n\n**Example request body:**\n```json\n{\n  \"repository_ids_to_add\": [123, 456],\n  \"repository_ids_to_remove\": [789]\n}\n```"

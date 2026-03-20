@@ -6,6 +6,7 @@ defmodule GitHubEx.Codegen.Provider do
   alias GitHubEx.AuthManifest
   alias GitHubEx.Client
   alias GitHubEx.Codegen
+  alias GitHubEx.Codegen.Plugins.Auth, as: AuthPlugin
   alias GitHubEx.Codegen.Plugins.Source
   alias PristineCodegen.{JSON, ProviderIR}
 
@@ -71,7 +72,7 @@ defmodule GitHubEx.Codegen.Provider do
   def source_plugins, do: [Source]
 
   @impl true
-  def auth_plugins, do: []
+  def auth_plugins, do: [AuthPlugin]
 
   @impl true
   def pagination_plugins, do: []

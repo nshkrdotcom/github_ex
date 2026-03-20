@@ -2,6 +2,7 @@ defmodule GitHubEx.ProviderContractTest do
   use ExUnit.Case, async: true
 
   alias GitHubEx.Codegen.Provider
+  alias GitHubEx.Codegen.Plugins.Auth, as: AuthPlugin
   alias PristineCodegen.Compiler
 
   @project_root Path.expand("../..", __DIR__)
@@ -40,5 +41,23 @@ defmodule GitHubEx.ProviderContractTest do
     refute "priv/generated/manifest.json" in artifact_paths
     refute "priv/generated/docs_manifest.json" in artifact_paths
     refute "priv/generated/open_api_state.snapshot.term" in artifact_paths
+  end
+
+  test "provider exposes GitHub auth derivation through the shared auth plugin seam" do
+    auth_plugins = Provider.auth_plugins()
+
+    assert length(auth_plugins) == 1
+    assert Enum.member?(auth_plugins, AuthPlugin)
+
+    assert {:ok, compilation} =
+             Compiler.compile(Provider, project_root: @project_root)
+
+    auth_policy_ids = Enum.map(compilation.provider_ir.auth_policies, & &1.id)
+
+    assert "github.default_bearer_optional" in auth_policy_ids
+    assert "github.oauth_application_client_credentials" in auth_policy_ids
+
+    assert Enum.find(compilation.provider_ir.operations, &(&1.id == "apps/check-token")).auth_policy_id ==
+             "github.oauth_application_client_credentials"
   end
 end

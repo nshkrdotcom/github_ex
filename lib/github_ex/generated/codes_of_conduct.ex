@@ -7,9 +7,9 @@ defmodule GitHubEx.CodesOfConduct do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get all codes of conduct\n\nReturns array of all GitHub's codes of conduct."
@@ -56,9 +56,9 @@ defmodule GitHubEx.CodesOfConduct do
     path: [{"key", :key}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a code of conduct\n\nReturns information about the specified GitHub code of conduct."

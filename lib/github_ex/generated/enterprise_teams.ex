@@ -7,9 +7,9 @@ defmodule GitHubEx.EnterpriseTeams do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create an enterprise team\n\nTo create an enterprise team, the authenticated user must be an owner of the enterprise."
@@ -56,9 +56,9 @@ defmodule GitHubEx.EnterpriseTeams do
     path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete an enterprise team\n\nTo delete an enterprise team, the authenticated user must be an enterprise owner.\n\nIf you are an enterprise owner, deleting an enterprise team will delete all of its IdP mappings as well."
@@ -105,9 +105,9 @@ defmodule GitHubEx.EnterpriseTeams do
     path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get an enterprise team\n\nGets a team using the team's slug. To create the slug, GitHub replaces special characters in the name string, changes all words to lowercase, and replaces spaces with a `-` separator and adds the \"ent:\" prefix. For example, \"My TEam Näme\" would become `ent:my-team-name`."
@@ -154,9 +154,9 @@ defmodule GitHubEx.EnterpriseTeams do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "List enterprise teams\n\nList all teams in the enterprise for the authenticated user"
@@ -234,9 +234,9 @@ defmodule GitHubEx.EnterpriseTeams do
     path: [{"enterprise", :enterprise}, {"team_slug", :team_slug}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update an enterprise team\n\nTo edit a team, the authenticated user must be an enterprise owner."

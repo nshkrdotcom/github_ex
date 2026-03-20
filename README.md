@@ -20,10 +20,10 @@ generated [Auth Capability Matrix](guides/auth-capability-matrix.md) so that
 auth guidance comes from committed data instead of memory.
 
 Normal request-surface generation now flows through
-`codegen/github_ex/codegen/provider.ex` and the shared `pristine_codegen`
-compiler. Generated modules build `Pristine.Operation` values and call
-`Pristine.execute/3` directly, with compiler-emitted `stream_*` wrappers for
-paginated endpoints.
+`codegen/github_ex/codegen/provider.ex`, the OpenAPI source plugin, the GitHub
+auth plugin, and the shared `pristine_codegen` compiler. Generated modules
+build `Pristine.Operation` values and call `Pristine.execute/3` directly, with
+compiler-emitted `stream_*` wrappers for paginated endpoints.
 
 ## Authentication Start Here
 
@@ -139,7 +139,7 @@ wrapped.links["next"]
 - raw bearer tokens such as fine-grained PATs, classic PATs, installation tokens, or OAuth access tokens
 - OAuth-backed token sources through `oauth2: [...]`
 - request-scoped basic auth for `/applications/{client_id}/token*` endpoints
-- GitHub App JWT and installation-token flows through `GitHubEx.AppAuth`
+- GitHub App JWT and installation-token flows through `GitHubEx.AppAuth`, which returns `Pristine.Client` runtime clients ready for generated operations
 
 Use the generated [Auth Capability Matrix](guides/auth-capability-matrix.md) to
 check a specific REST operation before assuming one token type covers it.

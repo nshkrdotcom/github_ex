@@ -7,9 +7,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Attach a configuration to repositories\n\nAttach a code security configuration to a set of repositories. If the repositories specified are already attached to a configuration, they will be re-attached to the provided configuration.\n\nIf insufficient GHAS licenses are available to attach the configuration to a repository, only free features will be enabled.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
@@ -56,9 +56,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Attach an enterprise configuration to repositories\n\nAttaches an enterprise code security configuration to repositories. If the repositories specified are already attached to a configuration, they will be re-attached to the provided configuration.\n\nIf insufficient GHAS licenses are available to attach the configuration to a repository, only free features will be enabled.\n\nThe authenticated user must be an administrator for the enterprise to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -108,9 +108,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a code security configuration\n\nCreates a code security configuration in an organization.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
@@ -157,9 +157,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Create a code security configuration for an enterprise\n\nCreates a code security configuration in an enterprise.\n\nThe authenticated user must be an administrator of the enterprise in order to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -208,9 +208,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a code security configuration\n\nDeletes the desired code security configuration from an organization.\nRepositories attached to the configuration will retain their settings but will no longer be associated with\nthe configuration.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
@@ -257,9 +257,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Delete a code security configuration for an enterprise\n\nDeletes a code security configuration from an enterprise.\nRepositories attached to the configuration will retain their settings but will no longer be associated with\nthe configuration.\n\nThe authenticated user must be an administrator for the enterprise to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -308,9 +308,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Detach configurations from repositories\n\nDetach code security configuration(s) from a set of repositories.\nRepositories will retain their settings but will no longer be associated with the configuration.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
@@ -357,9 +357,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get a code security configuration\n\nGets a code security configuration available in an organization.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
@@ -406,9 +406,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get the code security configuration associated with a repository\n\nGet the code security configuration that manages a repository's code security settings.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `repo` scope to use this endpoint."
@@ -457,9 +457,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"before", :before}, {"after", :after}],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get code security configurations for an enterprise\n\nLists all code security configurations available in an enterprise.\n\nThe authenticated user must be an administrator of the enterprise in order to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `read:enterprise` scope to use this endpoint."
@@ -539,14 +539,14 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"target_type", :target_type},
       {"per_page", :per_page},
       {"before", :before},
       {"after", :after}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get code security configurations for an organization\n\nLists all code security configurations available in an organization.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -624,9 +624,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get default code security configurations\n\nLists the default code security configurations for an organization.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -673,9 +673,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get default code security configurations for an enterprise\n\nLists the default code security configurations for an enterprise.\n\nThe authenticated user must be an administrator of the enterprise in order to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `read:enterprise` scope to use this endpoint."
@@ -727,14 +727,14 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"before", :before},
       {"after", :after},
       {"status", :status}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get repositories associated with a code security configuration\n\nLists the repositories associated with a code security configuration in an organization.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `read:org` scope to use this endpoint."
@@ -814,14 +814,14 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"before", :before},
       {"after", :after},
       {"status", :status}
     ],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Get repositories associated with an enterprise code security configuration\n\nLists the repositories associated with an enterprise code security configuration in an organization.\n\nThe authenticated user must be an administrator of the enterprise in order to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `read:enterprise` scope to use this endpoint."
@@ -911,9 +911,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Retrieve a code security configuration of an enterprise\n\nGets a code security configuration available in an enterprise.\n\nThe authenticated user must be an administrator of the enterprise in order to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `read:enterprise` scope to use this endpoint."
@@ -965,9 +965,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set a code security configuration as a default for an organization\n\nSets a code security configuration as a default to be applied to new repositories in your organization.\n\nThis configuration will be applied to the matching repository type (all, none, public, private and internal) by default when they are created.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
@@ -1014,9 +1014,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Set a code security configuration as a default for an enterprise\n\nSets a code security configuration as a default to be applied to new repositories in your enterprise.\n\nThis configuration will be applied by default to the matching repository type when created, but only for organizations within the enterprise that do not already have a default code security configuration set.\n\nThe authenticated user must be an administrator for the enterprise to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."
@@ -1073,9 +1073,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"org", :org}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a code security configuration\n\nUpdates a code security configuration in an organization.\n\nThe authenticated user must be an administrator or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `write:org` scope to use this endpoint."
@@ -1122,9 +1122,9 @@ defmodule GitHubEx.CodeSecurity do
     path: [{"enterprise", :enterprise}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
+    form_data: %{mode: :none},
     query: [],
-    headers: [],
-    form_data: %{mode: :none}
+    headers: []
   }
 
   @doc "Update a custom code security configuration for an enterprise\n\nUpdates a code security configuration in an enterprise.\n\nThe authenticated user must be an administrator of the enterprise in order to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:enterprise` scope to use this endpoint."

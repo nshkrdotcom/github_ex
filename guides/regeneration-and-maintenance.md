@@ -17,7 +17,8 @@ Normal SDK generation now runs through the shared `pristine_codegen` compiler:
 
 - provider definition: `codegen/github_ex/codegen/provider.ex`
 - OpenAPI source plugin: `codegen/github_ex/codegen/plugins/source.ex`
-- provider auth artifact support: `codegen/github_ex/auth_manifest.ex`
+- GitHub auth plugin: `codegen/github_ex/codegen/plugins/auth.ex`
+- auth artifact renderer and guide builder: `codegen/github_ex/auth_manifest.ex`
 
 The generated request surface compiles straight to `Pristine.Operation` and
 direct runtime execution. There is no repo-local string-template fallback and
