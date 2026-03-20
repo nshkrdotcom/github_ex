@@ -7,9 +7,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}, {"budget_id", :budget_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete a budget for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nDeletes a budget by ID for an organization. The authenticated user must be an organization admin or billing manager."
@@ -17,8 +17,11 @@ defmodule GitHubEx.Billing do
   def delete_budget_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_budget_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_budget_org_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}, {"scope", :scope}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get all budgets for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets all budgets for an organization. The authenticated user must be an organization admin or billing manager.\nEach page returns up to 10 budgets."
@@ -66,14 +69,18 @@ defmodule GitHubEx.Billing do
   def get_all_budgets_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_all_budgets_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_all_budgets_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_all_budgets_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_all_budgets_org_operation(params) end,
@@ -82,7 +89,9 @@ defmodule GitHubEx.Billing do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -136,9 +145,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}, {"budget_id", :budget_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a budget by ID for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets a budget by ID. The authenticated user must be an organization admin or billing manager."
@@ -146,8 +155,11 @@ defmodule GitHubEx.Billing do
   def get_budget_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_budget_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_budget_org_operation(params) when is_map(params) do
@@ -185,7 +197,6 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -194,7 +205,8 @@ defmodule GitHubEx.Billing do
       {"model", :model},
       {"product", :product}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get billing premium request usage report for an organization\n\nGets a report of premium request usage for an organization. To use this endpoint, you must be an administrator of an organization within an enterprise or an organization account.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -203,8 +215,11 @@ defmodule GitHubEx.Billing do
   def get_github_billing_premium_request_usage_report_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_github_billing_premium_request_usage_report_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_github_billing_premium_request_usage_report_org_operation(params)
@@ -251,7 +266,6 @@ defmodule GitHubEx.Billing do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -259,7 +273,8 @@ defmodule GitHubEx.Billing do
       {"model", :model},
       {"product", :product}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get billing premium request usage report for a user\n\nGets a report of premium request usage for a user.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -268,8 +283,11 @@ defmodule GitHubEx.Billing do
   def get_github_billing_premium_request_usage_report_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_github_billing_premium_request_usage_report_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_github_billing_premium_request_usage_report_user_operation(params)
@@ -316,9 +334,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"year", :year}, {"month", :month}, {"day", :day}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get billing usage report for an organization\n\nGets a report of the total usage for an organization. To use this endpoint, you must be an administrator of an organization within an enterprise or an organization account.\n\n**Note:** This endpoint is only available to organizations with access to the enhanced billing platform. For more information, see \"[About the enhanced billing platform](https://docs.github.com/billing/using-the-new-billing-platform).\""
@@ -327,8 +345,11 @@ defmodule GitHubEx.Billing do
   def get_github_billing_usage_report_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_github_billing_usage_report_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_github_billing_usage_report_org_operation(params) when is_map(params) do
@@ -367,9 +388,9 @@ defmodule GitHubEx.Billing do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"year", :year}, {"month", :month}, {"day", :day}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get billing usage report for a user\n\nGets a report of the total usage for a user.\n\n**Note:** This endpoint is only available to users with access to the enhanced billing platform."
@@ -378,8 +399,11 @@ defmodule GitHubEx.Billing do
   def get_github_billing_usage_report_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_github_billing_usage_report_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_github_billing_usage_report_user_operation(params) when is_map(params) do
@@ -418,7 +442,6 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -427,7 +450,8 @@ defmodule GitHubEx.Billing do
       {"product", :product},
       {"sku", :sku}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get billing usage summary for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets a summary report of usage for an organization. To use this endpoint, you must be an administrator of an organization within an enterprise or an organization account.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -436,8 +460,11 @@ defmodule GitHubEx.Billing do
   def get_github_billing_usage_summary_report_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_github_billing_usage_summary_report_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_github_billing_usage_summary_report_org_operation(params) when is_map(params) do
@@ -479,7 +506,6 @@ defmodule GitHubEx.Billing do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"year", :year},
       {"month", :month},
@@ -488,7 +514,8 @@ defmodule GitHubEx.Billing do
       {"product", :product},
       {"sku", :sku}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get billing usage summary for a user\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nGets a summary report of usage for a user.\n\n**Note:** Only data from the past 24 months is accessible via this endpoint."
@@ -497,8 +524,11 @@ defmodule GitHubEx.Billing do
   def get_github_billing_usage_summary_report_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_github_billing_usage_summary_report_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_github_billing_usage_summary_report_user_operation(params) when is_map(params) do
@@ -540,9 +570,9 @@ defmodule GitHubEx.Billing do
     path: [{"org", :org}, {"budget_id", :budget_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update a budget for an organization\n\n> [!NOTE]\n> This endpoint is in public preview and is subject to change.\n\nUpdates an existing budget for an organization. The authenticated user must be an organization admin or billing manager."
@@ -550,8 +580,11 @@ defmodule GitHubEx.Billing do
   def update_budget_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_budget_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_budget_org_operation(params) when is_map(params) do

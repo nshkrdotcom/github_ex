@@ -12,7 +12,7 @@
       "compiler": "pristine_codegen",
       "provider": "github_ex",
       "source_strategy": "openapi_only",
-      "version": "dev"
+      "version": "0.1.0"
     },
     "sources": [
       {
@@ -117,6 +117,7 @@
     "lib/github_ex/generated/rate_limit.ex",
     "lib/github_ex/generated/reactions.ex",
     "lib/github_ex/generated/repos.ex",
+    "lib/github_ex/generated/runtime_schema.ex",
     "lib/github_ex/generated/search.ex",
     "lib/github_ex/generated/secret_scanning.ex",
     "lib/github_ex/generated/security_advisories.ex",

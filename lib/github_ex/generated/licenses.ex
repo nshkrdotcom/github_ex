@@ -7,9 +7,9 @@ defmodule GitHubEx.Licenses do
     path: [{"license", :license}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a license\n\nGets information about a specific license. For more information, see \"[Licensing a repository ](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).\""
@@ -17,8 +17,11 @@ defmodule GitHubEx.Licenses do
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.Licenses do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"featured", :featured}, {"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get all commonly used licenses\n\nLists the most commonly used licenses on GitHub. For more information, see \"[Licensing a repository ](https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).\""
@@ -66,14 +69,18 @@ defmodule GitHubEx.Licenses do
   def get_all_commonly_used(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_all_commonly_used_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_all_commonly_used(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_all_commonly_used(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_all_commonly_used_operation(params) end,
@@ -82,7 +89,9 @@ defmodule GitHubEx.Licenses do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -136,9 +145,9 @@ defmodule GitHubEx.Licenses do
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"ref", :ref}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get the license for a repository\n\nThis method returns the contents of the repository's license file, if one is detected.\n\nThis endpoint supports the following custom media types. For more information, see \"[Media types](https://docs.github.com/rest/using-the-rest-api/getting-started-with-the-rest-api#media-types).\"\n\n- **`application/vnd.github.raw+json`**: Returns the raw contents of the license.\n- **`application/vnd.github.html+json`**: Returns the license contents in HTML. Markup languages are rendered to HTML using GitHub's open-source [Markup library](https://github.com/github/markup)."
@@ -146,8 +155,11 @@ defmodule GitHubEx.Licenses do
   def get_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_for_repo_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_for_repo_operation(params) when is_map(params) do

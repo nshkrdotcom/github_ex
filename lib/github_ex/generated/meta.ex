@@ -7,9 +7,9 @@ defmodule GitHubEx.Meta do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get GitHub meta information\n\nReturns meta information about GitHub, including a list of GitHub's IP addresses. For more information, see \"[About GitHub's IP addresses](https://docs.github.com/articles/about-github-s-ip-addresses/).\"\n\nThe API's response also includes a list of GitHub's domain names.\n\nThe values shown in the documentation's response are example values. You must always query the API directly to get the latest values.\n\n> [!NOTE]\n> This endpoint returns both IPv4 and IPv6 addresses. However, not all features support IPv6. You should refer to the specific documentation for each feature to determine if IPv6 is supported."
@@ -17,8 +17,11 @@ defmodule GitHubEx.Meta do
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.Meta do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get all API versions\n\nGet all supported GitHub API versions."
@@ -66,8 +69,11 @@ defmodule GitHubEx.Meta do
   def get_all_versions(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_all_versions_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_all_versions_operation(params) when is_map(params) do
@@ -105,9 +111,9 @@ defmodule GitHubEx.Meta do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"s", :s}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get Octocat\n\nGet the octocat as ASCII art"
@@ -115,8 +121,11 @@ defmodule GitHubEx.Meta do
   def get_octocat(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_octocat_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_octocat_operation(params) when is_map(params) do
@@ -154,9 +163,9 @@ defmodule GitHubEx.Meta do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get the Zen of GitHub\n\nGet a random sentence from the Zen of GitHub"
@@ -164,8 +173,11 @@ defmodule GitHubEx.Meta do
   def get_zen(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_zen_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_zen_operation(params) when is_map(params) do
@@ -203,9 +215,9 @@ defmodule GitHubEx.Meta do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "GitHub API Root\n\nGet Hypermedia links to resources accessible in GitHub's REST API"
@@ -213,8 +225,11 @@ defmodule GitHubEx.Meta do
   def root(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_root_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_root_operation(params) when is_map(params) do

@@ -7,9 +7,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create a private registry for an organization\n\nCreates a private registry configuration with an encrypted value for an organization. Encrypt your secret using [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -17,8 +17,11 @@ defmodule GitHubEx.PrivateRegistries do
   def create_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_org_private_registry_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_org_private_registry_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete a private registry for an organization\n\nDelete a private registry configuration at the organization-level.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -66,8 +69,11 @@ defmodule GitHubEx.PrivateRegistries do
   def delete_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_org_private_registry_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_org_private_registry_operation(params) when is_map(params) do
@@ -105,9 +111,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a private registry for an organization\n\nGet the configuration of a single private registry defined for an organization, omitting its encrypted value.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -115,8 +121,11 @@ defmodule GitHubEx.PrivateRegistries do
   def get_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_org_private_registry_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_org_private_registry_operation(params) when is_map(params) do
@@ -154,9 +163,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get private registries public key for an organization\n\nGets the org public key, which is needed to encrypt private registry secrets. You need to encrypt a secret before you can create or update secrets.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -164,8 +173,11 @@ defmodule GitHubEx.PrivateRegistries do
   def get_org_public_key(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_org_public_key_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_org_public_key_operation(params) when is_map(params) do
@@ -203,9 +215,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List private registries for an organization\n\nLists all private registry configurations available at the organization-level without revealing their encrypted\nvalues.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -213,14 +225,18 @@ defmodule GitHubEx.PrivateRegistries do
   def list_org_private_registries(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_org_private_registries_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_org_private_registries(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_private_registries(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_org_private_registries_operation(params) end,
@@ -229,7 +245,9 @@ defmodule GitHubEx.PrivateRegistries do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -283,9 +301,9 @@ defmodule GitHubEx.PrivateRegistries do
     path: [{"org", :org}, {"secret_name", :secret_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update a private registry for an organization\n\nUpdates a private registry configuration with an encrypted value for an organization. Encrypt your secret using [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages). For more information, see \"[Encrypting secrets for the REST API](https://docs.github.com/rest/guides/encrypting-secrets-for-the-rest-api).\"\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -293,8 +311,11 @@ defmodule GitHubEx.PrivateRegistries do
   def update_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_org_private_registry_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_org_private_registry_operation(params) when is_map(params) do

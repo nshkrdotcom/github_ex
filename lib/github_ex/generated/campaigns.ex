@@ -7,9 +7,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create a campaign for an organization\n\nCreate a campaign for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint.\n\nFine-grained tokens must have the \"Code scanning alerts\" repository permissions (read) on all repositories included\nin the campaign."
@@ -17,8 +17,11 @@ defmodule GitHubEx.Campaigns do
   def create_campaign(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_campaign_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_campaign_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}, {"campaign_number", :campaign_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete a campaign for an organization\n\nDeletes a campaign in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
@@ -66,8 +69,11 @@ defmodule GitHubEx.Campaigns do
   def delete_campaign(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_campaign_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_campaign_operation(params) when is_map(params) do
@@ -105,9 +111,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}, {"campaign_number", :campaign_number}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a campaign for an organization\n\nGets a campaign for an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
@@ -115,8 +121,11 @@ defmodule GitHubEx.Campaigns do
   def get_campaign_summary(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_campaign_summary_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_campaign_summary_operation(params) when is_map(params) do
@@ -154,7 +163,6 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"page", :page},
       {"per_page", :per_page},
@@ -162,7 +170,8 @@ defmodule GitHubEx.Campaigns do
       {"state", :state},
       {"sort", :sort}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List campaigns for an organization\n\nLists campaigns in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
@@ -170,14 +179,18 @@ defmodule GitHubEx.Campaigns do
   def list_org_campaigns(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_org_campaigns_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_org_campaigns(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_campaigns(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_org_campaigns_operation(params) end,
@@ -186,7 +199,9 @@ defmodule GitHubEx.Campaigns do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -240,9 +255,9 @@ defmodule GitHubEx.Campaigns do
     path: [{"org", :org}, {"campaign_number", :campaign_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update a campaign\n\nUpdates a campaign in an organization.\n\nThe authenticated user must be an owner or security manager for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint."
@@ -250,8 +265,11 @@ defmodule GitHubEx.Campaigns do
   def update_campaign(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_campaign_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_campaign_operation(params) when is_map(params) do

@@ -22,7 +22,11 @@ Normal SDK generation now runs through the shared `pristine_codegen` compiler:
 
 The generated request surface compiles straight to `Pristine.Operation` and
 direct runtime execution. There is no repo-local string-template fallback and
-no `GitHubEx.GeneratedSupport` shim in the active path.
+no `GitHubEx.GeneratedSupport` shim in the active path. Generated schema
+modules resolve through `lib/github_ex/generated/runtime_schema.ex` instead of
+shared runtime-schema internals, and the thin client bridge is limited to
+`GitHubEx.Client.pristine_client/1`, `runtime_execute_opts/2`, and
+`runtime_operation/3` before the final `Pristine.execute/3` call.
 
 ## Refresh the OpenAPI Spec
 

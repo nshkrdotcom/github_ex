@@ -7,9 +7,9 @@ defmodule GitHubEx.Classroom do
     path: [{"classroom_id", :classroom_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a classroom\n\nGets a GitHub Classroom classroom for the current user. Classroom will only be returned if the current user is an administrator of the GitHub Classroom."
@@ -17,8 +17,11 @@ defmodule GitHubEx.Classroom do
   def get_a_classroom(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_a_classroom_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_a_classroom_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.Classroom do
     path: [{"assignment_id", :assignment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get an assignment\n\nGets a GitHub Classroom assignment. Assignment will only be returned if the current user is an administrator of the GitHub Classroom for the assignment."
@@ -66,8 +69,11 @@ defmodule GitHubEx.Classroom do
   def get_an_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_an_assignment_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_an_assignment_operation(params) when is_map(params) do
@@ -105,9 +111,9 @@ defmodule GitHubEx.Classroom do
     path: [{"assignment_id", :assignment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get assignment grades\n\nGets grades for a GitHub Classroom assignment. Grades will only be returned if the current user is an administrator of the GitHub Classroom for the assignment."
@@ -115,8 +121,11 @@ defmodule GitHubEx.Classroom do
   def get_assignment_grades(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_assignment_grades_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_assignment_grades_operation(params) when is_map(params) do
@@ -154,9 +163,9 @@ defmodule GitHubEx.Classroom do
     path: [{"assignment_id", :assignment_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List accepted assignments for an assignment\n\nLists any assignment repositories that have been created by students accepting a GitHub Classroom assignment. Accepted assignments will only be returned if the current user is an administrator of the GitHub Classroom for the assignment."
@@ -165,8 +174,11 @@ defmodule GitHubEx.Classroom do
   def list_accepted_assignments_for_an_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_accepted_assignments_for_an_assignment_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_accepted_assignments_for_an_assignment(term(), map(), keyword()) ::
@@ -174,6 +186,7 @@ defmodule GitHubEx.Classroom do
   def stream_list_accepted_assignments_for_an_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_accepted_assignments_for_an_assignment_operation(params) end,
@@ -182,7 +195,9 @@ defmodule GitHubEx.Classroom do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -240,9 +255,9 @@ defmodule GitHubEx.Classroom do
     path: [{"classroom_id", :classroom_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List assignments for a classroom\n\nLists GitHub Classroom assignments for a classroom. Assignments will only be returned if the current user is an administrator of the GitHub Classroom."
@@ -251,14 +266,18 @@ defmodule GitHubEx.Classroom do
   def list_assignments_for_a_classroom(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_assignments_for_a_classroom_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_assignments_for_a_classroom(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_assignments_for_a_classroom(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_assignments_for_a_classroom_operation(params) end,
@@ -267,7 +286,9 @@ defmodule GitHubEx.Classroom do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -322,9 +343,9 @@ defmodule GitHubEx.Classroom do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List classrooms\n\nLists GitHub Classroom classrooms for the current user. Classrooms will only be returned if the current user is an administrator of one or more GitHub Classrooms."
@@ -332,14 +353,18 @@ defmodule GitHubEx.Classroom do
   def list_classrooms(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_classrooms_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_classrooms(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_classrooms(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_classrooms_operation(params) end,
@@ -348,7 +373,9 @@ defmodule GitHubEx.Classroom do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}

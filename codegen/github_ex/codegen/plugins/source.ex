@@ -435,10 +435,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
   end
 
   defp fingerprint_kind(path) do
-    cond do
-      String.contains?(path, "/openapi/") -> :openapi
-      true -> :source
-    end
+    if String.contains?(path, "/openapi/"), do: :openapi, else: :source
   end
 
   defp operation_entries(spec) do

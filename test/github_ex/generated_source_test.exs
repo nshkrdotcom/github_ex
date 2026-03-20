@@ -12,7 +12,9 @@ defmodule GitHubEx.GeneratedSourceTest do
       @generated_dir
       |> Path.join("**/*.ex")
       |> Path.wildcard()
-      |> Enum.reject(&String.ends_with?(&1, "/client.ex"))
+      |> Enum.reject(fn path ->
+        String.ends_with?(path, "/client.ex") or String.ends_with?(path, "/runtime_schema.ex")
+      end)
       |> Enum.map(&File.read!/1)
 
     assert sources != []
@@ -21,7 +23,7 @@ defmodule GitHubEx.GeneratedSourceTest do
 
     assert Enum.all?(
              sources,
-             &String.contains?(&1, "Pristine.execute(runtime_client, operation, opts)")
+             &String.contains?(&1, "Pristine.execute(runtime_client, operation, execute_opts)")
            )
 
     refute Enum.any?(sources, &String.contains?(&1, "GitHubEx.GeneratedSupport"))
@@ -33,6 +35,7 @@ defmodule GitHubEx.GeneratedSourceTest do
     client_source = File.read!(@client_source)
 
     assert users_source =~ "runtime_client = GitHubEx.Client.pristine_client(client)"
+    assert users_source =~ "execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)"
     assert client_source =~ "alias Pristine.Client, as: RuntimeClient"
     refute client_source =~ "alias Pristine.SDK.OpenAPI.Client"
     refute client_source =~ "Pristine.execute_request("
@@ -57,5 +60,14 @@ defmodule GitHubEx.GeneratedSourceTest do
     assert repos_source =~ "def stream_list_for_authenticated_user("
     assert apps_source =~ ~s(retry_group: "github.oauth")
     assert users_source =~ ~s(telemetry_event: [:github_ex, :users, :get_authenticated])
+  end
+
+  test "generated schema helpers stay provider-local" do
+    runtime_schema_source = File.read!(Path.join(@generated_dir, "runtime_schema.ex"))
+
+    assert runtime_schema_source =~ "defmodule GitHubEx.Generated.RuntimeSchema do"
+    assert runtime_schema_source =~ "def build_schema("
+    assert runtime_schema_source =~ "def decode_module_type("
+    refute runtime_schema_source =~ "Pristine.Runtime.Schema"
   end
 end

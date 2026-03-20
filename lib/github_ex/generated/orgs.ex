@@ -7,7 +7,6 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"actor_type", :actor_type}, {"actor_id", :actor_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"min_timestamp", :min_timestamp},
       {"max_timestamp", :max_timestamp},
@@ -17,7 +16,8 @@ defmodule GitHubEx.Orgs do
       {"sort", :sort},
       {"api_route_substring", :api_route_substring}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get route stats by actor\n\nGet API request count statistics for an actor broken down by route within a specified time frame."
@@ -25,14 +25,18 @@ defmodule GitHubEx.Orgs do
   def get_route_stats_by_actor(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_route_stats_by_actor_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_route_stats_by_actor(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_route_stats_by_actor(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_route_stats_by_actor_operation(params) end,
@@ -41,7 +45,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -95,7 +101,6 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"min_timestamp", :min_timestamp},
       {"max_timestamp", :max_timestamp},
@@ -105,7 +110,8 @@ defmodule GitHubEx.Orgs do
       {"sort", :sort},
       {"subject_name_substring", :subject_name_substring}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get subject stats\n\nGet API request statistics for all subjects within an organization within a specified time frame. Subjects can be users or GitHub Apps."
@@ -113,14 +119,18 @@ defmodule GitHubEx.Orgs do
   def get_subject_stats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_subject_stats_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_subject_stats(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_subject_stats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_subject_stats_operation(params) end,
@@ -129,7 +139,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -183,9 +195,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"min_timestamp", :min_timestamp}, {"max_timestamp", :max_timestamp}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get summary stats\n\nGet overall statistics of API requests made within an organization by all users and apps within a specified time frame."
@@ -193,8 +205,11 @@ defmodule GitHubEx.Orgs do
   def get_summary_stats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_summary_stats_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_summary_stats_operation(params) when is_map(params) do
@@ -232,9 +247,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"actor_type", :actor_type}, {"actor_id", :actor_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"min_timestamp", :min_timestamp}, {"max_timestamp", :max_timestamp}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get summary stats by actor\n\nGet overall statistics of API requests within the organization made by a specific actor. Actors can be GitHub App installations, OAuth apps or other tokens on behalf of a user."
@@ -242,8 +257,11 @@ defmodule GitHubEx.Orgs do
   def get_summary_stats_by_actor(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_summary_stats_by_actor_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_summary_stats_by_actor_operation(params) when is_map(params) do
@@ -281,9 +299,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"user_id", :user_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"min_timestamp", :min_timestamp}, {"max_timestamp", :max_timestamp}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get summary stats by user\n\nGet overall statistics of API requests within the organization for a user."
@@ -291,8 +309,11 @@ defmodule GitHubEx.Orgs do
   def get_summary_stats_by_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_summary_stats_by_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_summary_stats_by_user_operation(params) when is_map(params) do
@@ -330,13 +351,13 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"min_timestamp", :min_timestamp},
       {"max_timestamp", :max_timestamp},
       {"timestamp_increment", :timestamp_increment}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get time stats\n\nGet the number of API requests and rate-limited requests made within an organization over a specified time period."
@@ -344,8 +365,11 @@ defmodule GitHubEx.Orgs do
   def get_time_stats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_time_stats_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_time_stats_operation(params) when is_map(params) do
@@ -383,13 +407,13 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"actor_type", :actor_type}, {"actor_id", :actor_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"min_timestamp", :min_timestamp},
       {"max_timestamp", :max_timestamp},
       {"timestamp_increment", :timestamp_increment}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get time stats by actor\n\nGet the number of API requests and rate-limited requests made within an organization by a specific actor within a specified time period."
@@ -397,8 +421,11 @@ defmodule GitHubEx.Orgs do
   def get_time_stats_by_actor(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_time_stats_by_actor_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_time_stats_by_actor_operation(params) when is_map(params) do
@@ -436,13 +463,13 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"user_id", :user_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"min_timestamp", :min_timestamp},
       {"max_timestamp", :max_timestamp},
       {"timestamp_increment", :timestamp_increment}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get time stats by user\n\nGet the number of API requests and rate-limited requests made within an organization by a specific user over a specified time period."
@@ -450,8 +477,11 @@ defmodule GitHubEx.Orgs do
   def get_time_stats_by_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_time_stats_by_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_time_stats_by_user_operation(params) when is_map(params) do
@@ -489,7 +519,6 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"user_id", :user_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"min_timestamp", :min_timestamp},
       {"max_timestamp", :max_timestamp},
@@ -499,7 +528,8 @@ defmodule GitHubEx.Orgs do
       {"sort", :sort},
       {"actor_name_substring", :actor_name_substring}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get user stats\n\nGet API usage statistics within an organization for a user broken down by the type of access."
@@ -507,14 +537,18 @@ defmodule GitHubEx.Orgs do
   def get_user_stats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_user_stats_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_user_stats(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_user_stats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_user_stats_operation(params) end,
@@ -523,7 +557,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -577,9 +613,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"team_slug", :team_slug}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add a security manager team\n\n> [!WARNING]\n> **Closing down notice:** This operation is closing down and will be removed starting January 1, 2026. Please use the \"[Organization Roles](https://docs.github.com/rest/orgs/organization-roles)\" endpoints instead."
@@ -587,8 +623,11 @@ defmodule GitHubEx.Orgs do
   def add_security_manager_team(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_add_security_manager_team_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_add_security_manager_team_operation(params) when is_map(params) do
@@ -626,9 +665,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"team_slug", :team_slug}, {"role_id", :role_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Assign an organization role to a team\n\nAssigns an organization role to a team in an organization. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nThe authenticated user must be an administrator for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -636,8 +675,11 @@ defmodule GitHubEx.Orgs do
   def assign_team_to_org_role(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_assign_team_to_org_role_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_assign_team_to_org_role_operation(params) when is_map(params) do
@@ -675,9 +717,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}, {"role_id", :role_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Assign an organization role to a user\n\nAssigns an organization role to a member of an organization. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nThe authenticated user must be an administrator for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -685,8 +727,11 @@ defmodule GitHubEx.Orgs do
   def assign_user_to_org_role(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_assign_user_to_org_role_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_assign_user_to_org_role_operation(params) when is_map(params) do
@@ -724,9 +769,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Block a user from an organization\n\nBlocks the given user on behalf of the specified organization and returns a 204. If the organization cannot block the given user a 422 is returned."
@@ -734,8 +779,11 @@ defmodule GitHubEx.Orgs do
   def block_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_block_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_block_user_operation(params) when is_map(params) do
@@ -773,9 +821,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"invitation_id", :invitation_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Cancel an organization invitation\n\nCancel an organization invitation. In order to cancel an organization invitation, the authenticated user must be an organization owner.\n\nThis endpoint triggers [notifications](https://docs.github.com/github/managing-subscriptions-and-notifications-on-github/about-notifications)."
@@ -783,8 +831,11 @@ defmodule GitHubEx.Orgs do
   def cancel_invitation(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_cancel_invitation_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_cancel_invitation_operation(params) when is_map(params) do
@@ -822,9 +873,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Check if a user is blocked by an organization\n\nReturns a 204 if the given user is blocked by the given organization. Returns a 404 if the organization is not blocking the user, or if the user account has been identified as spam by GitHub."
@@ -832,8 +883,11 @@ defmodule GitHubEx.Orgs do
   def check_blocked_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_check_blocked_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_check_blocked_user_operation(params) when is_map(params) do
@@ -871,9 +925,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Check organization membership for a user\n\nCheck if a user is, publicly or privately, a member of the organization."
@@ -881,8 +935,11 @@ defmodule GitHubEx.Orgs do
   def check_membership_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_check_membership_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_check_membership_for_user_operation(params) when is_map(params) do
@@ -920,9 +977,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Check public organization membership for a user\n\nCheck if the provided user is a public member of the organization."
@@ -931,8 +988,11 @@ defmodule GitHubEx.Orgs do
   def check_public_membership_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_check_public_membership_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_check_public_membership_for_user_operation(params) when is_map(params) do
@@ -971,19 +1031,28 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
-  @doc "Convert an organization member to outside collaborator\n\nWhen an organization member is converted to an outside collaborator, they'll only have access to the repositories that their current team membership allows. The user will no longer be a member of the organization. For more information, see \"[Converting an organization member to an outside collaborator](https://docs.github.com/articles/converting-an-organization-member-to-an-outside-collaborator/)\". Converting an organization member to an outside collaborator may be restricted by enterprise administrators. For more information, see \"[Enforcing repository management policies in your enterprise](https://docs.github.com/admin/policies/enforcing-policies-for-your-enterprise/enforcing-repository-management-policies-in-your-enterprise#enforcing-a-policy-for-inviting-outside-collaborators-to-repositories).\""
+  @doc ~S"""
+       Convert an organization member to outside collaborator
+
+       When an organization member is converted to an outside collaborator, they'll only have access to the repositories that their current team membership allows. The user will no longer be a member of the organization. For more information, see "[Converting an organization member to an outside collaborator](https://docs.github.com/articles/converting-an-organization-member-to-an-outside-collaborator/)". Converting an organization member to an outside collaborator may be restricted by enterprise administrators. For more information, see "[Enforcing repository management policies in your enterprise](https://docs.github.com/admin/policies/enforcing-policies-for-your-enterprise/enforcing-repository-management-policies-in-your-enterprise#enforcing-a-policy-for-inviting-outside-collaborators-to-repositories)."
+       """
+       |> String.trim_leading("\n")
+       |> String.trim_trailing("\n")
   @spec convert_member_to_outside_collaborator(term(), map(), keyword()) ::
           {:ok, term()} | {:error, term()}
   def convert_member_to_outside_collaborator(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_convert_member_to_outside_collaborator_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_convert_member_to_outside_collaborator_operation(params) when is_map(params) do
@@ -1022,9 +1091,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create an artifact deployment record\n\nCreate or update deployment records for an artifact associated\nwith an organization.\nThis endpoint allows you to record information about a specific\nartifact, such as its name, digest, environments, cluster, and\ndeployment.\nThe deployment name has to be uniqe within a cluster (i.e a\ncombination of logical, physical environment and cluster) as it\nidentifies unique deployment.\nMultiple requests for the same combination of logical, physical\nenvironment, cluster and deployment name will only create one\nrecord, successive request will update the existing record.\nThis allows for a stable tracking of a deployment where the actual\ndeployed artifact can change over time."
@@ -1033,8 +1102,11 @@ defmodule GitHubEx.Orgs do
   def create_artifact_deployment_record(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_artifact_deployment_record_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_artifact_deployment_record_operation(params) when is_map(params) do
@@ -1073,9 +1145,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create artifact metadata storage record\n\nCreate metadata storage records for artifacts associated with an organization.\nThis endpoint will create a new artifact storage record on behalf of any artifact matching the provided digest and\nassociated with a repository owned by the organization."
@@ -1084,8 +1156,11 @@ defmodule GitHubEx.Orgs do
   def create_artifact_storage_record(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_artifact_storage_record_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_artifact_storage_record_operation(params) when is_map(params) do
@@ -1124,18 +1199,30 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
-  @doc "Create an organization invitation\n\nInvite people to an organization by using their GitHub user ID or their email address. In order to create invitations in an organization, the authenticated user must be an organization owner.\n\nThis endpoint triggers [notifications](https://docs.github.com/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. For more information, see \"[Rate limits for the API](https://docs.github.com/rest/using-the-rest-api/rate-limits-for-the-rest-api#about-secondary-rate-limits)\"\nand \"[Best practices for using the REST API](https://docs.github.com/rest/guides/best-practices-for-using-the-rest-api).\""
+  @doc ~S"""
+       Create an organization invitation
+
+       Invite people to an organization by using their GitHub user ID or their email address. In order to create invitations in an organization, the authenticated user must be an organization owner.
+
+       This endpoint triggers [notifications](https://docs.github.com/github/managing-subscriptions-and-notifications-on-github/about-notifications). Creating content too quickly using this endpoint may result in secondary rate limiting. For more information, see "[Rate limits for the API](https://docs.github.com/rest/using-the-rest-api/rate-limits-for-the-rest-api#about-secondary-rate-limits)"
+       and "[Best practices for using the REST API](https://docs.github.com/rest/guides/best-practices-for-using-the-rest-api)."
+       """
+       |> String.trim_leading("\n")
+       |> String.trim_trailing("\n")
   @spec create_invitation(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_invitation(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_invitation_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_invitation_operation(params) when is_map(params) do
@@ -1173,9 +1260,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create issue field for an organization\n\nCreates a new issue field for an organization.\n\nYou can find out more about issue fields in [Managing issue fields in an organization](https://docs.github.com/issues/tracking-your-work-with-issues/using-issues/managing-issue-fields-in-an-organization).\n\nTo use this endpoint, the authenticated user must be an administrator for the organization. OAuth app tokens and\npersonal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -1183,8 +1270,11 @@ defmodule GitHubEx.Orgs do
   def create_issue_field(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_issue_field_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_issue_field_operation(params) when is_map(params) do
@@ -1222,9 +1312,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create issue type for an organization\n\nCreate a new issue type for an organization.\n\nYou can find out more about issue types in [Managing issue types in an organization](https://docs.github.com/issues/tracking-your-work-with-issues/configuring-issues/managing-issue-types-in-an-organization).\n\nTo use this endpoint, the authenticated user must be an administrator for the organization. OAuth app tokens and\npersonal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -1232,8 +1322,11 @@ defmodule GitHubEx.Orgs do
   def create_issue_type(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_issue_type_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_issue_type_operation(params) when is_map(params) do
@@ -1271,9 +1364,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create an organization webhook\n\nCreate a hook that posts payloads in JSON format.\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or\nedit webhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -1281,8 +1374,11 @@ defmodule GitHubEx.Orgs do
   def create_webhook(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_webhook_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_webhook_operation(params) when is_map(params) do
@@ -1320,9 +1416,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"custom_property_name", :custom_property_name}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create or update a custom property for an organization\n\nCreates a new or updates an existing custom property that is defined for an organization.\n\nTo use this endpoint, the authenticated user must be one of:\n- An administrator for the organization.\n- A user, or a user on a team, with the fine-grained permission of `custom_properties_org_definitions_manager` in the organization."
@@ -1338,11 +1434,14 @@ defmodule GitHubEx.Orgs do
       )
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     operation =
       build_custom_properties_for_repos_create_or_update_organization_definition_operation(params)
 
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_custom_properties_for_repos_create_or_update_organization_definition_operation(
@@ -1391,9 +1490,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create or update custom properties for an organization\n\nCreates new or updates existing custom properties defined for an organization in a batch.\n\nIf the property already exists, the existing property will be replaced with the new values.\nMissing optional values will fall back to default values, previous values will be overwritten.\nE.g. if a property exists with `values_editable_by: org_and_repo_actors` and it's updated without specifying `values_editable_by`, it will be updated to default value `org_actors`.\n\nTo use this endpoint, the authenticated user must be one of:\n  - An administrator for the organization.\n  - A user, or a user on a team, with the fine-grained permission of `custom_properties_org_definitions_manager` in the organization."
@@ -1409,13 +1508,16 @@ defmodule GitHubEx.Orgs do
       )
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     operation =
       build_custom_properties_for_repos_create_or_update_organization_definitions_operation(
         params
       )
 
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_custom_properties_for_repos_create_or_update_organization_definitions_operation(
@@ -1464,9 +1566,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create or update custom property values for organization repositories\n\nCreate new or update existing custom property values for repositories in a batch that belong to an organization.\nEach target repository will have its custom property values updated to match the values provided in the request.\n\nA maximum of 30 repositories can be updated in a single request.\n\nUsing a value of `null` for a custom property will remove or 'unset' the property value from the repository.\n\nTo use this endpoint, the authenticated user must be one of:\n  - An administrator for the organization.\n  - A user, or a user on a team, with the fine-grained permission of `custom_properties_org_values_editor` in the organization."
@@ -1479,11 +1581,14 @@ defmodule GitHubEx.Orgs do
       )
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     operation =
       build_custom_properties_for_repos_create_or_update_organization_values_operation(params)
 
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_custom_properties_for_repos_create_or_update_organization_values_operation(params)
@@ -1530,9 +1635,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"custom_property_name", :custom_property_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove a custom property for an organization\n\nRemoves a custom property that is defined for an organization.\n\nTo use this endpoint, the authenticated user must be one of:\n  - An administrator for the organization.\n  - A user, or a user on a team, with the fine-grained permission of `custom_properties_org_definitions_manager` in the organization."
@@ -1545,8 +1650,11 @@ defmodule GitHubEx.Orgs do
       )
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_custom_properties_for_repos_delete_organization_definition_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_custom_properties_for_repos_delete_organization_definition_operation(params)
@@ -1593,9 +1701,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"custom_property_name", :custom_property_name}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a custom property for an organization\n\nGets a custom property that is defined for an organization.\nOrganization members can read these properties."
@@ -1604,8 +1712,11 @@ defmodule GitHubEx.Orgs do
   def custom_properties_for_repos_get_organization_definition(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_custom_properties_for_repos_get_organization_definition_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_custom_properties_for_repos_get_organization_definition_operation(params)
@@ -1652,9 +1763,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get all custom properties for an organization\n\nGets all custom properties defined for an organization.\nOrganization members can read these properties."
@@ -1663,8 +1774,11 @@ defmodule GitHubEx.Orgs do
   def custom_properties_for_repos_get_organization_definitions(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_custom_properties_for_repos_get_organization_definitions_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_custom_properties_for_repos_get_organization_definitions_operation(params)
@@ -1711,13 +1825,13 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"page", :page},
       {"repository_query", :repository_query}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List custom property values for organization repositories\n\nLists organization repositories with all of their custom property values.\nOrganization members can read these properties."
@@ -1726,8 +1840,11 @@ defmodule GitHubEx.Orgs do
   def custom_properties_for_repos_get_organization_values(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_custom_properties_for_repos_get_organization_values_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_custom_properties_for_repos_get_organization_values(term(), map(), keyword()) ::
@@ -1739,6 +1856,7 @@ defmodule GitHubEx.Orgs do
       )
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_custom_properties_for_repos_get_organization_values_operation(params) end,
@@ -1747,7 +1865,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -1806,9 +1926,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete an organization\n\nDeletes an organization and all its repositories.\n\nThe organization login will be unavailable for 90 days after deletion.\n\nPlease review the Terms of Service regarding account deletion before using this endpoint:\n\nhttps://docs.github.com/site-policy/github-terms/github-terms-of-service"
@@ -1816,8 +1936,11 @@ defmodule GitHubEx.Orgs do
   def delete(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_operation(params) when is_map(params) do
@@ -1855,9 +1978,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete attestations in bulk\n\nDelete artifact attestations in bulk by either subject digests or unique ID."
@@ -1865,8 +1988,11 @@ defmodule GitHubEx.Orgs do
   def delete_attestations_bulk(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_attestations_bulk_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_attestations_bulk_operation(params) when is_map(params) do
@@ -1904,9 +2030,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"attestation_id", :attestation_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete attestations by ID\n\nDelete an artifact attestation by unique ID that is associated with a repository owned by an org."
@@ -1914,8 +2040,11 @@ defmodule GitHubEx.Orgs do
   def delete_attestations_by_id(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_attestations_by_id_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_attestations_by_id_operation(params) when is_map(params) do
@@ -1953,9 +2082,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"subject_digest", :subject_digest}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete attestations by subject digest\n\nDelete an artifact attestation by subject digest."
@@ -1964,8 +2093,11 @@ defmodule GitHubEx.Orgs do
   def delete_attestations_by_subject_digest(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_attestations_by_subject_digest_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_attestations_by_subject_digest_operation(params) when is_map(params) do
@@ -2004,9 +2136,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"issue_field_id", :issue_field_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete issue field for an organization\n\nDeletes an issue field for an organization.\n\nYou can find out more about issue fields in [Managing issue fields in an organization](https://docs.github.com/issues/tracking-your-work-with-issues/using-issues/managing-issue-fields-in-an-organization).\n\nTo use this endpoint, the authenticated user must be an administrator for the organization. OAuth app tokens and\npersonal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2014,8 +2146,11 @@ defmodule GitHubEx.Orgs do
   def delete_issue_field(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_issue_field_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_issue_field_operation(params) when is_map(params) do
@@ -2053,9 +2188,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"issue_type_id", :issue_type_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete issue type for an organization\n\nDeletes an issue type for an organization.\n\nYou can find out more about issue types in [Managing issue types in an organization](https://docs.github.com/issues/tracking-your-work-with-issues/configuring-issues/managing-issue-types-in-an-organization).\n\nTo use this endpoint, the authenticated user must be an administrator for the organization. OAuth app tokens and\npersonal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2063,8 +2198,11 @@ defmodule GitHubEx.Orgs do
   def delete_issue_type(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_issue_type_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_issue_type_operation(params) when is_map(params) do
@@ -2102,9 +2240,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete an organization webhook\n\nDelete a webhook for an organization.\n\nThe authenticated user must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -2112,8 +2250,11 @@ defmodule GitHubEx.Orgs do
   def delete_webhook(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_webhook_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_webhook_operation(params) when is_map(params) do
@@ -2151,9 +2292,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Disable a selected repository for immutable releases in an organization\n\nRemoves a repository from the list of selected repositories that are enforced for immutable releases in an organization. To use this endpoint, the organization immutable releases policy for `enforced_repositories` must be configured to `selected`.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2166,11 +2307,14 @@ defmodule GitHubEx.Orgs do
       )
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     operation =
       build_disable_selected_repository_immutable_releases_organization_operation(params)
 
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_disable_selected_repository_immutable_releases_organization_operation(params)
@@ -2221,9 +2365,9 @@ defmodule GitHubEx.Orgs do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Enable or disable a security feature for an organization\n\n> [!WARNING]\n> **Closing down notice:** The ability to enable or disable a security feature for all eligible repositories in an organization is closing down. Please use [code security configurations](https://docs.github.com/rest/code-security/configurations) instead. For more information, see the [changelog](https://github.blog/changelog/2024-07-22-deprecation-of-api-endpoint-to-enable-or-disable-a-security-feature-for-an-organization/).\n\nEnables or disables the specified security feature for all eligible repositories in an organization. For more information, see \"[Managing security managers in your organization](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/managing-security-managers-in-your-organization).\"\n\nThe authenticated user must be an organization owner or be member of a team with the security manager role to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org`, `write:org`, or `repo` scopes to use this endpoint."
@@ -2232,8 +2376,11 @@ defmodule GitHubEx.Orgs do
   def enable_or_disable_security_product_on_all_org_repos(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_enable_or_disable_security_product_on_all_org_repos_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_enable_or_disable_security_product_on_all_org_repos_operation(params)
@@ -2276,9 +2423,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"repository_id", :repository_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Enable a selected repository for immutable releases in an organization\n\nAdds a repository to the list of selected repositories that are enforced for immutable releases in an organization. To use this endpoint, the organization immutable releases policy for `enforced_repositories` must be configured to `selected`.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2291,8 +2438,11 @@ defmodule GitHubEx.Orgs do
       )
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_enable_selected_repository_immutable_releases_organization_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_enable_selected_repository_immutable_releases_organization_operation(params)
@@ -2339,9 +2489,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get an organization\n\nGets information about an organization.\n\nWhen the value of `two_factor_requirement_enabled` is `true`, the organization requires all members, billing managers, outside collaborators, guest collaborators, repository collaborators, or everyone with access to any repository within the organization to enable [two-factor authentication](https://docs.github.com/articles/securing-your-account-with-two-factor-authentication-2fa/).\n\nTo see the full details about an organization, the authenticated user must be an organization owner.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to see the full details about an organization.\n\nTo see information about an organization's GitHub plan, GitHub Apps need the `Organization plan` permission."
@@ -2349,8 +2499,11 @@ defmodule GitHubEx.Orgs do
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_operation(params) when is_map(params) do
@@ -2388,9 +2541,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get immutable releases settings for an organization\n\nGets the immutable releases policy for repositories in an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2399,8 +2552,11 @@ defmodule GitHubEx.Orgs do
   def get_immutable_releases_settings(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_immutable_releases_settings_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_immutable_releases_settings_operation(params) when is_map(params) do
@@ -2439,9 +2595,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"page", :page}, {"per_page", :per_page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List selected repositories for immutable releases enforcement\n\nList all of the repositories that have been selected for immutable releases enforcement in an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2450,8 +2606,11 @@ defmodule GitHubEx.Orgs do
   def get_immutable_releases_settings_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_immutable_releases_settings_repositories_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_immutable_releases_settings_repositories(term(), map(), keyword()) ::
@@ -2459,6 +2618,7 @@ defmodule GitHubEx.Orgs do
   def stream_get_immutable_releases_settings_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_immutable_releases_settings_repositories_operation(params) end,
@@ -2467,7 +2627,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -2525,9 +2687,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get an organization membership for the authenticated user\n\nIf the authenticated user is an active or pending member of the organization, this endpoint will return the user's membership. If the authenticated user is not affiliated with the organization, a `404` is returned. This endpoint will return a `403` if the request is made by a GitHub App that is blocked by the organization."
@@ -2536,8 +2698,11 @@ defmodule GitHubEx.Orgs do
   def get_membership_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_membership_for_authenticated_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_membership_for_authenticated_user_operation(params) when is_map(params) do
@@ -2576,9 +2741,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get organization membership for a user\n\nIn order to get a user's membership with an organization, the authenticated user must be an organization member. The `state` parameter in the response can be used to identify the user's membership status."
@@ -2586,8 +2751,11 @@ defmodule GitHubEx.Orgs do
   def get_membership_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_membership_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_membership_for_user_operation(params) when is_map(params) do
@@ -2625,9 +2793,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"role_id", :role_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get an organization role\n\nGets an organization role that is available to this organization. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nTo use this endpoint, the authenticated user must be one of:\n\n- An administrator for the organization.\n- A user, or a user on a team, with the fine-grained permissions of `read_organization_custom_org_role` in the organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -2635,8 +2803,11 @@ defmodule GitHubEx.Orgs do
   def get_org_role(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_org_role_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_org_role_operation(params) when is_map(params) do
@@ -2674,9 +2845,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"ruleset_id", :ruleset_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get organization ruleset history\n\nGet the history of an organization ruleset."
@@ -2684,14 +2855,18 @@ defmodule GitHubEx.Orgs do
   def get_org_ruleset_history(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_org_ruleset_history_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_org_ruleset_history(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_org_ruleset_history(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_org_ruleset_history_operation(params) end,
@@ -2700,7 +2875,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -2758,9 +2935,9 @@ defmodule GitHubEx.Orgs do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get organization ruleset version\n\nGet a version of an organization ruleset."
@@ -2768,8 +2945,11 @@ defmodule GitHubEx.Orgs do
   def get_org_ruleset_version(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_org_ruleset_version_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_org_ruleset_version_operation(params) when is_map(params) do
@@ -2807,9 +2987,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get an organization webhook\n\nReturns a webhook configured in an organization. To get only the webhook\n`config` properties, see \"[Get a webhook configuration for an organization](/rest/orgs/webhooks#get-a-webhook-configuration-for-an-organization).\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -2817,8 +2997,11 @@ defmodule GitHubEx.Orgs do
   def get_webhook(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_webhook_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_webhook_operation(params) when is_map(params) do
@@ -2856,9 +3039,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a webhook configuration for an organization\n\nReturns the webhook configuration for an organization. To get more information about the webhook, including the `active` state and `events`, use \"[Get an organization webhook ](/rest/orgs/webhooks#get-an-organization-webhook).\"\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -2866,8 +3049,11 @@ defmodule GitHubEx.Orgs do
   def get_webhook_config_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_webhook_config_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_webhook_config_for_org_operation(params) when is_map(params) do
@@ -2905,9 +3091,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}, {"delivery_id", :delivery_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a webhook delivery for an organization webhook\n\nReturns a delivery for a webhook configured in an organization.\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -2915,8 +3101,11 @@ defmodule GitHubEx.Orgs do
   def get_webhook_delivery(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_webhook_delivery_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_webhook_delivery_operation(params) when is_map(params) do
@@ -2954,9 +3143,9 @@ defmodule GitHubEx.Orgs do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"since", :since}, {"per_page", :per_page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List organizations\n\nLists all organizations, in the order that they were created.\n\n> [!NOTE]\n> Pagination is powered exclusively by the `since` parameter. Use the [Link header](https://docs.github.com/rest/guides/using-pagination-in-the-rest-api#using-link-headers) to get the URL for the next page of organizations."
@@ -2964,14 +3153,18 @@ defmodule GitHubEx.Orgs do
   def list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list(term(), map(), keyword()) :: Enumerable.t()
   def stream_list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_operation(params) end,
@@ -2980,7 +3173,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3034,9 +3229,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List app installations for an organization\n\nLists all GitHub Apps in an organization. The installation count includes\nall GitHub Apps installed on repositories in the organization.\n\nThe authenticated user must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:read` scope to use this endpoint."
@@ -3044,14 +3239,18 @@ defmodule GitHubEx.Orgs do
   def list_app_installations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_app_installations_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_app_installations(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_app_installations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_app_installations_operation(params) end,
@@ -3060,7 +3259,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3114,9 +3315,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"subject_digest", :subject_digest}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List artifact deployment records\n\nList deployment records for an artifact metadata associated with an organization."
@@ -3125,14 +3326,18 @@ defmodule GitHubEx.Orgs do
   def list_artifact_deployment_records(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_artifact_deployment_records_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_artifact_deployment_records(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_artifact_deployment_records(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_artifact_deployment_records_operation(params) end,
@@ -3141,7 +3346,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3196,9 +3403,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"subject_digest", :subject_digest}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List artifact storage records\n\nList a collection of artifact storage records with a given subject digest that are associated with repositories owned by an organization.\n\nThe collection of storage records returned by this endpoint is filtered according to the authenticated user's permissions; if the authenticated user cannot read a repository, the attestations associated with that repository will not be included in the response. In addition, when using a fine-grained access token the `content:read` permission is required."
@@ -3207,14 +3414,18 @@ defmodule GitHubEx.Orgs do
   def list_artifact_storage_records(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_artifact_storage_records_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_artifact_storage_records(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_artifact_storage_records(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_artifact_storage_records_operation(params) end,
@@ -3223,7 +3434,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3278,14 +3491,14 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"before", :before},
       {"after", :after},
       {"predicate_type", :predicate_type}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List attestation repositories\n\nList repositories owned by the provided organization that have created at least one attested artifact\nResults will be sorted in ascending order by repository ID"
@@ -3294,14 +3507,18 @@ defmodule GitHubEx.Orgs do
   def list_attestation_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_attestation_repositories_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_attestation_repositories(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_attestation_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_attestation_repositories_operation(params) end,
@@ -3310,7 +3527,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3365,14 +3584,14 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"subject_digest", :subject_digest}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"before", :before},
       {"after", :after},
       {"predicate_type", :predicate_type}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List attestations\n\nList a collection of artifact attestations with a given subject digest that are associated with repositories owned by an organization.\n\nThe collection of attestations returned by this endpoint is filtered according to the authenticated user's permissions; if the authenticated user cannot read a repository, the attestations associated with that repository will not be included in the response. In addition, when using a fine-grained access token the `attestations:read` permission is required.\n\n**Please note:** in order to offer meaningful security benefits, an attestation's signature and timestamps **must** be cryptographically verified, and the identity of the attestation signer **must** be validated. Attestations can be verified using the [GitHub CLI `attestation verify` command](https://cli.github.com/manual/gh_attestation_verify). For more information, see [our guide on how to use artifact attestations to establish a build's provenance](https://docs.github.com/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)."
@@ -3380,14 +3599,18 @@ defmodule GitHubEx.Orgs do
   def list_attestations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_attestations_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_attestations(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_attestations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_attestations_operation(params) end,
@@ -3396,7 +3619,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3450,9 +3675,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"before", :before}, {"after", :after}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List attestations by bulk subject digests\n\nList a collection of artifact attestations associated with any entry in a list of subject digests owned by an organization.\n\nThe collection of attestations returned by this endpoint is filtered according to the authenticated user's permissions; if the authenticated user cannot read a repository, the attestations associated with that repository will not be included in the response. In addition, when using a fine-grained access token the `attestations:read` permission is required.\n\n**Please note:** in order to offer meaningful security benefits, an attestation's signature and timestamps **must** be cryptographically verified, and the identity of the attestation signer **must** be validated. Attestations can be verified using the [GitHub CLI `attestation verify` command](https://cli.github.com/manual/gh_attestation_verify). For more information, see [our guide on how to use artifact attestations to establish a build's provenance](https://docs.github.com/actions/security-guides/using-artifact-attestations-to-establish-provenance-for-builds)."
@@ -3460,8 +3685,11 @@ defmodule GitHubEx.Orgs do
   def list_attestations_bulk(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_attestations_bulk_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_list_attestations_bulk_operation(params) when is_map(params) do
@@ -3499,9 +3727,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List users blocked by an organization\n\nList the users blocked by an organization."
@@ -3509,14 +3737,18 @@ defmodule GitHubEx.Orgs do
   def list_blocked_users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_blocked_users_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_blocked_users(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_blocked_users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_blocked_users_operation(params) end,
@@ -3525,7 +3757,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3579,9 +3813,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List failed organization invitations\n\nThe return hash contains `failed_at` and `failed_reason` fields which represent the time at which the invitation failed and the reason for the failure."
@@ -3589,14 +3823,18 @@ defmodule GitHubEx.Orgs do
   def list_failed_invitations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_failed_invitations_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_failed_invitations(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_failed_invitations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_failed_invitations_operation(params) end,
@@ -3605,7 +3843,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3659,9 +3899,9 @@ defmodule GitHubEx.Orgs do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List organizations for the authenticated user\n\nList organizations for the authenticated user.\n\nFor OAuth app tokens and personal access tokens (classic), this endpoint only lists organizations that your authorization allows you to operate on in some way (e.g., you can list teams with `read:org` scope, you can publicize your organization membership with `user` scope, etc.). Therefore, this API requires at least `user` or `read:org` scope for OAuth app tokens and personal access tokens (classic). Requests with insufficient scope will receive a `403 Forbidden` response.\n\n> [!NOTE]\n> Requests using a fine-grained access token will receive a `200 Success` response with an empty list."
@@ -3669,14 +3909,18 @@ defmodule GitHubEx.Orgs do
   def list_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_for_authenticated_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_for_authenticated_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_for_authenticated_user_operation(params) end,
@@ -3685,7 +3929,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3739,9 +3985,9 @@ defmodule GitHubEx.Orgs do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List organizations for a user\n\nList [public organization memberships](https://docs.github.com/articles/publicizing-or-concealing-organization-membership) for the specified user.\n\nThis method only lists _public_ memberships, regardless of authentication. If you need to fetch all of the organization memberships (public and private) for the authenticated user, use the [List organizations for the authenticated user](https://docs.github.com/rest/orgs/orgs#list-organizations-for-the-authenticated-user) API instead."
@@ -3749,14 +3995,18 @@ defmodule GitHubEx.Orgs do
   def list_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_for_user_operation(params) end,
@@ -3765,7 +4015,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3819,9 +4071,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"invitation_id", :invitation_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List organization invitation teams\n\nList all teams associated with an invitation. In order to see invitations in an organization, the authenticated user must be an organization owner."
@@ -3829,14 +4081,18 @@ defmodule GitHubEx.Orgs do
   def list_invitation_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_invitation_teams_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_invitation_teams(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_invitation_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_invitation_teams_operation(params) end,
@@ -3845,7 +4101,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3899,9 +4157,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List issue fields for an organization\n\nLists all issue fields for an organization. OAuth app tokens and personal access tokens (classic) need the read:org scope to use this endpoint."
@@ -3909,14 +4167,18 @@ defmodule GitHubEx.Orgs do
   def list_issue_fields(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_issue_fields_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_issue_fields(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_issue_fields(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_issue_fields_operation(params) end,
@@ -3925,7 +4187,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -3979,9 +4243,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List issue types for an organization\n\nLists all issue types for an organization. OAuth app tokens and personal access tokens (classic) need the read:org scope to use this endpoint."
@@ -3989,14 +4253,18 @@ defmodule GitHubEx.Orgs do
   def list_issue_types(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_issue_types_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_issue_types(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_issue_types(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_issue_types_operation(params) end,
@@ -4005,7 +4273,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4059,14 +4329,14 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"filter", :filter},
       {"role", :role},
       {"per_page", :per_page},
       {"page", :page}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List organization members\n\nList all users who are members of an organization. If the authenticated user is also a member of this organization then both concealed and public members will be returned."
@@ -4074,14 +4344,18 @@ defmodule GitHubEx.Orgs do
   def list_members(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_members_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_members(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_members(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_members_operation(params) end,
@@ -4090,7 +4364,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4144,9 +4420,9 @@ defmodule GitHubEx.Orgs do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"state", :state}, {"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List organization memberships for the authenticated user\n\nLists all of the authenticated user's organization memberships."
@@ -4155,14 +4431,18 @@ defmodule GitHubEx.Orgs do
   def list_memberships_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_memberships_for_authenticated_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_memberships_for_authenticated_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_memberships_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_memberships_for_authenticated_user_operation(params) end,
@@ -4171,7 +4451,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4229,9 +4511,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"role_id", :role_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List teams that are assigned to an organization role\n\nLists the teams that are assigned to an organization role. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nTo use this endpoint, you must be an administrator for the organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -4239,14 +4521,18 @@ defmodule GitHubEx.Orgs do
   def list_org_role_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_org_role_teams_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_org_role_teams(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_role_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_org_role_teams_operation(params) end,
@@ -4255,7 +4541,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4309,9 +4597,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"role_id", :role_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List users that are assigned to an organization role\n\nLists organization members that are assigned to an organization role. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nTo use this endpoint, you must be an administrator for the organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -4319,14 +4607,18 @@ defmodule GitHubEx.Orgs do
   def list_org_role_users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_org_role_users_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_org_role_users(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_role_users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_org_role_users_operation(params) end,
@@ -4335,7 +4627,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4389,9 +4683,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get all organization roles for an organization\n\nLists the organization roles available in this organization. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nTo use this endpoint, the authenticated user must be one of:\n\n- An administrator for the organization.\n- A user, or a user on a team, with the fine-grained permissions of `read_organization_custom_org_role` in the organization.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -4399,14 +4693,18 @@ defmodule GitHubEx.Orgs do
   def list_org_roles(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_org_roles_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_org_roles(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_roles(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_org_roles_operation(params) end,
@@ -4415,7 +4713,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4469,9 +4769,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"filter", :filter}, {"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List outside collaborators for an organization\n\nList all users who are outside collaborators of an organization."
@@ -4479,14 +4779,18 @@ defmodule GitHubEx.Orgs do
   def list_outside_collaborators(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_outside_collaborators_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_outside_collaborators(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_outside_collaborators(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_outside_collaborators_operation(params) end,
@@ -4495,7 +4799,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4549,9 +4855,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"pat_id", :pat_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List repositories a fine-grained personal access token has access to\n\nLists the repositories a fine-grained personal access token has access to.\n\nOnly GitHub Apps can use this endpoint."
@@ -4559,14 +4865,18 @@ defmodule GitHubEx.Orgs do
   def list_pat_grant_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_pat_grant_repositories_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_pat_grant_repositories(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_pat_grant_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_pat_grant_repositories_operation(params) end,
@@ -4575,7 +4885,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4629,9 +4941,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"pat_request_id", :pat_request_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List repositories requested to be accessed by a fine-grained personal access token\n\nLists the repositories a fine-grained personal access token request is requesting access to.\n\nOnly GitHub Apps can use this endpoint."
@@ -4640,14 +4952,18 @@ defmodule GitHubEx.Orgs do
   def list_pat_grant_request_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_pat_grant_request_repositories_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_pat_grant_request_repositories(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_pat_grant_request_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_pat_grant_request_repositories_operation(params) end,
@@ -4656,7 +4972,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4711,7 +5029,6 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"page", :page},
@@ -4724,7 +5041,8 @@ defmodule GitHubEx.Orgs do
       {"last_used_after", :last_used_after},
       {"token_id", :token_id}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List requests to access organization resources with fine-grained personal access tokens\n\nLists requests from organization members to access organization resources with a fine-grained personal access token.\n\nOnly GitHub Apps can use this endpoint."
@@ -4732,14 +5050,18 @@ defmodule GitHubEx.Orgs do
   def list_pat_grant_requests(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_pat_grant_requests_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_pat_grant_requests(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_pat_grant_requests(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_pat_grant_requests_operation(params) end,
@@ -4748,7 +5070,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4802,7 +5126,6 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"page", :page},
@@ -4815,7 +5138,8 @@ defmodule GitHubEx.Orgs do
       {"last_used_after", :last_used_after},
       {"token_id", :token_id}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List fine-grained personal access tokens with access to organization resources\n\nLists approved fine-grained personal access tokens owned by organization members that can access organization resources.\n\nOnly GitHub Apps can use this endpoint."
@@ -4823,14 +5147,18 @@ defmodule GitHubEx.Orgs do
   def list_pat_grants(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_pat_grants_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_pat_grants(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_pat_grants(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_pat_grants_operation(params) end,
@@ -4839,7 +5167,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4893,14 +5223,14 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"per_page", :per_page},
       {"page", :page},
       {"role", :role},
       {"invitation_source", :invitation_source}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List pending organization invitations\n\nThe return hash contains a `role` field which refers to the Organization\nInvitation role and will be one of the following values: `direct_member`, `admin`,\n`billing_manager`, or `hiring_manager`. If the invitee is not a GitHub\nmember, the `login` field in the return hash will be `null`."
@@ -4908,14 +5238,18 @@ defmodule GitHubEx.Orgs do
   def list_pending_invitations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_pending_invitations_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_pending_invitations(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_pending_invitations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_pending_invitations_operation(params) end,
@@ -4924,7 +5258,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -4978,9 +5314,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List public organization members\n\nMembers of an organization can choose to have their membership publicized or not."
@@ -4988,14 +5324,18 @@ defmodule GitHubEx.Orgs do
   def list_public_members(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_public_members_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_public_members(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_public_members(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_public_members_operation(params) end,
@@ -5004,7 +5344,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -5058,9 +5400,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List security manager teams\n\n> [!WARNING]\n> **Closing down notice:** This operation is closing down and will be removed starting January 1, 2026. Please use the \"[Organization Roles](https://docs.github.com/rest/orgs/organization-roles)\" endpoints instead."
@@ -5068,14 +5410,18 @@ defmodule GitHubEx.Orgs do
   def list_security_manager_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_security_manager_teams_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_security_manager_teams(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_security_manager_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_security_manager_teams_operation(params) end,
@@ -5084,7 +5430,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -5138,9 +5486,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"cursor", :cursor}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List deliveries for an organization webhook\n\nReturns a list of webhook deliveries for a webhook configured in an organization.\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -5148,14 +5496,18 @@ defmodule GitHubEx.Orgs do
   def list_webhook_deliveries(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_webhook_deliveries_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_webhook_deliveries(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_webhook_deliveries(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_webhook_deliveries_operation(params) end,
@@ -5164,7 +5516,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -5218,9 +5572,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List organization webhooks\n\nList webhooks for an organization.\n\nThe authenticated user must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -5228,14 +5582,18 @@ defmodule GitHubEx.Orgs do
   def list_webhooks(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_webhooks_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_webhooks(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_webhooks(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_webhooks_operation(params) end,
@@ -5244,7 +5602,9 @@ defmodule GitHubEx.Orgs do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -5298,9 +5658,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Ping an organization webhook\n\nThis will trigger a [ping event](https://docs.github.com/webhooks/#ping-event)\nto be sent to the hook.\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -5308,8 +5668,11 @@ defmodule GitHubEx.Orgs do
   def ping_webhook(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_ping_webhook_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_ping_webhook_operation(params) when is_map(params) do
@@ -5347,9 +5710,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}, {"delivery_id", :delivery_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Redeliver a delivery for an organization webhook\n\nRedeliver a delivery for a webhook configured in an organization.\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -5357,8 +5720,11 @@ defmodule GitHubEx.Orgs do
   def redeliver_webhook_delivery(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_redeliver_webhook_delivery_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_redeliver_webhook_delivery_operation(params) when is_map(params) do
@@ -5396,9 +5762,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove an organization member\n\nRemoving a user from this list will remove them from all teams and they will no longer have any access to the organization's repositories.\n\n> [!NOTE]\n> If a user has both direct membership in the organization as well as indirect membership via an enterprise team, only their direct membership will be removed. Their indirect membership via an enterprise team remains until the user is removed from the enterprise team."
@@ -5406,8 +5772,11 @@ defmodule GitHubEx.Orgs do
   def remove_member(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_remove_member_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_remove_member_operation(params) when is_map(params) do
@@ -5445,9 +5814,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove organization membership for a user\n\nIn order to remove a user's membership with an organization, the authenticated user must be an organization owner.\n\nIf the specified user is an active member of the organization, this will remove them from the organization. If the specified user has been invited to the organization, this will cancel their invitation. The specified user will receive an email notification in both cases.\n\n> [!NOTE]\n> If a user has both direct membership in the organization as well as indirect membership via an enterprise team, only their direct membership will be removed. Their indirect membership via an enterprise team remains until the user is removed from the enterprise team."
@@ -5455,8 +5824,11 @@ defmodule GitHubEx.Orgs do
   def remove_membership_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_remove_membership_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_remove_membership_for_user_operation(params) when is_map(params) do
@@ -5494,9 +5866,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove outside collaborator from an organization\n\nRemoving a user from this list will remove them from all the organization's repositories."
@@ -5504,8 +5876,11 @@ defmodule GitHubEx.Orgs do
   def remove_outside_collaborator(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_remove_outside_collaborator_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_remove_outside_collaborator_operation(params) when is_map(params) do
@@ -5543,9 +5918,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove public organization membership for the authenticated user\n\nRemoves the public membership for the authenticated user from the specified organization, unless public visibility is enforced by default."
@@ -5554,8 +5929,11 @@ defmodule GitHubEx.Orgs do
   def remove_public_membership_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_remove_public_membership_for_authenticated_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_remove_public_membership_for_authenticated_user_operation(params)
@@ -5598,9 +5976,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"team_slug", :team_slug}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove a security manager team\n\n> [!WARNING]\n> **Closing down notice:** This operation is closing down and will be removed starting January 1, 2026. Please use the \"[Organization Roles](https://docs.github.com/rest/orgs/organization-roles)\" endpoints instead."
@@ -5608,8 +5986,11 @@ defmodule GitHubEx.Orgs do
   def remove_security_manager_team(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_remove_security_manager_team_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_remove_security_manager_team_operation(params) when is_map(params) do
@@ -5647,9 +6028,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"pat_request_id", :pat_request_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Review a request to access organization resources with a fine-grained personal access token\n\nApproves or denies a pending request to access organization resources via a fine-grained personal access token.\n\nOnly GitHub Apps can use this endpoint."
@@ -5657,8 +6038,11 @@ defmodule GitHubEx.Orgs do
   def review_pat_grant_request(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_review_pat_grant_request_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_review_pat_grant_request_operation(params) when is_map(params) do
@@ -5696,9 +6080,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Review requests to access organization resources with fine-grained personal access tokens\n\nApproves or denies multiple pending requests to access organization resources via a fine-grained personal access token.\n\nOnly GitHub Apps can use this endpoint."
@@ -5707,8 +6091,11 @@ defmodule GitHubEx.Orgs do
   def review_pat_grant_requests_in_bulk(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_review_pat_grant_requests_in_bulk_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_review_pat_grant_requests_in_bulk_operation(params) when is_map(params) do
@@ -5747,9 +6134,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"team_slug", :team_slug}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove all organization roles for a team\n\nRemoves all assigned organization roles from a team. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nThe authenticated user must be an administrator for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -5757,8 +6144,11 @@ defmodule GitHubEx.Orgs do
   def revoke_all_org_roles_team(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_revoke_all_org_roles_team_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_revoke_all_org_roles_team_operation(params) when is_map(params) do
@@ -5796,9 +6186,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove all organization roles for a user\n\nRevokes all assigned organization roles from a user. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nThe authenticated user must be an administrator for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -5806,8 +6196,11 @@ defmodule GitHubEx.Orgs do
   def revoke_all_org_roles_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_revoke_all_org_roles_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_revoke_all_org_roles_user_operation(params) when is_map(params) do
@@ -5845,9 +6238,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"team_slug", :team_slug}, {"role_id", :role_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove an organization role from a team\n\nRemoves an organization role from a team. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nThe authenticated user must be an administrator for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -5855,8 +6248,11 @@ defmodule GitHubEx.Orgs do
   def revoke_org_role_team(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_revoke_org_role_team_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_revoke_org_role_team_operation(params) when is_map(params) do
@@ -5894,9 +6290,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}, {"role_id", :role_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove an organization role from a user\n\nRemove an organization role from a user. For more information on organization roles, see \"[Using organization roles](https://docs.github.com/organizations/managing-peoples-access-to-your-organization-with-roles/using-organization-roles).\"\n\nThe authenticated user must be an administrator for the organization to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -5904,8 +6300,11 @@ defmodule GitHubEx.Orgs do
   def revoke_org_role_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_revoke_org_role_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_revoke_org_role_user_operation(params) when is_map(params) do
@@ -5943,9 +6342,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"cluster", :cluster}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Set cluster deployment records\n\nSet deployment records for a given cluster.\nIf proposed records in the 'deployments' field have identical 'cluster', 'logical_environment',\n'physical_environment', and 'deployment_name' values as existing records, the existing records will be updated.\nIf no existing records match, new records will be created."
@@ -5954,8 +6353,11 @@ defmodule GitHubEx.Orgs do
   def set_cluster_deployment_records(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_set_cluster_deployment_records_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_set_cluster_deployment_records_operation(params) when is_map(params) do
@@ -5994,9 +6396,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Set immutable releases settings for an organization\n\nSets the immutable releases policy for repositories in an organization.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -6005,8 +6407,11 @@ defmodule GitHubEx.Orgs do
   def set_immutable_releases_settings(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_set_immutable_releases_settings_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_set_immutable_releases_settings_operation(params) when is_map(params) do
@@ -6045,9 +6450,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Set selected repositories for immutable releases enforcement\n\nReplaces all repositories that have been selected for immutable releases enforcement in an organization. To use this endpoint, the organization immutable releases policy for `enforced_repositories` must be configured to `selected`.\n\nOAuth tokens and personal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -6056,8 +6461,11 @@ defmodule GitHubEx.Orgs do
   def set_immutable_releases_settings_repositories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_set_immutable_releases_settings_repositories_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_set_immutable_releases_settings_repositories_operation(params) when is_map(params) do
@@ -6099,9 +6507,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Set organization membership for a user\n\nOnly authenticated organization owners can add a member to the organization or update the member's role.\n\n*   If the authenticated user is _adding_ a member to the organization, the invited user will receive an email inviting them to the organization. The user's [membership status](https://docs.github.com/rest/orgs/members#get-organization-membership-for-a-user) will be `pending` until they accept the invitation.\n    \n*   Authenticated users can _update_ a user's membership by passing the `role` parameter. If the authenticated user changes a member's role to `admin`, the affected user will receive an email notifying them that they've been made an organization owner. If the authenticated user changes an owner's role to `member`, no email will be sent.\n\n**Rate limits**\n\nTo prevent abuse, organization owners are limited to creating 50 organization invitations for an organization within a 24 hour period. If the organization is more than one month old or on a paid plan, the limit is 500 invitations per 24 hour period."
@@ -6109,8 +6517,11 @@ defmodule GitHubEx.Orgs do
   def set_membership_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_set_membership_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_set_membership_for_user_operation(params) when is_map(params) do
@@ -6148,9 +6559,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Set public organization membership for the authenticated user\n\nThe user can publicize their own membership. (A user cannot publicize the membership for another user.)\n\nNote that you'll need to set `Content-Length` to zero when calling out to this endpoint. For more information, see \"[HTTP method](https://docs.github.com/rest/guides/getting-started-with-the-rest-api#http-method).\""
@@ -6159,8 +6570,11 @@ defmodule GitHubEx.Orgs do
   def set_public_membership_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_set_public_membership_for_authenticated_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_set_public_membership_for_authenticated_user_operation(params) when is_map(params) do
@@ -6202,9 +6616,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Unblock a user from an organization\n\nUnblocks the given user on behalf of the specified organization."
@@ -6212,8 +6626,11 @@ defmodule GitHubEx.Orgs do
   def unblock_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_unblock_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_unblock_user_operation(params) when is_map(params) do
@@ -6251,9 +6668,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update an organization\n\n> [!WARNING]\n> **Closing down notice:** GitHub will replace and discontinue `members_allowed_repository_creation_type` in favor of more granular permissions. The new input parameters are `members_can_create_public_repositories`, `members_can_create_private_repositories` for all organizations and `members_can_create_internal_repositories` for organizations associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+. For more information, see the [blog post](https://developer.github.com/changes/2019-12-03-internal-visibility-changes).\n\n> [!WARNING]\n> **Closing down notice:** Code security product enablement for new repositories through the organization API is closing down. Please use [code security configurations](https://docs.github.com/rest/code-security/configurations#set-a-code-security-configuration-as-a-default-for-an-organization) to set defaults instead. For more information on setting a default security configuration, see the [changelog](https://github.blog/changelog/2024-07-09-sunsetting-security-settings-defaults-parameters-in-the-organizations-rest-api/).\n\nUpdates the organization's profile and member privileges.\n\nThe authenticated user must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need the `admin:org` or `repo` scope to use this endpoint."
@@ -6261,8 +6678,11 @@ defmodule GitHubEx.Orgs do
   def update(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_operation(params) when is_map(params) do
@@ -6300,9 +6720,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"issue_field_id", :issue_field_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update issue field for an organization\n\nUpdates an issue field for an organization.\n\nYou can find out more about issue fields in [Managing issue fields in an organization](https://docs.github.com/issues/tracking-your-work-with-issues/using-issues/managing-issue-fields-in-an-organization).\n\nTo use this endpoint, the authenticated user must be an administrator for the organization. OAuth app tokens and\npersonal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -6310,8 +6730,11 @@ defmodule GitHubEx.Orgs do
   def update_issue_field(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_issue_field_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_issue_field_operation(params) when is_map(params) do
@@ -6349,9 +6772,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"issue_type_id", :issue_type_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update issue type for an organization\n\nUpdates an issue type for an organization.\n\nYou can find out more about issue types in [Managing issue types in an organization](https://docs.github.com/issues/tracking-your-work-with-issues/configuring-issues/managing-issue-types-in-an-organization).\n\nTo use this endpoint, the authenticated user must be an administrator for the organization. OAuth app tokens and\npersonal access tokens (classic) need the `admin:org` scope to use this endpoint."
@@ -6359,8 +6782,11 @@ defmodule GitHubEx.Orgs do
   def update_issue_type(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_issue_type_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_issue_type_operation(params) when is_map(params) do
@@ -6398,9 +6824,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update an organization membership for the authenticated user\n\nConverts the authenticated user to an active member of the organization, if that user has a pending invitation from the organization."
@@ -6409,8 +6835,11 @@ defmodule GitHubEx.Orgs do
   def update_membership_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_membership_for_authenticated_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_membership_for_authenticated_user_operation(params) when is_map(params) do
@@ -6452,9 +6881,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"pat_id", :pat_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update the access a fine-grained personal access token has to organization resources\n\nUpdates the access an organization member has to organization resources via a fine-grained personal access token. Limited to revoking the token's existing access. Limited to revoking a token's existing access.\n\nOnly GitHub Apps can use this endpoint."
@@ -6462,8 +6891,11 @@ defmodule GitHubEx.Orgs do
   def update_pat_access(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_pat_access_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_pat_access_operation(params) when is_map(params) do
@@ -6501,9 +6933,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update the access to organization resources via fine-grained personal access tokens\n\nUpdates the access organization members have to organization resources via fine-grained personal access tokens. Limited to revoking a token's existing access.\n\nOnly GitHub Apps can use this endpoint."
@@ -6511,8 +6943,11 @@ defmodule GitHubEx.Orgs do
   def update_pat_accesses(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_pat_accesses_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_pat_accesses_operation(params) when is_map(params) do
@@ -6550,9 +6985,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update an organization webhook\n\nUpdates a webhook configured in an organization. When you update a webhook,\nthe `secret` will be overwritten. If you previously had a `secret` set, you must\nprovide the same `secret` or set a new `secret` or the secret will be removed. If\nyou are only updating individual webhook `config` properties, use \"[Update a webhook\nconfiguration for an organization](/rest/orgs/webhooks#update-a-webhook-configuration-for-an-organization)\".\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -6560,8 +6995,11 @@ defmodule GitHubEx.Orgs do
   def update_webhook(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_webhook_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_webhook_operation(params) when is_map(params) do
@@ -6599,9 +7037,9 @@ defmodule GitHubEx.Orgs do
     path: [{"org", :org}, {"hook_id", :hook_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update a webhook configuration for an organization\n\nUpdates the webhook configuration for an organization. To update more information about the webhook, including the `active` state and `events`, use \"[Update an organization webhook ](/rest/orgs/webhooks#update-an-organization-webhook).\"\n\nYou must be an organization owner to use this endpoint.\n\nOAuth app tokens and personal access tokens (classic) need `admin:org_hook` scope. OAuth apps cannot list, view, or edit\nwebhooks that they did not create and users cannot list, view, or edit webhooks that were created by OAuth apps."
@@ -6610,8 +7048,11 @@ defmodule GitHubEx.Orgs do
   def update_webhook_config_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_webhook_config_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_webhook_config_for_org_operation(params) when is_map(params) do

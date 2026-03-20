@@ -2,7 +2,6 @@ defmodule Mix.Tasks.Github.OAuthTaskTest do
   use ExUnit.Case, async: false
 
   alias Mix.Tasks.Github.Oauth, as: OAuthTask
-  alias Pristine.Core.Context, as: SDKContext
   alias Pristine.OAuth2.Token, as: SDKToken
 
   @moduletag :tmp_dir
@@ -157,7 +156,7 @@ defmodule Mix.Tasks.Github.OAuthTaskTest do
     assert provider.name == "github"
     assert opts[:client_id] == "client-id"
     assert opts[:client_secret] == "client-secret"
-    assert opts[:context].__struct__ == SDKContext.new().__struct__
+    assert match?(%{__struct__: _}, opts[:context])
 
     assert_receive {:mix_shell, :info, ["Updated token file: " <> ^path]}
     assert_receive {:mix_shell, :info, ["export GITHUB_OAUTH_TOKEN_PATH=\"" <> ^path <> "\""]}

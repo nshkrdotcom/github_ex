@@ -11,9 +11,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add an organization assignment\n\nAssign an enterprise team to an organization."
@@ -21,8 +21,11 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   def add(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_add_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_add_operation(params) when is_map(params) do
@@ -60,9 +63,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add organization assignments\n\nAssign an enterprise team to multiple organizations."
@@ -70,8 +73,11 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   def bulk_add(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_bulk_add_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_bulk_add_operation(params) when is_map(params) do
@@ -109,9 +115,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove organization assignments\n\nUnassign an enterprise team from multiple organizations."
@@ -119,8 +125,11 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   def bulk_remove(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_bulk_remove_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_bulk_remove_operation(params) when is_map(params) do
@@ -162,9 +171,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete an organization assignment\n\nUnassign an enterprise team from an organization."
@@ -172,8 +181,11 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   def delete(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_operation(params) when is_map(params) do
@@ -215,9 +227,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get organization assignment\n\nCheck if an enterprise team is assigned to an organization"
@@ -225,8 +237,11 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   def get_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_assignment_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_assignment_operation(params) when is_map(params) do
@@ -264,9 +279,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get organization assignments\n\nGet all organizations assigned to an enterprise team"
@@ -274,14 +289,18 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   def get_assignments(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_assignments_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_get_assignments(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_assignments(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_get_assignments_operation(params) end,
@@ -290,7 +309,9 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}

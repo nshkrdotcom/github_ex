@@ -7,9 +7,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create a hosted compute network configuration for an organization\n\nCreates a hosted compute network configuration for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `write:network_configurations` scope to use this endpoint."
@@ -18,8 +18,11 @@ defmodule GitHubEx.HostedCompute do
   def create_network_configuration_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_network_configuration_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_network_configuration_for_org_operation(params) when is_map(params) do
@@ -58,9 +61,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_configuration_id", :network_configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete a hosted compute network configuration from an organization\n\nDeletes a hosted compute network configuration from an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `write:network_configurations` scope to use this endpoint."
@@ -69,8 +72,11 @@ defmodule GitHubEx.HostedCompute do
   def delete_network_configuration_from_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_network_configuration_from_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_network_configuration_from_org_operation(params) when is_map(params) do
@@ -109,9 +115,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_configuration_id", :network_configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a hosted compute network configuration for an organization\n\nGets a hosted compute network configuration configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:network_configurations` scope to use this endpoint."
@@ -120,8 +126,11 @@ defmodule GitHubEx.HostedCompute do
   def get_network_configuration_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_network_configuration_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_network_configuration_for_org_operation(params) when is_map(params) do
@@ -160,9 +169,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_settings_id", :network_settings_id}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a hosted compute network settings resource for an organization\n\nGets a hosted compute network settings resource configured for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:network_configurations` scope to use this endpoint."
@@ -170,8 +179,11 @@ defmodule GitHubEx.HostedCompute do
   def get_network_settings_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_network_settings_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_network_settings_for_org_operation(params) when is_map(params) do
@@ -209,9 +221,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List hosted compute network configurations for an organization\n\nLists all hosted compute network configurations configured in an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `read:network_configurations` scope to use this endpoint."
@@ -220,14 +232,18 @@ defmodule GitHubEx.HostedCompute do
   def list_network_configurations_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_network_configurations_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_network_configurations_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_network_configurations_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_network_configurations_for_org_operation(params) end,
@@ -236,7 +252,9 @@ defmodule GitHubEx.HostedCompute do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -291,9 +309,9 @@ defmodule GitHubEx.HostedCompute do
     path: [{"org", :org}, {"network_configuration_id", :network_configuration_id}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update a hosted compute network configuration for an organization\n\nUpdates a hosted compute network configuration for an organization.\n\nOAuth app tokens and personal access tokens (classic) need the `write:network_configurations` scope to use this endpoint."
@@ -302,8 +320,11 @@ defmodule GitHubEx.HostedCompute do
   def update_network_configuration_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_network_configuration_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_network_configuration_for_org_operation(params) when is_map(params) do

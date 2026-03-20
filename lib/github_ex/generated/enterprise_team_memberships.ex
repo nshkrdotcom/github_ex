@@ -11,9 +11,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add team member\n\nAdd a team member to an enterprise team."
@@ -21,8 +21,11 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
   def add(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_add_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_add_operation(params) when is_map(params) do
@@ -60,9 +63,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Bulk add team members\n\nAdd multiple team members to an enterprise team."
@@ -70,8 +73,11 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
   def bulk_add(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_bulk_add_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_bulk_add_operation(params) when is_map(params) do
@@ -109,9 +115,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Bulk remove team members\n\nRemove multiple team members from an enterprise team."
@@ -119,8 +125,11 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
   def bulk_remove(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_bulk_remove_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_bulk_remove_operation(params) when is_map(params) do
@@ -162,9 +171,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get enterprise team membership\n\nReturns whether the user is a member of the enterprise team."
@@ -172,8 +181,11 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_operation(params) when is_map(params) do
@@ -211,9 +223,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     path: [{"enterprise", :enterprise}, {"enterprise-team", :enterprise_team}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"page", :page}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List members in an enterprise team\n\nLists all team members in an enterprise team."
@@ -221,14 +233,18 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
   def list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list(term(), map(), keyword()) :: Enumerable.t()
   def stream_list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_operation(params) end,
@@ -237,7 +253,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -295,9 +313,9 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Remove team membership\n\nRemove membership of a specific user from a particular team in an enterprise."
@@ -305,8 +323,11 @@ defmodule GitHubEx.EnterpriseTeamMemberships do
   def remove(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_remove_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_remove_operation(params) when is_map(params) do

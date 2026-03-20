@@ -7,9 +7,9 @@ defmodule GitHubEx.CodesOfConduct do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get all codes of conduct\n\nReturns array of all GitHub's codes of conduct."
@@ -17,8 +17,11 @@ defmodule GitHubEx.CodesOfConduct do
   def get_all_codes_of_conduct(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_all_codes_of_conduct_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_all_codes_of_conduct_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.CodesOfConduct do
     path: [{"key", :key}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get a code of conduct\n\nReturns information about the specified GitHub code of conduct."
@@ -66,8 +69,11 @@ defmodule GitHubEx.CodesOfConduct do
   def get_conduct_code(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_conduct_code_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_conduct_code_operation(params) when is_map(params) do

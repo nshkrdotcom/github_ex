@@ -197,6 +197,11 @@
         "path": "lib/github_ex/generated/repos.ex"
       },
       {
+        "id": "lib_github_ex_generated_runtime_schema",
+        "kind": "code",
+        "path": "lib/github_ex/generated/runtime_schema.ex"
+      },
+      {
         "id": "lib_github_ex_generated_search",
         "kind": "code",
         "path": "lib/github_ex/generated/search.ex"
@@ -9145,7 +9150,7 @@
       "compiler": "pristine_codegen",
       "provider": "github_ex",
       "source_strategy": "openapi_only",
-      "version": "dev"
+      "version": "0.1.0"
     },
     "sources": [
       {

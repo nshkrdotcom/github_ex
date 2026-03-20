@@ -7,9 +7,9 @@ defmodule GitHubEx.Credentials do
     path: [],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Revoke a list of credentials\n\nSubmit a list of credentials to be revoked. This endpoint is intended to revoke credentials the caller does not own and may have found exposed on GitHub.com or elsewhere. It can also be used for credentials associated with an old user account that you no longer have access to. Credential owners will be notified of the revocation.\n\nThis endpoint currently accepts the following credential types:\n- Personal access tokens (classic)\n- Fine-grained personal access tokens\n\nRevoked credentials may impact users on GitHub Free, Pro, & Team and GitHub Enterprise Cloud, and GitHub Enterprise Cloud with Enterprise Managed Users.\nGitHub cannot reactivate any credentials that have been revoked; new credentials will need to be generated.\n\nTo prevent abuse, this API is limited to only 60 unauthenticated requests per hour and a max of 1000 tokens per API request.\n\n> [!NOTE]\n> Any authenticated requests will return a 403."
@@ -17,8 +17,11 @@ defmodule GitHubEx.Credentials do
   def revoke(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_revoke_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_revoke_operation(params) when is_map(params) do

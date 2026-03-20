@@ -5,7 +5,6 @@ defmodule GitHubEx.Client do
 
   alias GitHubEx.Auth
   alias Pristine.Client, as: RuntimeClient
-  alias Pristine.Core.Context
   alias Pristine.Operation
 
   @default_accept "application/vnd.github+json"
@@ -80,7 +79,7 @@ defmodule GitHubEx.Client do
           api_version: String.t(),
           auth: auth_override(),
           base_url: String.t() | nil,
-          context: Context.t() | nil,
+          context: term() | nil,
           foundation: keyword() | nil,
           log_level: :debug | :info | :warn | :error | nil,
           logger: (atom(), String.t(), map() -> term()) | nil,
@@ -171,6 +170,35 @@ defmodule GitHubEx.Client do
     raise ArgumentError, "expected GitHubEx.Client or Pristine.Client, got: #{inspect(other)}"
   end
 
+  @doc false
+  @spec runtime_execute_opts(t() | RuntimeClient.t(), keyword()) :: keyword()
+  def runtime_execute_opts(%RuntimeClient{}, opts) when is_list(opts), do: opts
+
+  def runtime_execute_opts(%__MODULE__{typed_responses: typed_responses}, opts)
+      when is_list(opts) do
+    Keyword.put_new(opts, :typed_responses, typed_responses)
+  end
+
+  @doc false
+  @spec runtime_operation(t() | RuntimeClient.t(), Operation.t(), keyword()) :: Operation.t()
+  def runtime_operation(client = %RuntimeClient{}, %Operation{} = operation, opts)
+      when is_list(opts) do
+    operation
+    |> maybe_disable_operation_schemas(Keyword.get(opts, :typed_responses, false))
+    |> normalize_runtime_operation(client)
+  end
+
+  def runtime_operation(
+        client = %__MODULE__{typed_responses: typed_responses},
+        %Operation{} = operation,
+        opts
+      )
+      when is_list(opts) do
+    operation
+    |> maybe_disable_operation_schemas(Keyword.get(opts, :typed_responses, typed_responses))
+    |> normalize_runtime_operation(client)
+  end
+
   @spec request(t() | RuntimeClient.t(), request_t()) :: {:ok, term()} | {:error, term()}
   def request(client, request) when is_map(request) do
     if raw_request?(request) do
@@ -183,7 +211,7 @@ defmodule GitHubEx.Client do
         |> maybe_disable_raw_schemas(typed_runtime?)
         |> build_raw_operation(client)
 
-      execute_operation(client, operation, request_opts, request[:retry_opts])
+      execute_operation(client, operation, request_opts, request[:retry_opts], typed_runtime?)
     else
       raise ArgumentError, "expected raw request spec, got: #{inspect(request)}"
     end
@@ -223,10 +251,17 @@ defmodule GitHubEx.Client do
 
   def default_request_auth(%__MODULE__{}), do: nil
 
-  defp execute_operation(client, %Operation{} = operation, request_opts, retry_opts) do
+  defp execute_operation(
+         client,
+         %Operation{} = operation,
+         request_opts,
+         retry_opts,
+         typed_responses?
+       ) do
     execute_opts =
       request_opts
       |> maybe_put(:retry_opts, retry_opts)
+      |> maybe_put(:typed_responses, typed_responses?)
 
     Pristine.execute(pristine_client(client), operation, execute_opts)
   end
@@ -352,6 +387,25 @@ defmodule GitHubEx.Client do
     request
     |> Map.put(:request_schema, nil)
     |> Map.put(:response_schema, nil)
+  end
+
+  defp maybe_disable_operation_schemas(%Operation{} = operation, true), do: operation
+
+  defp maybe_disable_operation_schemas(%Operation{} = operation, false) do
+    %Operation{operation | request_schema: nil, response_schemas: %{}}
+  end
+
+  defp normalize_runtime_operation(%Operation{} = operation, client) do
+    resource = operation.runtime[:resource]
+
+    circuit_breaker =
+      resolve_circuit_breaker(client, operation.runtime[:circuit_breaker], resource)
+
+    %Operation{
+      operation
+      | form_data: normalize_form_data(operation.form_data),
+        runtime: Map.put(operation.runtime, :circuit_breaker, circuit_breaker)
+    }
   end
 
   defp normalize_execute_opts(nil), do: []

@@ -7,9 +7,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add a field to an organization-owned project.\n\nAdd a field to an organization-owned project."
@@ -17,8 +17,11 @@ defmodule GitHubEx.Projects do
   def add_field_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_add_field_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_add_field_for_org_operation(params) when is_map(params) do
@@ -56,9 +59,9 @@ defmodule GitHubEx.Projects do
     path: [{"username", :username}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add field to user owned project\n\nAdd a field to a specified user owned project."
@@ -66,8 +69,11 @@ defmodule GitHubEx.Projects do
   def add_field_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_add_field_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_add_field_for_user_operation(params) when is_map(params) do
@@ -105,9 +111,9 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add item to organization owned project\n\nAdd an issue or pull request item to the specified organization owned project."
@@ -115,8 +121,11 @@ defmodule GitHubEx.Projects do
   def add_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_add_item_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_add_item_for_org_operation(params) when is_map(params) do
@@ -154,9 +163,9 @@ defmodule GitHubEx.Projects do
     path: [{"username", :username}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Add item to user owned project\n\nAdd an issue or pull request item to the specified user owned project."
@@ -164,8 +173,11 @@ defmodule GitHubEx.Projects do
   def add_item_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_add_item_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_add_item_for_user_operation(params) when is_map(params) do
@@ -203,9 +215,9 @@ defmodule GitHubEx.Projects do
     path: [{"user_id", :user_id}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create draft item for user owned project\n\nCreate draft issue item for the specified user owned project."
@@ -214,8 +226,11 @@ defmodule GitHubEx.Projects do
   def create_draft_item_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_draft_item_for_authenticated_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_draft_item_for_authenticated_user_operation(params) when is_map(params) do
@@ -257,9 +272,9 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create draft item for organization owned project\n\nCreate draft issue item for the specified organization owned project."
@@ -267,8 +282,11 @@ defmodule GitHubEx.Projects do
   def create_draft_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_draft_item_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_draft_item_for_org_operation(params) when is_map(params) do
@@ -306,9 +324,9 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create a view for an organization-owned project\n\nCreate a new view in an organization-owned project. Views allow you to customize how items in a project are displayed and filtered."
@@ -316,8 +334,11 @@ defmodule GitHubEx.Projects do
   def create_view_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_view_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_view_for_org_operation(params) when is_map(params) do
@@ -355,9 +376,9 @@ defmodule GitHubEx.Projects do
     path: [{"user_id", :user_id}, {"project_number", :project_number}],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Create a view for a user-owned project\n\nCreate a new view in a user-owned project. Views allow you to customize how items in a project are displayed and filtered."
@@ -365,8 +386,11 @@ defmodule GitHubEx.Projects do
   def create_view_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_create_view_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_create_view_for_user_operation(params) when is_map(params) do
@@ -408,9 +432,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete project item for organization\n\nDelete a specific item from an organization-owned project."
@@ -418,8 +442,11 @@ defmodule GitHubEx.Projects do
   def delete_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_item_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_item_for_org_operation(params) when is_map(params) do
@@ -461,9 +488,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Delete project item for user\n\nDelete a specific item from a user-owned project."
@@ -471,8 +498,11 @@ defmodule GitHubEx.Projects do
   def delete_item_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_delete_item_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_delete_item_for_user_operation(params) when is_map(params) do
@@ -514,9 +544,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get project field for organization\n\nGet a specific field for an organization-owned project."
@@ -524,8 +554,11 @@ defmodule GitHubEx.Projects do
   def get_field_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_field_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_field_for_org_operation(params) when is_map(params) do
@@ -567,9 +600,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get project field for user\n\nGet a specific field for a user-owned project."
@@ -577,8 +610,11 @@ defmodule GitHubEx.Projects do
   def get_field_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_field_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_field_for_user_operation(params) when is_map(params) do
@@ -616,9 +652,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get project for organization\n\nGet a specific organization-owned project."
@@ -626,8 +662,11 @@ defmodule GitHubEx.Projects do
   def get_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_for_org_operation(params) when is_map(params) do
@@ -665,9 +704,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get project for user\n\nGet a specific user-owned project."
@@ -675,8 +714,11 @@ defmodule GitHubEx.Projects do
   def get_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_for_user_operation(params) when is_map(params) do
@@ -718,9 +760,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"fields", :fields}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get an item for an organization owned project\n\nGet a specific item from an organization-owned project."
@@ -728,8 +770,11 @@ defmodule GitHubEx.Projects do
   def get_org_item(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_org_item_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_org_item_operation(params) when is_map(params) do
@@ -771,9 +816,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"fields", :fields}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Get an item for a user owned project\n\nGet a specific item from a user-owned project."
@@ -781,8 +826,11 @@ defmodule GitHubEx.Projects do
   def get_user_item(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_get_user_item_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_get_user_item_operation(params) when is_map(params) do
@@ -820,9 +868,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"before", :before}, {"after", :after}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List project fields for organization\n\nList all fields for a specific organization-owned project."
@@ -830,14 +878,18 @@ defmodule GitHubEx.Projects do
   def list_fields_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_fields_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_fields_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_fields_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_fields_for_org_operation(params) end,
@@ -846,7 +898,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -900,9 +954,9 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [{"per_page", :per_page}, {"before", :before}, {"after", :after}],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List project fields for user\n\nList all fields for a specific user-owned project."
@@ -910,14 +964,18 @@ defmodule GitHubEx.Projects do
   def list_fields_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_fields_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_fields_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_fields_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_fields_for_user_operation(params) end,
@@ -926,7 +984,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -980,14 +1040,14 @@ defmodule GitHubEx.Projects do
     path: [{"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"q", :q},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List projects for organization\n\nList all projects owned by a specific organization accessible by the authenticated user."
@@ -995,14 +1055,18 @@ defmodule GitHubEx.Projects do
   def list_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_for_org_operation(params) end,
@@ -1011,7 +1075,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -1065,14 +1131,14 @@ defmodule GitHubEx.Projects do
     path: [{"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"q", :q},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List projects for user\n\nList all projects owned by a specific user accessible by the authenticated user."
@@ -1080,14 +1146,18 @@ defmodule GitHubEx.Projects do
   def list_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_for_user_operation(params) end,
@@ -1096,7 +1166,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -1150,7 +1222,6 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"q", :q},
       {"fields", :fields},
@@ -1158,7 +1229,8 @@ defmodule GitHubEx.Projects do
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List items for an organization owned project\n\nList all items for a specific organization-owned project accessible by the authenticated user."
@@ -1166,14 +1238,18 @@ defmodule GitHubEx.Projects do
   def list_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_items_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_items_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_items_for_org_operation(params) end,
@@ -1182,7 +1258,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -1236,7 +1314,6 @@ defmodule GitHubEx.Projects do
     path: [{"project_number", :project_number}, {"username", :username}],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"before", :before},
       {"after", :after},
@@ -1244,7 +1321,8 @@ defmodule GitHubEx.Projects do
       {"q", :q},
       {"fields", :fields}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List items for a user owned project\n\nList all items for a specific user-owned project accessible by the authenticated user."
@@ -1252,14 +1330,18 @@ defmodule GitHubEx.Projects do
   def list_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_items_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_items_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_items_for_user_operation(params) end,
@@ -1268,7 +1350,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -1326,14 +1410,14 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"fields", :fields},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List items for an organization project view\n\nList items in an organization project with the saved view's filter applied."
@@ -1341,14 +1425,18 @@ defmodule GitHubEx.Projects do
   def list_view_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_view_items_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_view_items_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_view_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_view_items_for_org_operation(params) end,
@@ -1357,7 +1445,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -1415,14 +1505,14 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :none},
-    form_data: %{mode: :none},
     query: [
       {"fields", :fields},
       {"before", :before},
       {"after", :after},
       {"per_page", :per_page}
     ],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "List items for a user project view\n\nList items in a user project with the saved view's filter applied."
@@ -1430,14 +1520,18 @@ defmodule GitHubEx.Projects do
   def list_view_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_list_view_items_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   @spec stream_list_view_items_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_view_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
 
     Stream.resource(
       fn -> build_list_view_items_for_user_operation(params) end,
@@ -1446,7 +1540,9 @@ defmodule GitHubEx.Projects do
           {:halt, nil}
 
         %Pristine.Operation{} = operation ->
-          case Pristine.execute(runtime_client, operation, opts) do
+          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+          case Pristine.execute(runtime_client, operation, execute_opts) do
             {:ok, response} ->
               items = List.wrap(Pristine.Operation.items(operation, response))
               {items, Pristine.Operation.next_page(operation, response)}
@@ -1504,9 +1600,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update project item for organization\n\nUpdate a specific item in an organization-owned project."
@@ -1514,8 +1610,11 @@ defmodule GitHubEx.Projects do
   def update_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_item_for_org_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_item_for_org_operation(params) when is_map(params) do
@@ -1557,9 +1656,9 @@ defmodule GitHubEx.Projects do
     ],
     auth: {"auth", :auth},
     body: %{mode: :remaining},
-    form_data: %{mode: :none},
     query: [],
-    headers: []
+    headers: [],
+    form_data: %{mode: :none}
   }
 
   @doc "Update project item for user\n\nUpdate a specific item in a user-owned project."
@@ -1567,8 +1666,11 @@ defmodule GitHubEx.Projects do
   def update_item_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
     runtime_client = GitHubEx.Client.pristine_client(client)
+    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
     operation = build_update_item_for_user_operation(params)
-    Pristine.execute(runtime_client, operation, opts)
+    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+
+    Pristine.execute(runtime_client, operation, execute_opts)
   end
 
   defp build_update_item_for_user_operation(params) when is_map(params) do

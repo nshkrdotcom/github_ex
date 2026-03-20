@@ -1,8 +1,8 @@
 defmodule GitHubEx.ProviderContractTest do
   use ExUnit.Case, async: true
 
-  alias GitHubEx.Codegen.Provider
   alias GitHubEx.Codegen.Plugins.Auth, as: AuthPlugin
+  alias GitHubEx.Codegen.Provider
   alias PristineCodegen.Compiler
 
   @project_root Path.expand("../..", __DIR__)
