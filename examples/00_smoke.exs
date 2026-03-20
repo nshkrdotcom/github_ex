@@ -11,7 +11,9 @@ client =
 
 Live.banner!("GitHubEx smoke")
 
-meta = GitHubEx.Meta.root(client) |> Live.ok!("GitHubEx.Meta.root/1")
-rate_limit = GitHubEx.RateLimit.get(client) |> Live.ok!("GitHubEx.RateLimit.get/1")
+params = Live.maybe_unauthenticated_params()
+
+meta = GitHubEx.Meta.root(client, params) |> Live.ok!("GitHubEx.Meta.root/2")
+rate_limit = GitHubEx.RateLimit.get(client, params) |> Live.ok!("GitHubEx.RateLimit.get/2")
 
 Live.print_json!(%{meta: meta, rate_limit: rate_limit})

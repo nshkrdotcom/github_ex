@@ -11,11 +11,15 @@ client =
 
 Live.banner!("List pull requests")
 
-GitHubEx.Pulls.list(client, %{
-  "owner" => Live.owner!(),
-  "repo" => Live.repo!(),
-  "per_page" => 25,
-  "state" => "open"
-})
+GitHubEx.Pulls.list(
+  client,
+  %{
+    "owner" => Live.owner!(),
+    "repo" => Live.repo!(),
+    "per_page" => 25,
+    "state" => "open"
+  }
+  |> Live.maybe_unauthenticated_params()
+)
 |> Live.ok!("GitHubEx.Pulls.list/2")
 |> Live.print_json!()

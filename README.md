@@ -153,6 +153,7 @@ check a specific REST operation before assuming one token type covers it.
 - [GitHub App Authentication](guides/github-app-authentication.md): JWTs, installation tokens, app user tokens, narrowing, and 403 debugging
 - [Pagination and Rate Limits](guides/pagination-and-rate-limits.md): `Link` headers, wrapped responses, and retry behavior
 - [Common Workflows](guides/common-workflows.md): repos, issues, pulls, workflow runs, and common read paths
+- [Architecture and Design Reference](guides/architecture-and-design-reference.md): the canonical end-to-end design, build, auth, and runtime reference for this repo
 - [Low-Level Requests](guides/low-level-requests.md): the raw request escape hatch on `GitHubEx.Client.request/2`
 - [Regeneration and Maintenance](guides/regeneration-and-maintenance.md): pinned inputs, auth snapshot refresh, and codegen artifacts
 

@@ -11,11 +11,15 @@ client =
 
 Live.banner!("List repository issues")
 
-GitHubEx.Issues.list_for_repo(client, %{
-  "owner" => Live.owner!(),
-  "repo" => Live.repo!(),
-  "per_page" => 25,
-  "state" => "open"
-})
+GitHubEx.Issues.list_for_repo(
+  client,
+  %{
+    "owner" => Live.owner!(),
+    "repo" => Live.repo!(),
+    "per_page" => 25,
+    "state" => "open"
+  }
+  |> Live.maybe_unauthenticated_params()
+)
 |> Live.ok!("GitHubEx.Issues.list_for_repo/2")
 |> Live.print_json!()

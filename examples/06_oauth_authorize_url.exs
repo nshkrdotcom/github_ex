@@ -4,6 +4,9 @@ alias GitHubEx.Examples.Live
 
 Live.banner!("Build GitHub OAuth authorize URL")
 
-url = Live.oauth_authorize_url!(["read:user", "repo"])
+request = Live.oauth_authorization_request!(["read:user", "repo"])
 
-IO.puts(url)
+Live.print_json!(%{
+  authorize_url: request.url,
+  state: request.state
+})

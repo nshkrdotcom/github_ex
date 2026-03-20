@@ -153,6 +153,7 @@ defmodule GitHubEx.MixProject do
       "guides/github-app-authentication.md",
       "guides/pagination-and-rate-limits.md",
       "guides/common-workflows.md",
+      "guides/architecture-and-design-reference.md",
       "guides/low-level-requests.md",
       "guides/regeneration-and-maintenance.md",
       "examples/README.md",
@@ -178,9 +179,10 @@ defmodule GitHubEx.MixProject do
       {"Usage",
        [
          "guides/pagination-and-rate-limits.md",
-         "guides/common-workflows.md",
-         "guides/low-level-requests.md"
+         "guides/common-workflows.md"
        ]},
+      {"Architecture", ["guides/architecture-and-design-reference.md"]},
+      {"Advanced Usage", ["guides/low-level-requests.md"]},
       {"Examples", ["examples/README.md"]},
       {"Internals", ["guides/regeneration-and-maintenance.md"]},
       {"Release Notes", ["CHANGELOG.md", "LICENSE"]}

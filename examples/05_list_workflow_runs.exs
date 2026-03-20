@@ -23,6 +23,7 @@ params =
       workflow_id -> Map.put(params, "workflow_id", workflow_id)
     end
   end)
+  |> Live.maybe_unauthenticated_params()
 
 GitHubEx.Actions.list_workflow_runs_for_repo(client, params)
 |> Live.ok!("GitHubEx.Actions.list_workflow_runs_for_repo/2")
