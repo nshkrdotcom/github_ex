@@ -6,6 +6,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
 
   @http_methods ~w(get post put patch delete head options)
   @default_pagination_limit_param "per_page"
+  @relative_link_base "https://docs.github.com"
 
   @spec load(module(), keyword()) :: Dataset.t()
   def load(_provider_module, opts) when is_list(opts) do
@@ -70,7 +71,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
       responses: Map.get(operation, "responses", %{}),
       summary: normalize_text(operation["summary"]),
       description: normalize_text(operation["description"]),
-      docs_url: get_in(operation, ["externalDocs", "url"]),
+      docs_url: normalize_url(get_in(operation, ["externalDocs", "url"])),
       path_params: normalize_params(parameters, "path", components),
       query_params: normalize_params(parameters, "query", components),
       header_params: normalize_params(parameters, "header", components),
@@ -523,7 +524,21 @@ defmodule GitHubEx.Codegen.Plugins.Source do
 
   defp normalize_text(nil), do: nil
   defp normalize_text(""), do: nil
-  defp normalize_text(text), do: String.trim(text)
+
+  defp normalize_text(text) do
+    text
+    |> String.trim()
+    |> replace_markdown_relative_links()
+  end
+
+  defp replace_markdown_relative_links(text) do
+    Regex.replace(~r/\]\((\/[^)]+)\)/, text, fn _match, relative_url ->
+      "](#{@relative_link_base}#{relative_url})"
+    end)
+  end
+
+  defp normalize_url("/" <> _rest = url), do: @relative_link_base <> url
+  defp normalize_url(url), do: url
 
   defp resolve_parameter(%{"$ref" => "#/components/parameters/" <> name}, components) do
     components

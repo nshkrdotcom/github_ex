@@ -17,7 +17,7 @@ Common options:
 - `typed_responses:`
 - `transport:` and `transport_opts:`
 - `retry:` false, keyword list, or map
-- `foundation:` keyword list forwarded to `Pristine.Client.foundation/1`
+- `foundation:` keyword list forwarded to `Pristine.foundation_context/1`
 
 ## Request-Scoped Controls
 
@@ -52,7 +52,7 @@ GitHubEx.Users.get_authenticated(client, %{"typed_responses" => true})
 
 ## Foundation Overrides
 
-`GitHubEx.Client` builds its runtime context with `Pristine.Client.foundation/1`.
+`GitHubEx.Client` builds its runtime context with `Pristine.foundation_context/1`.
 That means you can still override advanced seams through `foundation:`.
 
 Example:

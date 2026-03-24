@@ -3,6 +3,8 @@ defmodule GitHubEx.Search do
   Generated Github Ex operations for search.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @code_partition_spec %{
     path: [],
     auth: {"auth", :auth},
@@ -22,33 +24,32 @@ defmodule GitHubEx.Search do
   @spec code(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def code(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_code_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_code_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_code(term(), map(), keyword()) :: Enumerable.t()
   def stream_code(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_code_operation(params) end,
+      fn -> build_code_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -58,11 +59,16 @@ defmodule GitHubEx.Search do
     )
   end
 
-  defp build_code_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @code_partition_spec)
+  defp build_code_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @code_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "search/code",
+      args: params,
+      call: {__MODULE__, :code},
+      opts: opts,
       method: :get,
       path_template: "/search/code",
       path_params: partition.path_params,
@@ -77,14 +83,12 @@ defmodule GitHubEx.Search do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :search, :code],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :search, :code],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["items"],
@@ -92,7 +96,7 @@ defmodule GitHubEx.Search do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @commits_partition_spec %{
@@ -114,33 +118,32 @@ defmodule GitHubEx.Search do
   @spec commits(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def commits(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_commits_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_commits_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_commits(term(), map(), keyword()) :: Enumerable.t()
   def stream_commits(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_commits_operation(params) end,
+      fn -> build_commits_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -150,11 +153,16 @@ defmodule GitHubEx.Search do
     )
   end
 
-  defp build_commits_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @commits_partition_spec)
+  defp build_commits_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @commits_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "search/commits",
+      args: params,
+      call: {__MODULE__, :commits},
+      opts: opts,
       method: :get,
       path_template: "/search/commits",
       path_params: partition.path_params,
@@ -169,14 +177,12 @@ defmodule GitHubEx.Search do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :search, :commits],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :search, :commits],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["items"],
@@ -184,7 +190,7 @@ defmodule GitHubEx.Search do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @issues_and_pull_requests_partition_spec %{
@@ -207,33 +213,32 @@ defmodule GitHubEx.Search do
   @spec issues_and_pull_requests(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def issues_and_pull_requests(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_issues_and_pull_requests_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_issues_and_pull_requests_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_issues_and_pull_requests(term(), map(), keyword()) :: Enumerable.t()
   def stream_issues_and_pull_requests(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_issues_and_pull_requests_operation(params) end,
+      fn -> build_issues_and_pull_requests_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -243,11 +248,16 @@ defmodule GitHubEx.Search do
     )
   end
 
-  defp build_issues_and_pull_requests_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @issues_and_pull_requests_partition_spec)
+  defp build_issues_and_pull_requests_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @issues_and_pull_requests_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "search/issues-and-pull-requests",
+      args: params,
+      call: {__MODULE__, :issues_and_pull_requests},
+      opts: opts,
       method: :get,
       path_template: "/search/issues",
       path_params: partition.path_params,
@@ -262,14 +272,12 @@ defmodule GitHubEx.Search do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :search, :issues_and_pull_requests],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :search, :issues_and_pull_requests],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["items"],
@@ -277,7 +285,7 @@ defmodule GitHubEx.Search do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @labels_partition_spec %{
@@ -300,33 +308,32 @@ defmodule GitHubEx.Search do
   @spec labels(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def labels(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_labels_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_labels_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_labels(term(), map(), keyword()) :: Enumerable.t()
   def stream_labels(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_labels_operation(params) end,
+      fn -> build_labels_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -336,11 +343,16 @@ defmodule GitHubEx.Search do
     )
   end
 
-  defp build_labels_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @labels_partition_spec)
+  defp build_labels_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @labels_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "search/labels",
+      args: params,
+      call: {__MODULE__, :labels},
+      opts: opts,
       method: :get,
       path_template: "/search/labels",
       path_params: partition.path_params,
@@ -355,14 +367,12 @@ defmodule GitHubEx.Search do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :search, :labels],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :search, :labels],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["items"],
@@ -370,7 +380,7 @@ defmodule GitHubEx.Search do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @repos_partition_spec %{
@@ -392,33 +402,32 @@ defmodule GitHubEx.Search do
   @spec repos(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def repos(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_repos_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_repos_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_repos(term(), map(), keyword()) :: Enumerable.t()
   def stream_repos(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_repos_operation(params) end,
+      fn -> build_repos_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -428,11 +437,16 @@ defmodule GitHubEx.Search do
     )
   end
 
-  defp build_repos_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @repos_partition_spec)
+  defp build_repos_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @repos_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "search/repos",
+      args: params,
+      call: {__MODULE__, :repos},
+      opts: opts,
       method: :get,
       path_template: "/search/repositories",
       path_params: partition.path_params,
@@ -447,14 +461,12 @@ defmodule GitHubEx.Search do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :search, :repos],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :search, :repos],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["items"],
@@ -462,7 +474,7 @@ defmodule GitHubEx.Search do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @topics_partition_spec %{
@@ -478,33 +490,32 @@ defmodule GitHubEx.Search do
   @spec topics(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def topics(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_topics_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_topics_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_topics(term(), map(), keyword()) :: Enumerable.t()
   def stream_topics(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_topics_operation(params) end,
+      fn -> build_topics_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -514,11 +525,16 @@ defmodule GitHubEx.Search do
     )
   end
 
-  defp build_topics_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @topics_partition_spec)
+  defp build_topics_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @topics_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "search/topics",
+      args: params,
+      call: {__MODULE__, :topics},
+      opts: opts,
       method: :get,
       path_template: "/search/topics",
       path_params: partition.path_params,
@@ -533,14 +549,12 @@ defmodule GitHubEx.Search do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :search, :topics],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :search, :topics],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["items"],
@@ -548,7 +562,7 @@ defmodule GitHubEx.Search do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @users_partition_spec %{
@@ -570,33 +584,32 @@ defmodule GitHubEx.Search do
   @spec users(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_users_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_users_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_users(term(), map(), keyword()) :: Enumerable.t()
   def stream_users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_users_operation(params) end,
+      fn -> build_users_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -606,11 +619,16 @@ defmodule GitHubEx.Search do
     )
   end
 
-  defp build_users_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @users_partition_spec)
+  defp build_users_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @users_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "search/users",
+      args: params,
+      call: {__MODULE__, :users},
+      opts: opts,
       method: :get,
       path_template: "/search/users",
       path_params: partition.path_params,
@@ -625,14 +643,12 @@ defmodule GitHubEx.Search do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :search, :users],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :search, :users],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["items"],
@@ -640,6 +656,15 @@ defmodule GitHubEx.Search do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

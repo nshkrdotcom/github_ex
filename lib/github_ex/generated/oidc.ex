@@ -3,6 +3,8 @@ defmodule GitHubEx.Oidc do
   Generated Github Ex operations for oidc.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_oidc_custom_property_inclusion_for_enterprise_partition_spec %{
     path: [{"enterprise", :enterprise}],
     auth: {"auth", :auth},
@@ -17,24 +19,29 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def create_oidc_custom_property_inclusion_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_oidc_custom_property_inclusion_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
 
-    Pristine.execute(runtime_client, operation, execute_opts)
+    request =
+      build_create_oidc_custom_property_inclusion_for_enterprise_request(client, params, opts)
+
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_oidc_custom_property_inclusion_for_enterprise_operation(params)
-       when is_map(params) do
+  defp build_create_oidc_custom_property_inclusion_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @create_oidc_custom_property_inclusion_for_enterprise_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "oidc/create-oidc-custom-property-inclusion-for-enterprise",
+      args: params,
+      call: {__MODULE__, :create_oidc_custom_property_inclusion_for_enterprise},
+      opts: opts,
       method: :post,
       path_template: "/enterprises/{enterprise}/actions/oidc/customization/properties/repo",
       path_params: partition.path_params,
@@ -49,20 +56,14 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [
-          :github_ex,
-          :oidc,
-          :create_oidc_custom_property_inclusion_for_enterprise
-        ],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :create_oidc_custom_property_inclusion_for_enterprise],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_oidc_custom_property_inclusion_for_org_partition_spec %{
@@ -79,24 +80,26 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def create_oidc_custom_property_inclusion_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_oidc_custom_property_inclusion_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_oidc_custom_property_inclusion_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_oidc_custom_property_inclusion_for_org_operation(params)
-       when is_map(params) do
+  defp build_create_oidc_custom_property_inclusion_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @create_oidc_custom_property_inclusion_for_org_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "oidc/create-oidc-custom-property-inclusion-for-org",
+      args: params,
+      call: {__MODULE__, :create_oidc_custom_property_inclusion_for_org},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/actions/oidc/customization/properties/repo",
       path_params: partition.path_params,
@@ -111,16 +114,14 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :oidc, :create_oidc_custom_property_inclusion_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :create_oidc_custom_property_inclusion_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_oidc_custom_property_inclusion_for_enterprise_partition_spec %{
@@ -140,24 +141,29 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def delete_oidc_custom_property_inclusion_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_oidc_custom_property_inclusion_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
 
-    Pristine.execute(runtime_client, operation, execute_opts)
+    request =
+      build_delete_oidc_custom_property_inclusion_for_enterprise_request(client, params, opts)
+
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_oidc_custom_property_inclusion_for_enterprise_operation(params)
-       when is_map(params) do
+  defp build_delete_oidc_custom_property_inclusion_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @delete_oidc_custom_property_inclusion_for_enterprise_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "oidc/delete-oidc-custom-property-inclusion-for-enterprise",
+      args: params,
+      call: {__MODULE__, :delete_oidc_custom_property_inclusion_for_enterprise},
+      opts: opts,
       method: :delete,
       path_template:
         "/enterprises/{enterprise}/actions/oidc/customization/properties/repo/{custom_property_name}",
@@ -173,20 +179,14 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [
-          :github_ex,
-          :oidc,
-          :delete_oidc_custom_property_inclusion_for_enterprise
-        ],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :delete_oidc_custom_property_inclusion_for_enterprise],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_oidc_custom_property_inclusion_for_org_partition_spec %{
@@ -203,24 +203,26 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def delete_oidc_custom_property_inclusion_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_oidc_custom_property_inclusion_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_oidc_custom_property_inclusion_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_oidc_custom_property_inclusion_for_org_operation(params)
-       when is_map(params) do
+  defp build_delete_oidc_custom_property_inclusion_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @delete_oidc_custom_property_inclusion_for_org_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "oidc/delete-oidc-custom-property-inclusion-for-org",
+      args: params,
+      call: {__MODULE__, :delete_oidc_custom_property_inclusion_for_org},
+      opts: opts,
       method: :delete,
       path_template:
         "/orgs/{org}/actions/oidc/customization/properties/repo/{custom_property_name}",
@@ -236,16 +238,14 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :oidc, :delete_oidc_custom_property_inclusion_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :delete_oidc_custom_property_inclusion_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_oidc_custom_sub_template_for_org_partition_spec %{
@@ -262,20 +262,23 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def get_oidc_custom_sub_template_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_oidc_custom_sub_template_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_oidc_custom_sub_template_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_oidc_custom_sub_template_for_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_oidc_custom_sub_template_for_org_partition_spec)
+  defp build_get_oidc_custom_sub_template_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_oidc_custom_sub_template_for_org_partition_spec)
+
+    %{
       id: "oidc/get-oidc-custom-sub-template-for-org",
+      args: params,
+      call: {__MODULE__, :get_oidc_custom_sub_template_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/actions/oidc/customization/sub",
       path_params: partition.path_params,
@@ -290,16 +293,14 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :oidc, :get_oidc_custom_sub_template_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :get_oidc_custom_sub_template_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_oidc_custom_property_inclusions_for_enterprise_partition_spec %{
@@ -316,12 +317,12 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def list_oidc_custom_property_inclusions_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_oidc_custom_property_inclusions_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
 
-    Pristine.execute(runtime_client, operation, execute_opts)
+    request =
+      build_list_oidc_custom_property_inclusions_for_enterprise_request(client, params, opts)
+
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_oidc_custom_property_inclusions_for_enterprise(term(), map(), keyword()) ::
@@ -332,22 +333,26 @@ defmodule GitHubEx.Oidc do
         opts \\ []
       )
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_oidc_custom_property_inclusions_for_enterprise_operation(params) end,
+      fn ->
+        build_list_oidc_custom_property_inclusions_for_enterprise_request(client, params, opts)
+      end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -357,16 +362,21 @@ defmodule GitHubEx.Oidc do
     )
   end
 
-  defp build_list_oidc_custom_property_inclusions_for_enterprise_operation(params)
-       when is_map(params) do
+  defp build_list_oidc_custom_property_inclusions_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @list_oidc_custom_property_inclusions_for_enterprise_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "oidc/list-oidc-custom-property-inclusions-for-enterprise",
+      args: params,
+      call: {__MODULE__, :list_oidc_custom_property_inclusions_for_enterprise},
+      opts: opts,
       method: :get,
       path_template: "/enterprises/{enterprise}/actions/oidc/customization/properties/repo",
       path_params: partition.path_params,
@@ -381,14 +391,12 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :oidc, :list_oidc_custom_property_inclusions_for_enterprise],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :list_oidc_custom_property_inclusions_for_enterprise],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -396,7 +404,7 @@ defmodule GitHubEx.Oidc do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_oidc_custom_property_inclusions_for_org_partition_spec %{
@@ -413,34 +421,33 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def list_oidc_custom_property_inclusions_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_oidc_custom_property_inclusions_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_oidc_custom_property_inclusions_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_oidc_custom_property_inclusions_for_org(term(), map(), keyword()) ::
           Enumerable.t()
   def stream_list_oidc_custom_property_inclusions_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_oidc_custom_property_inclusions_for_org_operation(params) end,
+      fn -> build_list_oidc_custom_property_inclusions_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -450,15 +457,21 @@ defmodule GitHubEx.Oidc do
     )
   end
 
-  defp build_list_oidc_custom_property_inclusions_for_org_operation(params) when is_map(params) do
+  defp build_list_oidc_custom_property_inclusions_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @list_oidc_custom_property_inclusions_for_org_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "oidc/list-oidc-custom-property-inclusions-for-org",
+      args: params,
+      call: {__MODULE__, :list_oidc_custom_property_inclusions_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/actions/oidc/customization/properties/repo",
       path_params: partition.path_params,
@@ -473,14 +486,12 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :oidc, :list_oidc_custom_property_inclusions_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :list_oidc_custom_property_inclusions_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -488,7 +499,7 @@ defmodule GitHubEx.Oidc do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @update_oidc_custom_sub_template_for_org_partition_spec %{
@@ -505,23 +516,23 @@ defmodule GitHubEx.Oidc do
           {:ok, term()} | {:error, term()}
   def update_oidc_custom_sub_template_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_oidc_custom_sub_template_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_oidc_custom_sub_template_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_oidc_custom_sub_template_for_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @update_oidc_custom_sub_template_for_org_partition_spec
-      )
+  defp build_update_oidc_custom_sub_template_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @update_oidc_custom_sub_template_for_org_partition_spec)
+
+    %{
       id: "oidc/update-oidc-custom-sub-template-for-org",
+      args: params,
+      call: {__MODULE__, :update_oidc_custom_sub_template_for_org},
+      opts: opts,
       method: :put,
       path_template: "/orgs/{org}/actions/oidc/customization/sub",
       path_params: partition.path_params,
@@ -536,15 +547,22 @@ defmodule GitHubEx.Oidc do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :oidc, :update_oidc_custom_sub_template_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :oidc, :update_oidc_custom_sub_template_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

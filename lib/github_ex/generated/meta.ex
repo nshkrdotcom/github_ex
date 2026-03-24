@@ -3,6 +3,8 @@ defmodule GitHubEx.Meta do
   Generated Github Ex operations for meta.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @get_partition_spec %{
     path: [],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Meta do
   @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_partition_spec)
+  defp build_get_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "meta/get",
+      args: params,
+      call: {__MODULE__, :get},
+      opts: opts,
       method: :get,
       path_template: "/meta",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Meta do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :meta, :get],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :meta, :get],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_all_versions_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Meta do
   @spec get_all_versions(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_all_versions(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_all_versions_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_all_versions_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_all_versions_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_all_versions_partition_spec)
+  defp build_get_all_versions_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_all_versions_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "meta/get-all-versions",
+      args: params,
+      call: {__MODULE__, :get_all_versions},
+      opts: opts,
       method: :get,
       path_template: "/versions",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.Meta do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :meta, :get_all_versions],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :meta, :get_all_versions],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_octocat_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.Meta do
   @spec get_octocat(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_octocat(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_octocat_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_octocat_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_octocat_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_octocat_partition_spec)
+  defp build_get_octocat_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_octocat_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "meta/get-octocat",
+      args: params,
+      call: {__MODULE__, :get_octocat},
+      opts: opts,
       method: :get,
       path_template: "/octocat",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.Meta do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :meta, :get_octocat],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :meta, :get_octocat],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_zen_partition_spec %{
@@ -172,19 +174,21 @@ defmodule GitHubEx.Meta do
   @spec get_zen(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_zen(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_zen_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_zen_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_zen_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_zen_partition_spec)
+  defp build_get_zen_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_zen_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "meta/get-zen",
+      args: params,
+      call: {__MODULE__, :get_zen},
+      opts: opts,
       method: :get,
       path_template: "/zen",
       path_params: partition.path_params,
@@ -199,16 +203,14 @@ defmodule GitHubEx.Meta do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :meta, :get_zen],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :meta, :get_zen],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @root_partition_spec %{
@@ -224,19 +226,21 @@ defmodule GitHubEx.Meta do
   @spec root(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def root(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_root_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_root_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_root_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @root_partition_spec)
+  defp build_root_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @root_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "meta/root",
+      args: params,
+      call: {__MODULE__, :root},
+      opts: opts,
       method: :get,
       path_template: "/",
       path_params: partition.path_params,
@@ -251,15 +255,22 @@ defmodule GitHubEx.Meta do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :meta, :root],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :meta, :root],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

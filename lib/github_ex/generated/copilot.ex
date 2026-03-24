@@ -3,6 +3,8 @@ defmodule GitHubEx.Copilot do
   Generated Github Ex operations for copilot.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @add_copilot_seats_for_teams_partition_spec %{
     path: [{"org", :org}],
     auth: {"auth", :auth},
@@ -34,19 +36,21 @@ defmodule GitHubEx.Copilot do
   @spec add_copilot_seats_for_teams(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add_copilot_seats_for_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_copilot_seats_for_teams_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_copilot_seats_for_teams_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_copilot_seats_for_teams_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_copilot_seats_for_teams_partition_spec)
+  defp build_add_copilot_seats_for_teams_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_copilot_seats_for_teams_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/add-copilot-seats-for-teams",
+      args: params,
+      call: {__MODULE__, :add_copilot_seats_for_teams},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/copilot/billing/selected_teams",
       path_params: partition.path_params,
@@ -61,16 +65,14 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :copilot, :add_copilot_seats_for_teams],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :add_copilot_seats_for_teams],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_copilot_seats_for_users_partition_spec %{
@@ -104,19 +106,21 @@ defmodule GitHubEx.Copilot do
   @spec add_copilot_seats_for_users(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add_copilot_seats_for_users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_copilot_seats_for_users_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_copilot_seats_for_users_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_copilot_seats_for_users_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_copilot_seats_for_users_partition_spec)
+  defp build_add_copilot_seats_for_users_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_copilot_seats_for_users_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/add-copilot-seats-for-users",
+      args: params,
+      call: {__MODULE__, :add_copilot_seats_for_users},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/copilot/billing/selected_users",
       path_params: partition.path_params,
@@ -131,16 +135,14 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :copilot, :add_copilot_seats_for_users],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :add_copilot_seats_for_users],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @cancel_copilot_seat_assignment_for_teams_partition_spec %{
@@ -174,23 +176,23 @@ defmodule GitHubEx.Copilot do
           {:ok, term()} | {:error, term()}
   def cancel_copilot_seat_assignment_for_teams(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_cancel_copilot_seat_assignment_for_teams_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_cancel_copilot_seat_assignment_for_teams_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_cancel_copilot_seat_assignment_for_teams_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @cancel_copilot_seat_assignment_for_teams_partition_spec
-      )
+  defp build_cancel_copilot_seat_assignment_for_teams_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @cancel_copilot_seat_assignment_for_teams_partition_spec)
+
+    %{
       id: "copilot/cancel-copilot-seat-assignment-for-teams",
+      args: params,
+      call: {__MODULE__, :cancel_copilot_seat_assignment_for_teams},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/copilot/billing/selected_teams",
       path_params: partition.path_params,
@@ -205,16 +207,14 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :copilot, :cancel_copilot_seat_assignment_for_teams],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :cancel_copilot_seat_assignment_for_teams],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @cancel_copilot_seat_assignment_for_users_partition_spec %{
@@ -248,23 +248,23 @@ defmodule GitHubEx.Copilot do
           {:ok, term()} | {:error, term()}
   def cancel_copilot_seat_assignment_for_users(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_cancel_copilot_seat_assignment_for_users_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_cancel_copilot_seat_assignment_for_users_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_cancel_copilot_seat_assignment_for_users_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @cancel_copilot_seat_assignment_for_users_partition_spec
-      )
+  defp build_cancel_copilot_seat_assignment_for_users_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @cancel_copilot_seat_assignment_for_users_partition_spec)
+
+    %{
       id: "copilot/cancel-copilot-seat-assignment-for-users",
+      args: params,
+      call: {__MODULE__, :cancel_copilot_seat_assignment_for_users},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/copilot/billing/selected_users",
       path_params: partition.path_params,
@@ -279,16 +279,14 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :copilot, :cancel_copilot_seat_assignment_for_users],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :cancel_copilot_seat_assignment_for_users],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @copilot_content_exclusion_for_organization_partition_spec %{
@@ -305,23 +303,23 @@ defmodule GitHubEx.Copilot do
           {:ok, term()} | {:error, term()}
   def copilot_content_exclusion_for_organization(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_copilot_content_exclusion_for_organization_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_copilot_content_exclusion_for_organization_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_copilot_content_exclusion_for_organization_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @copilot_content_exclusion_for_organization_partition_spec
-      )
+  defp build_copilot_content_exclusion_for_organization_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @copilot_content_exclusion_for_organization_partition_spec)
+
+    %{
       id: "copilot/copilot-content-exclusion-for-organization",
+      args: params,
+      call: {__MODULE__, :copilot_content_exclusion_for_organization},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/copilot/content_exclusion",
       path_params: partition.path_params,
@@ -336,16 +334,14 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :copilot, :copilot_content_exclusion_for_organization],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :copilot_content_exclusion_for_organization],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @copilot_metrics_for_organization_partition_spec %{
@@ -367,33 +363,32 @@ defmodule GitHubEx.Copilot do
           {:ok, term()} | {:error, term()}
   def copilot_metrics_for_organization(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_copilot_metrics_for_organization_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_copilot_metrics_for_organization_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_copilot_metrics_for_organization(term(), map(), keyword()) :: Enumerable.t()
   def stream_copilot_metrics_for_organization(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_copilot_metrics_for_organization_operation(params) end,
+      fn -> build_copilot_metrics_for_organization_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -403,12 +398,16 @@ defmodule GitHubEx.Copilot do
     )
   end
 
-  defp build_copilot_metrics_for_organization_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @copilot_metrics_for_organization_partition_spec)
+  defp build_copilot_metrics_for_organization_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @copilot_metrics_for_organization_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/copilot-metrics-for-organization",
+      args: params,
+      call: {__MODULE__, :copilot_metrics_for_organization},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/copilot/metrics",
       path_params: partition.path_params,
@@ -423,14 +422,12 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :copilot, :copilot_metrics_for_organization],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :copilot_metrics_for_organization],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -438,7 +435,7 @@ defmodule GitHubEx.Copilot do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @copilot_metrics_for_team_partition_spec %{
@@ -459,33 +456,32 @@ defmodule GitHubEx.Copilot do
   @spec copilot_metrics_for_team(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def copilot_metrics_for_team(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_copilot_metrics_for_team_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_copilot_metrics_for_team_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_copilot_metrics_for_team(term(), map(), keyword()) :: Enumerable.t()
   def stream_copilot_metrics_for_team(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_copilot_metrics_for_team_operation(params) end,
+      fn -> build_copilot_metrics_for_team_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -495,11 +491,16 @@ defmodule GitHubEx.Copilot do
     )
   end
 
-  defp build_copilot_metrics_for_team_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @copilot_metrics_for_team_partition_spec)
+  defp build_copilot_metrics_for_team_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @copilot_metrics_for_team_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/copilot-metrics-for-team",
+      args: params,
+      call: {__MODULE__, :copilot_metrics_for_team},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/team/{team_slug}/copilot/metrics",
       path_params: partition.path_params,
@@ -514,14 +515,12 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :copilot, :copilot_metrics_for_team],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :copilot_metrics_for_team],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -529,7 +528,7 @@ defmodule GitHubEx.Copilot do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @get_copilot_organization_details_partition_spec %{
@@ -546,20 +545,21 @@ defmodule GitHubEx.Copilot do
           {:ok, term()} | {:error, term()}
   def get_copilot_organization_details(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_copilot_organization_details_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_copilot_organization_details_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_copilot_organization_details_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_copilot_organization_details_partition_spec)
+  defp build_get_copilot_organization_details_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_copilot_organization_details_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/get-copilot-organization-details",
+      args: params,
+      call: {__MODULE__, :get_copilot_organization_details},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/copilot/billing",
       path_params: partition.path_params,
@@ -574,16 +574,14 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :copilot, :get_copilot_organization_details],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :get_copilot_organization_details],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_copilot_seat_details_for_user_partition_spec %{
@@ -600,20 +598,21 @@ defmodule GitHubEx.Copilot do
           {:ok, term()} | {:error, term()}
   def get_copilot_seat_details_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_copilot_seat_details_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_copilot_seat_details_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_copilot_seat_details_for_user_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_copilot_seat_details_for_user_partition_spec)
+  defp build_get_copilot_seat_details_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_copilot_seat_details_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/get-copilot-seat-details-for-user",
+      args: params,
+      call: {__MODULE__, :get_copilot_seat_details_for_user},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/members/{username}/copilot",
       path_params: partition.path_params,
@@ -628,16 +627,14 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :copilot, :get_copilot_seat_details_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :get_copilot_seat_details_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_copilot_seats_partition_spec %{
@@ -653,33 +650,32 @@ defmodule GitHubEx.Copilot do
   @spec list_copilot_seats(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_copilot_seats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_copilot_seats_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_copilot_seats_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_copilot_seats(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_copilot_seats(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_copilot_seats_operation(params) end,
+      fn -> build_list_copilot_seats_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -689,11 +685,16 @@ defmodule GitHubEx.Copilot do
     )
   end
 
-  defp build_list_copilot_seats_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_copilot_seats_partition_spec)
+  defp build_list_copilot_seats_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_copilot_seats_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/list-copilot-seats",
+      args: params,
+      call: {__MODULE__, :list_copilot_seats},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/copilot/billing/seats",
       path_params: partition.path_params,
@@ -708,14 +709,12 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :copilot, :list_copilot_seats],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :list_copilot_seats],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["seats"],
@@ -723,7 +722,7 @@ defmodule GitHubEx.Copilot do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @set_copilot_content_exclusion_for_organization_partition_spec %{
@@ -740,24 +739,26 @@ defmodule GitHubEx.Copilot do
           {:ok, term()} | {:error, term()}
   def set_copilot_content_exclusion_for_organization(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_set_copilot_content_exclusion_for_organization_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_set_copilot_content_exclusion_for_organization_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_set_copilot_content_exclusion_for_organization_operation(params)
-       when is_map(params) do
+  defp build_set_copilot_content_exclusion_for_organization_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @set_copilot_content_exclusion_for_organization_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "copilot/set-copilot-content-exclusion-for-organization",
+      args: params,
+      call: {__MODULE__, :set_copilot_content_exclusion_for_organization},
+      opts: opts,
       method: :put,
       path_template: "/orgs/{org}/copilot/content_exclusion",
       path_params: partition.path_params,
@@ -772,15 +773,22 @@ defmodule GitHubEx.Copilot do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :copilot, :set_copilot_content_exclusion_for_organization],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :copilot, :set_copilot_content_exclusion_for_organization],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

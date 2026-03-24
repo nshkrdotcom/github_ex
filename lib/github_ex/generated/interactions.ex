@@ -3,6 +3,8 @@ defmodule GitHubEx.Interactions do
   Generated Github Ex operations for interactions.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @get_restrictions_for_authenticated_user_partition_spec %{
     path: [],
     auth: {"auth", :auth},
@@ -17,23 +19,23 @@ defmodule GitHubEx.Interactions do
           {:ok, term()} | {:error, term()}
   def get_restrictions_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_restrictions_for_authenticated_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_restrictions_for_authenticated_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_restrictions_for_authenticated_user_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @get_restrictions_for_authenticated_user_partition_spec
-      )
+  defp build_get_restrictions_for_authenticated_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_restrictions_for_authenticated_user_partition_spec)
+
+    %{
       id: "interactions/get-restrictions-for-authenticated-user",
+      args: params,
+      call: {__MODULE__, :get_restrictions_for_authenticated_user},
+      opts: opts,
       method: :get,
       path_template: "/user/interaction-limits",
       path_params: partition.path_params,
@@ -48,16 +50,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :interactions, :get_restrictions_for_authenticated_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :get_restrictions_for_authenticated_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_restrictions_for_org_partition_spec %{
@@ -73,19 +73,21 @@ defmodule GitHubEx.Interactions do
   @spec get_restrictions_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_restrictions_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_restrictions_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_restrictions_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_restrictions_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_restrictions_for_org_partition_spec)
+  defp build_get_restrictions_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_restrictions_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "interactions/get-restrictions-for-org",
+      args: params,
+      call: {__MODULE__, :get_restrictions_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/interaction-limits",
       path_params: partition.path_params,
@@ -100,16 +102,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :interactions, :get_restrictions_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :get_restrictions_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_restrictions_for_repo_partition_spec %{
@@ -125,19 +125,21 @@ defmodule GitHubEx.Interactions do
   @spec get_restrictions_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_restrictions_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_restrictions_for_repo_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_restrictions_for_repo_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_restrictions_for_repo_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_restrictions_for_repo_partition_spec)
+  defp build_get_restrictions_for_repo_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_restrictions_for_repo_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "interactions/get-restrictions-for-repo",
+      args: params,
+      call: {__MODULE__, :get_restrictions_for_repo},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/interaction-limits",
       path_params: partition.path_params,
@@ -152,16 +154,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :interactions, :get_restrictions_for_repo],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :get_restrictions_for_repo],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_restrictions_for_authenticated_user_partition_spec %{
@@ -178,23 +178,23 @@ defmodule GitHubEx.Interactions do
           {:ok, term()} | {:error, term()}
   def remove_restrictions_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_restrictions_for_authenticated_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_restrictions_for_authenticated_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_restrictions_for_authenticated_user_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @remove_restrictions_for_authenticated_user_partition_spec
-      )
+  defp build_remove_restrictions_for_authenticated_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @remove_restrictions_for_authenticated_user_partition_spec)
+
+    %{
       id: "interactions/remove-restrictions-for-authenticated-user",
+      args: params,
+      call: {__MODULE__, :remove_restrictions_for_authenticated_user},
+      opts: opts,
       method: :delete,
       path_template: "/user/interaction-limits",
       path_params: partition.path_params,
@@ -209,16 +209,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :interactions, :remove_restrictions_for_authenticated_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :remove_restrictions_for_authenticated_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_restrictions_for_org_partition_spec %{
@@ -234,19 +232,21 @@ defmodule GitHubEx.Interactions do
   @spec remove_restrictions_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def remove_restrictions_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_restrictions_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_restrictions_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_restrictions_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @remove_restrictions_for_org_partition_spec)
+  defp build_remove_restrictions_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_restrictions_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "interactions/remove-restrictions-for-org",
+      args: params,
+      call: {__MODULE__, :remove_restrictions_for_org},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/interaction-limits",
       path_params: partition.path_params,
@@ -261,16 +261,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :interactions, :remove_restrictions_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :remove_restrictions_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_restrictions_for_repo_partition_spec %{
@@ -286,19 +284,21 @@ defmodule GitHubEx.Interactions do
   @spec remove_restrictions_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def remove_restrictions_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_restrictions_for_repo_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_restrictions_for_repo_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_restrictions_for_repo_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @remove_restrictions_for_repo_partition_spec)
+  defp build_remove_restrictions_for_repo_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_restrictions_for_repo_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "interactions/remove-restrictions-for-repo",
+      args: params,
+      call: {__MODULE__, :remove_restrictions_for_repo},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/interaction-limits",
       path_params: partition.path_params,
@@ -313,16 +313,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :interactions, :remove_restrictions_for_repo],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :remove_restrictions_for_repo],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @set_restrictions_for_authenticated_user_partition_spec %{
@@ -339,23 +337,23 @@ defmodule GitHubEx.Interactions do
           {:ok, term()} | {:error, term()}
   def set_restrictions_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_set_restrictions_for_authenticated_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_set_restrictions_for_authenticated_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_set_restrictions_for_authenticated_user_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @set_restrictions_for_authenticated_user_partition_spec
-      )
+  defp build_set_restrictions_for_authenticated_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @set_restrictions_for_authenticated_user_partition_spec)
+
+    %{
       id: "interactions/set-restrictions-for-authenticated-user",
+      args: params,
+      call: {__MODULE__, :set_restrictions_for_authenticated_user},
+      opts: opts,
       method: :put,
       path_template: "/user/interaction-limits",
       path_params: partition.path_params,
@@ -370,16 +368,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :interactions, :set_restrictions_for_authenticated_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :set_restrictions_for_authenticated_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @set_restrictions_for_org_partition_spec %{
@@ -395,19 +391,21 @@ defmodule GitHubEx.Interactions do
   @spec set_restrictions_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def set_restrictions_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_set_restrictions_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_set_restrictions_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_set_restrictions_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @set_restrictions_for_org_partition_spec)
+  defp build_set_restrictions_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @set_restrictions_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "interactions/set-restrictions-for-org",
+      args: params,
+      call: {__MODULE__, :set_restrictions_for_org},
+      opts: opts,
       method: :put,
       path_template: "/orgs/{org}/interaction-limits",
       path_params: partition.path_params,
@@ -422,16 +420,14 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :interactions, :set_restrictions_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :set_restrictions_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @set_restrictions_for_repo_partition_spec %{
@@ -447,19 +443,21 @@ defmodule GitHubEx.Interactions do
   @spec set_restrictions_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def set_restrictions_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_set_restrictions_for_repo_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_set_restrictions_for_repo_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_set_restrictions_for_repo_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @set_restrictions_for_repo_partition_spec)
+  defp build_set_restrictions_for_repo_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @set_restrictions_for_repo_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "interactions/set-restrictions-for-repo",
+      args: params,
+      call: {__MODULE__, :set_restrictions_for_repo},
+      opts: opts,
       method: :put,
       path_template: "/repos/{owner}/{repo}/interaction-limits",
       path_params: partition.path_params,
@@ -474,15 +472,22 @@ defmodule GitHubEx.Interactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :interactions, :set_restrictions_for_repo],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :interactions, :set_restrictions_for_repo],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

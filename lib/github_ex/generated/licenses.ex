@@ -3,6 +3,8 @@ defmodule GitHubEx.Licenses do
   Generated Github Ex operations for licenses.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @get_partition_spec %{
     path: [{"license", :license}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Licenses do
   @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_partition_spec)
+  defp build_get_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "licenses/get",
+      args: params,
+      call: {__MODULE__, :get},
+      opts: opts,
       method: :get,
       path_template: "/licenses/{license}",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Licenses do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :licenses, :get],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :licenses, :get],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_all_commonly_used_partition_spec %{
@@ -68,33 +70,32 @@ defmodule GitHubEx.Licenses do
   @spec get_all_commonly_used(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_all_commonly_used(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_all_commonly_used_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_all_commonly_used_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_get_all_commonly_used(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_all_commonly_used(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_get_all_commonly_used_operation(params) end,
+      fn -> build_get_all_commonly_used_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -104,11 +105,16 @@ defmodule GitHubEx.Licenses do
     )
   end
 
-  defp build_get_all_commonly_used_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_all_commonly_used_partition_spec)
+  defp build_get_all_commonly_used_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_all_commonly_used_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "licenses/get-all-commonly-used",
+      args: params,
+      call: {__MODULE__, :get_all_commonly_used},
+      opts: opts,
       method: :get,
       path_template: "/licenses",
       path_params: partition.path_params,
@@ -123,14 +129,12 @@ defmodule GitHubEx.Licenses do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :licenses, :get_all_commonly_used],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :licenses, :get_all_commonly_used],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -138,7 +142,7 @@ defmodule GitHubEx.Licenses do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @get_for_repo_partition_spec %{
@@ -154,19 +158,21 @@ defmodule GitHubEx.Licenses do
   @spec get_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_for_repo_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_for_repo_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_for_repo_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_for_repo_partition_spec)
+  defp build_get_for_repo_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_for_repo_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "licenses/get-for-repo",
+      args: params,
+      call: {__MODULE__, :get_for_repo},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/license",
       path_params: partition.path_params,
@@ -181,15 +187,22 @@ defmodule GitHubEx.Licenses do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :licenses, :get_for_repo],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :licenses, :get_for_repo],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

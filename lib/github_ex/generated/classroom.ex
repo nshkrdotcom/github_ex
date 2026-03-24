@@ -3,6 +3,8 @@ defmodule GitHubEx.Classroom do
   Generated Github Ex operations for classroom.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @get_a_classroom_partition_spec %{
     path: [{"classroom_id", :classroom_id}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Classroom do
   @spec get_a_classroom(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_a_classroom(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_a_classroom_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_a_classroom_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_a_classroom_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_a_classroom_partition_spec)
+  defp build_get_a_classroom_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_a_classroom_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "classroom/get-a-classroom",
+      args: params,
+      call: {__MODULE__, :get_a_classroom},
+      opts: opts,
       method: :get,
       path_template: "/classrooms/{classroom_id}",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Classroom do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :classroom, :get_a_classroom],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :classroom, :get_a_classroom],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_an_assignment_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Classroom do
   @spec get_an_assignment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_an_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_an_assignment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_an_assignment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_an_assignment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_an_assignment_partition_spec)
+  defp build_get_an_assignment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_an_assignment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "classroom/get-an-assignment",
+      args: params,
+      call: {__MODULE__, :get_an_assignment},
+      opts: opts,
       method: :get,
       path_template: "/assignments/{assignment_id}",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.Classroom do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :classroom, :get_an_assignment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :classroom, :get_an_assignment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_assignment_grades_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.Classroom do
   @spec get_assignment_grades(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_assignment_grades(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_assignment_grades_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_assignment_grades_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_assignment_grades_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_assignment_grades_partition_spec)
+  defp build_get_assignment_grades_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_assignment_grades_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "classroom/get-assignment-grades",
+      args: params,
+      call: {__MODULE__, :get_assignment_grades},
+      opts: opts,
       method: :get,
       path_template: "/assignments/{assignment_id}/grades",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.Classroom do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :classroom, :get_assignment_grades],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :classroom, :get_assignment_grades],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_accepted_assignments_for_an_assignment_partition_spec %{
@@ -173,34 +175,33 @@ defmodule GitHubEx.Classroom do
           {:ok, term()} | {:error, term()}
   def list_accepted_assignments_for_an_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_accepted_assignments_for_an_assignment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_accepted_assignments_for_an_assignment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_accepted_assignments_for_an_assignment(term(), map(), keyword()) ::
           Enumerable.t()
   def stream_list_accepted_assignments_for_an_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_accepted_assignments_for_an_assignment_operation(params) end,
+      fn -> build_list_accepted_assignments_for_an_assignment_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -210,15 +211,18 @@ defmodule GitHubEx.Classroom do
     )
   end
 
-  defp build_list_accepted_assignments_for_an_assignment_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @list_accepted_assignments_for_an_assignment_partition_spec
-      )
+  defp build_list_accepted_assignments_for_an_assignment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @list_accepted_assignments_for_an_assignment_partition_spec)
+
+    %{
       id: "classroom/list-accepted-assignments-for-an-assignment",
+      args: params,
+      call: {__MODULE__, :list_accepted_assignments_for_an_assignment},
+      opts: opts,
       method: :get,
       path_template: "/assignments/{assignment_id}/accepted_assignments",
       path_params: partition.path_params,
@@ -233,14 +237,12 @@ defmodule GitHubEx.Classroom do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :classroom, :list_accepted_assignments_for_an_assignment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :classroom, :list_accepted_assignments_for_an_assignment],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -248,7 +250,7 @@ defmodule GitHubEx.Classroom do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_assignments_for_a_classroom_partition_spec %{
@@ -265,33 +267,32 @@ defmodule GitHubEx.Classroom do
           {:ok, term()} | {:error, term()}
   def list_assignments_for_a_classroom(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_assignments_for_a_classroom_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_assignments_for_a_classroom_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_assignments_for_a_classroom(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_assignments_for_a_classroom(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_assignments_for_a_classroom_operation(params) end,
+      fn -> build_list_assignments_for_a_classroom_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -301,12 +302,16 @@ defmodule GitHubEx.Classroom do
     )
   end
 
-  defp build_list_assignments_for_a_classroom_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @list_assignments_for_a_classroom_partition_spec)
+  defp build_list_assignments_for_a_classroom_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_assignments_for_a_classroom_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "classroom/list-assignments-for-a-classroom",
+      args: params,
+      call: {__MODULE__, :list_assignments_for_a_classroom},
+      opts: opts,
       method: :get,
       path_template: "/classrooms/{classroom_id}/assignments",
       path_params: partition.path_params,
@@ -321,14 +326,12 @@ defmodule GitHubEx.Classroom do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :classroom, :list_assignments_for_a_classroom],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :classroom, :list_assignments_for_a_classroom],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -336,7 +339,7 @@ defmodule GitHubEx.Classroom do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_classrooms_partition_spec %{
@@ -352,33 +355,32 @@ defmodule GitHubEx.Classroom do
   @spec list_classrooms(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_classrooms(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_classrooms_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_classrooms_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_classrooms(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_classrooms(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_classrooms_operation(params) end,
+      fn -> build_list_classrooms_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -388,11 +390,16 @@ defmodule GitHubEx.Classroom do
     )
   end
 
-  defp build_list_classrooms_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_classrooms_partition_spec)
+  defp build_list_classrooms_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_classrooms_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "classroom/list-classrooms",
+      args: params,
+      call: {__MODULE__, :list_classrooms},
+      opts: opts,
       method: :get,
       path_template: "/classrooms",
       path_params: partition.path_params,
@@ -407,14 +414,12 @@ defmodule GitHubEx.Classroom do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :classroom, :list_classrooms],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :classroom, :list_classrooms],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -422,6 +427,15 @@ defmodule GitHubEx.Classroom do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

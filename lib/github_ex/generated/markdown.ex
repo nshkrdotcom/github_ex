@@ -3,6 +3,8 @@ defmodule GitHubEx.Markdown do
   Generated Github Ex operations for markdown.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @render_partition_spec %{
     path: [],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Markdown do
   @spec render(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def render(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_render_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_render_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_render_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @render_partition_spec)
+  defp build_render_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @render_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "markdown/render",
+      args: params,
+      call: {__MODULE__, :render},
+      opts: opts,
       method: :post,
       path_template: "/markdown",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Markdown do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :markdown, :render],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :markdown, :render],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @render_raw_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Markdown do
   @spec render_raw(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def render_raw(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_render_raw_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_render_raw_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_render_raw_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @render_raw_partition_spec)
+  defp build_render_raw_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @render_raw_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "markdown/render-raw",
+      args: params,
+      call: {__MODULE__, :render_raw},
+      opts: opts,
       method: :post,
       path_template: "/markdown/raw",
       path_params: partition.path_params,
@@ -95,15 +99,22 @@ defmodule GitHubEx.Markdown do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :markdown, :render_raw],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :markdown, :render_raw],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

@@ -3,6 +3,8 @@ defmodule GitHubEx.Git do
   Generated Github Ex operations for git.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_blob_partition_spec %{
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Git do
   @spec create_blob(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_blob(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_blob_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_blob_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_blob_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_blob_partition_spec)
+  defp build_create_blob_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_blob_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/create-blob",
+      args: params,
+      call: {__MODULE__, :create_blob},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/git/blobs",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :git, :create_blob],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :create_blob],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_commit_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Git do
   @spec create_commit(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_commit(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_commit_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_commit_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_commit_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_commit_partition_spec)
+  defp build_create_commit_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_commit_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/create-commit",
+      args: params,
+      call: {__MODULE__, :create_commit},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/git/commits",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :git, :create_commit],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :create_commit],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_ref_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.Git do
   @spec create_ref(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_ref(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_ref_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_ref_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_ref_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_ref_partition_spec)
+  defp build_create_ref_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_ref_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/create-ref",
+      args: params,
+      call: {__MODULE__, :create_ref},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/git/refs",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :git, :create_ref],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :create_ref],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_tag_partition_spec %{
@@ -172,19 +174,21 @@ defmodule GitHubEx.Git do
   @spec create_tag(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_tag(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_tag_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_tag_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_tag_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_tag_partition_spec)
+  defp build_create_tag_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_tag_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/create-tag",
+      args: params,
+      call: {__MODULE__, :create_tag},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/git/tags",
       path_params: partition.path_params,
@@ -199,16 +203,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :git, :create_tag],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :create_tag],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_tree_partition_spec %{
@@ -234,19 +236,21 @@ defmodule GitHubEx.Git do
   @spec create_tree(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_tree(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_tree_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_tree_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_tree_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_tree_partition_spec)
+  defp build_create_tree_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_tree_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/create-tree",
+      args: params,
+      call: {__MODULE__, :create_tree},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/git/trees",
       path_params: partition.path_params,
@@ -261,16 +265,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :git, :create_tree],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :create_tree],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_ref_partition_spec %{
@@ -286,19 +288,21 @@ defmodule GitHubEx.Git do
   @spec delete_ref(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_ref(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_ref_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_ref_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_ref_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_ref_partition_spec)
+  defp build_delete_ref_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_ref_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/delete-ref",
+      args: params,
+      call: {__MODULE__, :delete_ref},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/git/refs/{ref}",
       path_params: partition.path_params,
@@ -313,16 +317,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :git, :delete_ref],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :delete_ref],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_blob_partition_spec %{
@@ -338,19 +340,21 @@ defmodule GitHubEx.Git do
   @spec get_blob(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_blob(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_blob_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_blob_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_blob_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_blob_partition_spec)
+  defp build_get_blob_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_blob_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/get-blob",
+      args: params,
+      call: {__MODULE__, :get_blob},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/git/blobs/{file_sha}",
       path_params: partition.path_params,
@@ -365,16 +369,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :git, :get_blob],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :get_blob],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_commit_partition_spec %{
@@ -391,7 +393,7 @@ defmodule GitHubEx.Git do
 
        Gets a Git [commit object](https://git-scm.com/book/en/v2/Git-Internals-Git-Objects).
 
-       To get the contents of a commit, see "[Get a commit](/rest/commits/commits#get-a-commit)."
+       To get the contents of a commit, see "[Get a commit](https://docs.github.com/rest/commits/commits#get-a-commit)."
 
        **Signature verification object**
 
@@ -428,19 +430,21 @@ defmodule GitHubEx.Git do
   @spec get_commit(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_commit(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_commit_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_commit_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_commit_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_commit_partition_spec)
+  defp build_get_commit_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_commit_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/get-commit",
+      args: params,
+      call: {__MODULE__, :get_commit},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/git/commits/{commit_sha}",
       path_params: partition.path_params,
@@ -455,16 +459,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :git, :get_commit],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :get_commit],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_ref_partition_spec %{
@@ -480,19 +482,21 @@ defmodule GitHubEx.Git do
   @spec get_ref(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_ref(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_ref_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_ref_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_ref_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_ref_partition_spec)
+  defp build_get_ref_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_ref_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/get-ref",
+      args: params,
+      call: {__MODULE__, :get_ref},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/git/ref/{ref}",
       path_params: partition.path_params,
@@ -507,16 +511,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :git, :get_ref],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :get_ref],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_tag_partition_spec %{
@@ -532,19 +534,21 @@ defmodule GitHubEx.Git do
   @spec get_tag(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_tag(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_tag_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_tag_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_tag_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_tag_partition_spec)
+  defp build_get_tag_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_tag_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/get-tag",
+      args: params,
+      call: {__MODULE__, :get_tag},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/git/tags/{tag_sha}",
       path_params: partition.path_params,
@@ -559,16 +563,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :git, :get_tag],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :get_tag],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_tree_partition_spec %{
@@ -584,19 +586,21 @@ defmodule GitHubEx.Git do
   @spec get_tree(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_tree(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_tree_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_tree_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_tree_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_tree_partition_spec)
+  defp build_get_tree_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_tree_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/get-tree",
+      args: params,
+      call: {__MODULE__, :get_tree},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/git/trees/{tree_sha}",
       path_params: partition.path_params,
@@ -611,16 +615,14 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :git, :get_tree],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :get_tree],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_matching_refs_partition_spec %{
@@ -636,33 +638,32 @@ defmodule GitHubEx.Git do
   @spec list_matching_refs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_matching_refs(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_matching_refs_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_matching_refs_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_matching_refs(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_matching_refs(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_matching_refs_operation(params) end,
+      fn -> build_list_matching_refs_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -672,11 +673,16 @@ defmodule GitHubEx.Git do
     )
   end
 
-  defp build_list_matching_refs_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_matching_refs_partition_spec)
+  defp build_list_matching_refs_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_matching_refs_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/list-matching-refs",
+      args: params,
+      call: {__MODULE__, :list_matching_refs},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/git/matching-refs/{ref}",
       path_params: partition.path_params,
@@ -691,14 +697,12 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :git, :list_matching_refs],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :list_matching_refs],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -706,7 +710,7 @@ defmodule GitHubEx.Git do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @update_ref_partition_spec %{
@@ -722,19 +726,21 @@ defmodule GitHubEx.Git do
   @spec update_ref(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_ref(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_ref_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_ref_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_ref_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_ref_partition_spec)
+  defp build_update_ref_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_ref_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "git/update-ref",
+      args: params,
+      call: {__MODULE__, :update_ref},
+      opts: opts,
       method: :patch,
       path_template: "/repos/{owner}/{repo}/git/refs/{ref}",
       path_params: partition.path_params,
@@ -749,15 +755,22 @@ defmodule GitHubEx.Git do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :git, :update_ref],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :git, :update_ref],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

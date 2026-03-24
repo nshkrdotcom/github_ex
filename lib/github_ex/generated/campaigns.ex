@@ -3,6 +3,8 @@ defmodule GitHubEx.Campaigns do
   Generated Github Ex operations for campaigns.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_campaign_partition_spec %{
     path: [{"org", :org}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Campaigns do
   @spec create_campaign(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_campaign(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_campaign_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_campaign_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_campaign_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_campaign_partition_spec)
+  defp build_create_campaign_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_campaign_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "campaigns/create-campaign",
+      args: params,
+      call: {__MODULE__, :create_campaign},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/campaigns",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Campaigns do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :campaigns, :create_campaign],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :campaigns, :create_campaign],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_campaign_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Campaigns do
   @spec delete_campaign(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_campaign(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_campaign_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_campaign_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_campaign_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_campaign_partition_spec)
+  defp build_delete_campaign_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_campaign_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "campaigns/delete-campaign",
+      args: params,
+      call: {__MODULE__, :delete_campaign},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/campaigns/{campaign_number}",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.Campaigns do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :campaigns, :delete_campaign],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :campaigns, :delete_campaign],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_campaign_summary_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.Campaigns do
   @spec get_campaign_summary(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_campaign_summary(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_campaign_summary_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_campaign_summary_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_campaign_summary_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_campaign_summary_partition_spec)
+  defp build_get_campaign_summary_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_campaign_summary_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "campaigns/get-campaign-summary",
+      args: params,
+      call: {__MODULE__, :get_campaign_summary},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/campaigns/{campaign_number}",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.Campaigns do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :campaigns, :get_campaign_summary],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :campaigns, :get_campaign_summary],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_org_campaigns_partition_spec %{
@@ -178,33 +180,32 @@ defmodule GitHubEx.Campaigns do
   @spec list_org_campaigns(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_org_campaigns(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_org_campaigns_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_org_campaigns_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_org_campaigns(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_campaigns(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_org_campaigns_operation(params) end,
+      fn -> build_list_org_campaigns_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -214,11 +215,16 @@ defmodule GitHubEx.Campaigns do
     )
   end
 
-  defp build_list_org_campaigns_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_org_campaigns_partition_spec)
+  defp build_list_org_campaigns_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_org_campaigns_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "campaigns/list-org-campaigns",
+      args: params,
+      call: {__MODULE__, :list_org_campaigns},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/campaigns",
       path_params: partition.path_params,
@@ -233,14 +239,12 @@ defmodule GitHubEx.Campaigns do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :campaigns, :list_org_campaigns],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :campaigns, :list_org_campaigns],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -248,7 +252,7 @@ defmodule GitHubEx.Campaigns do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @update_campaign_partition_spec %{
@@ -264,19 +268,21 @@ defmodule GitHubEx.Campaigns do
   @spec update_campaign(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_campaign(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_campaign_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_campaign_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_campaign_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_campaign_partition_spec)
+  defp build_update_campaign_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_campaign_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "campaigns/update-campaign",
+      args: params,
+      call: {__MODULE__, :update_campaign},
+      opts: opts,
       method: :patch,
       path_template: "/orgs/{org}/campaigns/{campaign_number}",
       path_params: partition.path_params,
@@ -291,15 +297,22 @@ defmodule GitHubEx.Campaigns do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :campaigns, :update_campaign],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :campaigns, :update_campaign],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

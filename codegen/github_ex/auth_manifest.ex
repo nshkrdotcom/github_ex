@@ -6,6 +6,7 @@ defmodule GitHubEx.AuthManifest do
   alias PristineCodegen.{JSON, ProviderIR}
 
   @supported_methods ~w(get post put patch delete head options)
+  @relative_link_base "https://docs.github.com"
   @example_lookup_order [
     {"00_smoke.exs", "meta/root"},
     {"01_get_authenticated_user.exs", "users/get-authenticated"},
@@ -262,7 +263,7 @@ defmodule GitHubEx.AuthManifest do
             {AuthParser.normalize_endpoint_key(method, path),
              %{
                description: normalize_text(operation["description"]),
-               docs_url: get_in(operation, ["externalDocs", "url"]),
+               docs_url: normalize_url(get_in(operation, ["externalDocs", "url"])),
                enabled_for_github_apps: get_in(operation, ["x-github", "enabledForGitHubApps"]),
                operation_id: operation["operationId"],
                summary: normalize_text(operation["summary"])
@@ -846,5 +847,19 @@ defmodule GitHubEx.AuthManifest do
 
   defp normalize_text(nil), do: nil
   defp normalize_text(""), do: nil
-  defp normalize_text(value), do: String.trim(value)
+
+  defp normalize_text(value) do
+    value
+    |> String.trim()
+    |> replace_markdown_relative_links()
+  end
+
+  defp replace_markdown_relative_links(text) do
+    Regex.replace(~r/\]\((\/[^)]+)\)/, text, fn _match, relative_url ->
+      "](#{@relative_link_base}#{relative_url})"
+    end)
+  end
+
+  defp normalize_url("/" <> _rest = url), do: @relative_link_base <> url
+  defp normalize_url(url), do: url
 end

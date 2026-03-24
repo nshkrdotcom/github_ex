@@ -22,7 +22,8 @@ auth guidance comes from committed data instead of memory.
 Normal request-surface generation now flows through
 `codegen/github_ex/codegen/provider.ex`, the OpenAPI source plugin, the GitHub
 auth plugin, and the shared `pristine_codegen` compiler. Generated modules
-build `Pristine.Operation` values and call `Pristine.execute/3` directly, with
+build request maps, hand them to the generated-request bridge inside
+`GitHubEx.Client`, and ultimately execute through `Pristine.execute_request/3`, with
 compiler-emitted `stream_*` wrappers for paginated endpoints.
 
 ## Authentication Start Here

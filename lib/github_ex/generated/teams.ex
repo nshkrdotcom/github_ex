@@ -3,6 +3,8 @@ defmodule GitHubEx.Teams do
   Generated Github Ex operations for teams.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @add_member_legacy_partition_spec %{
     path: [{"team_id", :team_id}, {"username", :username}],
     auth: {"auth", :auth},
@@ -33,19 +35,21 @@ defmodule GitHubEx.Teams do
   @spec add_member_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add_member_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_member_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_member_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_member_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_member_legacy_partition_spec)
+  defp build_add_member_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_member_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/add-member-legacy",
+      args: params,
+      call: {__MODULE__, :add_member_legacy},
+      opts: opts,
       method: :put,
       path_template: "/teams/{team_id}/members/{username}",
       path_params: partition.path_params,
@@ -60,16 +64,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :add_member_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :add_member_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_or_update_membership_for_user_in_org_partition_spec %{
@@ -104,23 +106,23 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def add_or_update_membership_for_user_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_or_update_membership_for_user_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_or_update_membership_for_user_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_or_update_membership_for_user_in_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @add_or_update_membership_for_user_in_org_partition_spec
-      )
+  defp build_add_or_update_membership_for_user_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @add_or_update_membership_for_user_in_org_partition_spec)
+
+    %{
       id: "teams/add-or-update-membership-for-user-in-org",
+      args: params,
+      call: {__MODULE__, :add_or_update_membership_for_user_in_org},
+      opts: opts,
       method: :put,
       path_template: "/orgs/{org}/teams/{team_slug}/memberships/{username}",
       path_params: partition.path_params,
@@ -135,16 +137,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :add_or_update_membership_for_user_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :add_or_update_membership_for_user_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_or_update_membership_for_user_legacy_partition_spec %{
@@ -179,23 +179,23 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def add_or_update_membership_for_user_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_or_update_membership_for_user_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_or_update_membership_for_user_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_or_update_membership_for_user_legacy_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @add_or_update_membership_for_user_legacy_partition_spec
-      )
+  defp build_add_or_update_membership_for_user_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @add_or_update_membership_for_user_legacy_partition_spec)
+
+    %{
       id: "teams/add-or-update-membership-for-user-legacy",
+      args: params,
+      call: {__MODULE__, :add_or_update_membership_for_user_legacy},
+      opts: opts,
       method: :put,
       path_template: "/teams/{team_id}/memberships/{username}",
       path_params: partition.path_params,
@@ -210,16 +210,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :add_or_update_membership_for_user_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :add_or_update_membership_for_user_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_or_update_repo_permissions_in_org_partition_spec %{
@@ -252,20 +250,23 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def add_or_update_repo_permissions_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_or_update_repo_permissions_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_or_update_repo_permissions_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_or_update_repo_permissions_in_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @add_or_update_repo_permissions_in_org_partition_spec)
+  defp build_add_or_update_repo_permissions_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @add_or_update_repo_permissions_in_org_partition_spec)
+
+    %{
       id: "teams/add-or-update-repo-permissions-in-org",
+      args: params,
+      call: {__MODULE__, :add_or_update_repo_permissions_in_org},
+      opts: opts,
       method: :put,
       path_template: "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}",
       path_params: partition.path_params,
@@ -280,16 +281,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :add_or_update_repo_permissions_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :add_or_update_repo_permissions_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_or_update_repo_permissions_legacy_partition_spec %{
@@ -317,20 +316,23 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def add_or_update_repo_permissions_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_or_update_repo_permissions_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_or_update_repo_permissions_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_or_update_repo_permissions_legacy_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @add_or_update_repo_permissions_legacy_partition_spec)
+  defp build_add_or_update_repo_permissions_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @add_or_update_repo_permissions_legacy_partition_spec)
+
+    %{
       id: "teams/add-or-update-repo-permissions-legacy",
+      args: params,
+      call: {__MODULE__, :add_or_update_repo_permissions_legacy},
+      opts: opts,
       method: :put,
       path_template: "/teams/{team_id}/repos/{owner}/{repo}",
       path_params: partition.path_params,
@@ -345,16 +347,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :add_or_update_repo_permissions_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :add_or_update_repo_permissions_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @check_permissions_for_repo_in_org_partition_spec %{
@@ -376,20 +376,21 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def check_permissions_for_repo_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_check_permissions_for_repo_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_check_permissions_for_repo_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_check_permissions_for_repo_in_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @check_permissions_for_repo_in_org_partition_spec)
+  defp build_check_permissions_for_repo_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @check_permissions_for_repo_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/check-permissions-for-repo-in-org",
+      args: params,
+      call: {__MODULE__, :check_permissions_for_repo_in_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}",
       path_params: partition.path_params,
@@ -404,16 +405,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :check_permissions_for_repo_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :check_permissions_for_repo_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @check_permissions_for_repo_legacy_partition_spec %{
@@ -430,20 +429,21 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def check_permissions_for_repo_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_check_permissions_for_repo_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_check_permissions_for_repo_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_check_permissions_for_repo_legacy_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @check_permissions_for_repo_legacy_partition_spec)
+  defp build_check_permissions_for_repo_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @check_permissions_for_repo_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/check-permissions-for-repo-legacy",
+      args: params,
+      call: {__MODULE__, :check_permissions_for_repo_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}/repos/{owner}/{repo}",
       path_params: partition.path_params,
@@ -458,16 +458,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :check_permissions_for_repo_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :check_permissions_for_repo_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_partition_spec %{
@@ -491,19 +489,21 @@ defmodule GitHubEx.Teams do
   @spec create(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_partition_spec)
+  defp build_create_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/create",
+      args: params,
+      call: {__MODULE__, :create},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/teams",
       path_params: partition.path_params,
@@ -518,16 +518,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :create],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :create],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_in_org_partition_spec %{
@@ -543,19 +541,21 @@ defmodule GitHubEx.Teams do
   @spec delete_in_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_in_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_in_org_partition_spec)
+  defp build_delete_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/delete-in-org",
+      args: params,
+      call: {__MODULE__, :delete_in_org},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/teams/{team_slug}",
       path_params: partition.path_params,
@@ -570,16 +570,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :teams, :delete_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :delete_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_legacy_partition_spec %{
@@ -595,19 +593,21 @@ defmodule GitHubEx.Teams do
   @spec delete_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_legacy_partition_spec)
+  defp build_delete_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/delete-legacy",
+      args: params,
+      call: {__MODULE__, :delete_legacy},
+      opts: opts,
       method: :delete,
       path_template: "/teams/{team_id}",
       path_params: partition.path_params,
@@ -622,16 +622,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :teams, :delete_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :delete_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_by_name_partition_spec %{
@@ -647,19 +645,21 @@ defmodule GitHubEx.Teams do
   @spec get_by_name(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_by_name(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_by_name_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_by_name_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_by_name_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_by_name_partition_spec)
+  defp build_get_by_name_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_by_name_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/get-by-name",
+      args: params,
+      call: {__MODULE__, :get_by_name},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams/{team_slug}",
       path_params: partition.path_params,
@@ -674,16 +674,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :get_by_name],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :get_by_name],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_legacy_partition_spec %{
@@ -699,19 +697,21 @@ defmodule GitHubEx.Teams do
   @spec get_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_legacy_partition_spec)
+  defp build_get_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/get-legacy",
+      args: params,
+      call: {__MODULE__, :get_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}",
       path_params: partition.path_params,
@@ -726,16 +726,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :get_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :get_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_member_legacy_partition_spec %{
@@ -751,19 +749,21 @@ defmodule GitHubEx.Teams do
   @spec get_member_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_member_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_member_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_member_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_member_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_member_legacy_partition_spec)
+  defp build_get_member_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_member_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/get-member-legacy",
+      args: params,
+      call: {__MODULE__, :get_member_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}/members/{username}",
       path_params: partition.path_params,
@@ -778,16 +778,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :get_member_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :get_member_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_membership_for_user_in_org_partition_spec %{
@@ -804,20 +802,21 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def get_membership_for_user_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_membership_for_user_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_membership_for_user_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_membership_for_user_in_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_membership_for_user_in_org_partition_spec)
+  defp build_get_membership_for_user_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_membership_for_user_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/get-membership-for-user-in-org",
+      args: params,
+      call: {__MODULE__, :get_membership_for_user_in_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams/{team_slug}/memberships/{username}",
       path_params: partition.path_params,
@@ -832,16 +831,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :get_membership_for_user_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :get_membership_for_user_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_membership_for_user_legacy_partition_spec %{
@@ -858,20 +855,21 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def get_membership_for_user_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_membership_for_user_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_membership_for_user_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_membership_for_user_legacy_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_membership_for_user_legacy_partition_spec)
+  defp build_get_membership_for_user_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_membership_for_user_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/get-membership-for-user-legacy",
+      args: params,
+      call: {__MODULE__, :get_membership_for_user_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}/memberships/{username}",
       path_params: partition.path_params,
@@ -886,16 +884,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :get_membership_for_user_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :get_membership_for_user_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_partition_spec %{
@@ -911,33 +907,32 @@ defmodule GitHubEx.Teams do
   @spec list(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list(term(), map(), keyword()) :: Enumerable.t()
   def stream_list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_operation(params) end,
+      fn -> build_list_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -947,11 +942,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_partition_spec)
+  defp build_list_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list",
+      args: params,
+      call: {__MODULE__, :list},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams",
       path_params: partition.path_params,
@@ -966,14 +966,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -981,7 +979,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_child_in_org_partition_spec %{
@@ -997,33 +995,32 @@ defmodule GitHubEx.Teams do
   @spec list_child_in_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_child_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_child_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_child_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_child_in_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_child_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_child_in_org_operation(params) end,
+      fn -> build_list_child_in_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1033,11 +1030,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_child_in_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_child_in_org_partition_spec)
+  defp build_list_child_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_child_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-child-in-org",
+      args: params,
+      call: {__MODULE__, :list_child_in_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams/{team_slug}/teams",
       path_params: partition.path_params,
@@ -1052,14 +1054,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_child_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_child_in_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1067,7 +1067,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_child_legacy_partition_spec %{
@@ -1083,33 +1083,32 @@ defmodule GitHubEx.Teams do
   @spec list_child_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_child_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_child_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_child_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_child_legacy(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_child_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_child_legacy_operation(params) end,
+      fn -> build_list_child_legacy_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1119,11 +1118,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_child_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_child_legacy_partition_spec)
+  defp build_list_child_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_child_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-child-legacy",
+      args: params,
+      call: {__MODULE__, :list_child_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}/teams",
       path_params: partition.path_params,
@@ -1138,14 +1142,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_child_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_child_legacy],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1153,7 +1155,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_for_authenticated_user_partition_spec %{
@@ -1169,33 +1171,32 @@ defmodule GitHubEx.Teams do
   @spec list_for_authenticated_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_authenticated_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_authenticated_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_authenticated_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_authenticated_user_operation(params) end,
+      fn -> build_list_for_authenticated_user_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1205,11 +1206,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_for_authenticated_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_for_authenticated_user_partition_spec)
+  defp build_list_for_authenticated_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_for_authenticated_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-for-authenticated-user",
+      args: params,
+      call: {__MODULE__, :list_for_authenticated_user},
+      opts: opts,
       method: :get,
       path_template: "/user/teams",
       path_params: partition.path_params,
@@ -1224,14 +1230,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_for_authenticated_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_for_authenticated_user],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1239,7 +1243,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_members_in_org_partition_spec %{
@@ -1255,33 +1259,32 @@ defmodule GitHubEx.Teams do
   @spec list_members_in_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_members_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_members_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_members_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_members_in_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_members_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_members_in_org_operation(params) end,
+      fn -> build_list_members_in_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1291,11 +1294,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_members_in_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_members_in_org_partition_spec)
+  defp build_list_members_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_members_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-members-in-org",
+      args: params,
+      call: {__MODULE__, :list_members_in_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams/{team_slug}/members",
       path_params: partition.path_params,
@@ -1310,14 +1318,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_members_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_members_in_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1325,7 +1331,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_members_legacy_partition_spec %{
@@ -1341,33 +1347,32 @@ defmodule GitHubEx.Teams do
   @spec list_members_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_members_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_members_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_members_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_members_legacy(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_members_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_members_legacy_operation(params) end,
+      fn -> build_list_members_legacy_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1377,11 +1382,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_members_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_members_legacy_partition_spec)
+  defp build_list_members_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_members_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-members-legacy",
+      args: params,
+      call: {__MODULE__, :list_members_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}/members",
       path_params: partition.path_params,
@@ -1396,14 +1406,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_members_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_members_legacy],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1411,7 +1419,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_pending_invitations_in_org_partition_spec %{
@@ -1428,33 +1436,32 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def list_pending_invitations_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_pending_invitations_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_pending_invitations_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_pending_invitations_in_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_pending_invitations_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_pending_invitations_in_org_operation(params) end,
+      fn -> build_list_pending_invitations_in_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1464,12 +1471,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_pending_invitations_in_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @list_pending_invitations_in_org_partition_spec)
+  defp build_list_pending_invitations_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_pending_invitations_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-pending-invitations-in-org",
+      args: params,
+      call: {__MODULE__, :list_pending_invitations_in_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams/{team_slug}/invitations",
       path_params: partition.path_params,
@@ -1484,14 +1495,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_pending_invitations_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_pending_invitations_in_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1499,7 +1508,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_pending_invitations_legacy_partition_spec %{
@@ -1516,33 +1525,32 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def list_pending_invitations_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_pending_invitations_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_pending_invitations_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_pending_invitations_legacy(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_pending_invitations_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_pending_invitations_legacy_operation(params) end,
+      fn -> build_list_pending_invitations_legacy_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1552,12 +1560,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_pending_invitations_legacy_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @list_pending_invitations_legacy_partition_spec)
+  defp build_list_pending_invitations_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_pending_invitations_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-pending-invitations-legacy",
+      args: params,
+      call: {__MODULE__, :list_pending_invitations_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}/invitations",
       path_params: partition.path_params,
@@ -1572,14 +1584,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_pending_invitations_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_pending_invitations_legacy],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1587,7 +1597,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_repos_in_org_partition_spec %{
@@ -1603,33 +1613,32 @@ defmodule GitHubEx.Teams do
   @spec list_repos_in_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_repos_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_repos_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_repos_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_repos_in_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_repos_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_repos_in_org_operation(params) end,
+      fn -> build_list_repos_in_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1639,11 +1648,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_repos_in_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_repos_in_org_partition_spec)
+  defp build_list_repos_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_repos_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-repos-in-org",
+      args: params,
+      call: {__MODULE__, :list_repos_in_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/teams/{team_slug}/repos",
       path_params: partition.path_params,
@@ -1658,14 +1672,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_repos_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_repos_in_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1673,7 +1685,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_repos_legacy_partition_spec %{
@@ -1689,33 +1701,32 @@ defmodule GitHubEx.Teams do
   @spec list_repos_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_repos_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_repos_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_repos_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_repos_legacy(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_repos_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_repos_legacy_operation(params) end,
+      fn -> build_list_repos_legacy_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1725,11 +1736,16 @@ defmodule GitHubEx.Teams do
     )
   end
 
-  defp build_list_repos_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_repos_legacy_partition_spec)
+  defp build_list_repos_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_repos_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/list-repos-legacy",
+      args: params,
+      call: {__MODULE__, :list_repos_legacy},
+      opts: opts,
       method: :get,
       path_template: "/teams/{team_id}/repos",
       path_params: partition.path_params,
@@ -1744,14 +1760,12 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :teams, :list_repos_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :list_repos_legacy],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1759,7 +1773,7 @@ defmodule GitHubEx.Teams do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @remove_member_legacy_partition_spec %{
@@ -1790,19 +1804,21 @@ defmodule GitHubEx.Teams do
   @spec remove_member_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def remove_member_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_member_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_member_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_member_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @remove_member_legacy_partition_spec)
+  defp build_remove_member_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_member_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/remove-member-legacy",
+      args: params,
+      call: {__MODULE__, :remove_member_legacy},
+      opts: opts,
       method: :delete,
       path_template: "/teams/{team_id}/members/{username}",
       path_params: partition.path_params,
@@ -1817,16 +1833,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :teams, :remove_member_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :remove_member_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_membership_for_user_in_org_partition_spec %{
@@ -1843,20 +1857,21 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def remove_membership_for_user_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_membership_for_user_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_membership_for_user_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_membership_for_user_in_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @remove_membership_for_user_in_org_partition_spec)
+  defp build_remove_membership_for_user_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_membership_for_user_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/remove-membership-for-user-in-org",
+      args: params,
+      call: {__MODULE__, :remove_membership_for_user_in_org},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/teams/{team_slug}/memberships/{username}",
       path_params: partition.path_params,
@@ -1871,16 +1886,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :teams, :remove_membership_for_user_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :remove_membership_for_user_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_membership_for_user_legacy_partition_spec %{
@@ -1897,20 +1910,21 @@ defmodule GitHubEx.Teams do
           {:ok, term()} | {:error, term()}
   def remove_membership_for_user_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_membership_for_user_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_membership_for_user_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_membership_for_user_legacy_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @remove_membership_for_user_legacy_partition_spec)
+  defp build_remove_membership_for_user_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_membership_for_user_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/remove-membership-for-user-legacy",
+      args: params,
+      call: {__MODULE__, :remove_membership_for_user_legacy},
+      opts: opts,
       method: :delete,
       path_template: "/teams/{team_id}/memberships/{username}",
       path_params: partition.path_params,
@@ -1925,16 +1939,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :teams, :remove_membership_for_user_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :remove_membership_for_user_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_repo_in_org_partition_spec %{
@@ -1955,19 +1967,21 @@ defmodule GitHubEx.Teams do
   @spec remove_repo_in_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def remove_repo_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_repo_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_repo_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_repo_in_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @remove_repo_in_org_partition_spec)
+  defp build_remove_repo_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_repo_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/remove-repo-in-org",
+      args: params,
+      call: {__MODULE__, :remove_repo_in_org},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}",
       path_params: partition.path_params,
@@ -1982,16 +1996,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :teams, :remove_repo_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :remove_repo_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_repo_legacy_partition_spec %{
@@ -2007,19 +2019,21 @@ defmodule GitHubEx.Teams do
   @spec remove_repo_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def remove_repo_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_repo_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_repo_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_repo_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @remove_repo_legacy_partition_spec)
+  defp build_remove_repo_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_repo_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/remove-repo-legacy",
+      args: params,
+      call: {__MODULE__, :remove_repo_legacy},
+      opts: opts,
       method: :delete,
       path_template: "/teams/{team_id}/repos/{owner}/{repo}",
       path_params: partition.path_params,
@@ -2034,16 +2048,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :teams, :remove_repo_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :remove_repo_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_in_org_partition_spec %{
@@ -2059,19 +2071,21 @@ defmodule GitHubEx.Teams do
   @spec update_in_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_in_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_in_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_in_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_in_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_in_org_partition_spec)
+  defp build_update_in_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_in_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/update-in-org",
+      args: params,
+      call: {__MODULE__, :update_in_org},
+      opts: opts,
       method: :patch,
       path_template: "/orgs/{org}/teams/{team_slug}",
       path_params: partition.path_params,
@@ -2086,16 +2100,14 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :update_in_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :update_in_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_legacy_partition_spec %{
@@ -2111,19 +2123,21 @@ defmodule GitHubEx.Teams do
   @spec update_legacy(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_legacy(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_legacy_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_legacy_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_legacy_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_legacy_partition_spec)
+  defp build_update_legacy_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_legacy_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "teams/update-legacy",
+      args: params,
+      call: {__MODULE__, :update_legacy},
+      opts: opts,
       method: :patch,
       path_template: "/teams/{team_id}",
       path_params: partition.path_params,
@@ -2138,15 +2152,22 @@ defmodule GitHubEx.Teams do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :teams, :update_legacy],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :teams, :update_legacy],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

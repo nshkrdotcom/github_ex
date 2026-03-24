@@ -3,6 +3,8 @@ defmodule GitHubEx.Reactions do
   Generated Github Ex operations for reactions.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_for_commit_comment_partition_spec %{
     path: [{"owner", :owner}, {"repo", :repo}, {"comment_id", :comment_id}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Reactions do
   @spec create_for_commit_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_for_commit_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_for_commit_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_for_commit_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_for_commit_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_for_commit_comment_partition_spec)
+  defp build_create_for_commit_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_for_commit_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/create-for-commit-comment",
+      args: params,
+      call: {__MODULE__, :create_for_commit_comment},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/comments/{comment_id}/reactions",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :reactions, :create_for_commit_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :create_for_commit_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_for_issue_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Reactions do
   @spec create_for_issue(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_for_issue(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_for_issue_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_for_issue_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_for_issue_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_for_issue_partition_spec)
+  defp build_create_for_issue_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_for_issue_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/create-for-issue",
+      args: params,
+      call: {__MODULE__, :create_for_issue},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/issues/{issue_number}/reactions",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :reactions, :create_for_issue],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :create_for_issue],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_for_issue_comment_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.Reactions do
   @spec create_for_issue_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_for_issue_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_for_issue_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_for_issue_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_for_issue_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_for_issue_comment_partition_spec)
+  defp build_create_for_issue_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_for_issue_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/create-for-issue-comment",
+      args: params,
+      call: {__MODULE__, :create_for_issue_comment},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :reactions, :create_for_issue_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :create_for_issue_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_for_pull_request_review_comment_partition_spec %{
@@ -173,20 +175,23 @@ defmodule GitHubEx.Reactions do
           {:ok, term()} | {:error, term()}
   def create_for_pull_request_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_for_pull_request_review_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_for_pull_request_review_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_for_pull_request_review_comment_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @create_for_pull_request_review_comment_partition_spec)
+  defp build_create_for_pull_request_review_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @create_for_pull_request_review_comment_partition_spec)
+
+    %{
       id: "reactions/create-for-pull-request-review-comment",
+      args: params,
+      call: {__MODULE__, :create_for_pull_request_review_comment},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
       path_params: partition.path_params,
@@ -201,16 +206,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :reactions, :create_for_pull_request_review_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :create_for_pull_request_review_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_for_release_partition_spec %{
@@ -226,19 +229,21 @@ defmodule GitHubEx.Reactions do
   @spec create_for_release(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_for_release(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_for_release_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_for_release_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_for_release_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_for_release_partition_spec)
+  defp build_create_for_release_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_for_release_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/create-for-release",
+      args: params,
+      call: {__MODULE__, :create_for_release},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/releases/{release_id}/reactions",
       path_params: partition.path_params,
@@ -253,16 +258,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :reactions, :create_for_release],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :create_for_release],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_for_commit_comment_partition_spec %{
@@ -283,19 +286,21 @@ defmodule GitHubEx.Reactions do
   @spec delete_for_commit_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_for_commit_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_for_commit_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_for_commit_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_for_commit_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_for_commit_comment_partition_spec)
+  defp build_delete_for_commit_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_for_commit_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/delete-for-commit-comment",
+      args: params,
+      call: {__MODULE__, :delete_for_commit_comment},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}",
       path_params: partition.path_params,
@@ -310,16 +315,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :reactions, :delete_for_commit_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :delete_for_commit_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_for_issue_partition_spec %{
@@ -340,19 +343,21 @@ defmodule GitHubEx.Reactions do
   @spec delete_for_issue(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_for_issue(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_for_issue_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_for_issue_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_for_issue_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_for_issue_partition_spec)
+  defp build_delete_for_issue_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_for_issue_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/delete-for-issue",
+      args: params,
+      call: {__MODULE__, :delete_for_issue},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}",
       path_params: partition.path_params,
@@ -367,16 +372,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :reactions, :delete_for_issue],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :delete_for_issue],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_for_issue_comment_partition_spec %{
@@ -397,19 +400,21 @@ defmodule GitHubEx.Reactions do
   @spec delete_for_issue_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_for_issue_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_for_issue_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_for_issue_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_for_issue_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_for_issue_comment_partition_spec)
+  defp build_delete_for_issue_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_for_issue_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/delete-for-issue-comment",
+      args: params,
+      call: {__MODULE__, :delete_for_issue_comment},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}",
       path_params: partition.path_params,
@@ -424,16 +429,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :reactions, :delete_for_issue_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :delete_for_issue_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_for_pull_request_comment_partition_spec %{
@@ -455,20 +458,21 @@ defmodule GitHubEx.Reactions do
           {:ok, term()} | {:error, term()}
   def delete_for_pull_request_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_for_pull_request_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_for_pull_request_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_for_pull_request_comment_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @delete_for_pull_request_comment_partition_spec)
+  defp build_delete_for_pull_request_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_for_pull_request_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/delete-for-pull-request-comment",
+      args: params,
+      call: {__MODULE__, :delete_for_pull_request_comment},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}",
       path_params: partition.path_params,
@@ -483,16 +487,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :reactions, :delete_for_pull_request_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :delete_for_pull_request_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_for_release_partition_spec %{
@@ -513,19 +515,21 @@ defmodule GitHubEx.Reactions do
   @spec delete_for_release(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_for_release(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_for_release_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_for_release_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_for_release_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_for_release_partition_spec)
+  defp build_delete_for_release_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_for_release_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/delete-for-release",
+      args: params,
+      call: {__MODULE__, :delete_for_release},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}",
       path_params: partition.path_params,
@@ -540,16 +544,14 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :reactions, :delete_for_release],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :delete_for_release],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_for_commit_comment_partition_spec %{
@@ -565,33 +567,32 @@ defmodule GitHubEx.Reactions do
   @spec list_for_commit_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_for_commit_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_commit_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_commit_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_commit_comment(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_commit_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_commit_comment_operation(params) end,
+      fn -> build_list_for_commit_comment_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -601,11 +602,16 @@ defmodule GitHubEx.Reactions do
     )
   end
 
-  defp build_list_for_commit_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_for_commit_comment_partition_spec)
+  defp build_list_for_commit_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_for_commit_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/list-for-commit-comment",
+      args: params,
+      call: {__MODULE__, :list_for_commit_comment},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/comments/{comment_id}/reactions",
       path_params: partition.path_params,
@@ -620,14 +626,12 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :reactions, :list_for_commit_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :list_for_commit_comment],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -635,7 +639,7 @@ defmodule GitHubEx.Reactions do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_for_issue_partition_spec %{
@@ -651,33 +655,32 @@ defmodule GitHubEx.Reactions do
   @spec list_for_issue(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_for_issue(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_issue_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_issue_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_issue(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_issue(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_issue_operation(params) end,
+      fn -> build_list_for_issue_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -687,11 +690,16 @@ defmodule GitHubEx.Reactions do
     )
   end
 
-  defp build_list_for_issue_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_for_issue_partition_spec)
+  defp build_list_for_issue_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_for_issue_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/list-for-issue",
+      args: params,
+      call: {__MODULE__, :list_for_issue},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/issues/{issue_number}/reactions",
       path_params: partition.path_params,
@@ -706,14 +714,12 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :reactions, :list_for_issue],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :list_for_issue],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -721,7 +727,7 @@ defmodule GitHubEx.Reactions do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_for_issue_comment_partition_spec %{
@@ -737,33 +743,32 @@ defmodule GitHubEx.Reactions do
   @spec list_for_issue_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_for_issue_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_issue_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_issue_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_issue_comment(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_issue_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_issue_comment_operation(params) end,
+      fn -> build_list_for_issue_comment_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -773,11 +778,16 @@ defmodule GitHubEx.Reactions do
     )
   end
 
-  defp build_list_for_issue_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_for_issue_comment_partition_spec)
+  defp build_list_for_issue_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_for_issue_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/list-for-issue-comment",
+      args: params,
+      call: {__MODULE__, :list_for_issue_comment},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions",
       path_params: partition.path_params,
@@ -792,14 +802,12 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :reactions, :list_for_issue_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :list_for_issue_comment],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -807,7 +815,7 @@ defmodule GitHubEx.Reactions do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_for_pull_request_review_comment_partition_spec %{
@@ -824,33 +832,32 @@ defmodule GitHubEx.Reactions do
           {:ok, term()} | {:error, term()}
   def list_for_pull_request_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_pull_request_review_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_pull_request_review_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_pull_request_review_comment(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_pull_request_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_pull_request_review_comment_operation(params) end,
+      fn -> build_list_for_pull_request_review_comment_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -860,12 +867,18 @@ defmodule GitHubEx.Reactions do
     )
   end
 
-  defp build_list_for_pull_request_review_comment_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @list_for_pull_request_review_comment_partition_spec)
+  defp build_list_for_pull_request_review_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @list_for_pull_request_review_comment_partition_spec)
+
+    %{
       id: "reactions/list-for-pull-request-review-comment",
+      args: params,
+      call: {__MODULE__, :list_for_pull_request_review_comment},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions",
       path_params: partition.path_params,
@@ -880,14 +893,12 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :reactions, :list_for_pull_request_review_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :list_for_pull_request_review_comment],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -895,7 +906,7 @@ defmodule GitHubEx.Reactions do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_for_release_partition_spec %{
@@ -911,33 +922,32 @@ defmodule GitHubEx.Reactions do
   @spec list_for_release(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_for_release(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_release_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_release_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_release(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_release(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_release_operation(params) end,
+      fn -> build_list_for_release_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -947,11 +957,16 @@ defmodule GitHubEx.Reactions do
     )
   end
 
-  defp build_list_for_release_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_for_release_partition_spec)
+  defp build_list_for_release_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_for_release_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "reactions/list-for-release",
+      args: params,
+      call: {__MODULE__, :list_for_release},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/releases/{release_id}/reactions",
       path_params: partition.path_params,
@@ -966,14 +981,12 @@ defmodule GitHubEx.Reactions do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :reactions, :list_for_release],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :reactions, :list_for_release],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -981,6 +994,15 @@ defmodule GitHubEx.Reactions do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

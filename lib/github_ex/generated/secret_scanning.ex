@@ -3,6 +3,8 @@ defmodule GitHubEx.SecretScanning do
   Generated Github Ex operations for secret scanning.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_push_protection_bypass_partition_spec %{
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
@@ -17,20 +19,21 @@ defmodule GitHubEx.SecretScanning do
           {:ok, term()} | {:error, term()}
   def create_push_protection_bypass(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_push_protection_bypass_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_push_protection_bypass_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_push_protection_bypass_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @create_push_protection_bypass_partition_spec)
+  defp build_create_push_protection_bypass_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_push_protection_bypass_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/create-push-protection-bypass",
+      args: params,
+      call: {__MODULE__, :create_push_protection_bypass},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/secret-scanning/push-protection-bypasses",
       path_params: partition.path_params,
@@ -45,16 +48,14 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :secret_scanning, :create_push_protection_bypass],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :create_push_protection_bypass],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_alert_partition_spec %{
@@ -70,19 +71,21 @@ defmodule GitHubEx.SecretScanning do
   @spec get_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_alert(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_alert_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_alert_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_alert_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_alert_partition_spec)
+  defp build_get_alert_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_alert_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/get-alert",
+      args: params,
+      call: {__MODULE__, :get_alert},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}",
       path_params: partition.path_params,
@@ -97,16 +100,14 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :secret_scanning, :get_alert],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :get_alert],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_scan_history_partition_spec %{
@@ -122,19 +123,21 @@ defmodule GitHubEx.SecretScanning do
   @spec get_scan_history(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_scan_history(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_scan_history_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_scan_history_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_scan_history_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_scan_history_partition_spec)
+  defp build_get_scan_history_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_scan_history_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/get-scan-history",
+      args: params,
+      call: {__MODULE__, :get_scan_history},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/secret-scanning/scan-history",
       path_params: partition.path_params,
@@ -149,16 +152,14 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :secret_scanning, :get_scan_history],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :get_scan_history],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_alerts_for_org_partition_spec %{
@@ -189,33 +190,32 @@ defmodule GitHubEx.SecretScanning do
   @spec list_alerts_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_alerts_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_alerts_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_alerts_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_alerts_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_alerts_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_alerts_for_org_operation(params) end,
+      fn -> build_list_alerts_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -225,11 +225,16 @@ defmodule GitHubEx.SecretScanning do
     )
   end
 
-  defp build_list_alerts_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_alerts_for_org_partition_spec)
+  defp build_list_alerts_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_alerts_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/list-alerts-for-org",
+      args: params,
+      call: {__MODULE__, :list_alerts_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/secret-scanning/alerts",
       path_params: partition.path_params,
@@ -244,14 +249,12 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :secret_scanning, :list_alerts_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :list_alerts_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -259,7 +262,7 @@ defmodule GitHubEx.SecretScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_alerts_for_repo_partition_spec %{
@@ -290,33 +293,32 @@ defmodule GitHubEx.SecretScanning do
   @spec list_alerts_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_alerts_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_alerts_for_repo_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_alerts_for_repo_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_alerts_for_repo(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_alerts_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_alerts_for_repo_operation(params) end,
+      fn -> build_list_alerts_for_repo_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -326,11 +328,16 @@ defmodule GitHubEx.SecretScanning do
     )
   end
 
-  defp build_list_alerts_for_repo_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_alerts_for_repo_partition_spec)
+  defp build_list_alerts_for_repo_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_alerts_for_repo_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/list-alerts-for-repo",
+      args: params,
+      call: {__MODULE__, :list_alerts_for_repo},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts",
       path_params: partition.path_params,
@@ -345,14 +352,12 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :secret_scanning, :list_alerts_for_repo],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :list_alerts_for_repo],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -360,7 +365,7 @@ defmodule GitHubEx.SecretScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_locations_for_alert_partition_spec %{
@@ -376,33 +381,32 @@ defmodule GitHubEx.SecretScanning do
   @spec list_locations_for_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_locations_for_alert(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_locations_for_alert_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_locations_for_alert_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_locations_for_alert(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_locations_for_alert(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_locations_for_alert_operation(params) end,
+      fn -> build_list_locations_for_alert_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -412,11 +416,16 @@ defmodule GitHubEx.SecretScanning do
     )
   end
 
-  defp build_list_locations_for_alert_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_locations_for_alert_partition_spec)
+  defp build_list_locations_for_alert_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_locations_for_alert_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/list-locations-for-alert",
+      args: params,
+      call: {__MODULE__, :list_locations_for_alert},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations",
       path_params: partition.path_params,
@@ -431,14 +440,12 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :secret_scanning, :list_locations_for_alert],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :list_locations_for_alert],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -446,7 +453,7 @@ defmodule GitHubEx.SecretScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_org_pattern_configs_partition_spec %{
@@ -462,19 +469,21 @@ defmodule GitHubEx.SecretScanning do
   @spec list_org_pattern_configs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_org_pattern_configs(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_org_pattern_configs_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_org_pattern_configs_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_list_org_pattern_configs_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_org_pattern_configs_partition_spec)
+  defp build_list_org_pattern_configs_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_org_pattern_configs_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/list-org-pattern-configs",
+      args: params,
+      call: {__MODULE__, :list_org_pattern_configs},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/secret-scanning/pattern-configurations",
       path_params: partition.path_params,
@@ -489,16 +498,14 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :secret_scanning, :list_org_pattern_configs],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :list_org_pattern_configs],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_alert_partition_spec %{
@@ -514,19 +521,21 @@ defmodule GitHubEx.SecretScanning do
   @spec update_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_alert(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_alert_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_alert_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_alert_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_alert_partition_spec)
+  defp build_update_alert_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_alert_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/update-alert",
+      args: params,
+      call: {__MODULE__, :update_alert},
+      opts: opts,
       method: :patch,
       path_template: "/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}",
       path_params: partition.path_params,
@@ -541,16 +550,14 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :secret_scanning, :update_alert],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :update_alert],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_org_pattern_configs_partition_spec %{
@@ -566,19 +573,21 @@ defmodule GitHubEx.SecretScanning do
   @spec update_org_pattern_configs(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_org_pattern_configs(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_org_pattern_configs_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_org_pattern_configs_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_org_pattern_configs_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_org_pattern_configs_partition_spec)
+  defp build_update_org_pattern_configs_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_org_pattern_configs_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "secret-scanning/update-org-pattern-configs",
+      args: params,
+      call: {__MODULE__, :update_org_pattern_configs},
+      opts: opts,
       method: :patch,
       path_template: "/orgs/{org}/secret-scanning/pattern-configurations",
       path_params: partition.path_params,
@@ -593,15 +602,22 @@ defmodule GitHubEx.SecretScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :secret_scanning, :update_org_pattern_configs],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :secret_scanning, :update_org_pattern_configs],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

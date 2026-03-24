@@ -3,6 +3,8 @@ defmodule GitHubEx.DependencyGraph do
   Generated Github Ex operations for dependency graph.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_repository_snapshot_partition_spec %{
     path: [{"owner", :owner}, {"repo", :repo}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.DependencyGraph do
   @spec create_repository_snapshot(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_repository_snapshot(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_repository_snapshot_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_repository_snapshot_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_repository_snapshot_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_repository_snapshot_partition_spec)
+  defp build_create_repository_snapshot_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_repository_snapshot_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "dependency-graph/create-repository-snapshot",
+      args: params,
+      call: {__MODULE__, :create_repository_snapshot},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/dependency-graph/snapshots",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.DependencyGraph do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :dependency_graph, :create_repository_snapshot],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :dependency_graph, :create_repository_snapshot],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @diff_range_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.DependencyGraph do
   @spec diff_range(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def diff_range(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_diff_range_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_diff_range_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_diff_range_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @diff_range_partition_spec)
+  defp build_diff_range_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @diff_range_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "dependency-graph/diff-range",
+      args: params,
+      call: {__MODULE__, :diff_range},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/dependency-graph/compare/{basehead}",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.DependencyGraph do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :dependency_graph, :diff_range],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :dependency_graph, :diff_range],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @export_sbom_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.DependencyGraph do
   @spec export_sbom(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def export_sbom(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_export_sbom_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_export_sbom_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_export_sbom_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @export_sbom_partition_spec)
+  defp build_export_sbom_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @export_sbom_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "dependency-graph/export-sbom",
+      args: params,
+      call: {__MODULE__, :export_sbom},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/dependency-graph/sbom",
       path_params: partition.path_params,
@@ -147,15 +151,22 @@ defmodule GitHubEx.DependencyGraph do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :dependency_graph, :export_sbom],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :dependency_graph, :export_sbom],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

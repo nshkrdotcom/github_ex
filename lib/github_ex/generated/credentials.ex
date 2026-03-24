@@ -3,6 +3,8 @@ defmodule GitHubEx.Credentials do
   Generated Github Ex operations for credentials.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @revoke_partition_spec %{
     path: [],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Credentials do
   @spec revoke(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def revoke(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_revoke_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_revoke_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_revoke_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @revoke_partition_spec)
+  defp build_revoke_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @revoke_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "credentials/revoke",
+      args: params,
+      call: {__MODULE__, :revoke},
+      opts: opts,
       method: :post,
       path_template: "/credentials/revoke",
       path_params: partition.path_params,
@@ -43,15 +47,22 @@ defmodule GitHubEx.Credentials do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :credentials, :revoke],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :credentials, :revoke],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

@@ -3,6 +3,8 @@ defmodule GitHubEx.PrivateRegistries do
   Generated Github Ex operations for private registries.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_org_private_registry_partition_spec %{
     path: [{"org", :org}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.PrivateRegistries do
   @spec create_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_org_private_registry_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_org_private_registry_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_org_private_registry_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_org_private_registry_partition_spec)
+  defp build_create_org_private_registry_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_org_private_registry_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "private-registries/create-org-private-registry",
+      args: params,
+      call: {__MODULE__, :create_org_private_registry},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/private-registries",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.PrivateRegistries do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :private_registries, :create_org_private_registry],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :private_registries, :create_org_private_registry],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_org_private_registry_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.PrivateRegistries do
   @spec delete_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_org_private_registry_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_org_private_registry_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_org_private_registry_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_org_private_registry_partition_spec)
+  defp build_delete_org_private_registry_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_org_private_registry_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "private-registries/delete-org-private-registry",
+      args: params,
+      call: {__MODULE__, :delete_org_private_registry},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/private-registries/{secret_name}",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.PrivateRegistries do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :private_registries, :delete_org_private_registry],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :private_registries, :delete_org_private_registry],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_org_private_registry_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.PrivateRegistries do
   @spec get_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_org_private_registry_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_org_private_registry_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_org_private_registry_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_org_private_registry_partition_spec)
+  defp build_get_org_private_registry_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_org_private_registry_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "private-registries/get-org-private-registry",
+      args: params,
+      call: {__MODULE__, :get_org_private_registry},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/private-registries/{secret_name}",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.PrivateRegistries do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :private_registries, :get_org_private_registry],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :private_registries, :get_org_private_registry],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_org_public_key_partition_spec %{
@@ -172,19 +174,21 @@ defmodule GitHubEx.PrivateRegistries do
   @spec get_org_public_key(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_org_public_key(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_org_public_key_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_org_public_key_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_org_public_key_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_org_public_key_partition_spec)
+  defp build_get_org_public_key_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_org_public_key_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "private-registries/get-org-public-key",
+      args: params,
+      call: {__MODULE__, :get_org_public_key},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/private-registries/public-key",
       path_params: partition.path_params,
@@ -199,16 +203,14 @@ defmodule GitHubEx.PrivateRegistries do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :private_registries, :get_org_public_key],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :private_registries, :get_org_public_key],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_org_private_registries_partition_spec %{
@@ -224,33 +226,32 @@ defmodule GitHubEx.PrivateRegistries do
   @spec list_org_private_registries(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_org_private_registries(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_org_private_registries_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_org_private_registries_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_org_private_registries(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_private_registries(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_org_private_registries_operation(params) end,
+      fn -> build_list_org_private_registries_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -260,11 +261,16 @@ defmodule GitHubEx.PrivateRegistries do
     )
   end
 
-  defp build_list_org_private_registries_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_org_private_registries_partition_spec)
+  defp build_list_org_private_registries_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_org_private_registries_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "private-registries/list-org-private-registries",
+      args: params,
+      call: {__MODULE__, :list_org_private_registries},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/private-registries",
       path_params: partition.path_params,
@@ -279,14 +285,12 @@ defmodule GitHubEx.PrivateRegistries do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :private_registries, :list_org_private_registries],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :private_registries, :list_org_private_registries],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["configurations"],
@@ -294,7 +298,7 @@ defmodule GitHubEx.PrivateRegistries do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @update_org_private_registry_partition_spec %{
@@ -310,19 +314,21 @@ defmodule GitHubEx.PrivateRegistries do
   @spec update_org_private_registry(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_org_private_registry(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_org_private_registry_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_org_private_registry_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_org_private_registry_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_org_private_registry_partition_spec)
+  defp build_update_org_private_registry_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_org_private_registry_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "private-registries/update-org-private-registry",
+      args: params,
+      call: {__MODULE__, :update_org_private_registry},
+      opts: opts,
       method: :patch,
       path_template: "/orgs/{org}/private-registries/{secret_name}",
       path_params: partition.path_params,
@@ -337,15 +343,22 @@ defmodule GitHubEx.PrivateRegistries do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :private_registries, :update_org_private_registry],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :private_registries, :update_org_private_registry],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

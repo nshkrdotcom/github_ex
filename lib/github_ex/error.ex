@@ -4,7 +4,8 @@ defmodule GitHubEx.Error do
   endpoint wrappers.
   """
 
-  alias GitHubEx.RateLimitInfo
+  alias GitHubEx.ProviderProfile
+  alias Pristine.Error, as: RuntimeError
 
   @retryable_codes [
     :api_connection,
@@ -15,20 +16,6 @@ defmodule GitHubEx.Error do
     :server_error,
     :service_unavailable
   ]
-  @status_codes %{
-    400 => :invalid_request,
-    401 => :unauthorized,
-    403 => :forbidden,
-    404 => :not_found,
-    409 => :conflict,
-    422 => :unprocessable_entity,
-    451 => :unavailable_for_legal_reasons,
-    500 => :server_error,
-    502 => :bad_gateway,
-    503 => :service_unavailable,
-    504 => :gateway_timeout
-  }
-
   @type code ::
           :api_connection
           | :bad_gateway
@@ -88,28 +75,25 @@ defmodule GitHubEx.Error do
     }
   end
 
-  @spec from_response(Pristine.Response.t() | map(), term(), non_neg_integer() | nil) :: t()
+  @spec from_response(Pristine.SDK.Response.t() | map(), term(), non_neg_integer() | nil) :: t()
   def from_response(%{status: _status} = response, body, retry_after_ms) do
-    headers = Map.get(response, :headers, %{})
-    body = normalize_body(body)
+    from_response(response, body, retry_after_ms, [])
+  end
 
-    retry_after_ms =
-      retry_after_ms ||
-        if RateLimitInfo.rate_limited?(Map.get(response, :status), headers) do
-          RateLimitInfo.retry_after_ms(headers)
-        end
-
-    %__MODULE__{
-      additional_data: additional_data(body),
+  @spec from_response(
+          Pristine.SDK.Response.t() | map(),
+          term(),
+          non_neg_integer() | nil,
+          keyword()
+        ) :: t()
+  def from_response(%{status: _status} = response, body, retry_after_ms, _opts) do
+    response
+    |> RuntimeError.from_response(
       body: body,
-      code: code_from_status(Map.get(response, :status), headers),
-      documentation_url: documentation_url(body),
-      headers: normalize_headers(headers),
-      message: message_from_body(body) || "HTTP #{Map.get(response, :status)}",
-      request_id: request_id(headers),
       retry_after_ms: retry_after_ms,
-      status: Map.get(response, :status)
-    }
+      profile: ProviderProfile.profile()
+    )
+    |> from_runtime_error()
   end
 
   @spec connection_error(term()) :: t()
@@ -134,37 +118,19 @@ defmodule GitHubEx.Error do
     "[#{code}] #{message} (request_id: #{request_id})"
   end
 
-  defp code_from_status(status, headers) do
-    if RateLimitInfo.rate_limited?(status, headers) do
-      :rate_limited
-    else
-      Map.get(@status_codes, status, :response_error)
-    end
+  defp from_runtime_error(%RuntimeError{} = error) do
+    %__MODULE__{
+      additional_data: normalize_additional_data(error.additional_data),
+      body: error.body,
+      code: error.provider_code || :response_error,
+      documentation_url: error.documentation_url,
+      headers: normalize_headers(error.headers),
+      message: error.message || "HTTP #{error.status}",
+      request_id: error.request_id,
+      retry_after_ms: error.retry_after_ms,
+      status: error.status
+    }
   end
-
-  defp normalize_body(nil), do: nil
-
-  defp normalize_body(body) when is_binary(body) do
-    case Jason.decode(body) do
-      {:ok, decoded} -> normalize_body(decoded)
-      {:error, _} -> %{"message" => body}
-    end
-  end
-
-  defp normalize_body(body) when is_map(body) do
-    Map.new(body, fn {key, value} -> {to_string(key), value} end)
-  end
-
-  defp normalize_body(body), do: body
-
-  defp additional_data(%{"errors" => errors}) when is_list(errors), do: %{"errors" => errors}
-  defp additional_data(_body), do: nil
-
-  defp documentation_url(%{"documentation_url" => value}) when is_binary(value), do: value
-  defp documentation_url(_body), do: nil
-
-  defp message_from_body(%{"message" => message}) when is_binary(message), do: message
-  defp message_from_body(_body), do: nil
 
   defp normalize_headers(headers) when is_map(headers) do
     Map.new(headers, fn {key, value} -> {to_string(key), value} end)
@@ -176,9 +142,8 @@ defmodule GitHubEx.Error do
 
   defp normalize_headers(_headers), do: %{}
 
-  defp request_id(headers) do
-    RateLimitInfo.header_value(headers, "x-github-request-id")
-  end
+  defp normalize_additional_data(nil), do: nil
+  defp normalize_additional_data(errors), do: %{"errors" => errors}
 
   defp format_reason(reason) do
     cond do

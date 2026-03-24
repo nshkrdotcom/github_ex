@@ -3,7 +3,10 @@ defmodule GitHubEx.RateLimitInfo do
   Helpers for GitHub rate-limit and pagination headers.
   """
 
-  alias GitHubEx.Retry
+  alias Pristine.Adapters.Retry.Foundation, as: FoundationRetry
+
+  @retry_after_reset_at_headers ["x-ratelimit-reset"]
+  @type headers :: map() | list()
 
   @type info :: %{
           limit: non_neg_integer() | nil,
@@ -15,7 +18,7 @@ defmodule GitHubEx.RateLimitInfo do
           used: non_neg_integer() | nil
         }
 
-  @spec info(map() | list()) :: info()
+  @spec info(headers()) :: info()
   def info(headers) do
     reset_epoch = integer_header(headers, "x-ratelimit-reset")
     retry_after_ms = retry_after_ms(headers)
@@ -31,12 +34,15 @@ defmodule GitHubEx.RateLimitInfo do
     }
   end
 
-  @spec retry_after_ms(map() | list()) :: non_neg_integer() | nil
+  @spec retry_after_ms(headers()) :: non_neg_integer() | nil
   def retry_after_ms(headers) do
-    Retry.parse_retry_after(headers) || reset_delta_ms(headers)
+    FoundationRetry.parse_retry_after(
+      headers,
+      reset_at_headers: @retry_after_reset_at_headers
+    )
   end
 
-  @spec rate_limited?(integer() | nil, map() | list()) :: boolean()
+  @spec rate_limited?(integer() | nil, headers()) :: boolean()
   def rate_limited?(status, headers) when status in [403, 429] do
     status == 429 or integer_header(headers, "x-ratelimit-remaining") == 0 or
       has_retry_after_header?(headers)
@@ -44,7 +50,7 @@ defmodule GitHubEx.RateLimitInfo do
 
   def rate_limited?(_status, _headers), do: false
 
-  @spec links(map() | list()) :: %{optional(String.t()) => String.t()}
+  @spec links(headers()) :: %{optional(String.t()) => String.t()}
   def links(headers) do
     headers
     |> header_value("link")
@@ -65,7 +71,7 @@ defmodule GitHubEx.RateLimitInfo do
 
   def parse_link_header(_value), do: %{}
 
-  @spec query_params_from_next(map() | list()) :: map() | nil
+  @spec query_params_from_next(headers()) :: map() | nil
   def query_params_from_next(headers) do
     case links(headers)["next"] do
       nil ->
@@ -79,7 +85,7 @@ defmodule GitHubEx.RateLimitInfo do
     end
   end
 
-  @spec header_value(map() | list(), String.t()) :: String.t() | nil
+  @spec header_value(headers(), String.t()) :: String.t() | nil
   def header_value(headers, name) when is_map(headers) do
     downcased_name = String.downcase(name)
 
@@ -118,17 +124,6 @@ defmodule GitHubEx.RateLimitInfo do
   defp has_retry_after_header?(headers) do
     not is_nil(header_value(headers, "retry-after")) or
       not is_nil(header_value(headers, "retry-after-ms"))
-  end
-
-  defp reset_delta_ms(headers) do
-    case integer_header(headers, "x-ratelimit-reset") do
-      reset_epoch when is_integer(reset_epoch) ->
-        now_epoch = DateTime.utc_now() |> DateTime.to_unix()
-        max(reset_epoch - now_epoch, 0) * 1_000
-
-      _other ->
-        nil
-    end
   end
 
   defp reset_datetime(nil), do: nil

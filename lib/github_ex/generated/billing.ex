@@ -3,6 +3,8 @@ defmodule GitHubEx.Billing do
   Generated Github Ex operations for billing.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @delete_budget_org_partition_spec %{
     path: [{"org", :org}, {"budget_id", :budget_id}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Billing do
   @spec delete_budget_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_budget_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_budget_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_budget_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_budget_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_budget_org_partition_spec)
+  defp build_delete_budget_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_budget_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "billing/delete-budget-org",
+      args: params,
+      call: {__MODULE__, :delete_budget_org},
+      opts: opts,
       method: :delete,
       path_template: "/organizations/{org}/settings/billing/budgets/{budget_id}",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :billing, :delete_budget_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :delete_budget_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_all_budgets_org_partition_spec %{
@@ -68,33 +70,32 @@ defmodule GitHubEx.Billing do
   @spec get_all_budgets_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_all_budgets_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_all_budgets_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_all_budgets_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_get_all_budgets_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_all_budgets_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_get_all_budgets_org_operation(params) end,
+      fn -> build_get_all_budgets_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -104,11 +105,16 @@ defmodule GitHubEx.Billing do
     )
   end
 
-  defp build_get_all_budgets_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_all_budgets_org_partition_spec)
+  defp build_get_all_budgets_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_all_budgets_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "billing/get-all-budgets-org",
+      args: params,
+      call: {__MODULE__, :get_all_budgets_org},
+      opts: opts,
       method: :get,
       path_template: "/organizations/{org}/settings/billing/budgets",
       path_params: partition.path_params,
@@ -123,14 +129,12 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :billing, :get_all_budgets_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_all_budgets_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: ["budgets"],
@@ -138,7 +142,7 @@ defmodule GitHubEx.Billing do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @get_budget_org_partition_spec %{
@@ -154,19 +158,21 @@ defmodule GitHubEx.Billing do
   @spec get_budget_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_budget_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_budget_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_budget_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_budget_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_budget_org_partition_spec)
+  defp build_get_budget_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_budget_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "billing/get-budget-org",
+      args: params,
+      call: {__MODULE__, :get_budget_org},
+      opts: opts,
       method: :get,
       path_template: "/organizations/{org}/settings/billing/budgets/{budget_id}",
       path_params: partition.path_params,
@@ -181,16 +187,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :billing, :get_budget_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_budget_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_github_billing_premium_request_usage_report_org_partition_spec %{
@@ -214,24 +218,29 @@ defmodule GitHubEx.Billing do
           {:ok, term()} | {:error, term()}
   def get_github_billing_premium_request_usage_report_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_github_billing_premium_request_usage_report_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
 
-    Pristine.execute(runtime_client, operation, execute_opts)
+    request =
+      build_get_github_billing_premium_request_usage_report_org_request(client, params, opts)
+
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_github_billing_premium_request_usage_report_org_operation(params)
-       when is_map(params) do
+  defp build_get_github_billing_premium_request_usage_report_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @get_github_billing_premium_request_usage_report_org_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "billing/get-github-billing-premium-request-usage-report-org",
+      args: params,
+      call: {__MODULE__, :get_github_billing_premium_request_usage_report_org},
+      opts: opts,
       method: :get,
       path_template: "/organizations/{org}/settings/billing/premium_request/usage",
       path_params: partition.path_params,
@@ -246,20 +255,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [
-          :github_ex,
-          :billing,
-          :get_github_billing_premium_request_usage_report_org
-        ],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_github_billing_premium_request_usage_report_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_github_billing_premium_request_usage_report_user_partition_spec %{
@@ -282,24 +285,29 @@ defmodule GitHubEx.Billing do
           {:ok, term()} | {:error, term()}
   def get_github_billing_premium_request_usage_report_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_github_billing_premium_request_usage_report_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
 
-    Pristine.execute(runtime_client, operation, execute_opts)
+    request =
+      build_get_github_billing_premium_request_usage_report_user_request(client, params, opts)
+
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_github_billing_premium_request_usage_report_user_operation(params)
-       when is_map(params) do
+  defp build_get_github_billing_premium_request_usage_report_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @get_github_billing_premium_request_usage_report_user_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "billing/get-github-billing-premium-request-usage-report-user",
+      args: params,
+      call: {__MODULE__, :get_github_billing_premium_request_usage_report_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/settings/billing/premium_request/usage",
       path_params: partition.path_params,
@@ -314,20 +322,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [
-          :github_ex,
-          :billing,
-          :get_github_billing_premium_request_usage_report_user
-        ],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_github_billing_premium_request_usage_report_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_github_billing_usage_report_org_partition_spec %{
@@ -344,20 +346,23 @@ defmodule GitHubEx.Billing do
           {:ok, term()} | {:error, term()}
   def get_github_billing_usage_report_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_github_billing_usage_report_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_github_billing_usage_report_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_github_billing_usage_report_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_github_billing_usage_report_org_partition_spec)
+  defp build_get_github_billing_usage_report_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_github_billing_usage_report_org_partition_spec)
+
+    %{
       id: "billing/get-github-billing-usage-report-org",
+      args: params,
+      call: {__MODULE__, :get_github_billing_usage_report_org},
+      opts: opts,
       method: :get,
       path_template: "/organizations/{org}/settings/billing/usage",
       path_params: partition.path_params,
@@ -372,16 +377,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :billing, :get_github_billing_usage_report_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_github_billing_usage_report_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_github_billing_usage_report_user_partition_spec %{
@@ -398,20 +401,23 @@ defmodule GitHubEx.Billing do
           {:ok, term()} | {:error, term()}
   def get_github_billing_usage_report_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_github_billing_usage_report_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_github_billing_usage_report_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_github_billing_usage_report_user_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_github_billing_usage_report_user_partition_spec)
+  defp build_get_github_billing_usage_report_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_github_billing_usage_report_user_partition_spec)
+
+    %{
       id: "billing/get-github-billing-usage-report-user",
+      args: params,
+      call: {__MODULE__, :get_github_billing_usage_report_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/settings/billing/usage",
       path_params: partition.path_params,
@@ -426,16 +432,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :billing, :get_github_billing_usage_report_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_github_billing_usage_report_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_github_billing_usage_summary_report_org_partition_spec %{
@@ -459,23 +463,23 @@ defmodule GitHubEx.Billing do
           {:ok, term()} | {:error, term()}
   def get_github_billing_usage_summary_report_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_github_billing_usage_summary_report_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_github_billing_usage_summary_report_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_github_billing_usage_summary_report_org_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @get_github_billing_usage_summary_report_org_partition_spec
-      )
+  defp build_get_github_billing_usage_summary_report_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_github_billing_usage_summary_report_org_partition_spec)
+
+    %{
       id: "billing/get-github-billing-usage-summary-report-org",
+      args: params,
+      call: {__MODULE__, :get_github_billing_usage_summary_report_org},
+      opts: opts,
       method: :get,
       path_template: "/organizations/{org}/settings/billing/usage/summary",
       path_params: partition.path_params,
@@ -490,16 +494,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :billing, :get_github_billing_usage_summary_report_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_github_billing_usage_summary_report_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_github_billing_usage_summary_report_user_partition_spec %{
@@ -523,23 +525,26 @@ defmodule GitHubEx.Billing do
           {:ok, term()} | {:error, term()}
   def get_github_billing_usage_summary_report_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_github_billing_usage_summary_report_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_github_billing_usage_summary_report_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_github_billing_usage_summary_report_user_operation(params) when is_map(params) do
+  defp build_get_github_billing_usage_summary_report_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @get_github_billing_usage_summary_report_user_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "billing/get-github-billing-usage-summary-report-user",
+      args: params,
+      call: {__MODULE__, :get_github_billing_usage_summary_report_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/settings/billing/usage/summary",
       path_params: partition.path_params,
@@ -554,16 +559,14 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :billing, :get_github_billing_usage_summary_report_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :get_github_billing_usage_summary_report_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_budget_org_partition_spec %{
@@ -579,19 +582,21 @@ defmodule GitHubEx.Billing do
   @spec update_budget_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_budget_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_budget_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_budget_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_budget_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_budget_org_partition_spec)
+  defp build_update_budget_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_budget_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "billing/update-budget-org",
+      args: params,
+      call: {__MODULE__, :update_budget_org},
+      opts: opts,
       method: :patch,
       path_template: "/organizations/{org}/settings/billing/budgets/{budget_id}",
       path_params: partition.path_params,
@@ -606,15 +611,22 @@ defmodule GitHubEx.Billing do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :billing, :update_budget_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :billing, :update_budget_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

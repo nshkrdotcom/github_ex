@@ -3,6 +3,8 @@ defmodule GitHubEx.CodeScanning do
   Generated Github Ex operations for code scanning.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @commit_autofix_partition_spec %{
     path: [{"owner", :owner}, {"repo", :repo}, {"alert_number", :alert_number}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.CodeScanning do
   @spec commit_autofix(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def commit_autofix(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_commit_autofix_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_commit_autofix_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_commit_autofix_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @commit_autofix_partition_spec)
+  defp build_commit_autofix_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @commit_autofix_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/commit-autofix",
+      args: params,
+      call: {__MODULE__, :commit_autofix},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/autofix/commits",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_scanning, :commit_autofix],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :commit_autofix],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_autofix_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.CodeScanning do
   @spec create_autofix(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_autofix(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_autofix_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_autofix_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_autofix_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_autofix_partition_spec)
+  defp build_create_autofix_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_autofix_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/create-autofix",
+      args: params,
+      call: {__MODULE__, :create_autofix},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/autofix",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_scanning, :create_autofix],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :create_autofix],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_variant_analysis_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.CodeScanning do
   @spec create_variant_analysis(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_variant_analysis(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_variant_analysis_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_variant_analysis_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_variant_analysis_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_variant_analysis_partition_spec)
+  defp build_create_variant_analysis_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_variant_analysis_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/create-variant-analysis",
+      args: params,
+      call: {__MODULE__, :create_variant_analysis},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/code-scanning/codeql/variant-analyses",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_scanning, :create_variant_analysis],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :create_variant_analysis],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_analysis_partition_spec %{
@@ -172,19 +174,21 @@ defmodule GitHubEx.CodeScanning do
   @spec delete_analysis(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_analysis(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_analysis_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_analysis_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_analysis_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_analysis_partition_spec)
+  defp build_delete_analysis_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_analysis_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/delete-analysis",
+      args: params,
+      call: {__MODULE__, :delete_analysis},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}",
       path_params: partition.path_params,
@@ -199,16 +203,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :code_scanning, :delete_analysis],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :delete_analysis],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_codeql_database_partition_spec %{
@@ -224,19 +226,21 @@ defmodule GitHubEx.CodeScanning do
   @spec delete_codeql_database(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_codeql_database(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_codeql_database_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_codeql_database_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_codeql_database_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_codeql_database_partition_spec)
+  defp build_delete_codeql_database_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_codeql_database_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/delete-codeql-database",
+      args: params,
+      call: {__MODULE__, :delete_codeql_database},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/code-scanning/codeql/databases/{language}",
       path_params: partition.path_params,
@@ -251,16 +255,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :code_scanning, :delete_codeql_database],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :delete_codeql_database],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_alert_partition_spec %{
@@ -276,19 +278,21 @@ defmodule GitHubEx.CodeScanning do
   @spec get_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_alert(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_alert_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_alert_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_alert_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_alert_partition_spec)
+  defp build_get_alert_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_alert_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-alert",
+      args: params,
+      call: {__MODULE__, :get_alert},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}",
       path_params: partition.path_params,
@@ -303,16 +307,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_alert],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_alert],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_analysis_partition_spec %{
@@ -328,19 +330,21 @@ defmodule GitHubEx.CodeScanning do
   @spec get_analysis(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_analysis(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_analysis_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_analysis_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_analysis_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_analysis_partition_spec)
+  defp build_get_analysis_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_analysis_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-analysis",
+      args: params,
+      call: {__MODULE__, :get_analysis},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}",
       path_params: partition.path_params,
@@ -355,16 +359,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_analysis],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_analysis],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_autofix_partition_spec %{
@@ -380,19 +382,21 @@ defmodule GitHubEx.CodeScanning do
   @spec get_autofix(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_autofix(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_autofix_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_autofix_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_autofix_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_autofix_partition_spec)
+  defp build_get_autofix_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_autofix_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-autofix",
+      args: params,
+      call: {__MODULE__, :get_autofix},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/autofix",
       path_params: partition.path_params,
@@ -407,16 +411,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_autofix],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_autofix],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_codeql_database_partition_spec %{
@@ -432,19 +434,21 @@ defmodule GitHubEx.CodeScanning do
   @spec get_codeql_database(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_codeql_database(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_codeql_database_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_codeql_database_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_codeql_database_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_codeql_database_partition_spec)
+  defp build_get_codeql_database_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_codeql_database_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-codeql-database",
+      args: params,
+      call: {__MODULE__, :get_codeql_database},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/codeql/databases/{language}",
       path_params: partition.path_params,
@@ -459,16 +463,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_codeql_database],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_codeql_database],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_default_setup_partition_spec %{
@@ -484,19 +486,21 @@ defmodule GitHubEx.CodeScanning do
   @spec get_default_setup(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_default_setup(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_default_setup_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_default_setup_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_default_setup_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_default_setup_partition_spec)
+  defp build_get_default_setup_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_default_setup_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-default-setup",
+      args: params,
+      call: {__MODULE__, :get_default_setup},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/default-setup",
       path_params: partition.path_params,
@@ -511,16 +515,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_default_setup],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_default_setup],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_sarif_partition_spec %{
@@ -532,23 +534,25 @@ defmodule GitHubEx.CodeScanning do
     form_data: %{mode: :none}
   }
 
-  @doc "Get information about a SARIF upload\n\nGets information about a SARIF upload, including the status and the URL of the analysis that was uploaded so that you can retrieve details of the analysis. For more information, see \"[Get a code scanning analysis for a repository](/rest/code-scanning/code-scanning#get-a-code-scanning-analysis-for-a-repository).\"\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
+  @doc "Get information about a SARIF upload\n\nGets information about a SARIF upload, including the status and the URL of the analysis that was uploaded so that you can retrieve details of the analysis. For more information, see \"[Get a code scanning analysis for a repository](https://docs.github.com/rest/code-scanning/code-scanning#get-a-code-scanning-analysis-for-a-repository).\"\nOAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories."
   @spec get_sarif(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_sarif(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_sarif_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_sarif_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_sarif_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_sarif_partition_spec)
+  defp build_get_sarif_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_sarif_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-sarif",
+      args: params,
+      call: {__MODULE__, :get_sarif},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}",
       path_params: partition.path_params,
@@ -563,16 +567,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_sarif],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_sarif],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_variant_analysis_partition_spec %{
@@ -592,19 +594,21 @@ defmodule GitHubEx.CodeScanning do
   @spec get_variant_analysis(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_variant_analysis(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_variant_analysis_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_variant_analysis_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_variant_analysis_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_variant_analysis_partition_spec)
+  defp build_get_variant_analysis_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_variant_analysis_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-variant-analysis",
+      args: params,
+      call: {__MODULE__, :get_variant_analysis},
+      opts: opts,
       method: :get,
       path_template:
         "/repos/{owner}/{repo}/code-scanning/codeql/variant-analyses/{codeql_variant_analysis_id}",
@@ -620,16 +624,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_variant_analysis],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_variant_analysis],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_variant_analysis_repo_task_partition_spec %{
@@ -652,20 +654,21 @@ defmodule GitHubEx.CodeScanning do
           {:ok, term()} | {:error, term()}
   def get_variant_analysis_repo_task(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_variant_analysis_repo_task_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_variant_analysis_repo_task_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_variant_analysis_repo_task_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_variant_analysis_repo_task_partition_spec)
+  defp build_get_variant_analysis_repo_task_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_variant_analysis_repo_task_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/get-variant-analysis-repo-task",
+      args: params,
+      call: {__MODULE__, :get_variant_analysis_repo_task},
+      opts: opts,
       method: :get,
       path_template:
         "/repos/{owner}/{repo}/code-scanning/codeql/variant-analyses/{codeql_variant_analysis_id}/repos/{repo_owner}/{repo_name}",
@@ -681,16 +684,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :get_variant_analysis_repo_task],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :get_variant_analysis_repo_task],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_alert_instances_partition_spec %{
@@ -706,33 +707,32 @@ defmodule GitHubEx.CodeScanning do
   @spec list_alert_instances(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_alert_instances(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_alert_instances_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_alert_instances_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_alert_instances(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_alert_instances(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_alert_instances_operation(params) end,
+      fn -> build_list_alert_instances_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -742,11 +742,16 @@ defmodule GitHubEx.CodeScanning do
     )
   end
 
-  defp build_list_alert_instances_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_alert_instances_partition_spec)
+  defp build_list_alert_instances_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_alert_instances_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/list-alert-instances",
+      args: params,
+      call: {__MODULE__, :list_alert_instances},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances",
       path_params: partition.path_params,
@@ -761,14 +766,12 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :list_alert_instances],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :list_alert_instances],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -776,7 +779,7 @@ defmodule GitHubEx.CodeScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_alerts_for_org_partition_spec %{
@@ -804,33 +807,32 @@ defmodule GitHubEx.CodeScanning do
   @spec list_alerts_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_alerts_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_alerts_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_alerts_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_alerts_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_alerts_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_alerts_for_org_operation(params) end,
+      fn -> build_list_alerts_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -840,11 +842,16 @@ defmodule GitHubEx.CodeScanning do
     )
   end
 
-  defp build_list_alerts_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_alerts_for_org_partition_spec)
+  defp build_list_alerts_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_alerts_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/list-alerts-for-org",
+      args: params,
+      call: {__MODULE__, :list_alerts_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/code-scanning/alerts",
       path_params: partition.path_params,
@@ -859,14 +866,12 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :list_alerts_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :list_alerts_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -874,7 +879,7 @@ defmodule GitHubEx.CodeScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_alerts_for_repo_partition_spec %{
@@ -904,33 +909,32 @@ defmodule GitHubEx.CodeScanning do
   @spec list_alerts_for_repo(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_alerts_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_alerts_for_repo_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_alerts_for_repo_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_alerts_for_repo(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_alerts_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_alerts_for_repo_operation(params) end,
+      fn -> build_list_alerts_for_repo_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -940,11 +944,16 @@ defmodule GitHubEx.CodeScanning do
     )
   end
 
-  defp build_list_alerts_for_repo_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_alerts_for_repo_partition_spec)
+  defp build_list_alerts_for_repo_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_alerts_for_repo_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/list-alerts-for-repo",
+      args: params,
+      call: {__MODULE__, :list_alerts_for_repo},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/alerts",
       path_params: partition.path_params,
@@ -959,14 +968,12 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :list_alerts_for_repo],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :list_alerts_for_repo],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -974,7 +981,7 @@ defmodule GitHubEx.CodeScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_codeql_databases_partition_spec %{
@@ -990,33 +997,32 @@ defmodule GitHubEx.CodeScanning do
   @spec list_codeql_databases(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_codeql_databases(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_codeql_databases_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_codeql_databases_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_codeql_databases(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_codeql_databases(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_codeql_databases_operation(params) end,
+      fn -> build_list_codeql_databases_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1026,11 +1032,16 @@ defmodule GitHubEx.CodeScanning do
     )
   end
 
-  defp build_list_codeql_databases_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_codeql_databases_partition_spec)
+  defp build_list_codeql_databases_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_codeql_databases_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/list-codeql-databases",
+      args: params,
+      call: {__MODULE__, :list_codeql_databases},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/codeql/databases",
       path_params: partition.path_params,
@@ -1045,14 +1056,12 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :list_codeql_databases],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :list_codeql_databases],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1060,7 +1069,7 @@ defmodule GitHubEx.CodeScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_recent_analyses_partition_spec %{
@@ -1086,33 +1095,32 @@ defmodule GitHubEx.CodeScanning do
   @spec list_recent_analyses(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_recent_analyses(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_recent_analyses_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_recent_analyses_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_recent_analyses(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_recent_analyses(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_recent_analyses_operation(params) end,
+      fn -> build_list_recent_analyses_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1122,11 +1130,16 @@ defmodule GitHubEx.CodeScanning do
     )
   end
 
-  defp build_list_recent_analyses_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_recent_analyses_partition_spec)
+  defp build_list_recent_analyses_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_recent_analyses_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/list-recent-analyses",
+      args: params,
+      call: {__MODULE__, :list_recent_analyses},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-scanning/analyses",
       path_params: partition.path_params,
@@ -1141,14 +1154,12 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_scanning, :list_recent_analyses],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :list_recent_analyses],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1156,7 +1167,7 @@ defmodule GitHubEx.CodeScanning do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @update_alert_partition_spec %{
@@ -1172,19 +1183,21 @@ defmodule GitHubEx.CodeScanning do
   @spec update_alert(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_alert(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_alert_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_alert_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_alert_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_alert_partition_spec)
+  defp build_update_alert_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_alert_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/update-alert",
+      args: params,
+      call: {__MODULE__, :update_alert},
+      opts: opts,
       method: :patch,
       path_template: "/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}",
       path_params: partition.path_params,
@@ -1199,16 +1212,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_scanning, :update_alert],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :update_alert],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_default_setup_partition_spec %{
@@ -1224,19 +1235,21 @@ defmodule GitHubEx.CodeScanning do
   @spec update_default_setup(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_default_setup(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_default_setup_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_default_setup_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_default_setup_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_default_setup_partition_spec)
+  defp build_update_default_setup_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_default_setup_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/update-default-setup",
+      args: params,
+      call: {__MODULE__, :update_default_setup},
+      opts: opts,
       method: :patch,
       path_template: "/repos/{owner}/{repo}/code-scanning/default-setup",
       path_params: partition.path_params,
@@ -1251,16 +1264,14 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_scanning, :update_default_setup],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :update_default_setup],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @upload_sarif_partition_spec %{
@@ -1278,8 +1289,8 @@ defmodule GitHubEx.CodeScanning do
        Uploads SARIF data containing the results of a code scanning analysis to make the results available in a repository. For troubleshooting information, see "[Troubleshooting SARIF uploads](https://docs.github.com/code-security/code-scanning/troubleshooting-sarif)."
 
        There are two places where you can upload code scanning results.
-       - If you upload to a pull request, for example `--ref refs/pull/42/merge` or `--ref refs/pull/42/head`, then the results appear as alerts in a pull request check. For more information, see "[Triaging code scanning alerts in pull requests](/code-security/secure-coding/triaging-code-scanning-alerts-in-pull-requests)."
-       - If you upload to a branch, for example `--ref refs/heads/my-branch`, then the results appear in the **Security** tab for your repository. For more information, see "[Managing code scanning alerts for your repository](/code-security/secure-coding/managing-code-scanning-alerts-for-your-repository#viewing-the-alerts-for-a-repository)."
+       - If you upload to a pull request, for example `--ref refs/pull/42/merge` or `--ref refs/pull/42/head`, then the results appear as alerts in a pull request check. For more information, see "[Triaging code scanning alerts in pull requests](https://docs.github.com/code-security/secure-coding/triaging-code-scanning-alerts-in-pull-requests)."
+       - If you upload to a branch, for example `--ref refs/heads/my-branch`, then the results appear in the **Security** tab for your repository. For more information, see "[Managing code scanning alerts for your repository](https://docs.github.com/code-security/secure-coding/managing-code-scanning-alerts-for-your-repository#viewing-the-alerts-for-a-repository)."
 
        You must compress the SARIF-formatted analysis data that you want to upload, using `gzip`, and then encode it as a Base64 format string. For example:
 
@@ -1304,7 +1315,7 @@ defmodule GitHubEx.CodeScanning do
 
        The `202 Accepted` response includes an `id` value.
        You can use this ID to check the status of the upload by using it in the `/sarifs/{sarif_id}` endpoint.
-       For more information, see "[Get information about a SARIF upload](/rest/code-scanning/code-scanning#get-information-about-a-sarif-upload)."
+       For more information, see "[Get information about a SARIF upload](https://docs.github.com/rest/code-scanning/code-scanning#get-information-about-a-sarif-upload)."
 
        OAuth app tokens and personal access tokens (classic) need the `security_events` scope to use this endpoint with private or public repositories, or the `public_repo` scope to use this endpoint with only public repositories.
 
@@ -1315,19 +1326,21 @@ defmodule GitHubEx.CodeScanning do
   @spec upload_sarif(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def upload_sarif(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_upload_sarif_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_upload_sarif_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_upload_sarif_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @upload_sarif_partition_spec)
+  defp build_upload_sarif_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @upload_sarif_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-scanning/upload-sarif",
+      args: params,
+      call: {__MODULE__, :upload_sarif},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/code-scanning/sarifs",
       path_params: partition.path_params,
@@ -1342,15 +1355,22 @@ defmodule GitHubEx.CodeScanning do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_scanning, :upload_sarif],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_scanning, :upload_sarif],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

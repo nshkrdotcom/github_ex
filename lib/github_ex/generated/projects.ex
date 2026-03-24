@@ -3,6 +3,8 @@ defmodule GitHubEx.Projects do
   Generated Github Ex operations for projects.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @add_field_for_org_partition_spec %{
     path: [{"project_number", :project_number}, {"org", :org}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Projects do
   @spec add_field_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add_field_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_field_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_field_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_field_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_field_for_org_partition_spec)
+  defp build_add_field_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_field_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/add-field-for-org",
+      args: params,
+      call: {__MODULE__, :add_field_for_org},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/projectsV2/{project_number}/fields",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :add_field_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :add_field_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_field_for_user_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Projects do
   @spec add_field_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add_field_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_field_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_field_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_field_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_field_for_user_partition_spec)
+  defp build_add_field_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_field_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/add-field-for-user",
+      args: params,
+      call: {__MODULE__, :add_field_for_user},
+      opts: opts,
       method: :post,
       path_template: "/users/{username}/projectsV2/{project_number}/fields",
       path_params: partition.path_params,
@@ -95,16 +99,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :add_field_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :add_field_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_item_for_org_partition_spec %{
@@ -120,19 +122,21 @@ defmodule GitHubEx.Projects do
   @spec add_item_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_item_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_item_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_item_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_item_for_org_partition_spec)
+  defp build_add_item_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_item_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/add-item-for-org",
+      args: params,
+      call: {__MODULE__, :add_item_for_org},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/projectsV2/{project_number}/items",
       path_params: partition.path_params,
@@ -147,16 +151,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :add_item_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :add_item_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @add_item_for_user_partition_spec %{
@@ -172,19 +174,21 @@ defmodule GitHubEx.Projects do
   @spec add_item_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add_item_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_item_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_item_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_item_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_item_for_user_partition_spec)
+  defp build_add_item_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_item_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/add-item-for-user",
+      args: params,
+      call: {__MODULE__, :add_item_for_user},
+      opts: opts,
       method: :post,
       path_template: "/users/{username}/projectsV2/{project_number}/items",
       path_params: partition.path_params,
@@ -199,16 +203,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :add_item_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :add_item_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_draft_item_for_authenticated_user_partition_spec %{
@@ -225,23 +227,23 @@ defmodule GitHubEx.Projects do
           {:ok, term()} | {:error, term()}
   def create_draft_item_for_authenticated_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_draft_item_for_authenticated_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_draft_item_for_authenticated_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_draft_item_for_authenticated_user_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @create_draft_item_for_authenticated_user_partition_spec
-      )
+  defp build_create_draft_item_for_authenticated_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @create_draft_item_for_authenticated_user_partition_spec)
+
+    %{
       id: "projects/create-draft-item-for-authenticated-user",
+      args: params,
+      call: {__MODULE__, :create_draft_item_for_authenticated_user},
+      opts: opts,
       method: :post,
       path_template: "/user/{user_id}/projectsV2/{project_number}/drafts",
       path_params: partition.path_params,
@@ -256,16 +258,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :create_draft_item_for_authenticated_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :create_draft_item_for_authenticated_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_draft_item_for_org_partition_spec %{
@@ -281,19 +281,21 @@ defmodule GitHubEx.Projects do
   @spec create_draft_item_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_draft_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_draft_item_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_draft_item_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_draft_item_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_draft_item_for_org_partition_spec)
+  defp build_create_draft_item_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_draft_item_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/create-draft-item-for-org",
+      args: params,
+      call: {__MODULE__, :create_draft_item_for_org},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/projectsV2/{project_number}/drafts",
       path_params: partition.path_params,
@@ -308,16 +310,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :create_draft_item_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :create_draft_item_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_view_for_org_partition_spec %{
@@ -333,19 +333,21 @@ defmodule GitHubEx.Projects do
   @spec create_view_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_view_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_view_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_view_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_view_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_view_for_org_partition_spec)
+  defp build_create_view_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_view_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/create-view-for-org",
+      args: params,
+      call: {__MODULE__, :create_view_for_org},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/projectsV2/{project_number}/views",
       path_params: partition.path_params,
@@ -360,16 +362,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :create_view_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :create_view_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_view_for_user_partition_spec %{
@@ -385,19 +385,21 @@ defmodule GitHubEx.Projects do
   @spec create_view_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_view_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_view_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_view_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_view_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_view_for_user_partition_spec)
+  defp build_create_view_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_view_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/create-view-for-user",
+      args: params,
+      call: {__MODULE__, :create_view_for_user},
+      opts: opts,
       method: :post,
       path_template: "/users/{user_id}/projectsV2/{project_number}/views",
       path_params: partition.path_params,
@@ -412,16 +414,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :create_view_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :create_view_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_item_for_org_partition_spec %{
@@ -441,19 +441,21 @@ defmodule GitHubEx.Projects do
   @spec delete_item_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_item_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_item_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_item_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_item_for_org_partition_spec)
+  defp build_delete_item_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_item_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/delete-item-for-org",
+      args: params,
+      call: {__MODULE__, :delete_item_for_org},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/projectsV2/{project_number}/items/{item_id}",
       path_params: partition.path_params,
@@ -468,16 +470,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :projects, :delete_item_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :delete_item_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_item_for_user_partition_spec %{
@@ -497,19 +497,21 @@ defmodule GitHubEx.Projects do
   @spec delete_item_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_item_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_item_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_item_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_item_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_item_for_user_partition_spec)
+  defp build_delete_item_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_item_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/delete-item-for-user",
+      args: params,
+      call: {__MODULE__, :delete_item_for_user},
+      opts: opts,
       method: :delete,
       path_template: "/users/{username}/projectsV2/{project_number}/items/{item_id}",
       path_params: partition.path_params,
@@ -524,16 +526,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :projects, :delete_item_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :delete_item_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_field_for_org_partition_spec %{
@@ -553,19 +553,21 @@ defmodule GitHubEx.Projects do
   @spec get_field_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_field_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_field_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_field_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_field_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_field_for_org_partition_spec)
+  defp build_get_field_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_field_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/get-field-for-org",
+      args: params,
+      call: {__MODULE__, :get_field_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/projectsV2/{project_number}/fields/{field_id}",
       path_params: partition.path_params,
@@ -580,16 +582,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :get_field_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :get_field_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_field_for_user_partition_spec %{
@@ -609,19 +609,21 @@ defmodule GitHubEx.Projects do
   @spec get_field_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_field_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_field_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_field_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_field_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_field_for_user_partition_spec)
+  defp build_get_field_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_field_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/get-field-for-user",
+      args: params,
+      call: {__MODULE__, :get_field_for_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/projectsV2/{project_number}/fields/{field_id}",
       path_params: partition.path_params,
@@ -636,16 +638,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :get_field_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :get_field_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_for_org_partition_spec %{
@@ -661,19 +661,21 @@ defmodule GitHubEx.Projects do
   @spec get_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_for_org_partition_spec)
+  defp build_get_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/get-for-org",
+      args: params,
+      call: {__MODULE__, :get_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/projectsV2/{project_number}",
       path_params: partition.path_params,
@@ -688,16 +690,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :get_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :get_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_for_user_partition_spec %{
@@ -713,19 +713,21 @@ defmodule GitHubEx.Projects do
   @spec get_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_for_user_partition_spec)
+  defp build_get_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/get-for-user",
+      args: params,
+      call: {__MODULE__, :get_for_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/projectsV2/{project_number}",
       path_params: partition.path_params,
@@ -740,16 +742,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :get_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :get_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_org_item_partition_spec %{
@@ -769,19 +769,21 @@ defmodule GitHubEx.Projects do
   @spec get_org_item(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_org_item(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_org_item_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_org_item_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_org_item_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_org_item_partition_spec)
+  defp build_get_org_item_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_org_item_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/get-org-item",
+      args: params,
+      call: {__MODULE__, :get_org_item},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/projectsV2/{project_number}/items/{item_id}",
       path_params: partition.path_params,
@@ -796,16 +798,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :get_org_item],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :get_org_item],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_user_item_partition_spec %{
@@ -825,19 +825,21 @@ defmodule GitHubEx.Projects do
   @spec get_user_item(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_user_item(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_user_item_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_user_item_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_user_item_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_user_item_partition_spec)
+  defp build_get_user_item_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_user_item_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/get-user-item",
+      args: params,
+      call: {__MODULE__, :get_user_item},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/projectsV2/{project_number}/items/{item_id}",
       path_params: partition.path_params,
@@ -852,16 +854,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :get_user_item],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :get_user_item],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_fields_for_org_partition_spec %{
@@ -877,33 +877,32 @@ defmodule GitHubEx.Projects do
   @spec list_fields_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_fields_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_fields_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_fields_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_fields_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_fields_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_fields_for_org_operation(params) end,
+      fn -> build_list_fields_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -913,11 +912,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_fields_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_fields_for_org_partition_spec)
+  defp build_list_fields_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_fields_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-fields-for-org",
+      args: params,
+      call: {__MODULE__, :list_fields_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/projectsV2/{project_number}/fields",
       path_params: partition.path_params,
@@ -932,14 +936,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_fields_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_fields_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -947,7 +949,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_fields_for_user_partition_spec %{
@@ -963,33 +965,32 @@ defmodule GitHubEx.Projects do
   @spec list_fields_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_fields_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_fields_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_fields_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_fields_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_fields_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_fields_for_user_operation(params) end,
+      fn -> build_list_fields_for_user_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -999,11 +1000,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_fields_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_fields_for_user_partition_spec)
+  defp build_list_fields_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_fields_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-fields-for-user",
+      args: params,
+      call: {__MODULE__, :list_fields_for_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/projectsV2/{project_number}/fields",
       path_params: partition.path_params,
@@ -1018,14 +1024,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_fields_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_fields_for_user],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1033,7 +1037,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_for_org_partition_spec %{
@@ -1054,33 +1058,32 @@ defmodule GitHubEx.Projects do
   @spec list_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_org_operation(params) end,
+      fn -> build_list_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1090,11 +1093,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_for_org_partition_spec)
+  defp build_list_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-for-org",
+      args: params,
+      call: {__MODULE__, :list_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/projectsV2",
       path_params: partition.path_params,
@@ -1109,14 +1117,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1124,7 +1130,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_for_user_partition_spec %{
@@ -1145,33 +1151,32 @@ defmodule GitHubEx.Projects do
   @spec list_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_for_user_operation(params) end,
+      fn -> build_list_for_user_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1181,11 +1186,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_for_user_partition_spec)
+  defp build_list_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-for-user",
+      args: params,
+      call: {__MODULE__, :list_for_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/projectsV2",
       path_params: partition.path_params,
@@ -1200,14 +1210,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_for_user],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1215,7 +1223,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_items_for_org_partition_spec %{
@@ -1237,33 +1245,32 @@ defmodule GitHubEx.Projects do
   @spec list_items_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_items_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_items_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_items_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_items_for_org_operation(params) end,
+      fn -> build_list_items_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1273,11 +1280,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_items_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_items_for_org_partition_spec)
+  defp build_list_items_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_items_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-items-for-org",
+      args: params,
+      call: {__MODULE__, :list_items_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/projectsV2/{project_number}/items",
       path_params: partition.path_params,
@@ -1292,14 +1304,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_items_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_items_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1307,7 +1317,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_items_for_user_partition_spec %{
@@ -1329,33 +1339,32 @@ defmodule GitHubEx.Projects do
   @spec list_items_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_items_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_items_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_items_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_items_for_user_operation(params) end,
+      fn -> build_list_items_for_user_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1365,11 +1374,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_items_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_items_for_user_partition_spec)
+  defp build_list_items_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_items_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-items-for-user",
+      args: params,
+      call: {__MODULE__, :list_items_for_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/projectsV2/{project_number}/items",
       path_params: partition.path_params,
@@ -1384,14 +1398,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_items_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_items_for_user],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1399,7 +1411,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_view_items_for_org_partition_spec %{
@@ -1424,33 +1436,32 @@ defmodule GitHubEx.Projects do
   @spec list_view_items_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_view_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_view_items_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_view_items_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_view_items_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_view_items_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_view_items_for_org_operation(params) end,
+      fn -> build_list_view_items_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1460,11 +1471,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_view_items_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_view_items_for_org_partition_spec)
+  defp build_list_view_items_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_view_items_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-view-items-for-org",
+      args: params,
+      call: {__MODULE__, :list_view_items_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/projectsV2/{project_number}/views/{view_number}/items",
       path_params: partition.path_params,
@@ -1479,14 +1495,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_view_items_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_view_items_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1494,7 +1508,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_view_items_for_user_partition_spec %{
@@ -1519,33 +1533,32 @@ defmodule GitHubEx.Projects do
   @spec list_view_items_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_view_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_view_items_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_view_items_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_view_items_for_user(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_view_items_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_view_items_for_user_operation(params) end,
+      fn -> build_list_view_items_for_user_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1555,11 +1568,16 @@ defmodule GitHubEx.Projects do
     )
   end
 
-  defp build_list_view_items_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_view_items_for_user_partition_spec)
+  defp build_list_view_items_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_view_items_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/list-view-items-for-user",
+      args: params,
+      call: {__MODULE__, :list_view_items_for_user},
+      opts: opts,
       method: :get,
       path_template: "/users/{username}/projectsV2/{project_number}/views/{view_number}/items",
       path_params: partition.path_params,
@@ -1574,14 +1592,12 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :projects, :list_view_items_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :list_view_items_for_user],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1589,7 +1605,7 @@ defmodule GitHubEx.Projects do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @update_item_for_org_partition_spec %{
@@ -1609,19 +1625,21 @@ defmodule GitHubEx.Projects do
   @spec update_item_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_item_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_item_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_item_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_item_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_item_for_org_partition_spec)
+  defp build_update_item_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_item_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/update-item-for-org",
+      args: params,
+      call: {__MODULE__, :update_item_for_org},
+      opts: opts,
       method: :patch,
       path_template: "/orgs/{org}/projectsV2/{project_number}/items/{item_id}",
       path_params: partition.path_params,
@@ -1636,16 +1654,14 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :update_item_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :update_item_for_org],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_item_for_user_partition_spec %{
@@ -1665,19 +1681,21 @@ defmodule GitHubEx.Projects do
   @spec update_item_for_user(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_item_for_user(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_item_for_user_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_item_for_user_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_item_for_user_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_item_for_user_partition_spec)
+  defp build_update_item_for_user_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_item_for_user_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "projects/update-item-for-user",
+      args: params,
+      call: {__MODULE__, :update_item_for_user},
+      opts: opts,
       method: :patch,
       path_template: "/users/{username}/projectsV2/{project_number}/items/{item_id}",
       path_params: partition.path_params,
@@ -1692,15 +1710,22 @@ defmodule GitHubEx.Projects do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :projects, :update_item_for_user],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :projects, :update_item_for_user],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

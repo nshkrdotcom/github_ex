@@ -3,6 +3,8 @@ defmodule GitHubEx.SecurityAdvisories do
   Generated Github Ex operations for security advisories.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @create_fork_partition_spec %{
     path: [{"owner", :owner}, {"repo", :repo}, {"ghsa_id", :ghsa_id}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.SecurityAdvisories do
   @spec create_fork(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_fork(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_fork_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_fork_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_fork_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_fork_partition_spec)
+  defp build_create_fork_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_fork_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/create-fork",
+      args: params,
+      call: {__MODULE__, :create_fork},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/security-advisories/{ghsa_id}/forks",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :security_advisories, :create_fork],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :create_fork],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_private_vulnerability_report_partition_spec %{
@@ -69,20 +71,23 @@ defmodule GitHubEx.SecurityAdvisories do
           {:ok, term()} | {:error, term()}
   def create_private_vulnerability_report(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_private_vulnerability_report_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_private_vulnerability_report_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_private_vulnerability_report_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @create_private_vulnerability_report_partition_spec)
+  defp build_create_private_vulnerability_report_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @create_private_vulnerability_report_partition_spec)
+
+    %{
       id: "security-advisories/create-private-vulnerability-report",
+      args: params,
+      call: {__MODULE__, :create_private_vulnerability_report},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/security-advisories/reports",
       path_params: partition.path_params,
@@ -97,16 +102,14 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :security_advisories, :create_private_vulnerability_report],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :create_private_vulnerability_report],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_repository_advisory_partition_spec %{
@@ -122,19 +125,21 @@ defmodule GitHubEx.SecurityAdvisories do
   @spec create_repository_advisory(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_repository_advisory(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_repository_advisory_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_repository_advisory_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_repository_advisory_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_repository_advisory_partition_spec)
+  defp build_create_repository_advisory_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_repository_advisory_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/create-repository-advisory",
+      args: params,
+      call: {__MODULE__, :create_repository_advisory},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/security-advisories",
       path_params: partition.path_params,
@@ -149,16 +154,14 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :security_advisories, :create_repository_advisory],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :create_repository_advisory],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_repository_advisory_cve_request_partition_spec %{
@@ -175,20 +178,23 @@ defmodule GitHubEx.SecurityAdvisories do
           {:ok, term()} | {:error, term()}
   def create_repository_advisory_cve_request(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_repository_advisory_cve_request_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_repository_advisory_cve_request_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_repository_advisory_cve_request_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @create_repository_advisory_cve_request_partition_spec)
+  defp build_create_repository_advisory_cve_request_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @create_repository_advisory_cve_request_partition_spec)
+
+    %{
       id: "security-advisories/create-repository-advisory-cve-request",
+      args: params,
+      call: {__MODULE__, :create_repository_advisory_cve_request},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/security-advisories/{ghsa_id}/cve",
       path_params: partition.path_params,
@@ -203,20 +209,14 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [
-          :github_ex,
-          :security_advisories,
-          :create_repository_advisory_cve_request
-        ],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :create_repository_advisory_cve_request],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_global_advisory_partition_spec %{
@@ -232,19 +232,21 @@ defmodule GitHubEx.SecurityAdvisories do
   @spec get_global_advisory(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_global_advisory(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_global_advisory_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_global_advisory_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_global_advisory_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_global_advisory_partition_spec)
+  defp build_get_global_advisory_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_global_advisory_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/get-global-advisory",
+      args: params,
+      call: {__MODULE__, :get_global_advisory},
+      opts: opts,
       method: :get,
       path_template: "/advisories/{ghsa_id}",
       path_params: partition.path_params,
@@ -259,16 +261,14 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :security_advisories, :get_global_advisory],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :get_global_advisory],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_repository_advisory_partition_spec %{
@@ -284,19 +284,21 @@ defmodule GitHubEx.SecurityAdvisories do
   @spec get_repository_advisory(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_repository_advisory(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_repository_advisory_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_repository_advisory_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_repository_advisory_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_repository_advisory_partition_spec)
+  defp build_get_repository_advisory_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_repository_advisory_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/get-repository-advisory",
+      args: params,
+      call: {__MODULE__, :get_repository_advisory},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/security-advisories/{ghsa_id}",
       path_params: partition.path_params,
@@ -311,16 +313,14 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :security_advisories, :get_repository_advisory],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :get_repository_advisory],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_global_advisories_partition_spec %{
@@ -355,33 +355,32 @@ defmodule GitHubEx.SecurityAdvisories do
   @spec list_global_advisories(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_global_advisories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_global_advisories_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_global_advisories_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_global_advisories(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_global_advisories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_global_advisories_operation(params) end,
+      fn -> build_list_global_advisories_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -391,11 +390,16 @@ defmodule GitHubEx.SecurityAdvisories do
     )
   end
 
-  defp build_list_global_advisories_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_global_advisories_partition_spec)
+  defp build_list_global_advisories_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_global_advisories_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/list-global-advisories",
+      args: params,
+      call: {__MODULE__, :list_global_advisories},
+      opts: opts,
       method: :get,
       path_template: "/advisories",
       path_params: partition.path_params,
@@ -410,14 +414,12 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :security_advisories, :list_global_advisories],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :list_global_advisories],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -425,7 +427,7 @@ defmodule GitHubEx.SecurityAdvisories do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_org_repository_advisories_partition_spec %{
@@ -449,33 +451,32 @@ defmodule GitHubEx.SecurityAdvisories do
           {:ok, term()} | {:error, term()}
   def list_org_repository_advisories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_org_repository_advisories_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_org_repository_advisories_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_org_repository_advisories(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_org_repository_advisories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_org_repository_advisories_operation(params) end,
+      fn -> build_list_org_repository_advisories_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -485,12 +486,16 @@ defmodule GitHubEx.SecurityAdvisories do
     )
   end
 
-  defp build_list_org_repository_advisories_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @list_org_repository_advisories_partition_spec)
+  defp build_list_org_repository_advisories_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_org_repository_advisories_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/list-org-repository-advisories",
+      args: params,
+      call: {__MODULE__, :list_org_repository_advisories},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/security-advisories",
       path_params: partition.path_params,
@@ -505,14 +510,12 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :security_advisories, :list_org_repository_advisories],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :list_org_repository_advisories],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -520,7 +523,7 @@ defmodule GitHubEx.SecurityAdvisories do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_repository_advisories_partition_spec %{
@@ -543,33 +546,32 @@ defmodule GitHubEx.SecurityAdvisories do
   @spec list_repository_advisories(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_repository_advisories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_repository_advisories_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_repository_advisories_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_repository_advisories(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_repository_advisories(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_repository_advisories_operation(params) end,
+      fn -> build_list_repository_advisories_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -579,11 +581,16 @@ defmodule GitHubEx.SecurityAdvisories do
     )
   end
 
-  defp build_list_repository_advisories_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_repository_advisories_partition_spec)
+  defp build_list_repository_advisories_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_repository_advisories_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/list-repository-advisories",
+      args: params,
+      call: {__MODULE__, :list_repository_advisories},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/security-advisories",
       path_params: partition.path_params,
@@ -598,14 +605,12 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :security_advisories, :list_repository_advisories],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :list_repository_advisories],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -613,7 +618,7 @@ defmodule GitHubEx.SecurityAdvisories do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @update_repository_advisory_partition_spec %{
@@ -629,19 +634,21 @@ defmodule GitHubEx.SecurityAdvisories do
   @spec update_repository_advisory(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_repository_advisory(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_repository_advisory_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_repository_advisory_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_repository_advisory_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_repository_advisory_partition_spec)
+  defp build_update_repository_advisory_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_repository_advisory_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "security-advisories/update-repository-advisory",
+      args: params,
+      call: {__MODULE__, :update_repository_advisory},
+      opts: opts,
       method: :patch,
       path_template: "/repos/{owner}/{repo}/security-advisories/{ghsa_id}",
       path_params: partition.path_params,
@@ -656,15 +663,22 @@ defmodule GitHubEx.SecurityAdvisories do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :security_advisories, :update_repository_advisory],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :security_advisories, :update_repository_advisory],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

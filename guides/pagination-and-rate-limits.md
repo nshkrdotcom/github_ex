@@ -29,8 +29,8 @@ response.rate_limit.remaining
 ## Generated Stream Helpers
 
 The shared compiler emits `stream_*` wrappers for paginated operations. They
-follow GitHub `Link` headers and unwrap the current page through
-`Pristine.Operation.items/2`:
+follow GitHub `Link` headers and unwrap the current page through the shared
+`Pristine.SDK.OpenAPI.Client` pagination helpers:
 
 ```elixir
 GitHubEx.Repos.stream_list_for_authenticated_user(client, %{"per_page" => 100})

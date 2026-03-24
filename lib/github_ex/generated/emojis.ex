@@ -3,6 +3,8 @@ defmodule GitHubEx.Emojis do
   Generated Github Ex operations for emojis.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @get_partition_spec %{
     path: [],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Emojis do
   @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_partition_spec)
+  defp build_get_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "emojis/get",
+      args: params,
+      call: {__MODULE__, :get},
+      opts: opts,
       method: :get,
       path_template: "/emojis",
       path_params: partition.path_params,
@@ -43,15 +47,22 @@ defmodule GitHubEx.Emojis do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :emojis, :get],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :emojis, :get],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

@@ -3,6 +3,8 @@ defmodule GitHubEx.Gitignore do
   Generated Github Ex operations for gitignore.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @get_all_templates_partition_spec %{
     path: [],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Gitignore do
   @spec get_all_templates(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_all_templates(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_all_templates_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_all_templates_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_all_templates_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_all_templates_partition_spec)
+  defp build_get_all_templates_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_all_templates_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "gitignore/get-all-templates",
+      args: params,
+      call: {__MODULE__, :get_all_templates},
+      opts: opts,
       method: :get,
       path_template: "/gitignore/templates",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Gitignore do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :gitignore, :get_all_templates],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :gitignore, :get_all_templates],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_template_partition_spec %{
@@ -68,19 +70,21 @@ defmodule GitHubEx.Gitignore do
   @spec get_template(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_template(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_template_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_template_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_template_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_template_partition_spec)
+  defp build_get_template_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_template_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "gitignore/get-template",
+      args: params,
+      call: {__MODULE__, :get_template},
+      opts: opts,
       method: :get,
       path_template: "/gitignore/templates/{name}",
       path_params: partition.path_params,
@@ -95,15 +99,22 @@ defmodule GitHubEx.Gitignore do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :gitignore, :get_template],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :gitignore, :get_template],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

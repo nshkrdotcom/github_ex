@@ -3,6 +3,8 @@ defmodule GitHubEx.CodeSecurity do
   Generated Github Ex operations for code security.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @attach_configuration_partition_spec %{
     path: [{"org", :org}, {"configuration_id", :configuration_id}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec attach_configuration(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def attach_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_attach_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_attach_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_attach_configuration_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @attach_configuration_partition_spec)
+  defp build_attach_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @attach_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/attach-configuration",
+      args: params,
+      call: {__MODULE__, :attach_configuration},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/code-security/configurations/{configuration_id}/attach",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_security, :attach_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :attach_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @attach_enterprise_configuration_partition_spec %{
@@ -69,20 +71,21 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def attach_enterprise_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_attach_enterprise_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_attach_enterprise_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_attach_enterprise_configuration_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @attach_enterprise_configuration_partition_spec)
+  defp build_attach_enterprise_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @attach_enterprise_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/attach-enterprise-configuration",
+      args: params,
+      call: {__MODULE__, :attach_enterprise_configuration},
+      opts: opts,
       method: :post,
       path_template:
         "/enterprises/{enterprise}/code-security/configurations/{configuration_id}/attach",
@@ -98,16 +101,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_security, :attach_enterprise_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :attach_enterprise_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_configuration_partition_spec %{
@@ -123,19 +124,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec create_configuration(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_configuration_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_configuration_partition_spec)
+  defp build_create_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/create-configuration",
+      args: params,
+      call: {__MODULE__, :create_configuration},
+      opts: opts,
       method: :post,
       path_template: "/orgs/{org}/code-security/configurations",
       path_params: partition.path_params,
@@ -150,16 +153,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_security, :create_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :create_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_configuration_for_enterprise_partition_spec %{
@@ -176,20 +177,23 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def create_configuration_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_configuration_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_configuration_for_enterprise_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_configuration_for_enterprise_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @create_configuration_for_enterprise_partition_spec)
+  defp build_create_configuration_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @create_configuration_for_enterprise_partition_spec)
+
+    %{
       id: "code-security/create-configuration-for-enterprise",
+      args: params,
+      call: {__MODULE__, :create_configuration_for_enterprise},
+      opts: opts,
       method: :post,
       path_template: "/enterprises/{enterprise}/code-security/configurations",
       path_params: partition.path_params,
@@ -204,16 +208,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_security, :create_configuration_for_enterprise],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :create_configuration_for_enterprise],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_configuration_partition_spec %{
@@ -229,19 +231,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec delete_configuration(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_configuration_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_configuration_partition_spec)
+  defp build_delete_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/delete-configuration",
+      args: params,
+      call: {__MODULE__, :delete_configuration},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/code-security/configurations/{configuration_id}",
       path_params: partition.path_params,
@@ -256,16 +260,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :code_security, :delete_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :delete_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_configuration_for_enterprise_partition_spec %{
@@ -282,20 +284,23 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def delete_configuration_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_configuration_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_configuration_for_enterprise_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_configuration_for_enterprise_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @delete_configuration_for_enterprise_partition_spec)
+  defp build_delete_configuration_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @delete_configuration_for_enterprise_partition_spec)
+
+    %{
       id: "code-security/delete-configuration-for-enterprise",
+      args: params,
+      call: {__MODULE__, :delete_configuration_for_enterprise},
+      opts: opts,
       method: :delete,
       path_template: "/enterprises/{enterprise}/code-security/configurations/{configuration_id}",
       path_params: partition.path_params,
@@ -310,16 +315,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :code_security, :delete_configuration_for_enterprise],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :delete_configuration_for_enterprise],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @detach_configuration_partition_spec %{
@@ -335,19 +338,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec detach_configuration(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def detach_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_detach_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_detach_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_detach_configuration_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @detach_configuration_partition_spec)
+  defp build_detach_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @detach_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/detach-configuration",
+      args: params,
+      call: {__MODULE__, :detach_configuration},
+      opts: opts,
       method: :delete,
       path_template: "/orgs/{org}/code-security/configurations/detach",
       path_params: partition.path_params,
@@ -362,16 +367,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :code_security, :detach_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :detach_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_configuration_partition_spec %{
@@ -387,19 +390,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec get_configuration(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_configuration_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_configuration_partition_spec)
+  defp build_get_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/get-configuration",
+      args: params,
+      call: {__MODULE__, :get_configuration},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/code-security/configurations/{configuration_id}",
       path_params: partition.path_params,
@@ -414,16 +419,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_configuration_for_repository_partition_spec %{
@@ -440,20 +443,21 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def get_configuration_for_repository(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_configuration_for_repository_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_configuration_for_repository_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_configuration_for_repository_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_configuration_for_repository_partition_spec)
+  defp build_get_configuration_for_repository_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_configuration_for_repository_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/get-configuration-for-repository",
+      args: params,
+      call: {__MODULE__, :get_configuration_for_repository},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/code-security-configuration",
       path_params: partition.path_params,
@@ -468,16 +472,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_configuration_for_repository],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_configuration_for_repository],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_configurations_for_enterprise_partition_spec %{
@@ -494,33 +496,32 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def get_configurations_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_configurations_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_configurations_for_enterprise_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_get_configurations_for_enterprise(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_configurations_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_get_configurations_for_enterprise_operation(params) end,
+      fn -> build_get_configurations_for_enterprise_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -530,12 +531,16 @@ defmodule GitHubEx.CodeSecurity do
     )
   end
 
-  defp build_get_configurations_for_enterprise_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_configurations_for_enterprise_partition_spec)
+  defp build_get_configurations_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_configurations_for_enterprise_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/get-configurations-for-enterprise",
+      args: params,
+      call: {__MODULE__, :get_configurations_for_enterprise},
+      opts: opts,
       method: :get,
       path_template: "/enterprises/{enterprise}/code-security/configurations",
       path_params: partition.path_params,
@@ -550,14 +555,12 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_configurations_for_enterprise],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_configurations_for_enterprise],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -565,7 +568,7 @@ defmodule GitHubEx.CodeSecurity do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @get_configurations_for_org_partition_spec %{
@@ -586,33 +589,32 @@ defmodule GitHubEx.CodeSecurity do
   @spec get_configurations_for_org(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_configurations_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_configurations_for_org_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_configurations_for_org_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_get_configurations_for_org(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_configurations_for_org(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_get_configurations_for_org_operation(params) end,
+      fn -> build_get_configurations_for_org_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -622,11 +624,16 @@ defmodule GitHubEx.CodeSecurity do
     )
   end
 
-  defp build_get_configurations_for_org_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_configurations_for_org_partition_spec)
+  defp build_get_configurations_for_org_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_configurations_for_org_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/get-configurations-for-org",
+      args: params,
+      call: {__MODULE__, :get_configurations_for_org},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/code-security/configurations",
       path_params: partition.path_params,
@@ -641,14 +648,12 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_configurations_for_org],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_configurations_for_org],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -656,7 +661,7 @@ defmodule GitHubEx.CodeSecurity do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @get_default_configurations_partition_spec %{
@@ -672,19 +677,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec get_default_configurations(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_default_configurations(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_default_configurations_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_default_configurations_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_default_configurations_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_default_configurations_partition_spec)
+  defp build_get_default_configurations_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_default_configurations_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/get-default-configurations",
+      args: params,
+      call: {__MODULE__, :get_default_configurations},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/code-security/configurations/defaults",
       path_params: partition.path_params,
@@ -699,16 +706,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_default_configurations],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_default_configurations],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_default_configurations_for_enterprise_partition_spec %{
@@ -725,23 +730,23 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def get_default_configurations_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_default_configurations_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_default_configurations_for_enterprise_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_default_configurations_for_enterprise_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @get_default_configurations_for_enterprise_partition_spec
-      )
+  defp build_get_default_configurations_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_default_configurations_for_enterprise_partition_spec)
+
+    %{
       id: "code-security/get-default-configurations-for-enterprise",
+      args: params,
+      call: {__MODULE__, :get_default_configurations_for_enterprise},
+      opts: opts,
       method: :get,
       path_template: "/enterprises/{enterprise}/code-security/configurations/defaults",
       path_params: partition.path_params,
@@ -756,16 +761,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_default_configurations_for_enterprise],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_default_configurations_for_enterprise],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_repositories_for_configuration_partition_spec %{
@@ -787,33 +790,32 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def get_repositories_for_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_repositories_for_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_repositories_for_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_get_repositories_for_configuration(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_repositories_for_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_get_repositories_for_configuration_operation(params) end,
+      fn -> build_get_repositories_for_configuration_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -823,12 +825,18 @@ defmodule GitHubEx.CodeSecurity do
     )
   end
 
-  defp build_get_repositories_for_configuration_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @get_repositories_for_configuration_partition_spec)
+  defp build_get_repositories_for_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_repositories_for_configuration_partition_spec)
+
+    %{
       id: "code-security/get-repositories-for-configuration",
+      args: params,
+      call: {__MODULE__, :get_repositories_for_configuration},
+      opts: opts,
       method: :get,
       path_template: "/orgs/{org}/code-security/configurations/{configuration_id}/repositories",
       path_params: partition.path_params,
@@ -843,14 +851,12 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_repositories_for_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_repositories_for_configuration],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -858,7 +864,7 @@ defmodule GitHubEx.CodeSecurity do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @get_repositories_for_enterprise_configuration_partition_spec %{
@@ -880,34 +886,33 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def get_repositories_for_enterprise_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_repositories_for_enterprise_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_repositories_for_enterprise_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_get_repositories_for_enterprise_configuration(term(), map(), keyword()) ::
           Enumerable.t()
   def stream_get_repositories_for_enterprise_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_get_repositories_for_enterprise_configuration_operation(params) end,
+      fn -> build_get_repositories_for_enterprise_configuration_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -917,16 +922,21 @@ defmodule GitHubEx.CodeSecurity do
     )
   end
 
-  defp build_get_repositories_for_enterprise_configuration_operation(params)
-       when is_map(params) do
+  defp build_get_repositories_for_enterprise_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+
     partition =
-      Pristine.Operation.partition(
+      OpenAPIClient.partition(
         params,
         @get_repositories_for_enterprise_configuration_partition_spec
       )
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/get-repositories-for-enterprise-configuration",
+      args: params,
+      call: {__MODULE__, :get_repositories_for_enterprise_configuration},
+      opts: opts,
       method: :get,
       path_template:
         "/enterprises/{enterprise}/code-security/configurations/{configuration_id}/repositories",
@@ -942,18 +952,12 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [
-          :github_ex,
-          :code_security,
-          :get_repositories_for_enterprise_configuration
-        ],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_repositories_for_enterprise_configuration],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -961,7 +965,7 @@ defmodule GitHubEx.CodeSecurity do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @get_single_configuration_for_enterprise_partition_spec %{
@@ -978,23 +982,23 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def get_single_configuration_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_single_configuration_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_single_configuration_for_enterprise_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_single_configuration_for_enterprise_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @get_single_configuration_for_enterprise_partition_spec
-      )
+  defp build_get_single_configuration_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @get_single_configuration_for_enterprise_partition_spec)
+
+    %{
       id: "code-security/get-single-configuration-for-enterprise",
+      args: params,
+      call: {__MODULE__, :get_single_configuration_for_enterprise},
+      opts: opts,
       method: :get,
       path_template: "/enterprises/{enterprise}/code-security/configurations/{configuration_id}",
       path_params: partition.path_params,
@@ -1009,16 +1013,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :code_security, :get_single_configuration_for_enterprise],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :get_single_configuration_for_enterprise],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @set_configuration_as_default_partition_spec %{
@@ -1034,19 +1036,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec set_configuration_as_default(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def set_configuration_as_default(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_set_configuration_as_default_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_set_configuration_as_default_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_set_configuration_as_default_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @set_configuration_as_default_partition_spec)
+  defp build_set_configuration_as_default_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @set_configuration_as_default_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/set-configuration-as-default",
+      args: params,
+      call: {__MODULE__, :set_configuration_as_default},
+      opts: opts,
       method: :put,
       path_template: "/orgs/{org}/code-security/configurations/{configuration_id}/defaults",
       path_params: partition.path_params,
@@ -1061,16 +1065,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_security, :set_configuration_as_default],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :set_configuration_as_default],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @set_configuration_as_default_for_enterprise_partition_spec %{
@@ -1087,23 +1089,23 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def set_configuration_as_default_for_enterprise(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_set_configuration_as_default_for_enterprise_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_set_configuration_as_default_for_enterprise_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_set_configuration_as_default_for_enterprise_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(
-        params,
-        @set_configuration_as_default_for_enterprise_partition_spec
-      )
+  defp build_set_configuration_as_default_for_enterprise_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
 
-    Pristine.Operation.new(%{
+    partition =
+      OpenAPIClient.partition(params, @set_configuration_as_default_for_enterprise_partition_spec)
+
+    %{
       id: "code-security/set-configuration-as-default-for-enterprise",
+      args: params,
+      call: {__MODULE__, :set_configuration_as_default_for_enterprise},
+      opts: opts,
       method: :put,
       path_template:
         "/enterprises/{enterprise}/code-security/configurations/{configuration_id}/defaults",
@@ -1119,20 +1121,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [
-          :github_ex,
-          :code_security,
-          :set_configuration_as_default_for_enterprise
-        ],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :set_configuration_as_default_for_enterprise],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_configuration_partition_spec %{
@@ -1148,19 +1144,21 @@ defmodule GitHubEx.CodeSecurity do
   @spec update_configuration(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_configuration_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_configuration_partition_spec)
+  defp build_update_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/update-configuration",
+      args: params,
+      call: {__MODULE__, :update_configuration},
+      opts: opts,
       method: :patch,
       path_template: "/orgs/{org}/code-security/configurations/{configuration_id}",
       path_params: partition.path_params,
@@ -1175,16 +1173,14 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_security, :update_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :update_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_enterprise_configuration_partition_spec %{
@@ -1201,20 +1197,21 @@ defmodule GitHubEx.CodeSecurity do
           {:ok, term()} | {:error, term()}
   def update_enterprise_configuration(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_enterprise_configuration_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_enterprise_configuration_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_enterprise_configuration_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @update_enterprise_configuration_partition_spec)
+  defp build_update_enterprise_configuration_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_enterprise_configuration_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "code-security/update-enterprise-configuration",
+      args: params,
+      call: {__MODULE__, :update_enterprise_configuration},
+      opts: opts,
       method: :patch,
       path_template: "/enterprises/{enterprise}/code-security/configurations/{configuration_id}",
       path_params: partition.path_params,
@@ -1229,15 +1226,22 @@ defmodule GitHubEx.CodeSecurity do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :code_security, :update_enterprise_configuration],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :code_security, :update_enterprise_configuration],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

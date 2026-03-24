@@ -3,6 +3,8 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   Generated Github Ex operations for enterprise team organizations.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @add_partition_spec %{
     path: [
       {"enterprise", :enterprise},
@@ -20,19 +22,21 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   @spec add(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def add(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_add_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_add_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_add_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @add_partition_spec)
+  defp build_add_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @add_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "enterprise-team-organizations/add",
+      args: params,
+      call: {__MODULE__, :add},
+      opts: opts,
       method: :put,
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/organizations/{org}",
       path_params: partition.path_params,
@@ -47,16 +51,14 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :enterprise_team_organizations, :add],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :enterprise_team_organizations, :add],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @bulk_add_partition_spec %{
@@ -72,19 +74,21 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   @spec bulk_add(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def bulk_add(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_bulk_add_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_bulk_add_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_bulk_add_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @bulk_add_partition_spec)
+  defp build_bulk_add_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @bulk_add_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "enterprise-team-organizations/bulk-add",
+      args: params,
+      call: {__MODULE__, :bulk_add},
+      opts: opts,
       method: :post,
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/organizations/add",
       path_params: partition.path_params,
@@ -99,16 +103,14 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :enterprise_team_organizations, :bulk_add],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :enterprise_team_organizations, :bulk_add],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @bulk_remove_partition_spec %{
@@ -124,19 +126,21 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   @spec bulk_remove(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def bulk_remove(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_bulk_remove_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_bulk_remove_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_bulk_remove_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @bulk_remove_partition_spec)
+  defp build_bulk_remove_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @bulk_remove_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "enterprise-team-organizations/bulk-remove",
+      args: params,
+      call: {__MODULE__, :bulk_remove},
+      opts: opts,
       method: :post,
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/organizations/remove",
       path_params: partition.path_params,
@@ -151,16 +155,14 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :enterprise_team_organizations, :bulk_remove],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :enterprise_team_organizations, :bulk_remove],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_partition_spec %{
@@ -180,19 +182,21 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   @spec delete(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_partition_spec)
+  defp build_delete_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "enterprise-team-organizations/delete",
+      args: params,
+      call: {__MODULE__, :delete},
+      opts: opts,
       method: :delete,
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/organizations/{org}",
       path_params: partition.path_params,
@@ -207,16 +211,14 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :enterprise_team_organizations, :delete],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :enterprise_team_organizations, :delete],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_assignment_partition_spec %{
@@ -236,19 +238,21 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   @spec get_assignment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_assignment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_assignment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_assignment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_assignment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_assignment_partition_spec)
+  defp build_get_assignment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_assignment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "enterprise-team-organizations/get-assignment",
+      args: params,
+      call: {__MODULE__, :get_assignment},
+      opts: opts,
       method: :get,
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/organizations/{org}",
       path_params: partition.path_params,
@@ -263,16 +267,14 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :enterprise_team_organizations, :get_assignment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :enterprise_team_organizations, :get_assignment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_assignments_partition_spec %{
@@ -288,33 +290,32 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
   @spec get_assignments(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_assignments(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_assignments_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_assignments_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_get_assignments(term(), map(), keyword()) :: Enumerable.t()
   def stream_get_assignments(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_get_assignments_operation(params) end,
+      fn -> build_get_assignments_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -324,11 +325,16 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
     )
   end
 
-  defp build_get_assignments_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_assignments_partition_spec)
+  defp build_get_assignments_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_assignments_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "enterprise-team-organizations/get-assignments",
+      args: params,
+      call: {__MODULE__, :get_assignments},
+      opts: opts,
       method: :get,
       path_template: "/enterprises/{enterprise}/teams/{enterprise-team}/organizations",
       path_params: partition.path_params,
@@ -343,14 +349,12 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :enterprise_team_organizations, :get_assignments],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :enterprise_team_organizations, :get_assignments],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -358,6 +362,15 @@ defmodule GitHubEx.EnterpriseTeamOrganizations do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

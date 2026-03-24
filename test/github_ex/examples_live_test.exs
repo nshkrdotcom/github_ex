@@ -4,10 +4,10 @@ defmodule GitHubEx.ExamplesLiveTest do
   use ExUnit.Case, async: false
 
   alias GitHubEx.Examples.Live
-  alias Pristine.OAuth2.AuthorizationRequest
-  alias Pristine.OAuth2.Error, as: OAuth2Error
   alias Pristine.Core.EndpointMetadata
   alias Pristine.Error, as: PristineError
+  alias Pristine.OAuth2.AuthorizationRequest
+  alias Pristine.OAuth2.Error, as: OAuth2Error
   alias Pristine.Response, as: PristineResponse
 
   @moduletag :tmp_dir

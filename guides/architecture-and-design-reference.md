@@ -164,8 +164,8 @@ That split matches the two host classes the library talks to:
 
 The main handwritten entrypoint is `GitHubEx.Client`.
 
-Its role is to translate GitHub-specific defaults into a `Pristine.Client`
-context:
+Its role is to translate GitHub-specific defaults into a `Pristine`
+foundation context and a thin provider profile:
 
 - default base URL
 - GitHub media type
@@ -178,19 +178,20 @@ context:
 - optional OAuth2 token-source wiring
 
 The client is intentionally thin. It does not own endpoint-specific knowledge.
-That knowledge stays in generated `Pristine.Operation` values.
+That knowledge stays in generated request maps and the shared `Pristine.SDK.*`
+runtime boundary.
 
 ### 5.3 Generated Operations
 
 Each generated endpoint function is a very small wrapper that does the
 following:
 
-1. Normalize the caller's client into a `Pristine.Client`.
-2. Merge execution options.
-3. Build a `Pristine.Operation`.
-4. Let the internal runtime-operation bridge in `GitHubEx.Client` apply runtime
-   tweaks.
-5. Call `Pristine.execute/3`.
+1. Partition the params with `Pristine.SDK.OpenAPI.Client.partition/2`.
+2. Build a request map with stable runtime metadata such as `resource`,
+   `retry`, `circuit_breaker`, and `rate_limit`.
+3. Hand that request map to the generated-request bridge in `GitHubEx.Client`.
+4. Let the thin client convert the request into a request spec and call
+   `Pristine.execute_request/3`.
 
 This matters architecturally because it keeps the generated surface declarative.
 Generated code describes the request; `pristine` executes it.

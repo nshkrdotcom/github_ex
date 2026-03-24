@@ -3,6 +3,8 @@ defmodule GitHubEx.Pulls do
   Generated Github Ex operations for pulls.
   """
 
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
+
   @check_if_merged_partition_spec %{
     path: [{"owner", :owner}, {"repo", :repo}, {"pull_number", :pull_number}],
     auth: {"auth", :auth},
@@ -16,19 +18,21 @@ defmodule GitHubEx.Pulls do
   @spec check_if_merged(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def check_if_merged(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_check_if_merged_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_check_if_merged_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_check_if_merged_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @check_if_merged_partition_spec)
+  defp build_check_if_merged_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @check_if_merged_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/check-if-merged",
+      args: params,
+      call: {__MODULE__, :check_if_merged},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/merge",
       path_params: partition.path_params,
@@ -43,16 +47,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :check_if_merged],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :check_if_merged],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_partition_spec %{
@@ -85,19 +87,21 @@ defmodule GitHubEx.Pulls do
   @spec create(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_partition_spec)
+  defp build_create_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/create",
+      args: params,
+      call: {__MODULE__, :create},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/pulls",
       path_params: partition.path_params,
@@ -112,16 +116,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :create],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :create],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_reply_for_review_comment_partition_spec %{
@@ -159,20 +161,21 @@ defmodule GitHubEx.Pulls do
           {:ok, term()} | {:error, term()}
   def create_reply_for_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_reply_for_review_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_reply_for_review_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_reply_for_review_comment_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @create_reply_for_review_comment_partition_spec)
+  defp build_create_reply_for_review_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_reply_for_review_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/create-reply-for-review-comment",
+      args: params,
+      call: {__MODULE__, :create_reply_for_review_comment},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies",
       path_params: partition.path_params,
@@ -187,16 +190,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :create_reply_for_review_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :create_reply_for_review_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_review_partition_spec %{
@@ -234,19 +235,21 @@ defmodule GitHubEx.Pulls do
   @spec create_review(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_review_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_review_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_review_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_review_partition_spec)
+  defp build_create_review_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_review_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/create-review",
+      args: params,
+      call: {__MODULE__, :create_review},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
       path_params: partition.path_params,
@@ -261,16 +264,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :create_review],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :create_review],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @create_review_comment_partition_spec %{
@@ -306,19 +307,21 @@ defmodule GitHubEx.Pulls do
   @spec create_review_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def create_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_create_review_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_create_review_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_create_review_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @create_review_comment_partition_spec)
+  defp build_create_review_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @create_review_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/create-review-comment",
+      args: params,
+      call: {__MODULE__, :create_review_comment},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
       path_params: partition.path_params,
@@ -333,16 +336,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :create_review_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :create_review_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_pending_review_partition_spec %{
@@ -363,19 +364,21 @@ defmodule GitHubEx.Pulls do
   @spec delete_pending_review(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_pending_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_pending_review_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_pending_review_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_pending_review_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_pending_review_partition_spec)
+  defp build_delete_pending_review_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_pending_review_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/delete-pending-review",
+      args: params,
+      call: {__MODULE__, :delete_pending_review},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}",
       path_params: partition.path_params,
@@ -390,16 +393,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :pulls, :delete_pending_review],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :delete_pending_review],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @delete_review_comment_partition_spec %{
@@ -415,19 +416,21 @@ defmodule GitHubEx.Pulls do
   @spec delete_review_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def delete_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_delete_review_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_delete_review_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_delete_review_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @delete_review_comment_partition_spec)
+  defp build_delete_review_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @delete_review_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/delete-review-comment",
+      args: params,
+      call: {__MODULE__, :delete_review_comment},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}",
       path_params: partition.path_params,
@@ -442,16 +445,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :pulls, :delete_review_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :delete_review_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @dismiss_review_partition_spec %{
@@ -472,19 +473,21 @@ defmodule GitHubEx.Pulls do
   @spec dismiss_review(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def dismiss_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_dismiss_review_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_dismiss_review_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_dismiss_review_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @dismiss_review_partition_spec)
+  defp build_dismiss_review_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @dismiss_review_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/dismiss-review",
+      args: params,
+      call: {__MODULE__, :dismiss_review},
+      opts: opts,
       method: :put,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals",
       path_params: partition.path_params,
@@ -499,16 +502,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :dismiss_review],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :dismiss_review],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_partition_spec %{
@@ -552,19 +553,21 @@ defmodule GitHubEx.Pulls do
   @spec get(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_partition_spec)
+  defp build_get_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/get",
+      args: params,
+      call: {__MODULE__, :get},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}",
       path_params: partition.path_params,
@@ -579,16 +582,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :get],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :get],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_review_partition_spec %{
@@ -609,19 +610,21 @@ defmodule GitHubEx.Pulls do
   @spec get_review(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_review_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_review_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_review_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_review_partition_spec)
+  defp build_get_review_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_review_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/get-review",
+      args: params,
+      call: {__MODULE__, :get_review},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}",
       path_params: partition.path_params,
@@ -636,16 +639,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :get_review],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :get_review],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @get_review_comment_partition_spec %{
@@ -661,19 +662,21 @@ defmodule GitHubEx.Pulls do
   @spec get_review_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def get_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_get_review_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_get_review_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_get_review_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @get_review_comment_partition_spec)
+  defp build_get_review_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @get_review_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/get-review-comment",
+      args: params,
+      call: {__MODULE__, :get_review_comment},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}",
       path_params: partition.path_params,
@@ -688,16 +691,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :get_review_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :get_review_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_partition_spec %{
@@ -721,33 +722,32 @@ defmodule GitHubEx.Pulls do
   @spec list(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list(term(), map(), keyword()) :: Enumerable.t()
   def stream_list(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_operation(params) end,
+      fn -> build_list_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -757,11 +757,16 @@ defmodule GitHubEx.Pulls do
     )
   end
 
-  defp build_list_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_partition_spec)
+  defp build_list_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list",
+      args: params,
+      call: {__MODULE__, :list},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls",
       path_params: partition.path_params,
@@ -776,14 +781,12 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -791,7 +794,7 @@ defmodule GitHubEx.Pulls do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_comments_for_review_partition_spec %{
@@ -812,33 +815,32 @@ defmodule GitHubEx.Pulls do
   @spec list_comments_for_review(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_comments_for_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_comments_for_review_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_comments_for_review_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_comments_for_review(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_comments_for_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_comments_for_review_operation(params) end,
+      fn -> build_list_comments_for_review_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -848,11 +850,16 @@ defmodule GitHubEx.Pulls do
     )
   end
 
-  defp build_list_comments_for_review_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_comments_for_review_partition_spec)
+  defp build_list_comments_for_review_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_comments_for_review_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list-comments-for-review",
+      args: params,
+      call: {__MODULE__, :list_comments_for_review},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments",
       path_params: partition.path_params,
@@ -867,14 +874,12 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list_comments_for_review],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list_comments_for_review],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -882,7 +887,7 @@ defmodule GitHubEx.Pulls do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_commits_partition_spec %{
@@ -898,33 +903,32 @@ defmodule GitHubEx.Pulls do
   @spec list_commits(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_commits(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_commits_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_commits_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_commits(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_commits(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_commits_operation(params) end,
+      fn -> build_list_commits_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -934,11 +938,16 @@ defmodule GitHubEx.Pulls do
     )
   end
 
-  defp build_list_commits_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_commits_partition_spec)
+  defp build_list_commits_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_commits_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list-commits",
+      args: params,
+      call: {__MODULE__, :list_commits},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/commits",
       path_params: partition.path_params,
@@ -953,14 +962,12 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list_commits],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list_commits],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -968,7 +975,7 @@ defmodule GitHubEx.Pulls do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_files_partition_spec %{
@@ -984,33 +991,32 @@ defmodule GitHubEx.Pulls do
   @spec list_files(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_files(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_files_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_files_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_files(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_files(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_files_operation(params) end,
+      fn -> build_list_files_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1020,11 +1026,16 @@ defmodule GitHubEx.Pulls do
     )
   end
 
-  defp build_list_files_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_files_partition_spec)
+  defp build_list_files_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_files_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list-files",
+      args: params,
+      call: {__MODULE__, :list_files},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/files",
       path_params: partition.path_params,
@@ -1039,14 +1050,12 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list_files],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list_files],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1054,7 +1063,7 @@ defmodule GitHubEx.Pulls do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_requested_reviewers_partition_spec %{
@@ -1070,19 +1079,21 @@ defmodule GitHubEx.Pulls do
   @spec list_requested_reviewers(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_requested_reviewers(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_requested_reviewers_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_requested_reviewers_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_list_requested_reviewers_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_requested_reviewers_partition_spec)
+  defp build_list_requested_reviewers_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_requested_reviewers_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list-requested-reviewers",
+      args: params,
+      call: {__MODULE__, :list_requested_reviewers},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
       path_params: partition.path_params,
@@ -1097,16 +1108,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list_requested_reviewers],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list_requested_reviewers],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @list_review_comments_partition_spec %{
@@ -1128,33 +1137,32 @@ defmodule GitHubEx.Pulls do
   @spec list_review_comments(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_review_comments(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_review_comments_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_review_comments_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_review_comments(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_review_comments(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_review_comments_operation(params) end,
+      fn -> build_list_review_comments_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1164,11 +1172,16 @@ defmodule GitHubEx.Pulls do
     )
   end
 
-  defp build_list_review_comments_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_review_comments_partition_spec)
+  defp build_list_review_comments_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_review_comments_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list-review-comments",
+      args: params,
+      call: {__MODULE__, :list_review_comments},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/comments",
       path_params: partition.path_params,
@@ -1183,14 +1196,12 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list_review_comments],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list_review_comments],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1198,7 +1209,7 @@ defmodule GitHubEx.Pulls do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_review_comments_for_repo_partition_spec %{
@@ -1221,33 +1232,32 @@ defmodule GitHubEx.Pulls do
           {:ok, term()} | {:error, term()}
   def list_review_comments_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_review_comments_for_repo_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_review_comments_for_repo_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_review_comments_for_repo(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_review_comments_for_repo(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_review_comments_for_repo_operation(params) end,
+      fn -> build_list_review_comments_for_repo_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1257,12 +1267,16 @@ defmodule GitHubEx.Pulls do
     )
   end
 
-  defp build_list_review_comments_for_repo_operation(params) when is_map(params) do
-    partition =
-      Pristine.Operation.partition(params, @list_review_comments_for_repo_partition_spec)
+  defp build_list_review_comments_for_repo_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_review_comments_for_repo_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list-review-comments-for-repo",
+      args: params,
+      call: {__MODULE__, :list_review_comments_for_repo},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/comments",
       path_params: partition.path_params,
@@ -1277,14 +1291,12 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list_review_comments_for_repo],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list_review_comments_for_repo],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1292,7 +1304,7 @@ defmodule GitHubEx.Pulls do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @list_reviews_partition_spec %{
@@ -1308,33 +1320,32 @@ defmodule GitHubEx.Pulls do
   @spec list_reviews(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def list_reviews(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_list_reviews_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_list_reviews_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
   @spec stream_list_reviews(term(), map(), keyword()) :: Enumerable.t()
   def stream_list_reviews(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
+    opts = normalize_request_opts!(opts)
 
     Stream.resource(
-      fn -> build_list_reviews_operation(params) end,
+      fn -> build_list_reviews_request(client, params, opts) end,
       fn
         nil ->
           {:halt, nil}
 
-        %Pristine.Operation{} = operation ->
-          operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
+        request when is_map(request) ->
+          wrapped_request =
+            update_in(request[:opts], fn request_opts ->
+              Keyword.put(request_opts || [], :response, :wrapped)
+            end)
 
-          case Pristine.execute(runtime_client, operation, execute_opts) do
+          case GitHubEx.Client.execute_generated_request(client, wrapped_request) do
             {:ok, response} ->
-              items = List.wrap(Pristine.Operation.items(operation, response))
-              {items, Pristine.Operation.next_page(operation, response)}
+              items = List.wrap(OpenAPIClient.items(request, response))
+              {items, OpenAPIClient.next_page_request(request, response)}
 
             {:error, reason} ->
               raise "pagination failed: " <> inspect(reason)
@@ -1344,11 +1355,16 @@ defmodule GitHubEx.Pulls do
     )
   end
 
-  defp build_list_reviews_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @list_reviews_partition_spec)
+  defp build_list_reviews_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @list_reviews_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/list-reviews",
+      args: params,
+      call: {__MODULE__, :list_reviews},
+      opts: opts,
       method: :get,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews",
       path_params: partition.path_params,
@@ -1363,14 +1379,12 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.read",
-        telemetry_event: [:github_ex, :pulls, :list_reviews],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.read",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :list_reviews],
+      timeout: nil,
       pagination: %{
         default_limit: nil,
         items_path: nil,
@@ -1378,7 +1392,7 @@ defmodule GitHubEx.Pulls do
         response_mapping: %{link_header: "link"},
         strategy: :link_header
       }
-    })
+    }
   end
 
   @merge_partition_spec %{
@@ -1401,19 +1415,21 @@ defmodule GitHubEx.Pulls do
   @spec merge(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def merge(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_merge_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_merge_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_merge_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @merge_partition_spec)
+  defp build_merge_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @merge_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/merge",
+      args: params,
+      call: {__MODULE__, :merge},
+      opts: opts,
       method: :put,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/merge",
       path_params: partition.path_params,
@@ -1428,16 +1444,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :merge],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :merge],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @remove_requested_reviewers_partition_spec %{
@@ -1453,19 +1467,21 @@ defmodule GitHubEx.Pulls do
   @spec remove_requested_reviewers(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def remove_requested_reviewers(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_remove_requested_reviewers_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_remove_requested_reviewers_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_remove_requested_reviewers_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @remove_requested_reviewers_partition_spec)
+  defp build_remove_requested_reviewers_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @remove_requested_reviewers_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/remove-requested-reviewers",
+      args: params,
+      call: {__MODULE__, :remove_requested_reviewers},
+      opts: opts,
       method: :delete,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
       path_params: partition.path_params,
@@ -1480,16 +1496,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.delete",
-        telemetry_event: [:github_ex, :pulls, :remove_requested_reviewers],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.delete",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :remove_requested_reviewers],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @request_reviewers_partition_spec %{
@@ -1512,19 +1526,21 @@ defmodule GitHubEx.Pulls do
   @spec request_reviewers(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def request_reviewers(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_request_reviewers_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_request_reviewers_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_request_reviewers_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @request_reviewers_partition_spec)
+  defp build_request_reviewers_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @request_reviewers_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/request-reviewers",
+      args: params,
+      call: {__MODULE__, :request_reviewers},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers",
       path_params: partition.path_params,
@@ -1539,16 +1555,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :request_reviewers],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :request_reviewers],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @submit_review_partition_spec %{
@@ -1582,19 +1596,21 @@ defmodule GitHubEx.Pulls do
   @spec submit_review(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def submit_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_submit_review_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_submit_review_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_submit_review_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @submit_review_partition_spec)
+  defp build_submit_review_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @submit_review_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/submit-review",
+      args: params,
+      call: {__MODULE__, :submit_review},
+      opts: opts,
       method: :post,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events",
       path_params: partition.path_params,
@@ -1609,16 +1625,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :submit_review],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :submit_review],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_partition_spec %{
@@ -1634,19 +1648,21 @@ defmodule GitHubEx.Pulls do
   @spec update(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_partition_spec)
+  defp build_update_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/update",
+      args: params,
+      call: {__MODULE__, :update},
+      opts: opts,
       method: :patch,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}",
       path_params: partition.path_params,
@@ -1661,16 +1677,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :update],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :update],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_branch_partition_spec %{
@@ -1686,19 +1700,21 @@ defmodule GitHubEx.Pulls do
   @spec update_branch(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_branch(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_branch_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_branch_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_branch_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_branch_partition_spec)
+  defp build_update_branch_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_branch_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/update-branch",
+      args: params,
+      call: {__MODULE__, :update_branch},
+      opts: opts,
       method: :put,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/update-branch",
       path_params: partition.path_params,
@@ -1713,16 +1729,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :update_branch],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :update_branch],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_review_partition_spec %{
@@ -1743,19 +1757,21 @@ defmodule GitHubEx.Pulls do
   @spec update_review(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_review(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_review_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_review_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_review_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_review_partition_spec)
+  defp build_update_review_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_review_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/update-review",
+      args: params,
+      call: {__MODULE__, :update_review},
+      opts: opts,
       method: :put,
       path_template: "/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}",
       path_params: partition.path_params,
@@ -1770,16 +1786,14 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :update_review],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :update_review],
+      timeout: nil,
       pagination: nil
-    })
+    }
   end
 
   @update_review_comment_partition_spec %{
@@ -1795,19 +1809,21 @@ defmodule GitHubEx.Pulls do
   @spec update_review_comment(term(), map(), keyword()) :: {:ok, term()} | {:error, term()}
   def update_review_comment(client, params \\ %{}, opts \\ [])
       when is_map(params) and is_list(opts) do
-    runtime_client = GitHubEx.Client.pristine_client(client)
-    execute_opts = GitHubEx.Client.runtime_execute_opts(client, opts)
-    operation = build_update_review_comment_operation(params)
-    operation = GitHubEx.Client.runtime_operation(client, operation, execute_opts)
-
-    Pristine.execute(runtime_client, operation, execute_opts)
+    opts = normalize_request_opts!(opts)
+    request = build_update_review_comment_request(client, params, opts)
+    GitHubEx.Client.execute_generated_request(client, request)
   end
 
-  defp build_update_review_comment_operation(params) when is_map(params) do
-    partition = Pristine.Operation.partition(params, @update_review_comment_partition_spec)
+  defp build_update_review_comment_request(client, params, opts)
+       when is_map(params) and is_list(opts) do
+    _ = client
+    partition = OpenAPIClient.partition(params, @update_review_comment_partition_spec)
 
-    Pristine.Operation.new(%{
+    %{
       id: "pulls/update-review-comment",
+      args: params,
+      call: {__MODULE__, :update_review_comment},
+      opts: opts,
       method: :patch,
       path_template: "/repos/{owner}/{repo}/pulls/comments/{comment_id}",
       path_params: partition.path_params,
@@ -1822,15 +1838,22 @@ defmodule GitHubEx.Pulls do
         override: partition.auth,
         security_schemes: ["githubToken"]
       },
-      runtime: %{
-        circuit_breaker: "core_api",
-        rate_limit_group: "github.integration",
-        resource: "core_api",
-        retry_group: "github.write",
-        telemetry_event: [:github_ex, :pulls, :update_review_comment],
-        timeout_ms: nil
-      },
+      resource: "core_api",
+      retry: "github.write",
+      circuit_breaker: "core_api",
+      rate_limit: "github.integration",
+      telemetry: [:github_ex, :pulls, :update_review_comment],
+      timeout: nil,
       pagination: nil
-    })
+    }
+  end
+
+  @spec normalize_request_opts!(list()) :: keyword()
+  defp normalize_request_opts!(opts) when is_list(opts) do
+    if Keyword.keyword?(opts) do
+      opts
+    else
+      raise ArgumentError, "request opts must be a keyword list"
+    end
   end
 end

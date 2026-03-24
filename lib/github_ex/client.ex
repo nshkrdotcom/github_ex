@@ -6,6 +6,8 @@ defmodule GitHubEx.Client do
   alias GitHubEx.Auth
   alias Pristine.Client, as: RuntimeClient
   alias Pristine.Operation
+  alias Pristine.SDK.Context
+  alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
 
   @default_accept "application/vnd.github+json"
   @default_api_version "2026-03-10"
@@ -47,6 +49,32 @@ defmodule GitHubEx.Client do
             | {:allow_stale?, boolean()}
           ]
 
+  @type generated_request_t :: %{
+          required(:method) => atom(),
+          required(:path_template) => String.t(),
+          optional(:id) => String.t() | nil,
+          optional(:path_params) => map(),
+          optional(:query) => map(),
+          optional(:body) => term() | nil,
+          optional(:form_data) => term() | nil,
+          optional(:headers) => map(),
+          optional(:auth) => auth_override(),
+          optional(:request_schema) => term() | nil,
+          optional(:response_schemas) => map(),
+          optional(:security) => [map()] | nil,
+          optional(:resource) => String.t() | nil,
+          optional(:retry) => String.t() | nil,
+          optional(:circuit_breaker) => String.t() | nil,
+          optional(:rate_limit) => String.t() | nil,
+          optional(:telemetry) => term(),
+          optional(:timeout) => pos_integer() | nil,
+          optional(:typed_responses) => boolean(),
+          optional(:opts) => keyword(),
+          optional(:args) => map(),
+          optional(:call) => {module(), atom()},
+          optional(:pagination) => map() | nil
+        }
+
   @type raw_request_t :: %{
           required(:method) => atom(),
           required(:path) => String.t(),
@@ -67,7 +95,7 @@ defmodule GitHubEx.Client do
           optional(:retry) => String.t() | nil,
           optional(:retry_opts) => keyword(),
           optional(:telemetry) => term(),
-          optional(:timeout) => pos_integer(),
+          optional(:timeout) => pos_integer() | nil,
           optional(:opts) => keyword(),
           optional(:use_default_auth) => boolean()
         }
@@ -79,7 +107,7 @@ defmodule GitHubEx.Client do
           api_version: String.t(),
           auth: auth_override(),
           base_url: String.t() | nil,
-          context: term() | nil,
+          context: Context.t() | nil,
           foundation: keyword() | nil,
           log_level: :debug | :info | :warn | :error | nil,
           logger: (atom(), String.t(), map() -> term()) | nil,
@@ -158,8 +186,9 @@ defmodule GitHubEx.Client do
       user_agent: Keyword.get(opts, :user_agent, config(:user_agent, default_user_agent()))
     }
 
-    runtime_client = build_runtime_client(client)
-    %{client | pristine_client: runtime_client, context: runtime_client.context}
+    context = build_context(client)
+    runtime_client = RuntimeClient.from_context(context)
+    %{client | pristine_client: runtime_client, context: context}
   end
 
   @spec pristine_client(t() | RuntimeClient.t()) :: RuntimeClient.t()
@@ -202,16 +231,7 @@ defmodule GitHubEx.Client do
   @spec request(t() | RuntimeClient.t(), request_t()) :: {:ok, term()} | {:error, term()}
   def request(client, request) when is_map(request) do
     if raw_request?(request) do
-      typed_runtime? = typed_runtime_enabled?(client, request)
-      request_opts = normalize_execute_opts(request[:opts])
-
-      operation =
-        request
-        |> Map.put(:form_data, normalize_form_data(request[:form_data]))
-        |> maybe_disable_raw_schemas(typed_runtime?)
-        |> build_raw_operation(client)
-
-      execute_operation(client, operation, request_opts, request[:retry_opts], typed_runtime?)
+      execute_raw_request(client, request)
     else
       raise ArgumentError, "expected raw request spec, got: #{inspect(request)}"
     end
@@ -251,60 +271,84 @@ defmodule GitHubEx.Client do
 
   def default_request_auth(%__MODULE__{}), do: nil
 
-  defp execute_operation(
-         client,
-         %Operation{} = operation,
-         request_opts,
-         retry_opts,
-         typed_responses?
-       ) do
-    execute_opts =
-      request_opts
-      |> maybe_put(:retry_opts, retry_opts)
-      |> maybe_put(:typed_responses, typed_responses?)
+  @doc false
+  @spec execute_generated_request(t() | RuntimeClient.t(), generated_request_t()) ::
+          {:ok, term()} | {:error, term()}
+  def execute_generated_request(client, request) when is_map(request) do
+    if generated_request?(request) do
+      typed_runtime? = typed_runtime_enabled?(client, request)
 
-    Pristine.execute(pristine_client(client), operation, execute_opts)
+      request_spec =
+        request
+        |> normalize_generated_request()
+        |> OpenAPIClient.to_request_spec()
+        |> prepare_request_spec(client, typed_runtime?, Map.get(request, :use_default_auth, true))
+
+      execute_opts =
+        request[:opts]
+        |> normalize_execute_opts()
+        |> maybe_put(:retry_opts, request[:retry_opts])
+        |> maybe_put(:typed_responses, typed_runtime?)
+
+      Pristine.execute_request(request_spec, client_context(client), execute_opts)
+    else
+      raise ArgumentError, "expected generated request spec, got: #{inspect(request)}"
+    end
   end
 
-  defp build_raw_operation(request, client) do
+  defp execute_raw_request(client, request) do
+    typed_runtime? = typed_runtime_enabled?(client, request)
+
+    request_spec =
+      request
+      |> Map.put(:form_data, normalize_form_data(request[:form_data]))
+      |> maybe_disable_raw_schemas(typed_runtime?)
+      |> build_raw_request_spec(client)
+
+    execute_opts =
+      request[:opts]
+      |> normalize_execute_opts()
+      |> maybe_put(:retry_opts, request[:retry_opts])
+      |> maybe_put(:typed_responses, typed_runtime?)
+
+    Pristine.execute_request(request_spec, client_context(client), execute_opts)
+  end
+
+  defp build_raw_request_spec(request, client) do
     path = request[:path]
     resource = request[:resource] || resource_group(path)
+    use_default_auth? = Map.get(request, :use_default_auth, true)
+    auth = resolve_request_auth(client, request[:auth], use_default_auth?)
 
-    Operation.new(%{
+    %{
       id: request[:id] || "#{request[:method]} #{path}",
       method: request[:method],
-      path_template: path,
+      path: path,
       path_params: request[:path_params] || %{},
       query: request[:query] || %{},
       headers: request[:headers] || %{},
       body: request[:body],
       form_data: request[:form_data],
       request_schema: request[:request_schema],
-      response_schemas: raw_response_schemas(request[:response_schema]),
-      auth:
-        runtime_auth(
-          request[:auth],
-          request[:security],
-          Map.get(request, :use_default_auth, true),
-          path
-        ),
-      runtime: %{
-        resource: resource,
-        retry_group: request[:retry] || retry_group(request[:method], resource),
-        circuit_breaker: resolve_circuit_breaker(client, request[:circuit_breaker], resource),
-        rate_limit_group: request[:rate_limit] || "github.integration",
-        telemetry_event: request[:telemetry],
-        timeout_ms: request[:timeout]
-      }
-    })
+      response_schema: request[:response_schema],
+      auth: auth,
+      use_default_auth: use_default_auth?,
+      security: request[:security] || default_raw_security(path, use_default_auth?),
+      resource: resource,
+      retry: request[:retry] || retry_group(request[:method], resource),
+      circuit_breaker: resolve_circuit_breaker(client, request[:circuit_breaker], resource),
+      rate_limit: request[:rate_limit] || "github.integration",
+      telemetry: request[:telemetry],
+      timeout: request[:timeout]
+    }
   end
 
-  defp build_runtime_client(%__MODULE__{} = client) do
+  defp build_context(%__MODULE__{} = client) do
     base_opts = [
       auth: default_auth_modules(client),
       base_url: client.base_url,
       default_timeout: client.timeout_ms,
-      default_headers: %{
+      headers: %{
         "Accept" => client.accept,
         "User-Agent" => client.user_agent,
         "X-GitHub-Api-Version" => client.api_version
@@ -313,6 +357,7 @@ defmodule GitHubEx.Client do
       log_level: client.log_level,
       logger: client.logger,
       package_version: package_version(),
+      provider_profile: GitHubEx.ProviderProfile.profile(),
       response_wrapper: GitHubEx.Response,
       result_classifier: GitHubEx.ResultClassifier,
       retry: retry_profile(client.retry),
@@ -321,40 +366,38 @@ defmodule GitHubEx.Client do
       transport_opts: client.transport_opts
     ]
 
-    RuntimeClient.foundation(Keyword.merge(base_opts, client.foundation || []))
+    Pristine.foundation_context(Keyword.merge(base_opts, client.foundation || []))
   end
-
-  defp runtime_auth(auth, security, use_default_auth?, path) do
-    override = normalize_request_auth(auth)
-
-    %{
-      use_client_default?: use_default_auth? and is_nil(override),
-      override: override,
-      security_schemes:
-        security_schemes(security || default_raw_security(path, use_default_auth?))
-    }
-  end
-
-  defp security_schemes(nil), do: []
-
-  defp security_schemes(security) when is_list(security) do
-    security
-    |> Enum.flat_map(fn
-      %{} = requirement -> Map.keys(requirement)
-      _other -> []
-    end)
-    |> Enum.map(&to_string/1)
-    |> Enum.uniq()
-  end
-
-  defp security_schemes(_security), do: []
 
   defp default_raw_security(_path, false), do: nil
   defp default_raw_security("/applications/" <> _rest, _use_default_auth?), do: nil
   defp default_raw_security(_path, _use_default_auth?), do: [%{"githubToken" => []}]
 
-  defp raw_response_schemas(nil), do: %{}
-  defp raw_response_schemas(schema), do: %{default: schema}
+  defp client_context(%RuntimeClient{context: context}), do: context
+  defp client_context(%__MODULE__{context: context}), do: context
+
+  defp prepare_request_spec(request_spec, client, typed_runtime?, use_default_auth?) do
+    path = request_spec[:path] || request_spec[:path_template]
+    resource = request_spec[:resource] || resource_group(path)
+    auth = resolve_request_auth(client, request_spec[:auth], use_default_auth?)
+
+    request_spec
+    |> Map.put(:auth, auth)
+    |> Map.put(:headers, request_spec[:headers] || %{})
+    |> Map.put(:query, request_spec[:query] || %{})
+    |> Map.put(:form_data, normalize_form_data(request_spec[:form_data]))
+    |> maybe_disable_schemas(typed_runtime?)
+    |> Map.put(:resource, resource)
+    |> Map.put(:retry, request_spec[:retry] || retry_group(request_spec[:method], resource))
+    |> Map.put(:rate_limit, request_spec[:rate_limit] || "github.integration")
+    |> Map.put(
+      :circuit_breaker,
+      resolve_circuit_breaker(client, request_spec[:circuit_breaker], resource)
+    )
+  end
+
+  defp resolve_request_auth(%__MODULE__{} = client, nil, true), do: default_request_auth(client)
+  defp resolve_request_auth(_client, auth, _use_default_auth), do: auth
 
   defp typed_runtime_enabled?(client, request) do
     default =
@@ -380,6 +423,14 @@ defmodule GitHubEx.Client do
   end
 
   defp request_typed_responses(_args, default), do: default
+
+  defp maybe_disable_schemas(request_spec, true), do: request_spec
+
+  defp maybe_disable_schemas(request_spec, false) do
+    request_spec
+    |> Map.put(:request_schema, nil)
+    |> Map.put(:response_schema, nil)
+  end
 
   defp maybe_disable_raw_schemas(request, true), do: request
 
@@ -420,6 +471,16 @@ defmodule GitHubEx.Client do
 
   defp normalize_execute_opts(_opts) do
     raise ArgumentError, "request opts must be a keyword list"
+  end
+
+  defp normalize_generated_request(request) when is_map(request) do
+    request
+    |> Map.put_new(:opts, [])
+    |> Map.put_new(:headers, %{})
+    |> Map.put_new(:query, %{})
+    |> Map.put_new(:path_params, %{})
+    |> Map.put_new(:request_schema, nil)
+    |> Map.put_new(:response_schemas, %{})
   end
 
   defp normalize_retry(false), do: false
@@ -507,7 +568,7 @@ defmodule GitHubEx.Client do
     end
   end
 
-  defp normalize_auth(auth) when is_map(auth), do: normalize_request_auth(auth)
+  defp normalize_auth(auth) when is_map(auth), do: normalize_auth_map(auth)
 
   defp normalize_auth(other) do
     raise ArgumentError, "invalid auth configuration: #{inspect(other)}"
@@ -599,25 +660,17 @@ defmodule GitHubEx.Client do
 
   defp normalize_form_data_value(value), do: value
 
-  defp normalize_request_auth(nil), do: nil
-  defp normalize_request_auth(false), do: false
-  defp normalize_request_auth([]), do: []
-
-  defp normalize_request_auth(%{} = auth) do
+  defp normalize_auth_map(%{} = auth) do
     Map.new(auth, fn {key, value} -> {to_string(key), value} end)
   end
-
-  defp normalize_request_auth({module, opts})
-       when is_atom(module) and is_list(opts),
-       do: {module, opts}
-
-  defp normalize_request_auth(auth) when is_binary(auth), do: auth
-  defp normalize_request_auth(auth) when is_list(auth), do: auth
-  defp normalize_request_auth(_auth), do: nil
 
   defp maybe_put(opts, _key, nil), do: opts
   defp maybe_put(opts, _key, value) when value == [], do: opts
   defp maybe_put(opts, key, value), do: Keyword.put(opts, key, value)
+
+  defp generated_request?(request) when is_map(request) do
+    Map.has_key?(request, :method) and Map.has_key?(request, :path_template)
+  end
 
   defp raw_request?(request) when is_map(request) do
     Map.has_key?(request, :method) and Map.has_key?(request, :path)
