@@ -143,7 +143,7 @@ External but design-critical dependencies from `mix.exs`:
 - `../pristine/apps/pristine_provider_testkit`
 
 Those sibling paths are the preferred local-development shape. When the sibling
-checkouts are absent, `mix.exs` falls back to pinned git refs with `subdir:`
+checkouts are absent, `mix.exs` falls back to GitHub `subdir:` dependencies
 for the corresponding `pristine` child apps. The repo no longer relies on a
 vendored dependency tree to keep generation and runtime behavior working.
 
