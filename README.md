@@ -93,6 +93,22 @@ end
 mix deps.get
 ```
 
+For active local development beside sibling checkouts, `github_ex` can also be
+consumed from a relative path:
+
+```elixir
+{:github_ex, path: "../github_ex"}
+```
+
+Inside this repo, the shared `pristine` child apps now resolve by one stable
+policy:
+
+- prefer sibling-relative paths when local checkouts exist
+- otherwise fall back to pinned git refs with `subdir:`
+
+That removes the need for a committed vendored `deps/` tree while keeping
+local development and downstream dependency behavior aligned.
+
 ## Make One Request
 
 Create a client with a bearer token:

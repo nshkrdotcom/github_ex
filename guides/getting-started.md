@@ -28,6 +28,25 @@ end
 mix deps.get
 ```
 
+For local multi-repo development, a sibling checkout is also a supported
+installation shape:
+
+```elixir
+def deps do
+  [
+    {:github_ex, path: "../github_ex"}
+  ]
+end
+```
+
+Inside this repo, `pristine` child apps follow the same policy:
+
+- prefer sibling-relative paths when those checkouts exist
+- otherwise fall back to pinned git refs with `subdir:`
+
+That keeps local development and downstream consumption aligned without a
+vendored `deps/` layout.
+
 ## Create a Client
 
 With a bearer token:

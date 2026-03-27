@@ -142,6 +142,11 @@ External but design-critical dependencies from `mix.exs`:
 - `../pristine/apps/pristine_codegen`
 - `../pristine/apps/pristine_provider_testkit`
 
+Those sibling paths are the preferred local-development shape. When the sibling
+checkouts are absent, `mix.exs` falls back to pinned git refs with `subdir:`
+for the corresponding `pristine` child apps. The repo no longer relies on a
+vendored dependency tree to keep generation and runtime behavior working.
+
 `github_ex` is therefore not an isolated runtime stack. It is a GitHub-specific
 provider package built on shared `pristine` execution and generation layers.
 

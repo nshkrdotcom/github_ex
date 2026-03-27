@@ -1,8 +1,10 @@
 Code.require_file("build_support/plt_fingerprint.ex", __DIR__)
+Code.require_file("build_support/dependency_resolver.exs", __DIR__)
 
 defmodule GitHubEx.MixProject do
   use Mix.Project
 
+  alias GitHubEx.Build.DependencyResolver
   alias GitHubEx.Build.PltFingerprint
 
   @version "0.1.0"
@@ -39,10 +41,9 @@ defmodule GitHubEx.MixProject do
 
   defp deps do
     [
-      {:pristine, path: "../pristine/apps/pristine_runtime"},
-      {:pristine_codegen, path: "../pristine/apps/pristine_codegen"},
-      {:pristine_provider_testkit,
-       path: "../pristine/apps/pristine_provider_testkit", only: :test},
+      DependencyResolver.pristine_runtime(),
+      DependencyResolver.pristine_codegen(),
+      DependencyResolver.pristine_provider_testkit(only: :test),
       {:oapi_generator,
        github: "nshkrdotcom/open-api-generator",
        branch: "doc-generator-fix",

@@ -96,9 +96,17 @@ defmodule GitHubEx.SourceCompatibilityTest do
   defp write_transformed_mix_exs!(path, probe_module) do
     plt_path = Path.join(@project_root, "build_support/plt_fingerprint.ex")
 
+    dependency_resolver_path =
+      Path.join(@project_root, "build_support/dependency_resolver.exs")
+
     source =
       Path.join(@project_root, "mix.exs")
       |> File.read!()
+      |> String.replace(
+        "Code.require_file(\"build_support/dependency_resolver.exs\", __DIR__)",
+        "Code.require_file(#{inspect(dependency_resolver_path)})",
+        global: false
+      )
       |> String.replace(
         "Code.require_file(\"build_support/plt_fingerprint.ex\", __DIR__)",
         "Code.require_file(#{inspect(plt_path)})",
