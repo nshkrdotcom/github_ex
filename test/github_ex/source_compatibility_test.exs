@@ -75,7 +75,7 @@ defmodule GitHubEx.SourceCompatibilityTest do
     end)
   end
 
-  test "mix project still evaluates path dependency loading outside deps checkouts", %{
+  test "mix project skips path dependency loading outside its own project root", %{
     tmp_dir: tmp_dir
   } do
     probe_module = ModuleTools.unique_module("MixProjectStandaloneProbe")
@@ -83,9 +83,8 @@ defmodule GitHubEx.SourceCompatibilityTest do
 
     write_transformed_mix_exs!(mix_path, probe_module)
 
-    assert_raise RuntimeError, "mix_dep_load_called", fn ->
-      Code.compile_file(mix_path)
-    end
+    assert [{^probe_module, _beam}] = Code.compile_file(mix_path)
+    assert Keyword.keyword?(probe_module.project())
 
     on_exit(fn ->
       :code.purge(probe_module)
@@ -117,16 +116,6 @@ defmodule GitHubEx.SourceCompatibilityTest do
         "defmodule #{inspect(probe_module)} do",
         global: false
       )
-      |> String.replace("Mix.Dep.load_and_cache()", "__MODULE__.__mix_dep_load_and_cache__()",
-        global: false
-      )
-      |> then(fn source ->
-        Regex.replace(
-          ~r/\nend\s*\z/,
-          source,
-          "\n  def __mix_dep_load_and_cache__(), do: raise(\"mix_dep_load_called\")\nend"
-        )
-      end)
 
     File.mkdir_p!(Path.dirname(path))
     File.write!(path, source)
