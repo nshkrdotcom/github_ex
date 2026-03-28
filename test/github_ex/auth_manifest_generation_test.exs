@@ -29,6 +29,13 @@ defmodule GitHubEx.AuthManifestGenerationTest do
            }
   end
 
+  test "auth manifest omits volatile generation timestamps" do
+    auth_manifest = load_json(@auth_manifest_path)
+
+    refute Map.has_key?(auth_manifest, "generated_at")
+    assert auth_manifest["spec_version"] == "2026-03-10"
+  end
+
   test "all operations listed by GitHub's endpoint support pages exist in the SDK manifest" do
     generated_keys =
       @provider_ir_path

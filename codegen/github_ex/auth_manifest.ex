@@ -98,7 +98,6 @@ defmodule GitHubEx.AuthManifest do
       |> Enum.sort_by(&{&1.module, &1.path, &1.function})
 
     %{
-      generated_at: Date.utc_today() |> Date.to_iso8601(),
       module_summaries: build_module_summaries(manifest_operations),
       operations: manifest_operations,
       sources: build_sources(bundle),
