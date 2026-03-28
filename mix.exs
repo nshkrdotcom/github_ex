@@ -53,8 +53,8 @@ defmodule GitHubEx.MixProject do
       {:finch, "~> 0.20"},
       {:jose, "~> 1.11"},
       {:telemetry, "~> 1.2"},
-      {:mox, "~> 1.1", only: :test},
-      {:ex_doc, "~> 0.38", only: :dev, runtime: false},
+      {:mox, "~> 1.2", only: :test},
+      {:ex_doc, "~> 0.40", only: :dev, runtime: false},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
