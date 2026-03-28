@@ -100,11 +100,12 @@ consumed from a relative path:
 {:github_ex, path: "../github_ex"}
 ```
 
-Inside this repo, the shared `pristine` child apps now resolve by one stable
+Inside this repo, the shared `pristine` dependencies now resolve by one stable
 policy:
 
 - prefer sibling-relative paths when local checkouts exist
-- otherwise fall back to GitHub `subdir:` dependencies
+- otherwise use Hex `pristine ~> 0.2.0` plus GitHub `subdir:` dependencies for
+  `pristine_codegen` and `pristine_provider_testkit`
 
 That removes the need for a committed vendored `deps/` tree while keeping
 local development and downstream dependency behavior aligned.

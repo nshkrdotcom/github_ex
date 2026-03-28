@@ -28,8 +28,15 @@ defmodule GitHubEx.MixProject do
     ]
   end
 
-  defp elixirc_paths(:dev), do: ["lib", "codegen"]
-  defp elixirc_paths(:test), do: ["lib", "test/support", "codegen"]
+  defp elixirc_paths(:dev), do: if(include_tooling_deps?(), do: ["lib", "codegen"], else: ["lib"])
+
+  defp elixirc_paths(:test),
+    do:
+      if(include_tooling_deps?(),
+        do: ["lib", "test/support", "codegen"],
+        else: ["lib", "test/support"]
+      )
+
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
@@ -41,9 +48,8 @@ defmodule GitHubEx.MixProject do
 
   defp deps do
     [
-      DependencyResolver.pristine_runtime(),
-      DependencyResolver.pristine_codegen(),
-      DependencyResolver.pristine_provider_testkit(only: :test),
+      pristine_runtime_dep(),
+      codegen_deps(),
       {:oapi_generator,
        github: "nshkrdotcom/open-api-generator",
        branch: "doc-generator-fix",
@@ -58,6 +64,26 @@ defmodule GitHubEx.MixProject do
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
+    |> List.flatten()
+  end
+
+  defp pristine_runtime_dep do
+    if use_hex_runtime_dep?() do
+      {:pristine, "~> 0.2.0"}
+    else
+      DependencyResolver.pristine_runtime()
+    end
+  end
+
+  defp codegen_deps do
+    if include_tooling_deps?() do
+      [
+        DependencyResolver.pristine_codegen(),
+        DependencyResolver.pristine_provider_testkit(only: :test)
+      ]
+    else
+      []
+    end
   end
 
   defp dialyzer do
@@ -110,15 +136,27 @@ defmodule GitHubEx.MixProject do
       name: "github_ex",
       description: description(),
       files: ~w(
-        assets
-        build_support
-        codegen
-        config
-        examples
-        guides
-        lib
-        priv/generated
-        priv/upstream
+        build_support/dependency_resolver.exs
+        build_support/plt_fingerprint.ex
+        lib/github_ex.ex
+        lib/github_ex/application.ex
+        lib/github_ex/app_auth.ex
+        lib/github_ex/auth.ex
+        lib/github_ex/auth_matrix.ex
+        lib/github_ex/client.ex
+        lib/github_ex/error.ex
+        lib/github_ex/generated
+        lib/github_ex/oauth.ex
+        lib/github_ex/oauth_token_file.ex
+        lib/github_ex/pagination.ex
+        lib/github_ex/provider_profile.ex
+        lib/github_ex/rate_limit_info.ex
+        lib/github_ex/response.ex
+        lib/github_ex/result_classifier.ex
+        lib/github_ex/retry.ex
+        lib/mix/tasks/github.auth.lookup.ex
+        lib/mix/tasks/github.oauth.ex
+        priv/generated/auth_manifest.json
         CHANGELOG.md
         LICENSE
         README.md
@@ -193,7 +231,7 @@ defmodule GitHubEx.MixProject do
   end
 
   defp groups_for_modules do
-    [
+    runtime_groups = [
       {"Core",
        [
          GitHubEx,
@@ -209,23 +247,55 @@ defmodule GitHubEx.MixProject do
          GitHubEx.Response,
          GitHubEx.Retry
        ]},
-      {"Tooling",
-       [
-         GitHubEx.Codegen,
-         GitHubEx.Codegen.Provider,
-         GitHubEx.Codegen.Plugins.Source,
-         GitHubEx.Refresh,
-         Mix.Tasks.Github.Auth.Lookup,
-         Mix.Tasks.Github.Auth.Refresh,
-         Mix.Tasks.Github.Generate,
-         Mix.Tasks.Github.Oauth,
-         Mix.Tasks.Github.Refresh
-       ]},
       {"Generated Surface", generated_module_pattern()}
     ]
+
+    published_task_group = [
+      {"Tasks", [Mix.Tasks.Github.Auth.Lookup, Mix.Tasks.Github.Oauth]}
+    ]
+
+    repo_tooling_group =
+      if include_tooling_deps?() do
+        [
+          {"Repo Tooling",
+           [
+             GitHubEx.Codegen,
+             GitHubEx.Codegen.Provider,
+             GitHubEx.Codegen.Plugins.Source,
+             GitHubEx.Refresh,
+             Mix.Tasks.Github.Auth.Refresh,
+             Mix.Tasks.Github.Generate,
+             Mix.Tasks.Github.Refresh
+           ]}
+        ]
+      else
+        []
+      end
+
+    runtime_groups ++ published_task_group ++ repo_tooling_group
   end
 
   defp generated_module_pattern do
     ~r/^GitHubEx\.(?!Application$|AppAuth$|Auth$|Build(?:\.|$)|Client$|Codegen(?:\.|$)|Error$|OAuth(?:\.|$)|OAuthTokenFile$|Pagination$|RateLimitInfo$|Refresh$|Response$|ResultClassifier$|Retry$)[A-Z]/
+  end
+
+  defp publishing_package? do
+    Enum.any?(System.argv(), &(&1 in ["hex.build", "hex.publish"]))
+  end
+
+  defp use_hex_runtime_dep? do
+    publishing_package?() or installing_as_dependency?() or force_hex_runtime_dep?()
+  end
+
+  defp include_tooling_deps? do
+    not use_hex_runtime_dep?()
+  end
+
+  defp installing_as_dependency? do
+    Enum.member?(Path.split(__DIR__), "deps")
+  end
+
+  defp force_hex_runtime_dep? do
+    System.get_env("GITHUB_EX_HEX_DEPS") in ["1", "true", "TRUE", "yes", "YES"]
   end
 end
