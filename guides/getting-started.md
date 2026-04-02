@@ -19,7 +19,7 @@ Before you create credentials, choose your path:
 ```elixir
 def deps do
   [
-    {:github_ex, "~> 0.1.0"}
+    {:github_ex, "~> 0.1.1"}
   ]
 end
 ```
@@ -42,7 +42,7 @@ end
 Inside this repo, `pristine` dependencies follow the same policy:
 
 - prefer sibling-relative paths when those checkouts exist
-- otherwise use Hex `pristine ~> 0.2.0` plus GitHub `subdir:` dependencies for
+- otherwise use Hex `pristine ~> 0.2.1` plus GitHub `subdir:` dependencies for
   `pristine_codegen` and `pristine_provider_testkit`
 
 That keeps local development and downstream consumption aligned without a

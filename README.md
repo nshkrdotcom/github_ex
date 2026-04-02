@@ -84,7 +84,7 @@ still documents that as a real reason OAuth can remain the better fit.
 ```elixir
 def deps do
   [
-    {:github_ex, "~> 0.1.0"}
+    {:github_ex, "~> 0.1.1"}
   ]
 end
 ```
@@ -104,7 +104,7 @@ Inside this repo, the shared `pristine` dependencies now resolve by one stable
 policy:
 
 - prefer sibling-relative paths when local checkouts exist
-- otherwise use Hex `pristine ~> 0.2.0` plus GitHub `subdir:` dependencies for
+- otherwise use Hex `pristine ~> 0.2.1` plus GitHub `subdir:` dependencies for
   `pristine_codegen` and `pristine_provider_testkit`
 
 That removes the need for a committed vendored `deps/` tree while keeping

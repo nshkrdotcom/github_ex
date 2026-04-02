@@ -7,7 +7,7 @@ defmodule GitHubEx.MixProject do
   alias GitHubEx.Build.DependencyResolver
   alias GitHubEx.Build.PltFingerprint
 
-  @version "0.1.0"
+  @version "0.1.1"
   @source_url "https://github.com/nshkrdotcom/github_ex"
 
   def project do
@@ -69,7 +69,7 @@ defmodule GitHubEx.MixProject do
 
   defp pristine_runtime_dep do
     if use_hex_runtime_dep?() do
-      {:pristine, "~> 0.2.0"}
+      {:pristine, "~> 0.2.1"}
     else
       DependencyResolver.pristine_runtime()
     end
