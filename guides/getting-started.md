@@ -41,7 +41,10 @@ end
 
 Inside this repo, `pristine` dependencies follow the same policy:
 
-- prefer sibling-relative paths when those checkouts exist
+- prefer sibling-relative paths when those checkouts exist for normal compile,
+  test, and docs work
+- use release Hex/GitHub sources when running `mix deps.get`, `mix hex.build`,
+  or `mix hex.publish` so `mix.lock` stays publishable
 - otherwise use Hex `pristine ~> 0.2.1` plus GitHub `subdir:` dependencies for
   `pristine_codegen` and `pristine_provider_testkit`
 

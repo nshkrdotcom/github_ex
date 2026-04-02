@@ -92,6 +92,39 @@ defmodule GitHubEx.SourceCompatibilityTest do
     end)
   end
 
+  test "mix deps.get resolves release sources even when sibling workspaces exist", %{
+    tmp_dir: tmp_dir
+  } do
+    probe_module = ModuleTools.unique_module("MixProjectReleaseDepsProbe")
+    mix_path = Path.join([tmp_dir, "standalone", "github_ex", "mix.exs"])
+    original_argv = System.argv()
+
+    write_transformed_mix_exs!(mix_path, probe_module)
+    System.argv(["deps.get"])
+
+    assert [{^probe_module, _beam}] = Code.compile_file(mix_path)
+
+    deps = probe_module.project()[:deps]
+
+    assert {:pristine, "~> 0.2.1"} = find_dependency!(deps, :pristine)
+
+    assert {:pristine_codegen, opts} = find_dependency!(deps, :pristine_codegen)
+    assert opts[:github] == "nshkrdotcom/pristine"
+    refute Keyword.has_key?(opts, :path)
+
+    assert {:pristine_provider_testkit, opts} =
+             find_dependency!(deps, :pristine_provider_testkit)
+
+    assert opts[:github] == "nshkrdotcom/pristine"
+    refute Keyword.has_key?(opts, :path)
+
+    on_exit(fn ->
+      System.argv(original_argv)
+      :code.purge(probe_module)
+      :code.delete(probe_module)
+    end)
+  end
+
   defp write_transformed_mix_exs!(path, probe_module) do
     plt_path = Path.join(@project_root, "build_support/plt_fingerprint.ex")
 
@@ -119,6 +152,15 @@ defmodule GitHubEx.SourceCompatibilityTest do
 
     File.mkdir_p!(Path.dirname(path))
     File.write!(path, source)
+  end
+
+  defp find_dependency!(deps, app) do
+    Enum.find(deps, fn
+      {^app, _requirement} -> true
+      {^app, _requirement, _opts} -> true
+      {^app, opts} when is_list(opts) -> true
+      _other -> false
+    end) || flunk("expected dependency #{inspect(app)} to be present")
   end
 
   defp restore_mix_project_stack(original_project) do
