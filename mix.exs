@@ -78,7 +78,7 @@ defmodule GitHubEx.MixProject do
   defp codegen_deps do
     if include_tooling_deps?() do
       [
-        DependencyResolver.pristine_codegen(),
+        DependencyResolver.pristine_codegen(override: true),
         DependencyResolver.pristine_provider_testkit(only: :test)
       ]
     else
