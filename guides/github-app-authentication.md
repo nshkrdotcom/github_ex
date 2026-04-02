@@ -15,6 +15,12 @@ script for yourself. Start with
 Check the generated [Auth Capability Matrix](auth-capability-matrix.md) before
 you assume a GitHub App installation token covers the endpoint you want.
 
+Boundary note:
+
+- `GitHubEx.AppAuth` owns GitHub-specific JWT and installation-token exchange
+- `pristine` owns the shared runtime transport and OAuth helper substrate
+- higher control planes should own durable app-install and secret authority
+
 ## Three Credentials You Need To Distinguish
 
 ### App JWT

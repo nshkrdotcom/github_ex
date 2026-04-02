@@ -162,6 +162,13 @@ wrapped.links["next"]
 Use the generated [Auth Capability Matrix](guides/auth-capability-matrix.md) to
 check a specific REST operation before assuming one token type covers it.
 
+Ownership split:
+
+- `pristine` owns the generic runtime OAuth and token-source mechanics
+- `GitHubEx.OAuth` and `GitHubEx.AppAuth` own GitHub-specific auth semantics
+- durable app installs, secret storage, and hosted callback orchestration stay
+  outside the SDK
+
 ## Docs Map
 
 - [Getting Started](guides/getting-started.md): installation, auth preflight, clients, and first calls
