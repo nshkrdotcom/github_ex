@@ -162,6 +162,8 @@ defmodule GitHubEx.MixProject do
         README.md
         assets
         mix.exs
+        examples
+        guides
       ),
       licenses: ["MIT"],
       links: %{
