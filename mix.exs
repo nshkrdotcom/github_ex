@@ -291,11 +291,13 @@ defmodule GitHubEx.MixProject do
   end
 
   defp use_hex_runtime_dep? do
-    locking_release_deps?() or installing_as_dependency?() or force_hex_runtime_dep?()
+    (locking_release_deps?() and not force_workspace_path_deps?()) or
+      installing_as_dependency?() or force_hex_runtime_dep?()
   end
 
   defp include_tooling_deps? do
-    not (publishing_package?() or installing_as_dependency?() or force_hex_runtime_dep?())
+    force_workspace_path_deps?() or
+      not (publishing_package?() or installing_as_dependency?() or force_hex_runtime_dep?())
   end
 
   defp installing_as_dependency? do
@@ -304,5 +306,10 @@ defmodule GitHubEx.MixProject do
 
   defp force_hex_runtime_dep? do
     System.get_env("GITHUB_EX_HEX_DEPS") in ["1", "true", "TRUE", "yes", "YES"]
+  end
+
+  defp force_workspace_path_deps? do
+    not force_hex_runtime_dep?() and
+      System.get_env("FORCE_WORKSPACE_PATH_DEPS") in ["1", "true", "TRUE", "yes", "YES"]
   end
 end

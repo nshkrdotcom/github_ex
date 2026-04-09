@@ -4,6 +4,10 @@
 headers and runtime defaults, then delegates transport, serialization, retry,
 telemetry, and circuit breaking to `pristine`.
 
+That delegation stops at the `pristine` family surface. `GitHubEx.Client`
+builds a GitHub-specific facade without re-exposing `Pristine.Core.*` or any
+raw lower transport package as the public SDK contract.
+
 ## Supported Options
 
 Common options:

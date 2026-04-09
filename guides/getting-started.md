@@ -1,6 +1,10 @@
 # Getting Started
 
 `GitHubEx` is a generated, runtime-thin SDK for the GitHub REST API.
+It keeps the provider-local surface in `GitHubEx.*` while targeting the
+bounded `pristine` family boundary for runtime execution. Lower unary HTTP
+execution stays under `pristine`; `github_ex` does not expose raw lower
+transport packages as part of its public API.
 
 ## Auth Preflight
 

@@ -26,6 +26,18 @@ build request maps, hand them to the generated-request bridge inside
 `GitHubEx.Client`, and ultimately execute through `Pristine.execute_request/3`, with
 compiler-emitted `stream_*` wrappers for paginated endpoints.
 
+That dependency is intentional. `github_ex` targets the bounded `pristine`
+family surface:
+
+- `Pristine.foundation_context/1`
+- `Pristine.execute_request/3`
+- `Pristine.SDK.OpenAPI.Client`
+- `Pristine.OAuth2`
+
+It does not treat `Pristine.Core.*` internals or lower transport packages as
+its public SDK API. The lower unary HTTP lane stays beneath `pristine` and its
+Execution Plane-backed transport substrate.
+
 ## Authentication Start Here
 
 ### 1. I want to run the bundled examples today
