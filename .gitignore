@@ -21,3 +21,14 @@ github_ex-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Nested example project artifacts
+examples/_output/
+examples/**/_build/
+examples/**/deps/
+examples/**/doc/
+examples/**/cover/
+examples/**/priv/plts/
+examples/**/*.beam
+examples/**/*.plt
+examples/**/*.plt.hash
