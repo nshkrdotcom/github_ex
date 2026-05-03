@@ -1,7 +1,7 @@
 defmodule GitHubEx.AuthSources do
   @moduledoc false
 
-  alias GitHubEx.AuthParser
+  alias GitHubEx.{AuthParser, TextTools}
 
   @source_specs [
     %{
@@ -259,14 +259,9 @@ defmodule GitHubEx.AuthSources do
     html = get_body!(page_url)
 
     next_data =
-      case Regex.run(
-             ~r/<script id="__NEXT_DATA__" type="application\/json">([\s\S]*?)<\/script>/,
-             html,
-             capture: :all_but_first
-           ) do
-        [json] -> Jason.decode!(json)
-        _other -> raise "missing __NEXT_DATA__ payload for #{page_url}"
-      end
+      html
+      |> TextTools.next_data_script_json!(page_url)
+      |> Jason.decode!()
 
     operations =
       next_data

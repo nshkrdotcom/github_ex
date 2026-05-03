@@ -728,7 +728,7 @@ defmodule GitHubEx.Client do
         _other -> @default_breaker_group
       end
 
-    "github:#{host}:#{group}"
+    "github:" <> host <> ":" <> group
   end
 
   defp default_user_agent do

@@ -52,10 +52,11 @@ defmodule Mix.Tasks.Github.GenerateTaskTest do
 
     on_exit(restore_codegen)
 
-    assert_raise Mix.Error,
-                 ~r/GitHubEx\.Codegen\.generate!\/0 is unavailable in this build/,
-                 fn ->
-                   GenerateTask.run([])
-                 end
+    error =
+      assert_raise Mix.Error, fn ->
+        GenerateTask.run([])
+      end
+
+    assert Exception.message(error) == "GitHubEx.Codegen.generate!/0 is unavailable in this build"
   end
 end

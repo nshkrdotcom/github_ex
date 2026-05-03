@@ -1,11 +1,9 @@
 defmodule GitHubEx.AuthParser do
   @moduledoc false
 
-  @availability_pattern ~r/\[`?(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\s+([^`\]]+)`?\]\(([^)]+)\)/
-  @heading_pattern ~r/^##\s+(.+?) permissions for "(.+)"\s*$/
-  @table_row_pattern ~r/^\|\s*`(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\s+([^`]+)`\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$/
-  @prog_access_permission_pattern ~r/^"([^"]+)"\s+(.+?)\s+permissions$/
-  @scope_sentence_pattern ~r/[^.\n]*(scope|scopes)[^.\n]*/i
+  alias GitHubEx.TextTools
+
+  @methods ~w(GET POST PUT PATCH DELETE HEAD OPTIONS)
 
   @spec normalize_endpoint_key(atom() | String.t(), String.t()) :: String.t()
   def normalize_endpoint_key(method, path) when is_atom(method) do
@@ -18,8 +16,9 @@ defmodule GitHubEx.AuthParser do
 
   @spec parse_endpoint_availability(String.t()) :: map()
   def parse_endpoint_availability(markdown) when is_binary(markdown) do
-    Regex.scan(@availability_pattern, markdown)
-    |> Enum.reduce(%{}, fn [_, method, path, href], acc ->
+    markdown
+    |> endpoint_availability_entries()
+    |> Enum.reduce(%{}, fn {method, path, href}, acc ->
       Map.put_new(acc, normalize_endpoint_key(method, path), %{
         method: method,
         path: path,
@@ -91,10 +90,7 @@ defmodule GitHubEx.AuthParser do
   def extract_legacy_scope_hints(description) when is_binary(description) do
     description
     |> legacy_hint_sentences()
-    |> Enum.flat_map(fn sentence ->
-      Regex.scan(~r/`([a-z][a-z0-9:_-]*)`/, sentence, capture: :all_but_first)
-      |> List.flatten()
-    end)
+    |> Enum.flat_map(&TextTools.code_span_values/1)
     |> Enum.uniq()
   end
 
@@ -131,27 +127,146 @@ defmodule GitHubEx.AuthParser do
   end
 
   defp get(map, key) when is_map(map) do
-    Map.get(map, key) || Map.get(map, String.to_atom(key))
-  rescue
-    ArgumentError -> Map.get(map, key)
+    Map.get(map, key) || Map.get(map, prog_access_atom_key(key))
+  end
+
+  defp endpoint_availability_entries(markdown) do
+    markdown
+    |> String.split("[")
+    |> Enum.flat_map(&endpoint_availability_segment/1)
+  end
+
+  defp endpoint_availability_segment(segment) do
+    case String.split(segment, "](", parts: 2) do
+      [label, href_rest] ->
+        endpoint_availability_link(label, href_rest)
+
+      _other ->
+        []
+    end
+  end
+
+  defp endpoint_availability_link(label, href_rest) do
+    href = href_rest |> String.split(")", parts: 2) |> List.first()
+
+    case parse_endpoint_label(label) do
+      {:ok, method, path} -> [{method, path, href}]
+      :error -> []
+    end
+  end
+
+  defp parse_endpoint_label("`" <> rest) do
+    rest
+    |> String.trim_trailing("`")
+    |> parse_method_path()
+  end
+
+  defp parse_endpoint_label(label), do: parse_method_path(label)
+
+  defp parse_backtick_endpoint("`" <> rest) do
+    rest
+    |> String.trim_trailing("`")
+    |> parse_method_path()
+  end
+
+  defp parse_backtick_endpoint(_endpoint), do: :error
+
+  defp parse_method_path(value) do
+    case TextTools.split_words(value) do
+      [method, path] when method in @methods ->
+        {:ok, method, path}
+
+      _other ->
+        :error
+    end
+  end
+
+  defp quoted_value(~s(") <> rest) do
+    case String.split(rest, ~s("), parts: 2) do
+      [value, ""] ->
+        {:ok, value}
+
+      [value, suffix] ->
+        if String.trim(suffix) == "", do: {:ok, value}, else: :error
+
+      _other ->
+        :error
+    end
+  end
+
+  defp quoted_value(_value), do: :error
+
+  defp prog_access_atom_key("fineGrainedPat"), do: :fineGrainedPat
+  defp prog_access_atom_key("serverToServer"), do: :serverToServer
+  defp prog_access_atom_key("userToServerRest"), do: :userToServerRest
+  defp prog_access_atom_key(_key), do: nil
+
+  defp parse_prog_access_permission_label(label) do
+    with {:ok, permission, rest} <- leading_quoted_value(label),
+         scope_type when is_binary(scope_type) <- permission_scope_type(rest) do
+      %{
+        scope_type: normalize_scope_type(scope_type),
+        permission: permission
+      }
+    else
+      _other ->
+        nil
+    end
+  end
+
+  defp leading_quoted_value(~s(") <> rest) do
+    case String.split(rest, ~s("), parts: 2) do
+      [value, suffix] -> {:ok, value, String.trim(suffix)}
+      _other -> :error
+    end
+  end
+
+  defp leading_quoted_value(_value), do: :error
+
+  defp permission_scope_type(rest) do
+    suffix = " permissions"
+
+    if String.ends_with?(rest, suffix) do
+      rest
+      |> String.replace_suffix(suffix, "")
+      |> String.trim()
+    end
   end
 
   defp parse_permission_heading(line) do
-    case Regex.run(@heading_pattern, line) do
-      [_, scope_type, permission] ->
-        %{
-          scope_type: normalize_scope_type(scope_type),
-          permission: permission
-        }
-
+    with "## " <> rest <- String.trim(line),
+         [scope_type, quoted_permission] <- String.split(rest, " permissions for ", parts: 2),
+         {:ok, permission} <- quoted_value(quoted_permission) do
+      %{
+        scope_type: normalize_scope_type(scope_type),
+        permission: permission
+      }
+    else
       _other ->
         nil
     end
   end
 
   defp parse_permission_row(line) do
-    case Regex.run(@table_row_pattern, line) do
-      [_, method, path, access, tokens, additional_permissions] ->
+    cells =
+      line
+      |> String.trim()
+      |> String.split("|")
+      |> Enum.map(&String.trim/1)
+      |> Enum.reject(&(&1 == ""))
+
+    case cells do
+      [endpoint, access, tokens, additional_permissions] ->
+        parse_permission_row_endpoint(endpoint, access, tokens, additional_permissions)
+
+      _other ->
+        nil
+    end
+  end
+
+  defp parse_permission_row_endpoint(endpoint, access, tokens, additional_permissions) do
+    case parse_backtick_endpoint(endpoint) do
+      {:ok, method, path} ->
         %{
           method: method,
           path: path,
@@ -160,7 +275,7 @@ defmodule GitHubEx.AuthParser do
           additional_permissions: additional_permissions
         }
 
-      _other ->
+      :error ->
         nil
     end
   end
@@ -190,11 +305,11 @@ defmodule GitHubEx.AuthParser do
 
   defp parse_prog_access_permissions(entry) when is_map(entry) do
     Enum.flat_map(entry, fn {label, access} ->
-      case Regex.run(@prog_access_permission_pattern, label) do
-        [_, permission, scope_type] ->
+      case parse_prog_access_permission_label(label) do
+        %{permission: permission, scope_type: scope_type} ->
           [
             %{
-              scope_type: normalize_scope_type(scope_type),
+              scope_type: scope_type,
               permission: permission,
               access: normalize_access(access),
               additional_permissions: false
@@ -209,8 +324,12 @@ defmodule GitHubEx.AuthParser do
 
   defp legacy_hint_sentences(description) do
     matches =
-      Regex.scan(@scope_sentence_pattern, description)
-      |> Enum.map(&List.first/1)
+      description
+      |> TextTools.sentence_fragments()
+      |> Enum.filter(fn sentence ->
+        lowered = String.downcase(sentence)
+        String.contains?(lowered, "scope") or String.contains?(lowered, "scopes")
+      end)
 
     flag_matches =
       description

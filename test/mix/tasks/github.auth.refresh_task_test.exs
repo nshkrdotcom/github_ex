@@ -105,11 +105,13 @@ defmodule Mix.Tasks.Github.Auth.RefreshTaskTest do
 
     on_exit(restore_auth_sources)
 
-    assert_raise Mix.Error,
-                 ~r/GitHubEx\.AuthSources\.refresh!\/0 is unavailable in this build/,
-                 fn ->
-                   AuthRefreshTask.run([])
-                 end
+    error =
+      assert_raise Mix.Error, fn ->
+        AuthRefreshTask.run([])
+      end
+
+    assert Exception.message(error) ==
+             "GitHubEx.AuthSources.refresh!/0 is unavailable in this build"
   end
 
   test "raises a clear error when GitHubEx.Codegen is unavailable" do
@@ -135,10 +137,11 @@ defmodule Mix.Tasks.Github.Auth.RefreshTaskTest do
     on_exit(restore_auth_sources)
     on_exit(restore_codegen)
 
-    assert_raise Mix.Error,
-                 ~r/GitHubEx\.Codegen\.generate!\/0 is unavailable in this build/,
-                 fn ->
-                   AuthRefreshTask.run([])
-                 end
+    error =
+      assert_raise Mix.Error, fn ->
+        AuthRefreshTask.run([])
+      end
+
+    assert Exception.message(error) == "GitHubEx.Codegen.generate!/0 is unavailable in this build"
   end
 end

@@ -4,7 +4,7 @@ defmodule GitHubEx.OAuth do
   boundary.
   """
 
-  alias GitHubEx.Client
+  alias GitHubEx.{Client, TextTools}
   alias Pristine.OAuth2
 
   @oauth_client_opts [
@@ -118,7 +118,7 @@ defmodule GitHubEx.OAuth do
 
   defp normalize_scopes(scopes) when is_binary(scopes) do
     scopes
-    |> String.split(~r/[\s,]+/, trim: true)
+    |> TextTools.split_scopes()
     |> Enum.reject(&(&1 == ""))
   end
 

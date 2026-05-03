@@ -259,7 +259,52 @@ defmodule GitHubEx.MixProject do
          GitHubEx.Response,
          GitHubEx.Retry
        ]},
-      {"Generated Surface", generated_module_pattern()}
+      {"Generated Surface",
+       [
+         GitHubEx.Actions,
+         GitHubEx.Activity,
+         GitHubEx.Apps,
+         GitHubEx.Billing,
+         GitHubEx.Campaigns,
+         GitHubEx.Checks,
+         GitHubEx.Classroom,
+         GitHubEx.CodeScanning,
+         GitHubEx.CodeSecurity,
+         GitHubEx.CodesOfConduct,
+         GitHubEx.Codespaces,
+         GitHubEx.Copilot,
+         GitHubEx.Credentials,
+         GitHubEx.Dependabot,
+         GitHubEx.DependencyGraph,
+         GitHubEx.Emojis,
+         GitHubEx.EnterpriseTeamMemberships,
+         GitHubEx.EnterpriseTeamOrganizations,
+         GitHubEx.EnterpriseTeams,
+         GitHubEx.Gists,
+         GitHubEx.Git,
+         GitHubEx.Gitignore,
+         GitHubEx.HostedCompute,
+         GitHubEx.Interactions,
+         GitHubEx.Issues,
+         GitHubEx.Licenses,
+         GitHubEx.Markdown,
+         GitHubEx.Meta,
+         GitHubEx.Migrations,
+         GitHubEx.Oidc,
+         GitHubEx.Orgs,
+         GitHubEx.Packages,
+         GitHubEx.PrivateRegistries,
+         GitHubEx.Projects,
+         GitHubEx.Pulls,
+         GitHubEx.RateLimit,
+         GitHubEx.Reactions,
+         GitHubEx.Repos,
+         GitHubEx.Search,
+         GitHubEx.SecretScanning,
+         GitHubEx.SecurityAdvisories,
+         GitHubEx.Teams,
+         GitHubEx.Users
+       ]}
     ]
 
     published_task_group = [
@@ -285,10 +330,6 @@ defmodule GitHubEx.MixProject do
       end
 
     runtime_groups ++ published_task_group ++ repo_tooling_group
-  end
-
-  defp generated_module_pattern do
-    ~r/^GitHubEx\.(?!Application$|AppAuth$|Auth$|Build(?:\.|$)|Client$|Codegen(?:\.|$)|Error$|OAuth(?:\.|$)|OAuthTokenFile$|Pagination$|RateLimitInfo$|Refresh$|Response$|ResultClassifier$|Retry$)[A-Z]/
   end
 
   defp publishing_package? do

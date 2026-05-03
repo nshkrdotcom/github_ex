@@ -1,8 +1,7 @@
 defmodule GitHubEx.AuthManifest do
   @moduledoc false
 
-  alias GitHubEx.AuthParser
-  alias GitHubEx.AuthSources
+  alias GitHubEx.{AuthParser, AuthSources, TextTools}
   alias PristineCodegen.{JSON, ProviderIR}
 
   @supported_methods ~w(get post put patch delete head options)
@@ -854,9 +853,7 @@ defmodule GitHubEx.AuthManifest do
   end
 
   defp replace_markdown_relative_links(text) do
-    Regex.replace(~r/\]\((\/[^)]+)\)/, text, fn _match, relative_url ->
-      "](#{@relative_link_base}#{relative_url})"
-    end)
+    TextTools.replace_markdown_relative_links(text)
   end
 
   defp normalize_url("/" <> _rest = url), do: @relative_link_base <> url

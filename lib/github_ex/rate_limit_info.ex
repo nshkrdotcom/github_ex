@@ -3,6 +3,7 @@ defmodule GitHubEx.RateLimitInfo do
   Helpers for GitHub rate-limit and pagination headers.
   """
 
+  alias GitHubEx.TextTools
   alias Pristine.Adapters.Retry.Foundation, as: FoundationRetry
 
   @retry_after_reset_at_headers ["x-ratelimit-reset"]
@@ -62,8 +63,8 @@ defmodule GitHubEx.RateLimitInfo do
     value
     |> String.split(",")
     |> Enum.reduce(%{}, fn part, acc ->
-      case Regex.run(~r/<([^>]+)>;\s*rel="([^"]+)"/, String.trim(part), capture: :all_but_first) do
-        [url, rel] -> Map.put(acc, rel, url)
+      case TextTools.parse_link_relation(part) do
+        {:ok, url, rel} -> Map.put(acc, rel, url)
         _ -> acc
       end
     end)

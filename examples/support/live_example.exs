@@ -310,12 +310,14 @@ defmodule GitHubEx.Examples.Live do
   end
 
   defp body_field(body, key) when is_map(body) do
-    Map.get(body, key) || Map.get(body, String.to_atom(key))
-  rescue
-    ArgumentError -> Map.get(body, key)
+    Map.get(body, key) || Map.get(body, body_field_atom_key(key))
   end
 
   defp body_field(_body, _key), do: nil
+
+  defp body_field_atom_key("error"), do: :error
+  defp body_field_atom_key("error_description"), do: :error_description
+  defp body_field_atom_key(_key), do: nil
 
   defp header_value(headers, name) when is_map(headers) do
     downcased = String.downcase(name)

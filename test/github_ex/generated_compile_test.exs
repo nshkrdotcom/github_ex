@@ -1,6 +1,8 @@
 defmodule GitHubEx.GeneratedCompileTest do
   use ExUnit.Case, async: true
 
+  alias GitHubEx.Codegen.AtomRegistry
+
   @generation_manifest_path Path.expand("../../priv/generated/generation_manifest.json", __DIR__)
   @provider_ir_path Path.expand("../../priv/generated/provider_ir.json", __DIR__)
   @operation_auth_policies_path Path.expand(
@@ -22,7 +24,7 @@ defmodule GitHubEx.GeneratedCompileTest do
                                               "module" => module_name
                                             } ->
       module = parse_module!(module_name)
-      function = String.to_atom(function_name)
+      function = AtomRegistry.function!(function_name)
 
       assert Code.ensure_loaded?(module)
       assert function_exported?(module, function, 3)
@@ -61,7 +63,7 @@ defmodule GitHubEx.GeneratedCompileTest do
   defp parse_module!(module_name) when is_binary(module_name) do
     module_name
     |> String.split(".")
-    |> Enum.map(&String.to_atom/1)
-    |> Module.concat()
+    |> List.last()
+    |> AtomRegistry.module_by_name!()
   end
 end

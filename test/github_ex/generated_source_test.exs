@@ -86,7 +86,7 @@ defmodule GitHubEx.GeneratedSourceTest do
       |> Enum.map(&File.read!/1)
 
     assert Enum.any?(sources, &String.contains?(&1, "https://docs.github.com/"))
-    refute Enum.any?(sources, &Regex.match?(~r/\]\(\/[^)]+\)/, &1))
+    refute Enum.any?(sources, &GitHubEx.TextTools.relative_markdown_link?/1)
   end
 
   test "generated schema helpers stay provider-local" do

@@ -2,6 +2,8 @@ defmodule GitHubEx.Codegen.Plugins.Source do
   @moduledoc false
 
   alias GitHubEx.Codegen
+  alias GitHubEx.Codegen.AtomRegistry
+  alias GitHubEx.TextTools
   alias PristineCodegen.Source.Dataset
 
   @http_methods ~w(get post put patch delete head options)
@@ -64,7 +66,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
 
     %{
       id: operation["operationId"] || "#{method} #{path}",
-      method: String.to_atom(method),
+      method: AtomRegistry.method!(method),
       module: module,
       function: function,
       path_template: path,
@@ -78,7 +80,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
       body: body_partition(method, request_content_types(operation, components)),
       form_data: form_data_partition(request_content_types(operation, components)),
       auth_policy_id: nil,
-      runtime_metadata: runtime_metadata(module, function, String.to_atom(method), path)
+      runtime_metadata: runtime_metadata(module, function, AtomRegistry.method!(method), path)
     }
   end
 
@@ -353,7 +355,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
   defp telemetry_event(module, function) do
     [
       :github_ex,
-      module |> Module.split() |> List.last() |> Macro.underscore() |> String.to_atom(),
+      AtomRegistry.event_segment!(module),
       function
     ]
   end
@@ -469,7 +471,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
         duplicates
         |> Enum.with_index(1)
         |> Enum.map(fn {entry, index} ->
-          %{entry | function: String.to_atom("#{function}_#{index}")}
+          %{entry | function: AtomRegistry.function!(Atom.to_string(function) <> "_#{index}")}
         end)
     end)
   end
@@ -484,11 +486,10 @@ defmodule GitHubEx.Codegen.Plugins.Source do
     |> String.split("/")
     |> List.last()
     |> Macro.underscore()
-    |> String.replace(~r/[^a-z0-9_]/, "_")
-    |> String.trim("_")
+    |> TextTools.identifier_name()
     |> case do
-      "" -> :"operation_#{:erlang.phash2({method, path})}"
-      name -> String.to_atom(name)
+      "" -> AtomRegistry.function!("operation_#{:erlang.phash2({method, path})}")
+      name -> AtomRegistry.function!(name)
     end
   end
 
@@ -496,14 +497,8 @@ defmodule GitHubEx.Codegen.Plugins.Source do
 
   defp module_from_tag(tag) do
     tag
-    |> to_string()
-    |> String.split(~r/[^a-zA-Z0-9]+/, trim: true)
-    |> Enum.map_join(&Macro.camelize/1)
-    |> case do
-      "" -> "Misc"
-      module_name -> module_name
-    end
-    |> then(&Module.concat([GitHubEx, &1]))
+    |> TextTools.module_name_from_tag()
+    |> AtomRegistry.module_by_name!()
   end
 
   defp infer_object_items_path([]), do: :unknown
@@ -532,9 +527,7 @@ defmodule GitHubEx.Codegen.Plugins.Source do
   end
 
   defp replace_markdown_relative_links(text) do
-    Regex.replace(~r/\]\((\/[^)]+)\)/, text, fn _match, relative_url ->
-      "](#{@relative_link_base}#{relative_url})"
-    end)
+    TextTools.replace_markdown_relative_links(text)
   end
 
   defp normalize_url("/" <> _rest = url), do: @relative_link_base <> url
@@ -577,11 +570,8 @@ defmodule GitHubEx.Codegen.Plugins.Source do
 
   defp parameter_name_atom(name) do
     name
-    |> to_string()
-    |> Macro.underscore()
-    |> String.replace(~r/[^a-z0-9_]/, "_")
-    |> String.trim("_")
-    |> String.to_atom()
+    |> TextTools.identifier_name()
+    |> AtomRegistry.parameter!()
   end
 
   defp sha256_file(path) do

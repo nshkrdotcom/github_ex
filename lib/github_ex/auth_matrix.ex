@@ -3,6 +3,8 @@ defmodule GitHubEx.AuthMatrix do
   Runtime lookup helper for the generated auth capability matrix.
   """
 
+  alias GitHubEx.TextTools
+
   @manifest_path Path.expand("../../priv/generated/auth_manifest.json", __DIR__)
   @manifest_cache_key {__MODULE__, :manifest}
   @index_cache_key {__MODULE__, :index}
@@ -74,7 +76,7 @@ defmodule GitHubEx.AuthMatrix do
   end
 
   defp parse_method_path_lookup(value) do
-    case String.split(value, ~r/\s+/, parts: 2, trim: true) do
+    case TextTools.split_words(value) do
       [method, path] when method in ~w(GET POST PUT PATCH DELETE HEAD OPTIONS) ->
         {:ok, method, path}
 

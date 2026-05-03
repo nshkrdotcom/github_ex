@@ -128,11 +128,12 @@ defmodule GitHubEx.RefreshTest do
     on_exit(restore_finch)
     on_exit(restore_codegen)
 
-    assert_raise RuntimeError,
-                 ~r/GitHubEx\.Codegen\.generate!\/1 is unavailable in this build/,
-                 fn ->
-                   GitHubEx.Refresh.run!(project_root: tmp_dir, spec_url: spec_url)
-                 end
+    error =
+      assert_raise RuntimeError, fn ->
+        GitHubEx.Refresh.run!(project_root: tmp_dir, spec_url: spec_url)
+      end
+
+    assert Exception.message(error) == "GitHubEx.Codegen.generate!/1 is unavailable in this build"
   end
 
   defp stub_finch_response(url, payload) do
