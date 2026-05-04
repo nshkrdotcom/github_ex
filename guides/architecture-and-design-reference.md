@@ -432,6 +432,28 @@ From GitHub's own auth docs:
 `github_ex` reflects that by accepting raw bearer strings in
 `GitHubEx.Client.new(auth: token)`.
 
+### 8.1.1 Governed Authority Boundary
+
+`GitHubEx.GovernedAuthority` is the provider-specific adapter between
+GitHubEx and the lower `pristine` governed context. It accepts a packet with
+bounded refs for authority, provider, credential, lease, target, token family,
+redaction, GitHub App, installation, OAuth app, and webhook identity. It then
+materializes only:
+
+- the GitHub REST base URL selected by the authority packet
+- package-owned GitHub default headers plus authority-selected headers
+- credential headers selected by the authority packet
+- ref-only metadata and exact secret values for redaction
+
+When `governed_authority:` is present, direct `auth:`, `oauth2:`, `base_url:`,
+GitHub API version, Accept, user agent, foundation overrides, request auth,
+request headers, request endpoint overrides, OAuth token-file paths, GitHub App
+PEM inputs, installation ids, webhook secrets, OAuth client credentials, and
+token fields are rejected before provider effects.
+
+The standalone examples intentionally keep env-backed ergonomics. Those env
+values are local direct-use inputs and cannot satisfy governed authority.
+
 ### 8.2 Fine-Grained Personal Access Tokens
 
 Official GitHub guidance is to prefer fine-grained PATs over classic PATs when

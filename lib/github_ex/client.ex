@@ -3,7 +3,7 @@ defmodule GitHubEx.Client do
   Thin GitHub client configuration layered on top of Pristine runtime execution.
   """
 
-  alias GitHubEx.Auth
+  alias GitHubEx.{Auth, GovernedAuthority}
   alias Pristine.Client, as: RuntimeClient
   alias Pristine.Operation
   alias Pristine.SDK.Context
@@ -109,6 +109,7 @@ defmodule GitHubEx.Client do
           base_url: String.t() | nil,
           context: Context.t() | nil,
           foundation: keyword() | nil,
+          governed_authority: GovernedAuthority.t() | nil,
           log_level: :debug | :info | :warn | :error | nil,
           logger: (atom(), String.t(), map() -> term()) | nil,
           oauth2: oauth2_config() | nil,
@@ -128,6 +129,7 @@ defmodule GitHubEx.Client do
     :base_url,
     :context,
     :foundation,
+    :governed_authority,
     :log_level,
     :logger,
     :oauth2,
@@ -150,17 +152,32 @@ defmodule GitHubEx.Client do
 
   @spec new(keyword()) :: t()
   def new(opts \\ []) when is_list(opts) do
-    auth = Keyword.get(opts, :auth)
-    oauth2 = normalize_oauth2(Keyword.get(opts, :oauth2))
-    base_url = Keyword.get(opts, :base_url, config(:base_url, @default_base_url))
-    api_version = Keyword.get(opts, :api_version, config(:api_version, @default_api_version))
-    timeout_ms = Keyword.get(opts, :timeout_ms, config(:timeout_ms, @default_timeout_ms))
+    governed_authority =
+      GovernedAuthority.client_authority!(
+        opts,
+        accept: @default_accept,
+        api_version: @default_api_version,
+        base_url: @default_base_url,
+        user_agent: default_user_agent()
+      )
+
+    governed? = not is_nil(governed_authority)
+    auth = if governed?, do: nil, else: Keyword.get(opts, :auth)
+    oauth2 = if governed?, do: nil, else: normalize_oauth2(Keyword.get(opts, :oauth2))
+    accept = accept(opts, governed_authority)
+    base_url = base_url(opts, governed_authority)
+    api_version = api_version(opts, governed_authority)
+    timeout_ms = timeout_ms(opts, governed?)
     typed_responses = Keyword.get(opts, :typed_responses, false)
     log_level = Keyword.get(opts, :log_level, :warn)
     logger = Keyword.get(opts, :logger)
 
     transport =
-      Keyword.get(opts, :transport, config(:transport, Pristine.Adapters.Transport.Finch))
+      if governed? do
+        Keyword.get(opts, :transport, Pristine.Adapters.Transport.Finch)
+      else
+        Keyword.get(opts, :transport, config(:transport, Pristine.Adapters.Transport.Finch))
+      end
 
     transport_opts =
       normalize_transport_opts(
@@ -170,20 +187,22 @@ defmodule GitHubEx.Client do
       )
 
     client = %__MODULE__{
-      accept: Keyword.get(opts, :accept, @default_accept),
+      accept: accept,
       api_version: api_version,
       auth: normalize_auth(auth),
       base_url: base_url,
-      foundation: normalize_foundation(Keyword.get(opts, :foundation)),
+      foundation:
+        if(governed?, do: nil, else: normalize_foundation(Keyword.get(opts, :foundation))),
+      governed_authority: governed_authority,
       log_level: log_level,
       logger: logger,
       oauth2: oauth2,
-      retry: normalize_retry(Keyword.get(opts, :retry, config(:retry, @default_retry))),
+      retry: retry(opts, governed?),
       timeout_ms: timeout_ms,
       transport: transport,
       transport_opts: transport_opts,
       typed_responses: typed_responses,
-      user_agent: Keyword.get(opts, :user_agent, config(:user_agent, default_user_agent()))
+      user_agent: user_agent(opts, governed_authority)
     }
 
     context = build_context(client)
@@ -230,6 +249,8 @@ defmodule GitHubEx.Client do
 
   @spec request(t() | RuntimeClient.t(), request_t()) :: {:ok, term()} | {:error, term()}
   def request(client, request) when is_map(request) do
+    GovernedAuthority.reject_request_smuggling!(client, request)
+
     if raw_request?(request) do
       execute_raw_request(client, request)
     else
@@ -275,6 +296,8 @@ defmodule GitHubEx.Client do
   @spec execute_generated_request(t() | RuntimeClient.t(), generated_request_t()) ::
           {:ok, term()} | {:error, term()}
   def execute_generated_request(client, request) when is_map(request) do
+    GovernedAuthority.reject_generated_request_smuggling!(client, request)
+
     if generated_request?(request) do
       typed_runtime? = typed_runtime_enabled?(client, request)
 
@@ -344,15 +367,8 @@ defmodule GitHubEx.Client do
   end
 
   defp build_context(%__MODULE__{} = client) do
-    base_opts = [
-      auth: default_auth_modules(client),
-      base_url: client.base_url,
+    common_opts = [
       default_timeout: client.timeout_ms,
-      headers: %{
-        "Accept" => client.accept,
-        "User-Agent" => client.user_agent,
-        "X-GitHub-Api-Version" => client.api_version
-      },
       error_module: GitHubEx.Error,
       log_level: client.log_level,
       logger: client.logger,
@@ -366,7 +382,27 @@ defmodule GitHubEx.Client do
       transport_opts: client.transport_opts
     ]
 
-    Pristine.foundation_context(Keyword.merge(base_opts, client.foundation || []))
+    client
+    |> context_authority_opts()
+    |> Keyword.merge(common_opts)
+    |> Keyword.merge(client.foundation || [])
+    |> Pristine.foundation_context()
+  end
+
+  defp context_authority_opts(%__MODULE__{governed_authority: %GovernedAuthority{} = authority}) do
+    [governed_authority: GovernedAuthority.pristine_authority(authority)]
+  end
+
+  defp context_authority_opts(%__MODULE__{} = client) do
+    [
+      auth: default_auth_modules(client),
+      base_url: client.base_url,
+      headers: %{
+        "Accept" => client.accept,
+        "User-Agent" => client.user_agent,
+        "X-GitHub-Api-Version" => client.api_version
+      }
+    ]
   end
 
   defp default_raw_security(_path, false), do: nil
@@ -663,6 +699,40 @@ defmodule GitHubEx.Client do
   defp normalize_auth_map(%{} = auth) do
     Map.new(auth, fn {key, value} -> {to_string(key), value} end)
   end
+
+  defp base_url(_opts, %GovernedAuthority{base_url: base_url}), do: base_url
+  defp base_url(opts, nil), do: Keyword.get(opts, :base_url, config(:base_url, @default_base_url))
+
+  defp accept(_opts, %GovernedAuthority{headers: headers}) do
+    Map.get(headers, "Accept", @default_accept)
+  end
+
+  defp accept(opts, nil), do: Keyword.get(opts, :accept, @default_accept)
+
+  defp api_version(_opts, %GovernedAuthority{headers: headers}) do
+    Map.get(headers, "X-GitHub-Api-Version", @default_api_version)
+  end
+
+  defp api_version(opts, nil) do
+    Keyword.get(opts, :api_version, config(:api_version, @default_api_version))
+  end
+
+  defp timeout_ms(opts, true), do: Keyword.get(opts, :timeout_ms, @default_timeout_ms)
+
+  defp timeout_ms(opts, false),
+    do: Keyword.get(opts, :timeout_ms, config(:timeout_ms, @default_timeout_ms))
+
+  defp retry(opts, true), do: normalize_retry(Keyword.get(opts, :retry, @default_retry))
+
+  defp retry(opts, false),
+    do: normalize_retry(Keyword.get(opts, :retry, config(:retry, @default_retry)))
+
+  defp user_agent(_opts, %GovernedAuthority{headers: headers}) do
+    Map.get(headers, "User-Agent", default_user_agent())
+  end
+
+  defp user_agent(opts, nil),
+    do: Keyword.get(opts, :user_agent, config(:user_agent, default_user_agent()))
 
   defp maybe_put(opts, _key, nil), do: opts
   defp maybe_put(opts, _key, value) when value == [], do: opts

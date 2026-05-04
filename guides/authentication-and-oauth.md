@@ -45,6 +45,12 @@ And use it:
 client = GitHubEx.Client.new(auth: System.fetch_env!("GITHUB_TOKEN"))
 ```
 
+This is standalone local use. Governed clients use
+`GitHubEx.Client.new(governed_authority: packet)` and reject env-backed tokens,
+saved OAuth token files, request auth overrides, request headers, direct
+endpoints, direct OAuth client credentials, GitHub App PEM inputs, installation
+ids, and webhook secrets supplied outside the authority packet.
+
 For the example-by-example mapping, read [Examples README](../examples/README.md).
 
 ## Broad Local Exploration
@@ -170,6 +176,11 @@ client = GitHubEx.Client.new()
 GitHub App permissions are usually finer-grained than OAuth scopes. Use OAuth
 because the flow or enterprise surface needs it, not because it is the default.
 
+In governed execution, OAuth client id, client secret, authorization code,
+refresh token, and token-file path selection must happen before the packet
+reaches `github_ex`. Passing those values directly to `GitHubEx.OAuth` or
+`GitHubEx.Client.new/1` beside `governed_authority:` is rejected.
+
 ## OAuth Application Token Endpoints
 
 These five endpoints are special:
@@ -191,6 +202,10 @@ GitHubEx.Apps.check_token(client, %{
   "access_token" => token
 })
 ```
+
+For governed clients, these basic-auth credentials are represented by the
+`oauth_application_basic` token family inside the authority packet instead of
+request parameters or headers.
 
 ## Where To Look Up Exact Permissions
 

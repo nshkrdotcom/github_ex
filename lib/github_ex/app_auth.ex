@@ -39,6 +39,8 @@ defmodule GitHubEx.AppAuth do
 
   @spec app_client(String.t() | pos_integer(), pem_input(), keyword()) :: Pristine.Client.t()
   def app_client(app_id, pem, opts \\ []) when is_list(opts) do
+    GitHubEx.GovernedAuthority.reject_app_auth_smuggling!(opts)
+
     {jwt_opts, client_opts} = Keyword.split(opts, [:claims, :expires_in, :iat_skew_seconds])
 
     client_opts
@@ -65,6 +67,8 @@ defmodule GitHubEx.AppAuth do
         ) ::
           Pristine.Client.t()
   def installation_client(app_id, pem, installation_id, opts \\ []) when is_list(opts) do
+    GitHubEx.GovernedAuthority.reject_app_auth_smuggling!(opts)
+
     {jwt_opts, remaining_opts} = Keyword.split(opts, [:claims, :expires_in, :iat_skew_seconds])
 
     {token_opts, client_opts} =

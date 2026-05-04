@@ -146,6 +146,7 @@ defmodule GitHubEx.MixProject do
         lib/github_ex/client.ex
         lib/github_ex/error.ex
         lib/github_ex/generated
+        lib/github_ex/governed_authority.ex
         lib/github_ex/oauth.ex
         lib/github_ex/oauth_token_file.ex
         lib/github_ex/pagination.ex
@@ -252,6 +253,7 @@ defmodule GitHubEx.MixProject do
          GitHubEx.AuthMatrix,
          GitHubEx.Client,
          GitHubEx.Error,
+         GitHubEx.GovernedAuthority,
          GitHubEx.OAuth,
          GitHubEx.OAuthTokenFile,
          GitHubEx.Pagination,

@@ -14,6 +14,8 @@ Common options:
 
 - `auth:` raw token string, auth adapter tuple, or auth adapter list
 - `oauth2:` token source config for `Pristine.Adapters.Auth.OAuth2`
+- `governed_authority:` authority-selected GitHub credential, lease, target,
+  endpoint, and redaction refs for governed execution
 - `base_url:` override the REST API site
 - `api_version:` override the `X-GitHub-Api-Version` header
 - `accept:` override the `Accept` header
@@ -22,6 +24,13 @@ Common options:
 - `transport:` and `transport_opts:`
 - `retry:` false, keyword list, or map
 - `foundation:` keyword list forwarded to `Pristine.foundation_context/1`
+
+`governed_authority:` is mutually exclusive with direct auth and endpoint
+configuration. When it is present, `GitHubEx.Client` uses package defaults and
+authority-selected headers to build the lower `pristine` governed context, and
+rejects direct `auth:`, `oauth2:`, `base_url:`, `api_version:`, `accept:`,
+`user_agent:`, `foundation:`, token, app credential, installation, webhook, and
+OAuth token-file inputs.
 
 ## Request-Scoped Controls
 
@@ -75,3 +84,7 @@ client =
 
 Keep those overrides explicit in application code. The SDK docs only promise
 the `GitHubEx.Client` surface, not raw runtime internals.
+
+Governed clients do not accept `foundation:` because it can override lower
+headers, auth, or endpoint materialization. Put those choices in the authority
+packet before constructing the client.

@@ -175,9 +175,18 @@ wrapped.links["next"]
 - OAuth-backed token sources through `oauth2: [...]`
 - request-scoped basic auth for `/applications/{client_id}/token*` endpoints
 - GitHub App JWT and installation-token flows through `GitHubEx.AppAuth`, which returns `Pristine.Client` runtime clients ready for generated operations
+- governed authority through `governed_authority: ...`, where the caller has
+  already selected the GitHub credential, lease, target, endpoint, and
+  redaction refs
 
 Use the generated [Auth Capability Matrix](guides/auth-capability-matrix.md) to
 check a specific REST operation before assuming one token type covers it.
+
+Standalone env examples remain standalone. A `GITHUB_TOKEN`, OAuth token file,
+GitHub App PEM path, constructor token, request header, request auth override,
+or app credential helper call cannot satisfy `governed_authority:`. Governed
+clients fail closed before constructing the runtime context when those direct
+inputs are supplied beside the authority packet.
 
 Ownership split:
 

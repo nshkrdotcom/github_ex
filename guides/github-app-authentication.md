@@ -20,6 +20,8 @@ Boundary note:
 - `GitHubEx.AppAuth` owns GitHub-specific JWT and installation-token exchange
 - `pristine` owns the shared runtime transport and OAuth helper substrate
 - higher control planes should own durable app-install and secret authority
+- governed clients receive GitHub App, installation, and app-user credential
+  material only through `governed_authority:`
 
 ## Three Credentials You Need To Distinguish
 
@@ -161,6 +163,12 @@ permission set already granted to the installation.
 `GitHubEx.AppAuth.installation_client/4` likewise returns a `Pristine.Client`
 ready to hand to generated modules such as `GitHubEx.Repos` or
 `GitHubEx.Issues`.
+
+Those helpers are standalone helpers. When `governed_authority:` is present,
+`GitHubEx.AppAuth` rejects raw app id, private key, and installation id inputs
+before signing. The governed caller must pass authority refs such as `app_ref`
+and `installation_ref` plus authority-selected credential headers instead of
+local PEM or env-derived values.
 
 ## How To Debug 403s
 
