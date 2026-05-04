@@ -51,6 +51,14 @@ saved OAuth token files, request auth overrides, request headers, direct
 endpoints, direct OAuth client credentials, GitHub App PEM inputs, installation
 ids, and webhook secrets supplied outside the authority packet.
 
+The governed packet must carry authority refs for the provider account,
+connector instance, credential handle, lease, token family, materialization,
+target, request scope, operation policy, header policy, and redaction policy.
+For OAuth user credentials that means `token_family: "oauth_user_token"` plus a
+`user_token_ref`; for PAT-style credentials it means a bearer-token family and
+`bearer_token_ref`. The SDK never turns `GITHUB_TOKEN`, OAuth files, or OAuth
+client credentials into governed authority.
+
 For the example-by-example mapping, read [Examples README](../examples/README.md).
 
 ## Broad Local Exploration

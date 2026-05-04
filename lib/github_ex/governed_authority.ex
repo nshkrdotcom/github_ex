@@ -10,7 +10,7 @@ defmodule GitHubEx.GovernedAuthority do
   alias Pristine.GovernedAuthority, as: PristineAuthority
 
   @redaction_marker "[REDACTED]"
-  @default_provider_refs ["github", "github_rest", "github_ex"]
+  @default_provider_refs ["github", "github_rest", "github_ex", "provider://github"]
   @token_families %{
     "fine_grained_pat" => :bearer,
     "classic_pat" => :bearer,
@@ -43,7 +43,11 @@ defmodule GitHubEx.GovernedAuthority do
     :installation_id,
     :webhook_secret,
     :oauth_token_path,
-    :token_source
+    :token_source,
+    :env,
+    :default_client,
+    :middleware,
+    :provider_payload
   ]
   @request_direct_keys [
     :auth,
@@ -60,7 +64,11 @@ defmodule GitHubEx.GovernedAuthority do
     :installation_id,
     :webhook_secret,
     :oauth_token_path,
-    :token_source
+    :token_source,
+    :env,
+    :default_client,
+    :middleware,
+    :provider_payload
   ]
 
   @type header_map :: %{optional(String.t()) => String.t()}
@@ -68,7 +76,10 @@ defmodule GitHubEx.GovernedAuthority do
   @type t :: %__MODULE__{
           authority_ref: String.t(),
           provider_ref: String.t(),
-          credential_ref: String.t(),
+          base_url_ref: String.t(),
+          provider_account_ref: String.t(),
+          connector_instance_ref: String.t(),
+          credential_handle_ref: String.t(),
           credential_lease_ref: String.t(),
           credential_family_ref: String.t(),
           token_family: String.t(),
@@ -77,10 +88,20 @@ defmodule GitHubEx.GovernedAuthority do
           oauth_app_ref: String.t() | nil,
           webhook_ref: String.t() | nil,
           target_ref: String.t(),
+          request_scope_ref: String.t(),
+          operation_policy_ref: String.t(),
+          header_policy_ref: String.t(),
           redaction_ref: String.t() | nil,
+          materialization_kind: String.t(),
+          materialization_ref: String.t() | nil,
+          bearer_token_ref: String.t() | nil,
+          app_token_ref: String.t() | nil,
+          installation_token_ref: String.t() | nil,
+          user_token_ref: String.t() | nil,
           base_url: String.t(),
           headers: header_map(),
           credential_headers: header_map(),
+          allowed_header_names: [String.t()],
           redaction_values: [String.t()],
           metadata: map(),
           pristine_authority: PristineAuthority.t()
@@ -89,14 +110,22 @@ defmodule GitHubEx.GovernedAuthority do
   @enforce_keys [
     :authority_ref,
     :provider_ref,
-    :credential_ref,
+    :base_url_ref,
+    :provider_account_ref,
+    :connector_instance_ref,
+    :credential_handle_ref,
     :credential_lease_ref,
     :credential_family_ref,
     :token_family,
     :target_ref,
+    :request_scope_ref,
+    :operation_policy_ref,
+    :header_policy_ref,
+    :materialization_kind,
     :base_url,
     :headers,
     :credential_headers,
+    :allowed_header_names,
     :redaction_values,
     :metadata,
     :pristine_authority
@@ -104,7 +133,10 @@ defmodule GitHubEx.GovernedAuthority do
   defstruct [
     :authority_ref,
     :provider_ref,
-    :credential_ref,
+    :base_url_ref,
+    :provider_account_ref,
+    :connector_instance_ref,
+    :credential_handle_ref,
     :credential_lease_ref,
     :credential_family_ref,
     :token_family,
@@ -113,10 +145,20 @@ defmodule GitHubEx.GovernedAuthority do
     :oauth_app_ref,
     :webhook_ref,
     :target_ref,
+    :request_scope_ref,
+    :operation_policy_ref,
+    :header_policy_ref,
     :redaction_ref,
+    :materialization_kind,
+    :materialization_ref,
+    :bearer_token_ref,
+    :app_token_ref,
+    :installation_token_ref,
+    :user_token_ref,
     :base_url,
     :headers,
     :credential_headers,
+    :allowed_header_names,
     :redaction_values,
     :metadata,
     :pristine_authority
@@ -153,12 +195,28 @@ defmodule GitHubEx.GovernedAuthority do
     authority_headers = authority_headers!(opts, defaults)
     authority_ref = required_string!(opts, :authority_ref)
     provider_ref = required_string!(opts, :provider_ref)
-    credential_ref = required_string!(opts, :credential_ref)
-    credential_lease_ref = required_string!(opts, :credential_lease_ref)
+    base_url_ref = required_ref!(opts, :base_url_ref, ["base-url://"])
+    provider_account_ref = required_ref!(opts, :provider_account_ref, ["provider-account://"])
+
+    connector_instance_ref =
+      required_ref!(opts, :connector_instance_ref, ["connector-instance://"])
+
+    credential_handle_ref =
+      required_ref!(opts, :credential_handle_ref, [
+        "credential-handle://",
+        "urn:credential-handle:"
+      ])
+
+    credential_lease_ref = required_ref!(opts, :credential_lease_ref, ["credential-lease://"])
     credential_family_ref = required_string!(opts, :credential_family_ref)
-    target_ref = required_string!(opts, :target_ref)
+    target_ref = required_ref!(opts, :target_ref, ["target://"])
+    request_scope_ref = required_ref!(opts, :request_scope_ref, ["request-scope://"])
+    operation_policy_ref = required_ref!(opts, :operation_policy_ref, ["operation-policy://"])
+    header_policy_ref = required_ref!(opts, :header_policy_ref, ["header-policy://"])
     redaction_ref = optional_string(opts, :redaction_ref)
     base_url = required_string!(opts, :base_url)
+    materialization_kind = materialization_kind(token_family)
+    materialization_refs = materialization_refs!(opts, token_family)
 
     validate_provider_ref!(provider_ref)
     validate_family_refs!(credential_family_ref, token_family)
@@ -173,7 +231,10 @@ defmodule GitHubEx.GovernedAuthority do
     metadata = %{
       authority_ref: authority_ref,
       provider_ref: provider_ref,
-      credential_ref: credential_ref,
+      base_url_ref: base_url_ref,
+      provider_account_ref: provider_account_ref,
+      connector_instance_ref: connector_instance_ref,
+      credential_handle_ref: credential_handle_ref,
       credential_lease_ref: credential_lease_ref,
       credential_family_ref: credential_family_ref,
       token_family: token_family,
@@ -182,24 +243,49 @@ defmodule GitHubEx.GovernedAuthority do
       oauth_app_ref: optional_string(opts, :oauth_app_ref),
       webhook_ref: optional_string(opts, :webhook_ref),
       target_ref: target_ref,
+      request_scope_ref: request_scope_ref,
+      operation_policy_ref: operation_policy_ref,
+      header_policy_ref: header_policy_ref,
       redaction_ref: redaction_ref
     }
 
     pristine_authority =
       PristineAuthority.new!(
         base_url: base_url,
-        credential_ref: credential_ref,
+        base_url_ref: base_url_ref,
+        authority_ref: authority_ref,
+        provider_account_ref: provider_account_ref,
+        connector_instance_ref: connector_instance_ref,
+        credential_handle_ref: credential_handle_ref,
         credential_lease_ref: credential_lease_ref,
         target_ref: target_ref,
+        request_scope_ref: request_scope_ref,
+        operation_policy_ref: operation_policy_ref,
+        header_policy_ref: header_policy_ref,
         redaction_ref: redaction_ref,
+        materialization_kind: materialization_kind,
+        materialization_ref: optional_string(opts, :materialization_ref),
+        bearer_token_ref: materialization_refs.bearer_token_ref,
+        app_token_ref: materialization_refs.app_token_ref,
+        installation_token_ref: materialization_refs.installation_token_ref,
+        user_token_ref: materialization_refs.user_token_ref,
         headers: authority_headers,
-        credential_headers: credential_headers
+        credential_headers: credential_headers,
+        allowed_header_names:
+          allowed_header_names(
+            fetch_value(opts, :allowed_header_names, []),
+            authority_headers,
+            credential_headers
+          )
       )
 
     %__MODULE__{
       authority_ref: authority_ref,
       provider_ref: provider_ref,
-      credential_ref: credential_ref,
+      base_url_ref: base_url_ref,
+      provider_account_ref: provider_account_ref,
+      connector_instance_ref: connector_instance_ref,
+      credential_handle_ref: credential_handle_ref,
       credential_lease_ref: credential_lease_ref,
       credential_family_ref: credential_family_ref,
       token_family: token_family,
@@ -208,10 +294,20 @@ defmodule GitHubEx.GovernedAuthority do
       oauth_app_ref: metadata.oauth_app_ref,
       webhook_ref: metadata.webhook_ref,
       target_ref: target_ref,
+      request_scope_ref: request_scope_ref,
+      operation_policy_ref: operation_policy_ref,
+      header_policy_ref: header_policy_ref,
       redaction_ref: redaction_ref,
+      materialization_kind: materialization_kind,
+      materialization_ref: optional_string(opts, :materialization_ref),
+      bearer_token_ref: materialization_refs.bearer_token_ref,
+      app_token_ref: materialization_refs.app_token_ref,
+      installation_token_ref: materialization_refs.installation_token_ref,
+      user_token_ref: materialization_refs.user_token_ref,
       base_url: base_url,
       headers: authority_headers,
       credential_headers: credential_headers,
+      allowed_header_names: pristine_authority.allowed_header_names,
       redaction_values: redaction_values,
       metadata: metadata,
       pristine_authority: pristine_authority
@@ -348,6 +444,54 @@ defmodule GitHubEx.GovernedAuthority do
     end
   end
 
+  defp materialization_kind("github_app_jwt"), do: "app_token"
+  defp materialization_kind("installation_token"), do: "installation_token"
+  defp materialization_kind("app_user_token"), do: "user_token"
+  defp materialization_kind("oauth_user_token"), do: "user_token"
+  defp materialization_kind("oauth_application_basic"), do: "app_token"
+  defp materialization_kind(_token_family), do: "bearer"
+
+  defp materialization_refs!(opts, token_family) do
+    empty = %{
+      bearer_token_ref: nil,
+      app_token_ref: nil,
+      installation_token_ref: nil,
+      user_token_ref: nil
+    }
+
+    case materialization_kind(token_family) do
+      "app_token" ->
+        Map.put(empty, :app_token_ref, required_ref!(opts, :app_token_ref, ["app-token://"]))
+
+      "installation_token" ->
+        Map.put(
+          empty,
+          :installation_token_ref,
+          required_ref!(opts, :installation_token_ref, ["installation-token://"])
+        )
+
+      "user_token" ->
+        Map.put(empty, :user_token_ref, required_ref!(opts, :user_token_ref, ["user-token://"]))
+
+      "bearer" ->
+        Map.put(
+          empty,
+          :bearer_token_ref,
+          required_ref!(opts, :bearer_token_ref, ["bearer-token://"])
+        )
+    end
+  end
+
+  defp required_ref!(opts, key, allowed_prefixes) do
+    value = required_string!(opts, key)
+
+    if Enum.any?(allowed_prefixes, &String.starts_with?(value, &1)) do
+      value
+    else
+      raise ArgumentError, "governed authority requires #{key} with an allowed ref prefix"
+    end
+  end
+
   defp validate_family_specific_refs!(opts, token_family) do
     case token_family do
       "github_app_jwt" ->
@@ -456,9 +600,13 @@ defmodule GitHubEx.GovernedAuthority do
   end
 
   defp normalize_family(value) do
-    value
-    |> optional_to_string()
-    |> String.trim()
+    value = value |> optional_to_string() |> String.trim()
+
+    if String.contains?(value, "/") do
+      value |> String.split("/") |> List.last()
+    else
+      value
+    end
   end
 
   defp required_string!(opts, key) do
@@ -541,4 +689,30 @@ defmodule GitHubEx.GovernedAuthority do
 
   defp tuple_pair?({_name, _value}), do: true
   defp tuple_pair?(_entry), do: false
+
+  defp allowed_header_names(names, authority_headers, credential_headers) do
+    names
+    |> normalize_header_names()
+    |> Kernel.++(Map.keys(authority_headers))
+    |> Kernel.++(Map.keys(credential_headers))
+    |> Enum.map(&normalize_header_name/1)
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.uniq()
+  end
+
+  defp normalize_header_names(names) when is_list(names) do
+    names
+    |> Enum.map(&normalize_header_name/1)
+    |> Enum.reject(&(&1 == ""))
+    |> Enum.uniq()
+  end
+
+  defp normalize_header_names(_names), do: []
+
+  defp normalize_header_name(name) do
+    name
+    |> to_string()
+    |> String.trim()
+    |> String.downcase()
+  end
 end

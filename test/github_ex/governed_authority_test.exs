@@ -30,7 +30,9 @@ defmodule GitHubEx.GovernedAuthorityTest do
             assert request.headers["Accept"] == "application/vnd.github+json"
             assert request.headers["X-GitHub-Api-Version"] == "2026-03-10"
             assert request.headers["X-GitHub-Governed-Target"] == "github-target-123"
-            assert context.governed_authority.credential_ref == "github-credential-123"
+
+            assert context.governed_authority.credential_handle_ref ==
+                     "credential-handle://tenant-1/github/install-456"
 
             {:ok,
              %TransportResponse{
@@ -44,7 +46,9 @@ defmodule GitHubEx.GovernedAuthorityTest do
 
     assert client.base_url == "https://governed.example.test"
     assert client.api_version == "2026-03-10"
-    assert client.governed_authority.credential_ref == "github-credential-123"
+
+    assert client.governed_authority.credential_handle_ref ==
+             "credential-handle://tenant-1/github/install-456"
 
     assert {:ok, %Response{data: %{"login" => "octocat"}}} =
              Client.request(client, %{method: :get, path: "/user", opts: [response: :wrapped]})
@@ -67,7 +71,11 @@ defmodule GitHubEx.GovernedAuthorityTest do
       private_key: "direct-private-key",
       installation_id: "456",
       webhook_secret: "direct-webhook-secret",
-      oauth_token_path: "/direct/github.json"
+      oauth_token_path: "/direct/github.json",
+      env: %{"GITHUB_TOKEN" => "direct-token"},
+      default_client: GitHubEx.Client,
+      middleware: [:auth],
+      provider_payload: %{"token" => "direct-token"}
     ]
 
     for {key, value} <- direct_values do
@@ -168,18 +176,33 @@ defmodule GitHubEx.GovernedAuthorityTest do
   defp authority do
     %{
       authority_ref: "github-authority-123",
-      provider_ref: "github",
-      credential_ref: "github-credential-123",
-      credential_lease_ref: "github-lease-123",
-      credential_family_ref: "installation_token",
+      provider_ref: "provider://github",
+      base_url_ref: "base-url://tenant-1/github/api",
+      provider_account_ref: "provider-account://tenant-1/github/app-installation",
+      connector_instance_ref: "connector-instance://tenant-1/github/rest",
+      credential_handle_ref: "credential-handle://tenant-1/github/install-456",
+      credential_lease_ref: "credential-lease://tenant-1/github/install-456",
+      credential_family_ref: "credential-family://github/installation_token",
       token_family: "installation_token",
-      app_ref: "github-app-123",
-      installation_ref: "github-installation-456",
-      target_ref: "github-target-123",
-      redaction_ref: "github-redaction-123",
+      app_ref: "github-app://tenant-1/github/app-123",
+      installation_ref: "github-installation://tenant-1/github/install-456",
+      installation_token_ref: "installation-token://tenant-1/github/install-456",
+      target_ref: "target://tenant-1/github/rest",
+      request_scope_ref: "request-scope://tenant-1/github/user",
+      operation_policy_ref: "operation-policy://tenant-1/github/user-read",
+      header_policy_ref: "header-policy://tenant-1/github/default",
+      redaction_ref: "redaction://tenant-1/github/default",
+      materialization_ref: "materialization://tenant-1/github/user",
       base_url: "https://governed.example.test",
       token: "governed-token",
-      headers: %{"X-GitHub-Governed-Target" => "github-target-123"}
+      headers: %{"X-GitHub-Governed-Target" => "github-target-123"},
+      allowed_header_names: [
+        "authorization",
+        "accept",
+        "user-agent",
+        "x-github-api-version",
+        "x-github-governed-target"
+      ]
     }
   end
 

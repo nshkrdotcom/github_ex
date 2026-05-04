@@ -170,6 +170,14 @@ before signing. The governed caller must pass authority refs such as `app_ref`
 and `installation_ref` plus authority-selected credential headers instead of
 local PEM or env-derived values.
 
+GitHub App governed authority also names the token-family materialization:
+`token_family: "github_app_jwt"` uses `app_token_ref`, and
+`token_family: "installation_token"` uses `installation_token_ref`. Both remain
+bound to `provider_account_ref`, `connector_instance_ref`,
+`credential_handle_ref`, `credential_lease_ref`, `target_ref`,
+`request_scope_ref`, `operation_policy_ref`, `header_policy_ref`, and
+`redaction_ref`.
+
 ## How To Debug 403s
 
 Check these first:

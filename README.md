@@ -176,8 +176,9 @@ wrapped.links["next"]
 - request-scoped basic auth for `/applications/{client_id}/token*` endpoints
 - GitHub App JWT and installation-token flows through `GitHubEx.AppAuth`, which returns `Pristine.Client` runtime clients ready for generated operations
 - governed authority through `governed_authority: ...`, where the caller has
-  already selected the GitHub credential, lease, target, endpoint, and
-  redaction refs
+  already selected the GitHub credential handle, lease, target, endpoint,
+  request scope, token-family materialization, header policy, and redaction
+  refs
 
 Use the generated [Auth Capability Matrix](guides/auth-capability-matrix.md) to
 check a specific REST operation before assuming one token type covers it.
@@ -187,6 +188,42 @@ GitHub App PEM path, constructor token, request header, request auth override,
 or app credential helper call cannot satisfy `governed_authority:`. Governed
 clients fail closed before constructing the runtime context when those direct
 inputs are supplied beside the authority packet.
+
+Governed packets are ref-only except for authority-selected provider headers and
+already-materialized credential headers:
+
+```elixir
+GitHubEx.Client.new(
+  governed_authority: %{
+    authority_ref: "authority://tenant-1/github/user-read",
+    provider_ref: "provider://github",
+    base_url_ref: "base-url://tenant-1/github/api",
+    provider_account_ref: "provider-account://tenant-1/github/app-installation",
+    connector_instance_ref: "connector-instance://tenant-1/github/rest",
+    credential_handle_ref: "credential-handle://tenant-1/github/install-456",
+    credential_lease_ref: "credential-lease://tenant-1/github/install-456",
+    credential_family_ref: "credential-family://github/installation_token",
+    token_family: "installation_token",
+    app_ref: "github-app://tenant-1/github/app-123",
+    installation_ref: "github-installation://tenant-1/github/install-456",
+    installation_token_ref: "installation-token://tenant-1/github/install-456",
+    target_ref: "target://tenant-1/github/rest",
+    request_scope_ref: "request-scope://tenant-1/github/user",
+    operation_policy_ref: "operation-policy://tenant-1/github/user-read",
+    header_policy_ref: "header-policy://tenant-1/github/default",
+    redaction_ref: "redaction://tenant-1/github/default",
+    materialization_ref: "materialization://tenant-1/github/user",
+    base_url: "https://api.github.com",
+    credential_headers: %{"Authorization" => "[REDACTED_BY_AUTHORITY]"},
+    allowed_header_names: [
+      "authorization",
+      "accept",
+      "user-agent",
+      "x-github-api-version"
+    ]
+  }
+)
+```
 
 Ownership split:
 

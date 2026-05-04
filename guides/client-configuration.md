@@ -15,7 +15,8 @@ Common options:
 - `auth:` raw token string, auth adapter tuple, or auth adapter list
 - `oauth2:` token source config for `Pristine.Adapters.Auth.OAuth2`
 - `governed_authority:` authority-selected GitHub credential, lease, target,
-  endpoint, and redaction refs for governed execution
+  endpoint, request scope, token-family materialization, header policy, and
+  redaction refs for governed execution
 - `base_url:` override the REST API site
 - `api_version:` override the `X-GitHub-Api-Version` header
 - `accept:` override the `Accept` header
@@ -31,6 +32,14 @@ authority-selected headers to build the lower `pristine` governed context, and
 rejects direct `auth:`, `oauth2:`, `base_url:`, `api_version:`, `accept:`,
 `user_agent:`, `foundation:`, token, app credential, installation, webhook, and
 OAuth token-file inputs.
+
+A governed authority packet must include the selected provider account,
+connector instance, credential handle, credential lease, token family,
+materialization ref, target ref, request scope ref, operation policy ref, header
+policy ref, and redaction ref. Token-family refs are explicit: installation
+tokens use `installation_token_ref`, app JWTs use `app_token_ref`, app or OAuth
+user tokens use `user_token_ref`, and PAT-style bearer tokens use
+`bearer_token_ref`.
 
 ## Request-Scoped Controls
 
