@@ -1,6 +1,6 @@
 defmodule GitHubEx.Interactions do
   @moduledoc """
-  Generated Github Ex operations for interactions.
+  Generated Github Ex operations module `GitHubEx.Interactions`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

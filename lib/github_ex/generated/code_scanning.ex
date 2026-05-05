@@ -1,6 +1,6 @@
 defmodule GitHubEx.CodeScanning do
   @moduledoc """
-  Generated Github Ex operations for code scanning.
+  Generated Github Ex operations module `GitHubEx.CodeScanning`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

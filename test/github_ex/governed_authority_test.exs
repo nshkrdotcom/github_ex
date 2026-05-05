@@ -152,6 +152,41 @@ defmodule GitHubEx.GovernedAuthorityTest do
     assert {:ok, %{"login" => "octocat"}} = Users.get_authenticated(client)
   end
 
+  test "governed authority rejects unknown token families" do
+    error =
+      assert_raise ArgumentError, fn ->
+        Client.new(governed_authority: Map.put(authority(), :token_family, "provider-added-kind"))
+      end
+
+    assert String.contains?(error.message, "unknown GitHub token family")
+  end
+
+  test "governed authority rejects unknown provider refs" do
+    error =
+      assert_raise ArgumentError, fn ->
+        Client.new(
+          governed_authority: Map.put(authority(), :provider_ref, "provider://github-next")
+        )
+      end
+
+    assert String.contains?(error.message, "unknown GitHub provider ref")
+  end
+
+  test "governed authority preserves webhook refs as strings" do
+    client =
+      Client.new(
+        governed_authority:
+          authority()
+          |> Map.put(:webhook_ref, "github-webhook://tenant-1/github/hooks/987"),
+        transport: TestTransport
+      )
+
+    assert client.governed_authority.webhook_ref == "github-webhook://tenant-1/github/hooks/987"
+
+    assert client.governed_authority.metadata.webhook_ref ==
+             "github-webhook://tenant-1/github/hooks/987"
+  end
+
   test "governed mode rejects app credential helper smuggling before signing" do
     jwk = JOSE.JWK.generate_key({:rsa, 2048, 65_537})
     pem = JOSE.JWK.to_pem(jwk)

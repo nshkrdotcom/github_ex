@@ -1,6 +1,6 @@
 defmodule GitHubEx.Reactions do
   @moduledoc """
-  Generated Github Ex operations for reactions.
+  Generated Github Ex operations module `GitHubEx.Reactions`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

@@ -2,227 +2,227 @@
   "artifact_plan": {
     "artifacts": [
       {
-        "id": "lib_github_ex_generated_actions",
+        "id": "lib/github_ex/generated/actions.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/actions.ex"
       },
       {
-        "id": "lib_github_ex_generated_activity",
+        "id": "lib/github_ex/generated/activity.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/activity.ex"
       },
       {
-        "id": "lib_github_ex_generated_apps",
+        "id": "lib/github_ex/generated/apps.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/apps.ex"
       },
       {
-        "id": "lib_github_ex_generated_billing",
+        "id": "lib/github_ex/generated/billing.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/billing.ex"
       },
       {
-        "id": "lib_github_ex_generated_campaigns",
+        "id": "lib/github_ex/generated/campaigns.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/campaigns.ex"
       },
       {
-        "id": "lib_github_ex_generated_checks",
+        "id": "lib/github_ex/generated/checks.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/checks.ex"
       },
       {
-        "id": "lib_github_ex_generated_classroom",
+        "id": "lib/github_ex/generated/classroom.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/classroom.ex"
       },
       {
-        "id": "lib_github_ex_generated_client",
+        "id": "lib/github_ex/generated/client.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/client.ex"
       },
       {
-        "id": "lib_github_ex_generated_code_scanning",
+        "id": "lib/github_ex/generated/code_scanning.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/code_scanning.ex"
       },
       {
-        "id": "lib_github_ex_generated_code_security",
+        "id": "lib/github_ex/generated/code_security.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/code_security.ex"
       },
       {
-        "id": "lib_github_ex_generated_codes_of_conduct",
+        "id": "lib/github_ex/generated/codes_of_conduct.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/codes_of_conduct.ex"
       },
       {
-        "id": "lib_github_ex_generated_codespaces",
+        "id": "lib/github_ex/generated/codespaces.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/codespaces.ex"
       },
       {
-        "id": "lib_github_ex_generated_copilot",
+        "id": "lib/github_ex/generated/copilot.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/copilot.ex"
       },
       {
-        "id": "lib_github_ex_generated_credentials",
+        "id": "lib/github_ex/generated/credentials.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/credentials.ex"
       },
       {
-        "id": "lib_github_ex_generated_dependabot",
+        "id": "lib/github_ex/generated/dependabot.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/dependabot.ex"
       },
       {
-        "id": "lib_github_ex_generated_dependency_graph",
+        "id": "lib/github_ex/generated/dependency_graph.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/dependency_graph.ex"
       },
       {
-        "id": "lib_github_ex_generated_emojis",
+        "id": "lib/github_ex/generated/emojis.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/emojis.ex"
       },
       {
-        "id": "lib_github_ex_generated_enterprise_team_memberships",
+        "id": "lib/github_ex/generated/enterprise_team_memberships.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/enterprise_team_memberships.ex"
       },
       {
-        "id": "lib_github_ex_generated_enterprise_team_organizations",
+        "id": "lib/github_ex/generated/enterprise_team_organizations.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/enterprise_team_organizations.ex"
       },
       {
-        "id": "lib_github_ex_generated_enterprise_teams",
+        "id": "lib/github_ex/generated/enterprise_teams.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/enterprise_teams.ex"
       },
       {
-        "id": "lib_github_ex_generated_gists",
+        "id": "lib/github_ex/generated/gists.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/gists.ex"
       },
       {
-        "id": "lib_github_ex_generated_git",
+        "id": "lib/github_ex/generated/git.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/git.ex"
       },
       {
-        "id": "lib_github_ex_generated_gitignore",
+        "id": "lib/github_ex/generated/gitignore.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/gitignore.ex"
       },
       {
-        "id": "lib_github_ex_generated_hosted_compute",
+        "id": "lib/github_ex/generated/hosted_compute.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/hosted_compute.ex"
       },
       {
-        "id": "lib_github_ex_generated_interactions",
+        "id": "lib/github_ex/generated/interactions.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/interactions.ex"
       },
       {
-        "id": "lib_github_ex_generated_issues",
+        "id": "lib/github_ex/generated/issues.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/issues.ex"
       },
       {
-        "id": "lib_github_ex_generated_licenses",
+        "id": "lib/github_ex/generated/licenses.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/licenses.ex"
       },
       {
-        "id": "lib_github_ex_generated_markdown",
+        "id": "lib/github_ex/generated/markdown.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/markdown.ex"
       },
       {
-        "id": "lib_github_ex_generated_meta",
+        "id": "lib/github_ex/generated/meta.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/meta.ex"
       },
       {
-        "id": "lib_github_ex_generated_migrations",
+        "id": "lib/github_ex/generated/migrations.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/migrations.ex"
       },
       {
-        "id": "lib_github_ex_generated_oidc",
+        "id": "lib/github_ex/generated/oidc.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/oidc.ex"
       },
       {
-        "id": "lib_github_ex_generated_orgs",
+        "id": "lib/github_ex/generated/orgs.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/orgs.ex"
       },
       {
-        "id": "lib_github_ex_generated_packages",
+        "id": "lib/github_ex/generated/packages.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/packages.ex"
       },
       {
-        "id": "lib_github_ex_generated_private_registries",
+        "id": "lib/github_ex/generated/private_registries.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/private_registries.ex"
       },
       {
-        "id": "lib_github_ex_generated_projects",
+        "id": "lib/github_ex/generated/projects.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/projects.ex"
       },
       {
-        "id": "lib_github_ex_generated_pulls",
+        "id": "lib/github_ex/generated/pulls.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/pulls.ex"
       },
       {
-        "id": "lib_github_ex_generated_rate_limit",
+        "id": "lib/github_ex/generated/rate_limit.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/rate_limit.ex"
       },
       {
-        "id": "lib_github_ex_generated_reactions",
+        "id": "lib/github_ex/generated/reactions.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/reactions.ex"
       },
       {
-        "id": "lib_github_ex_generated_repos",
+        "id": "lib/github_ex/generated/repos.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/repos.ex"
       },
       {
-        "id": "lib_github_ex_generated_runtime_schema",
+        "id": "lib/github_ex/generated/runtime_schema.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/runtime_schema.ex"
       },
       {
-        "id": "lib_github_ex_generated_search",
+        "id": "lib/github_ex/generated/search.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/search.ex"
       },
       {
-        "id": "lib_github_ex_generated_secret_scanning",
+        "id": "lib/github_ex/generated/secret_scanning.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/secret_scanning.ex"
       },
       {
-        "id": "lib_github_ex_generated_security_advisories",
+        "id": "lib/github_ex/generated/security_advisories.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/security_advisories.ex"
       },
       {
-        "id": "lib_github_ex_generated_teams",
+        "id": "lib/github_ex/generated/teams.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/teams.ex"
       },
       {
-        "id": "lib_github_ex_generated_users",
+        "id": "lib/github_ex/generated/users.ex",
         "kind": "code",
         "path": "lib/github_ex/generated/users.ex"
       },
@@ -9216,7 +9216,7 @@
       {
         "kind": "openapi",
         "path": "priv/upstream/openapi/api.github.com.2026-03-10.json",
-        "sha256": "5d3df9f089be947bf3417852bebdaf37f1f333a647ae971d3236e7a6c3cb085d"
+        "sha256": "769bbbc03c8d52162a31a168e86a675d54f5e3aa18c47f5690d4e42320b30915"
       }
     ]
   },

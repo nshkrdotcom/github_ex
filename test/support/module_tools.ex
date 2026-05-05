@@ -9,7 +9,15 @@ defmodule GitHubEx.TestSupport.ModuleTools do
   end
 
   def unique_module(prefix) when is_binary(prefix) do
-    Module.concat([GitHubEx, TestSupport, "#{prefix}#{System.unique_integer([:positive])}"])
+    case prefix do
+      "ResultClassifierProbe" -> GitHubEx.TestSupport.ResultClassifierProbe
+      "RefreshProbe" -> GitHubEx.TestSupport.RefreshProbe
+      "MixProjectDepsProbe" -> GitHubEx.TestSupport.MixProjectDepsProbe
+      "MixProjectStandaloneProbe" -> GitHubEx.TestSupport.MixProjectStandaloneProbe
+      "MixProjectWorkspaceDepsProbe" -> GitHubEx.TestSupport.MixProjectWorkspaceDepsProbe
+      "MixProjectPublishedDepsProbe" -> GitHubEx.TestSupport.MixProjectPublishedDepsProbe
+      other -> raise ArgumentError, "unknown finite test module prefix #{inspect(other)}"
+    end
   end
 
   def transform_module_source!(path, original_module, replacement_module, replacements \\ [])

@@ -1,6 +1,6 @@
 defmodule GitHubEx.CodesOfConduct do
   @moduledoc """
-  Generated Github Ex operations for codes of conduct.
+  Generated Github Ex operations module `GitHubEx.CodesOfConduct`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

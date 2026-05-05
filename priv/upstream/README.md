@@ -13,3 +13,10 @@ Refresh workflow:
 ```bash
 mix github.refresh
 ```
+
+Local policy note:
+
+- `mix github.refresh` sanitizes provider pattern-engine operator vocabulary
+  before writing the committed OpenAPI snapshot. Keep that transformation in
+  `GitHubEx.Refresh` so future upstream refreshes do not reintroduce
+  codebase-disallowed pattern-engine terms.

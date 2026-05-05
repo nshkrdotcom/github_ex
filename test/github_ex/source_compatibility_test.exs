@@ -69,7 +69,7 @@ defmodule GitHubEx.SourceCompatibilityTest do
     write_transformed_mix_exs!(mix_path, probe_module)
 
     assert [{^probe_module, _beam}] = Code.compile_file(mix_path)
-    assert Keyword.keyword?(probe_module.project())
+    assert Keyword.keyword?(project_config(probe_module))
 
     on_exit(fn ->
       :code.purge(probe_module)
@@ -86,7 +86,7 @@ defmodule GitHubEx.SourceCompatibilityTest do
     write_transformed_mix_exs!(mix_path, probe_module)
 
     assert [{^probe_module, _beam}] = Code.compile_file(mix_path)
-    assert Keyword.keyword?(probe_module.project())
+    assert Keyword.keyword?(project_config(probe_module))
 
     on_exit(fn ->
       :code.purge(probe_module)
@@ -106,7 +106,7 @@ defmodule GitHubEx.SourceCompatibilityTest do
 
     assert [{^probe_module, _beam}] = Code.compile_file(mix_path)
 
-    deps = probe_module.project()[:deps]
+    deps = project_config(probe_module)[:deps]
 
     assert {:pristine, opts} = find_dependency!(deps, :pristine)
 
@@ -143,7 +143,7 @@ defmodule GitHubEx.SourceCompatibilityTest do
 
     assert [{^probe_module, _beam}] = Code.compile_file(mix_path)
 
-    deps = probe_module.project()[:deps]
+    deps = project_config(probe_module)[:deps]
 
     assert {:pristine, "~> 0.2.1"} = find_dependency!(deps, :pristine)
     refute dependency_present?(deps, :pristine_codegen)
@@ -182,6 +182,10 @@ defmodule GitHubEx.SourceCompatibilityTest do
 
     File.mkdir_p!(Path.dirname(path))
     File.write!(path, source)
+  end
+
+  defp project_config(module) do
+    :erlang.apply(module, :project, [])
   end
 
   defp find_dependency!(deps, app) do

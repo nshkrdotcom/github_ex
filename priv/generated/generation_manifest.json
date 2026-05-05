@@ -73,7 +73,7 @@
       {
         "kind": "openapi",
         "path": "priv/upstream/openapi/api.github.com.2026-03-10.json",
-        "sha256": "5d3df9f089be947bf3417852bebdaf37f1f333a647ae971d3236e7a6c3cb085d"
+        "sha256": "769bbbc03c8d52162a31a168e86a675d54f5e3aa18c47f5690d4e42320b30915"
       }
     ]
   },

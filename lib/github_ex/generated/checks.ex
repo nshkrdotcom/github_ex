@@ -1,6 +1,6 @@
 defmodule GitHubEx.Checks do
   @moduledoc """
-  Generated Github Ex operations for checks.
+  Generated Github Ex operations module `GitHubEx.Checks`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

@@ -1,6 +1,6 @@
 defmodule GitHubEx.Oidc do
   @moduledoc """
-  Generated Github Ex operations for oidc.
+  Generated Github Ex operations module `GitHubEx.Oidc`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

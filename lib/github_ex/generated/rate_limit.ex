@@ -1,6 +1,6 @@
 defmodule GitHubEx.RateLimit do
   @moduledoc """
-  Generated Github Ex operations for rate limit.
+  Generated Github Ex operations module `GitHubEx.RateLimit`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

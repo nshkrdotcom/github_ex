@@ -1,6 +1,6 @@
 defmodule GitHubEx.HostedCompute do
   @moduledoc """
-  Generated Github Ex operations for hosted compute.
+  Generated Github Ex operations module `GitHubEx.HostedCompute`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

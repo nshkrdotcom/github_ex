@@ -1,6 +1,6 @@
 defmodule GitHubEx.Gists do
   @moduledoc """
-  Generated Github Ex operations for gists.
+  Generated Github Ex operations module `GitHubEx.Gists`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

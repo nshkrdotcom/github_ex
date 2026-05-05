@@ -35,4 +35,19 @@ defmodule GitHubEx.ErrorTest do
     assert error.code == :api_connection
     assert error.message == "timeout"
   end
+
+  test "unknown http statuses use the bounded response error code" do
+    response =
+      Response.new(
+        status: 418,
+        headers: %{"x-github-request-id" => "req_teapot"},
+        body: Jason.encode!(%{"message" => "provider added a new response state"})
+      )
+
+    error = Error.from_response(response, response.body, nil)
+
+    assert error.code == :response_error
+    assert error.status == 418
+    assert error.request_id == "req_teapot"
+  end
 end

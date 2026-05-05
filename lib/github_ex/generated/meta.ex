@@ -1,6 +1,6 @@
 defmodule GitHubEx.Meta do
   @moduledoc """
-  Generated Github Ex operations for meta.
+  Generated Github Ex operations module `GitHubEx.Meta`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

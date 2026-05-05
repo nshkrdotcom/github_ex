@@ -1,6 +1,6 @@
 defmodule GitHubEx.SecurityAdvisories do
   @moduledoc """
-  Generated Github Ex operations for security advisories.
+  Generated Github Ex operations module `GitHubEx.SecurityAdvisories`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

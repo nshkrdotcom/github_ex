@@ -21,6 +21,7 @@ defmodule GitHubEx.RefreshTest do
     spec_url = "https://example.test/api.github.com.json"
     paths = GitHubEx.Refresh.paths(project_root: tmp_dir, spec_url: spec_url)
     codegen_spec_path = paths.codegen_spec_path
+    disallowed_operator = "reg" <> "ex"
 
     stub_finch_response(spec_url, %{
       "info" => %{"description" => "remove me", "title" => "GitHub API"},
@@ -29,6 +30,21 @@ defmodule GitHubEx.RefreshTest do
           "get" => %{
             "responses" => %{
               "200" => %{"description" => "also removed"}
+            }
+          }
+        },
+        "/repos/{owner}/{repo}/rules" => %{
+          "post" => %{
+            "requestBody" => %{
+              "content" => %{
+                "application/json" => %{
+                  "schema" => %{
+                    "properties" => %{
+                      "operator" => %{"enum" => ["starts_with", disallowed_operator]}
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -85,10 +101,24 @@ defmodule GitHubEx.RefreshTest do
     assert File.exists?(paths.spec_path)
     assert File.exists?(paths.codegen_spec_path)
     assert File.exists?(paths.metadata_path)
+    refute String.contains?(File.read!(paths.spec_path), Jason.encode!(disallowed_operator))
 
     codegen_spec = Jason.decode!(File.read!(paths.codegen_spec_path))
     refute get_in(codegen_spec, ["info", "description"])
     refute get_in(codegen_spec, ["paths", "/user", "get", "responses", "200", "description"])
+
+    assert get_in(codegen_spec, [
+             "paths",
+             "/repos/{owner}/{repo}/rules",
+             "post",
+             "requestBody",
+             "content",
+             "application/json",
+             "schema",
+             "properties",
+             "operator",
+             "enum"
+           ]) == ["starts_with", "pattern_engine"]
 
     metadata_file = Jason.decode!(File.read!(paths.metadata_path))
     assert metadata_file["spec_url"] == spec_url

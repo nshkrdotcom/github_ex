@@ -8,6 +8,7 @@ defmodule GitHubEx.SourcePolicyTest do
 
   test "repo-owned code avoids unbounded atom creation" do
     assert_no_hits(atom_tokens(), &code_file?/1)
+    assert_no_prefixed_dynamic_quoted_atom_hits()
   end
 
   test "repo-owned code avoids pattern engine APIs" do
@@ -22,6 +23,16 @@ defmodule GitHubEx.SourcePolicyTest do
       |> candidate_files()
       |> Enum.filter(file_filter)
       |> Enum.flat_map(&file_hits(&1, tokens))
+
+    assert hits == []
+  end
+
+  defp assert_no_prefixed_dynamic_quoted_atom_hits do
+    hits =
+      @repo_root
+      |> candidate_files()
+      |> Enum.filter(&(code_file?(&1) and prefixed_dynamic_quoted_atom?(&1)))
+      |> Enum.map(&(&1 <> " contains prefixed dynamic quoted atom interpolation"))
 
     assert hits == []
   end
@@ -75,9 +86,39 @@ defmodule GitHubEx.SourcePolicyTest do
       "binary_" <> "to_existing_atom",
       "list_" <> "to_atom",
       "list_" <> "to_existing_atom",
+      "Module." <> "concat",
       <<?:, ?#, ?{>>,
       <<?:, ?", ?#, ?{>>
     ]
+  end
+
+  defp prefixed_dynamic_quoted_atom?(path) do
+    @repo_root
+    |> Path.join(path)
+    |> File.read!()
+    |> String.split(<<?:, ?">>)
+    |> Enum.drop(1)
+    |> Enum.any?(&prefixed_interpolation_before_quote?/1)
+  end
+
+  defp prefixed_interpolation_before_quote?(segment) do
+    segment
+    |> quoted_prefix()
+    |> prefixed_interpolation?()
+  end
+
+  defp quoted_prefix(segment) do
+    segment
+    |> String.split(<<?">>, parts: 2)
+    |> List.first()
+  end
+
+  defp prefixed_interpolation?(quoted) do
+    case :binary.match(quoted, <<?#, ?{>>) do
+      {0, 2} -> false
+      {_index, 2} -> true
+      :nomatch -> false
+    end
   end
 
   defp elixir_pattern_tokens do

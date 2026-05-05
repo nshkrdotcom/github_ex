@@ -1,6 +1,6 @@
 defmodule GitHubEx.Markdown do
   @moduledoc """
-  Generated Github Ex operations for markdown.
+  Generated Github Ex operations module `GitHubEx.Markdown`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

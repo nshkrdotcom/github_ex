@@ -85851,7 +85851,7 @@
                   "starts_with",
                   "ends_with",
                   "contains",
-                  "regex"
+                  "pattern_engine"
                 ]
               },
               "pattern": {
@@ -85893,7 +85893,7 @@
                   "starts_with",
                   "ends_with",
                   "contains",
-                  "regex"
+                  "pattern_engine"
                 ]
               },
               "pattern": {
@@ -85935,7 +85935,7 @@
                   "starts_with",
                   "ends_with",
                   "contains",
-                  "regex"
+                  "pattern_engine"
                 ]
               },
               "pattern": {
@@ -85977,7 +85977,7 @@
                   "starts_with",
                   "ends_with",
                   "contains",
-                  "regex"
+                  "pattern_engine"
                 ]
               },
               "pattern": {
@@ -86019,7 +86019,7 @@
                   "starts_with",
                   "ends_with",
                   "contains",
-                  "regex"
+                  "pattern_engine"
                 ]
               },
               "pattern": {

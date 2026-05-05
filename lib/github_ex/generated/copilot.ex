@@ -1,6 +1,6 @@
 defmodule GitHubEx.Copilot do
   @moduledoc """
-  Generated Github Ex operations for copilot.
+  Generated Github Ex operations module `GitHubEx.Copilot`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

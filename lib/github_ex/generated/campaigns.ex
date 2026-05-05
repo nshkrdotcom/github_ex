@@ -1,6 +1,6 @@
 defmodule GitHubEx.Campaigns do
   @moduledoc """
-  Generated Github Ex operations for campaigns.
+  Generated Github Ex operations module `GitHubEx.Campaigns`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

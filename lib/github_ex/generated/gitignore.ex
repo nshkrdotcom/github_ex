@@ -1,6 +1,6 @@
 defmodule GitHubEx.Gitignore do
   @moduledoc """
-  Generated Github Ex operations for gitignore.
+  Generated Github Ex operations module `GitHubEx.Gitignore`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

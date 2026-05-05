@@ -1,6 +1,6 @@
 defmodule GitHubEx.Emojis do
   @moduledoc """
-  Generated Github Ex operations for emojis.
+  Generated Github Ex operations module `GitHubEx.Emojis`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

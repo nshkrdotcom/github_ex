@@ -1,6 +1,6 @@
 defmodule GitHubEx.Classroom do
   @moduledoc """
-  Generated Github Ex operations for classroom.
+  Generated Github Ex operations module `GitHubEx.Classroom`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

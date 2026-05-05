@@ -125,7 +125,7 @@ defmodule Mix.Tasks.Github.Oauth do
     Application.get_env(
       :github_ex,
       :oauth_interactive_module,
-      Module.concat([Pristine, OAuth2, Interactive])
+      Pristine.OAuth2.Interactive
     )
   end
 
@@ -134,7 +134,7 @@ defmodule Mix.Tasks.Github.Oauth do
   end
 
   defp saved_token_module do
-    Module.concat([Pristine, OAuth2, SavedToken])
+    Pristine.OAuth2.SavedToken
   end
 
   defp fetch_env!(name) do
@@ -219,7 +219,7 @@ defmodule Mix.Tasks.Github.Oauth do
   end
 
   defp token_source_module do
-    Module.concat([Pristine, Adapters, TokenSource, File])
+    Pristine.Adapters.TokenSource.File
   end
 
   defp format_save_error({kind, %_{} = error}), do: "#{kind}: #{Exception.message(error)}"

@@ -1,6 +1,6 @@
 defmodule GitHubEx.Migrations do
   @moduledoc """
-  Generated Github Ex operations for migrations.
+  Generated Github Ex operations module `GitHubEx.Migrations`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

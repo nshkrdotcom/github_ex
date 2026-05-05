@@ -1,6 +1,6 @@
 defmodule GitHubEx.Dependabot do
   @moduledoc """
-  Generated Github Ex operations for dependabot.
+  Generated Github Ex operations module `GitHubEx.Dependabot`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

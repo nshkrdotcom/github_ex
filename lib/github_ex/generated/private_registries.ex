@@ -1,6 +1,6 @@
 defmodule GitHubEx.PrivateRegistries do
   @moduledoc """
-  Generated Github Ex operations for private registries.
+  Generated Github Ex operations module `GitHubEx.PrivateRegistries`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

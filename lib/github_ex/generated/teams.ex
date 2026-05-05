@@ -1,6 +1,6 @@
 defmodule GitHubEx.Teams do
   @moduledoc """
-  Generated Github Ex operations for teams.
+  Generated Github Ex operations module `GitHubEx.Teams`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

@@ -1,6 +1,6 @@
 defmodule GitHubEx.Credentials do
   @moduledoc """
-  Generated Github Ex operations for credentials.
+  Generated Github Ex operations module `GitHubEx.Credentials`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

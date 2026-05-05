@@ -28,7 +28,7 @@ defmodule Mix.Tasks.Github.Auth.Refresh do
   end
 
   defp refresh_auth_sources! do
-    auth_sources_module = Module.concat(GitHubEx, AuthSources)
+    auth_sources_module = GitHubEx.AuthSources
 
     if Code.ensure_loaded?(auth_sources_module) and
          function_exported?(auth_sources_module, :refresh!, 0) do
@@ -39,7 +39,7 @@ defmodule Mix.Tasks.Github.Auth.Refresh do
   end
 
   defp run_codegen! do
-    codegen_module = Module.concat(GitHubEx, Codegen)
+    codegen_module = GitHubEx.Codegen
 
     if Code.ensure_loaded?(codegen_module) and function_exported?(codegen_module, :generate!, 0) do
       :erlang.apply(codegen_module, :generate!, [])

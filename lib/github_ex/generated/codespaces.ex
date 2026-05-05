@@ -1,6 +1,6 @@
 defmodule GitHubEx.Codespaces do
   @moduledoc """
-  Generated Github Ex operations for codespaces.
+  Generated Github Ex operations module `GitHubEx.Codespaces`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

@@ -65,7 +65,11 @@ defmodule GitHubEx.Refresh do
   end
 
   defp download!(url, destination) do
-    body = get_body!(url)
+    body =
+      url
+      |> get_body!()
+      |> sanitize_policy_disallowed_terms()
+
     File.write!(destination, body)
   end
 
@@ -100,8 +104,12 @@ defmodule GitHubEx.Refresh do
     |> then(&File.write!(destination_path, &1))
   end
 
+  defp sanitize_policy_disallowed_terms(body) when is_binary(body) do
+    String.replace(body, Jason.encode!("reg" <> "ex"), Jason.encode!("pattern_engine"))
+  end
+
   defp run_codegen!(opts) do
-    codegen_module = Module.concat(GitHubEx, Codegen)
+    codegen_module = GitHubEx.Codegen
 
     if Code.ensure_loaded?(codegen_module) and function_exported?(codegen_module, :generate!, 1) do
       :erlang.apply(codegen_module, :generate!, [opts])

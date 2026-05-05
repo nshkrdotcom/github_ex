@@ -27,7 +27,7 @@ defmodule GitHubEx.Codegen.Plugins.Auth do
         id: @default_auth_policy_id,
         mode: :request_override_optional,
         security_schemes: ["githubToken"],
-        override_source: %{key: "auth"},
+        override_source: %{key: :auth},
         strategy_label: "Default bearer token with optional request override"
       },
       %AuthPolicy{

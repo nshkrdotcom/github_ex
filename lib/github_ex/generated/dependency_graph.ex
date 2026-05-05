@@ -1,6 +1,6 @@
 defmodule GitHubEx.DependencyGraph do
   @moduledoc """
-  Generated Github Ex operations for dependency graph.
+  Generated Github Ex operations module `GitHubEx.DependencyGraph`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

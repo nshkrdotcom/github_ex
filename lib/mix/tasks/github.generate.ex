@@ -15,7 +15,7 @@ defmodule Mix.Tasks.Github.Generate do
   end
 
   defp run_codegen! do
-    codegen_module = Module.concat(GitHubEx, Codegen)
+    codegen_module = GitHubEx.Codegen
 
     if Code.ensure_loaded?(codegen_module) and function_exported?(codegen_module, :generate!, 0) do
       :erlang.apply(codegen_module, :generate!, [])

@@ -1,6 +1,6 @@
 defmodule GitHubEx.Licenses do
   @moduledoc """
-  Generated Github Ex operations for licenses.
+  Generated Github Ex operations module `GitHubEx.Licenses`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient

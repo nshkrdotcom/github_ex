@@ -1,6 +1,6 @@
 defmodule GitHubEx.Search do
   @moduledoc """
-  Generated Github Ex operations for search.
+  Generated Github Ex operations module `GitHubEx.Search`.
   """
 
   alias Pristine.SDK.OpenAPI.Client, as: OpenAPIClient
