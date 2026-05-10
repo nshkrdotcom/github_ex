@@ -43,8 +43,11 @@ defmodule GitHubEx.SourcePolicyTest do
 
     (tracked ++ untracked)
     |> Enum.uniq()
-    |> Enum.reject(&ignored_path?/1)
+    |> Enum.filter(&File.regular?(Path.join(repo_root, &1)))
+    |> Enum.reject(&(ignored_path?(&1) or canonical_dependency_helper?(&1)))
   end
+
+  defp canonical_dependency_helper?(path), do: path == "build_support/dependency_sources.exs"
 
   defp git_lines(repo_root, args) do
     {output, 0} = System.cmd("git", ["-C", repo_root] ++ args)

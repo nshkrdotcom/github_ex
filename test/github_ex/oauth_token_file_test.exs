@@ -1,17 +1,19 @@
 defmodule GitHubEx.OAuthTokenFileTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: false
 
   alias GitHubEx.OAuthTokenFile
 
   @moduletag :tmp_dir
 
-  test "default_path uses XDG config when present", %{tmp_dir: tmp_dir} do
-    System.put_env("XDG_CONFIG_HOME", tmp_dir)
+  setup do
+    on_exit(fn -> Application.delete_env(:github_ex, :oauth_config_home) end)
+  end
+
+  test "default_path uses configured config home when present", %{tmp_dir: tmp_dir} do
+    Application.put_env(:github_ex, :oauth_config_home, tmp_dir)
 
     assert OAuthTokenFile.default_path() ==
              Path.join([tmp_dir, "github_ex", "oauth", "github.json"])
-  after
-    System.delete_env("XDG_CONFIG_HOME")
   end
 
   test "resolve_env_or_default expands custom paths" do

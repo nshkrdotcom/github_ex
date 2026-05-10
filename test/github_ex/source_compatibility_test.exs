@@ -101,6 +101,18 @@ defmodule GitHubEx.SourceCompatibilityTest do
     mix_path = Path.join([tmp_dir, "standalone", "github_ex", "mix.exs"])
     original_argv = System.argv()
 
+    pristine_runtime_path =
+      Path.join([tmp_dir, "standalone", "pristine", "apps", "pristine_runtime"])
+
+    pristine_codegen_path =
+      Path.join([tmp_dir, "standalone", "pristine", "apps", "pristine_codegen"])
+
+    pristine_provider_testkit_path =
+      Path.join([tmp_dir, "standalone", "pristine", "apps", "pristine_provider_testkit"])
+
+    File.mkdir_p!(pristine_runtime_path)
+    File.mkdir_p!(pristine_codegen_path)
+    File.mkdir_p!(pristine_provider_testkit_path)
     write_transformed_mix_exs!(mix_path, probe_module)
     System.argv(["deps.get"])
 
@@ -109,21 +121,15 @@ defmodule GitHubEx.SourceCompatibilityTest do
     deps = project_config(probe_module)[:deps]
 
     assert {:pristine, opts} = find_dependency!(deps, :pristine)
-
-    assert opts[:path] ==
-             Path.join(@project_root, "../pristine/apps/pristine_runtime") |> Path.expand()
+    assert resolved_path(opts[:path], mix_path) == pristine_runtime_path
 
     assert {:pristine_codegen, codegen_opts} = find_dependency!(deps, :pristine_codegen)
-
-    assert codegen_opts[:path] ==
-             Path.join(@project_root, "../pristine/apps/pristine_codegen") |> Path.expand()
+    assert resolved_path(codegen_opts[:path], mix_path) == pristine_codegen_path
 
     assert {:pristine_provider_testkit, testkit_opts} =
              find_dependency!(deps, :pristine_provider_testkit)
 
-    assert testkit_opts[:path] ==
-             Path.join(@project_root, "../pristine/apps/pristine_provider_testkit")
-             |> Path.expand()
+    assert resolved_path(testkit_opts[:path], mix_path) == pristine_provider_testkit_path
 
     on_exit(fn ->
       System.argv(original_argv)
@@ -157,16 +163,15 @@ defmodule GitHubEx.SourceCompatibilityTest do
 
   defp write_transformed_mix_exs!(path, probe_module) do
     plt_path = Path.join(@project_root, "build_support/plt_fingerprint.ex")
-
-    dependency_resolver_path =
-      Path.join(@project_root, "build_support/dependency_resolver.exs")
+    dependency_sources_path = Path.join(@project_root, "build_support/dependency_sources.exs")
+    build_support_path = Path.join(Path.dirname(path), "build_support")
 
     source =
       Path.join(@project_root, "mix.exs")
       |> File.read!()
       |> String.replace(
-        "Code.require_file(\"build_support/dependency_resolver.exs\", __DIR__)",
-        "Code.require_file(#{inspect(dependency_resolver_path)})",
+        "Code.require_file(\"build_support/dependency_sources.exs\", __DIR__)",
+        "Code.require_file(#{inspect(dependency_sources_path)})",
         global: false
       )
       |> String.replace(
@@ -180,7 +185,13 @@ defmodule GitHubEx.SourceCompatibilityTest do
         global: false
       )
 
-    File.mkdir_p!(Path.dirname(path))
+    File.mkdir_p!(build_support_path)
+
+    File.cp!(
+      Path.join(@project_root, "build_support/dependency_sources.config.exs"),
+      Path.join(build_support_path, "dependency_sources.config.exs")
+    )
+
     File.write!(path, source)
   end
 
@@ -205,6 +216,8 @@ defmodule GitHubEx.SourceCompatibilityTest do
       _other -> false
     end)
   end
+
+  defp resolved_path(path, mix_path), do: Path.expand(path, Path.dirname(mix_path))
 
   defp restore_mix_project_stack(original_project) do
     case Mix.Project.get() do

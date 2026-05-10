@@ -3,10 +3,10 @@ defmodule Mix.Tasks.Github.Oauth do
   Runs the interactive GitHub OAuth authorization-code flow and refreshes saved
   OAuth tokens.
 
-      export GITHUB_OAUTH_CLIENT_ID="..."
-      export GITHUB_OAUTH_CLIENT_SECRET="..."
-      export GITHUB_OAUTH_REDIRECT_URI="http://127.0.0.1:40071/callback"
-      mix github.oauth --save --manual --no-browser
+      mix github.oauth --save --manual --no-browser \\
+        --client-id="..." \\
+        --client-secret="..." \\
+        --redirect-uri="http://127.0.0.1:40071/callback"
   """
 
   use Mix.Task
@@ -16,6 +16,8 @@ defmodule Mix.Tasks.Github.Oauth do
 
   @default_timeout_ms 120_000
   @interactive_switches [
+    client_id: :string,
+    client_secret: :string,
     manual: :boolean,
     no_browser: :boolean,
     path: :string,
@@ -24,7 +26,7 @@ defmodule Mix.Tasks.Github.Oauth do
     scope: :keep,
     timeout: :integer
   ]
-  @refresh_switches [path: :string]
+  @refresh_switches [client_id: :string, client_secret: :string, path: :string]
 
   @shortdoc "Complete the interactive GitHub OAuth flow"
 
@@ -50,9 +52,14 @@ defmodule Mix.Tasks.Github.Oauth do
       Mix.raise("invalid options: #{format_invalid_options(invalid)}")
     end
 
-    client_id = fetch_env!("GITHUB_OAUTH_CLIENT_ID")
-    client_secret = fetch_env!("GITHUB_OAUTH_CLIENT_SECRET")
-    redirect_uri = opts[:redirect_uri] || fetch_env!("GITHUB_OAUTH_REDIRECT_URI")
+    client_id = required_oauth_value(opts, :client_id, :oauth_client_id, "--client-id")
+
+    client_secret =
+      required_oauth_value(opts, :client_secret, :oauth_client_secret, "--client-secret")
+
+    redirect_uri =
+      opts[:redirect_uri] || required_config_value(:oauth_redirect_uri, "--redirect-uri")
+
     timeout_ms = opts[:timeout] || @default_timeout_ms
     open_browser? = not Keyword.get(opts, :no_browser, false)
     manual? = Keyword.get(opts, :manual, false)
@@ -82,8 +89,11 @@ defmodule Mix.Tasks.Github.Oauth do
   end
 
   defp refresh_saved_token(opts) do
-    client_id = fetch_env!("GITHUB_OAUTH_CLIENT_ID")
-    client_secret = fetch_env!("GITHUB_OAUTH_CLIENT_SECRET")
+    client_id = required_oauth_value(opts, :client_id, :oauth_client_id, "--client-id")
+
+    client_secret =
+      required_oauth_value(opts, :client_secret, :oauth_client_secret, "--client-secret")
+
     path = save_path(opts)
     client = GitHubEx.Client.new()
 
@@ -137,10 +147,23 @@ defmodule Mix.Tasks.Github.Oauth do
     Pristine.OAuth2.SavedToken
   end
 
-  defp fetch_env!(name) do
-    case System.get_env(name) do
-      value when is_binary(value) and value != "" -> value
-      _other -> Mix.raise("missing required environment variable #{name}")
+  defp required_oauth_value(opts, option_key, config_key, option_name) do
+    case Keyword.get(opts, option_key) || Application.get_env(:github_ex, config_key) do
+      value when is_binary(value) and value != "" ->
+        value
+
+      _other ->
+        Mix.raise("missing required OAuth value #{option_name} or :github_ex, #{config_key}")
+    end
+  end
+
+  defp required_config_value(config_key, option_name) do
+    case Application.get_env(:github_ex, config_key) do
+      value when is_binary(value) and value != "" ->
+        value
+
+      _other ->
+        Mix.raise("missing required OAuth value #{option_name} or :github_ex, #{config_key}")
     end
   end
 
@@ -202,9 +225,13 @@ defmodule Mix.Tasks.Github.Oauth do
   defp save_enabled?(opts), do: Keyword.get(opts, :save, false)
 
   defp save_path(opts) do
-    opts
-    |> Keyword.get(:path, default_save_path())
-    |> Path.expand()
+    path = Keyword.get(opts, :path) || Application.get_env(:github_ex, :oauth_token_path)
+
+    if is_binary(path) and path != "" do
+      Path.expand(path)
+    else
+      default_save_path()
+    end
   end
 
   defp default_save_path do
