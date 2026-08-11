@@ -1,11 +1,19 @@
 Code.require_file("build_support/plt_fingerprint.ex", __DIR__)
 
-unless Code.ensure_loaded?(DependencySources) do
-  Code.require_file("build_support/dependency_sources.exs", __DIR__)
+# `build_support/` is not shipped in the published package, so its absence is
+# how this file knows it is running inside a consumer's deps/ rather than in a
+# source checkout. Guard on the file, not on a directory shape: a shape test
+# breaks when the repo is vendored at a different depth or used as a git dep.
+workspace_helper = Path.expand("build_support/dependency_sources.exs", __DIR__)
+
+if File.regular?(workspace_helper) and not Code.ensure_loaded?(DependencySources) do
+  Code.require_file(workspace_helper)
 end
 
 defmodule GitHubEx.MixProject do
   use Mix.Project
+
+  @workspace_checkout? File.regular?(Path.expand("build_support/dependency_sources.exs", __DIR__))
 
   alias GitHubEx.Build.PltFingerprint
 
@@ -73,15 +81,15 @@ defmodule GitHubEx.MixProject do
     if use_hex_runtime_dep?() do
       {:pristine, "~> 0.2.1"}
     else
-      DependencySources.dep(:pristine, __DIR__)
+      workspace_dep(:pristine, "~> 0.2.1")
     end
   end
 
   defp codegen_deps do
     if include_tooling_deps?() do
       [
-        DependencySources.dep(:pristine_codegen, __DIR__, override: true),
-        DependencySources.dep(:pristine_provider_testkit, __DIR__, only: :test)
+        workspace_dep(:pristine_codegen, "~> 0.2.1", override: true),
+        workspace_dep(:pristine_provider_testkit, "~> 0.2.1", only: :test)
       ]
     else
       []
@@ -131,6 +139,18 @@ defmodule GitHubEx.MixProject do
     OTP-friendly runtime defaults, OAuth helpers, GitHub App helpers,
     pagination utilities, and publication-ready docs.
     """
+  end
+
+
+  # In a source checkout the registry decides the source (path first). In a
+  # published package there is no registry, and the requirement stated here is
+  # the whole answer.
+  defp workspace_dep(app, hex_requirement, opts \\ []) do
+    if @workspace_checkout? do
+      apply(DependencySources, :dep, [app, __DIR__, opts])
+    else
+      if opts == [], do: {app, hex_requirement}, else: {app, hex_requirement, opts}
+    end
   end
 
   defp package do
