@@ -21,7 +21,6 @@ github_ex-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
-.dependency_sources.local.exs
 
 # Nested example project artifacts
 examples/_output/

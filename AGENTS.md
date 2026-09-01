@@ -2,17 +2,19 @@
 
 ## Project Structure
 - `lib/` contains public `GitHubEx` modules.
-- `codegen/` and `build_support/` support OpenAPI generation and dependency resolution.
+- `codegen/` and `build_support/` support OpenAPI generation and build tooling.
 - `test/` contains ExUnit coverage.
 - `doc/` is generated output and should not be edited.
 
 ## Execution Plane Stack
 - `github_ex` consumes `pristine` as the semantic HTTP runtime; do not reach into raw `execution_plane` internals.
-- Dependency source selection is handled by `build_support/dependency_sources.exs` and `build_support/dependency_sources.config.exs`.
-- Local dependency overrides use `.dependency_sources.local.exs`.
-- Default dependency priority is `path -> GitHub -> Hex`; publish mode is Hex-only and must fail with exact blockers if an internal dep is unavailable on Hex.
-- Dependency source selection must not use environment variables.
-- Weld maintains helper drift, manifests, clone checks, publish checks, and publish order, but this repo is not a Weld consumer in this pass and must not receive a blind Weld dependency.
+- Committed dependency tuples remain ordinary Hex requirements so standalone
+  clones and published consumers work without workspace tooling. Managed
+  development loads the MWO bootstrap and gets eligible source coordinates
+  from Portfolio Registry; operator preferences stay outside this repository.
+- MWO's process-scoped bootstrap pointer is the only dependency-management
+  environment input read by `mix.exs`; publish mode remains Hex-only.
+- This repo is not a Weld consumer in this pass and must not receive a blind Weld dependency.
 
 ## Runtime Environment
 - Runtime application code under `lib/**` must not call direct OS env APIs such as `System.get_env`, `System.fetch_env`, `System.put_env`, or `System.delete_env`.
